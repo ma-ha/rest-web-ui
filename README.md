@@ -1,7 +1,7 @@
 # ReST-Web-UI
 Framework to create descriptive web applications for REST/JSON type web services. All you need is a modern web browser -- and a web service somewhere.
 
-The heart of the framework file is *html/js/portal-ng.js*, but you really need to touch it.
+The heart of the framework file is *html/js/portal-ng.js*, but you rarely need to touch it.
 
 Modular plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialogs, lists, tables, content, navigation etc.
 The usage of the included set of essential modules is explained in my <a href="http://mh-svr.de/mw/index.php/PoNG_Modules" target="_blank">WIKI</p>.
