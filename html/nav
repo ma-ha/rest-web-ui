@@ -1,0 +1,6 @@
+{
+   "navigations" : [
+      { "layout":"main", "label":"Main"  },
+      { "layout":"test", "label":"Test"  }
+   ]
+}

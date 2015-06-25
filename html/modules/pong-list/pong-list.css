@@ -1,0 +1,42 @@
+
+.pongListFrm {
+	font-size:10pt;
+}
+
+.pongListFrm button { 
+	font-style: normal; font-weight: normal;  
+	margin:  0 0 0 10px; 
+	font-size: 10pt;	
+}
+
+.pongListFrm p { 
+	margin: 2px; 
+}
+
+.pongListFrm label { 
+	font-style: normal; font-weight: normal; 
+	width: 10em; 
+	display: block; float: left;
+	margin:  5px 0 0 0; 
+}
+.pongListFrm input { 
+	margin:  2px 0 0 0; 
+}
+
+.PongListFrmFld { float:left; }
+
+.pongList {
+	font-size:10pt;
+}
+
+.pongListRow {
+	width:100%;
+}
+
+.pongListCell {
+    float: left;
+}
+
+.pongListPagin {
+	width:100%;
+}

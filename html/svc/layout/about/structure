@@ -1,0 +1,15 @@
+{
+  "layout": {
+    "title": "PoNG Demo",
+    "includeHeader": "main",
+    "rows": [
+        {
+        "rowId": "impress",
+        "resourceURL": "svc/info/impress",
+        "description": "Impress", 
+        "height": "400px"
+      }
+    ],
+    "includeFooter": "main"
+  }
+}

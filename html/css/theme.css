@@ -1,0 +1,98 @@
+body { 
+	background-color: #e2e2e2;
+}
+.page-width {
+	width: 990px;  	
+}
+#header { 
+	height: 102px;  	
+	background-color: black;
+	color:#DDD; 
+}
+
+#header a:link{color:#DDD;}
+#header a:visited{color:#DDD;}
+#header a:hover{color:#222;}
+#header a:active{color:#DDD;} 
+
+#header .header-links {
+	position : absolute;
+	bottom: 5px;
+	right: 10px;
+	font-size: 10pt;
+	color: gray;
+}
+
+#maindiv { 
+	background-color: white; 
+}
+
+.res-title  { padding-left: 9px; padding-top: 5px; font-weight: bold; }
+.res-header { padding-left: 9px; padding-top: 5px; }
+.res-footer { padding-left: 9px; padding-top: 5px; font-size: 9pt; }
+
+#footer { 
+    height: 40px;  	
+	background-color: white; 
+}
+
+#footer a:link{color:#AAA;}
+#footer a:visited{color:#AAA;}
+#footer a:hover{color:#222;}
+#footer a:active{color:#AAA;} 
+
+#footer .footer-links {
+	position : absolute;
+	bottom: 5px;
+	left: 500px;
+	width: 600px;
+	font-size: 10pt;
+	color: gray;
+}
+#footer .copyright-div {
+	position : absolute;
+	bottom: 5px;
+	left: 50px;
+	width: 300px;
+	font-size: 10pt;
+	color: gray;
+}
+
+
+
+
+div.editable div.editmarker {
+ 	position:absolute; top: 0px; right:0px; 
+ 	background-color: #EEEEEE;
+ 	width: 16px; height: 16px;
+}
+ 
+div.optedithighlight div.editmarker {
+	position:absolute; top: 0px; right:0px; 
+	background-color: #AAAAAA;
+	width: 16px; height: 16px;
+}
+
+div.optedithighlight { 
+ 	border:1px; 
+ 	border-style: solid;
+ 	border-color: #AAAAAA;
+}
+
+div.edithighlight div.editmarker {
+	position:absolute; top: 0px; right:0px; 
+	background-color: #333333;
+	width: 16px; height: 16px;
+}
+div.edithighlight { 
+ 	border:1px; 
+ 	border-style: solid;
+ 	border-color: #333333;
+}
+
+
+
+.editdiv {  margin:2px; border: 1px solid silver;  
+}
+
+

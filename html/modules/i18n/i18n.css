@@ -1,0 +1,14 @@
+.i18n {
+	position : absolute;
+	bottom: 5px;
+	right: 5px;
+	font-size: 10pt;
+	color: gray;
+	width:80%;	
+	font-size: 10pt;
+}
+
+.i18nItem { width:30px; float:right; }
+
+.i18nItemActive {
+}

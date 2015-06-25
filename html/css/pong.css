@@ -1,0 +1,13 @@
+/* DO NOT EDIT !!! */	
+.rowdiv {
+    width: 100%;  
+}
+.coldiv {
+    float: left;  
+}
+#header { 
+	position:relative;
+}
+#footer { 
+	position:relative;
+}

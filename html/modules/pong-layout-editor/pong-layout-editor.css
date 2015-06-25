@@ -1,0 +1,17 @@
+editdiv {  border: 1px solid silver;  }
+
+.btToolbar{ margin-left: 5px; }
+
+.btToolbar button {
+    width: 1em; height: 1em;
+ 	background: white;   
+}
+
+
+.layoutEditorZoom {
+	position:absolute;
+	right:10px; top:30px;
+}
+.layoutEditorZoom select {
+	font-size:8pt;
+}

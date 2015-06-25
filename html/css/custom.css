@@ -1,0 +1,271 @@
+/* You can add all your custom styles here */
+
+body {
+		font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+}
+.pongListRow {
+	position:relative; float:right;
+}
+		
+.pongListCellmsg {
+	width:600px;
+}
+.pongListCelldate {
+	width:50px;
+}
+.pongListCellauthor {
+	width:160px;
+	font-weight: bold;
+}
+.pongListCelllink {
+	padding-left:10px; width:150px;
+}
+#header .header-links {
+	position : absolute;
+	top: 5px;
+	right: 10px;
+	font-size: 10pt;
+	color: gray;
+	height: 20px;
+}
+
+#wikiContent {
+ width: 970px;
+ height: 530px;	
+ font-size: 0.8em;
+}
+#wikiContent a:link{color:#333;}
+#wikiContent a:visited{color:#333;}
+#wikiContent a:hover{color:#333;}
+#wikiContent a:active{color:#333;} 
+
+.pongMasterDetailsFrmField label {
+	display: block;  
+	float: left;
+	margin:  5px 0 0 0; 
+	width: 100px; 
+}
+
+#cpp {
+	width: 1250px;
+}
+.ccpContentPongFormDiv{
+	height: 1200px;
+}
+.pongFormLabelField { 
+	color: grey;
+	padding-left:  30px; 
+}
+
+.pongFormInputCol {
+	position: relative; float: left; 
+}
+
+.pongFormInputccpContentGrp0Col0 {
+	width: 500px; height: 200px;
+}
+.pongFormInputccpContentGrp0Col1 {
+	width: 300px; height: 200px;
+}
+.pongFormInputccpContentGrp0Col0 fieldset {
+	width: 470px; height: 175px;
+}
+.pongFormInputccpContentGrp0Col1 fieldset  {
+	width: 270px; height: 175px;
+}
+.pongFormInputccpContentGrp0Col0 label {
+	display: block;  
+	float: left;
+	margin:  5px 0 0 0; 
+	width: 200px; 
+}
+.pongFormInputccpContentGrp0Col1 label {
+	display: block;  
+	float: left;
+	margin:  0px 0 0 0; 
+	width: 100px; 
+}
+.pongFormInputccpContentGrp0Col0 input,textarea {
+	width: 250px;	
+}
+.pongFormInputccpContentGrp0Col1 input {
+	width: 50px;	
+}
+.pongFormInputccpContentGrp0Col2 input {
+	width: 50px;	
+}
+
+.pongFormField p {
+	margin-top: 5px; margin-bottom: 5px;
+}
+
+.pongFormInputpaasContentGrp0Col0  {
+	height: 80px; width: 440px; 
+}
+.pongFormInputpaasContentGrp0Col1  {
+	height: 80px; width: 430px;
+}
+.pongFormInputpaasContentGrp1Col0  fieldset{
+	height: 140px; width:440px;
+}
+.pongFormInputpaasContentGrp1Col1  fieldset{
+	height: 140px; width:447px;
+}
+.pongFormInputGrp0 label {
+	display: block;
+    float: left;
+	width: 100px;
+}
+.pongFormInputCol {
+	padding-right:20px;
+}
+.pongFormInputpaasContentGrp1Col0 label {
+	display: block;  
+	float: right;
+	width: 410px;
+}
+.pongFormInputpaasContentGrp1Col1 label {
+	display: block;  
+	float: right;
+	width: 410px;
+}
+
+
+
+.PaasResultContent {
+	 overflow: auto;
+}
+
+
+
+
+
+
+.pongFormInputccpContentGrp1Col0 {
+	height: 510px; width:290px; 
+}
+.pongFormInputccpContentGrp1Col1 {
+	height: 510px; width:310px;
+}
+.pongFormInputccpContentGrp1Col2 {
+	height: 510px;
+}
+
+.pongFormInputccpContentGrp1Col0 fieldset {
+	width: 260px; height: 485px;
+}
+.pongFormInputccpContentGrp1Col1 fieldset  {
+	width: 280px; height: 485px;
+}
+.pongFormInputccpContentGrp1Col2 fieldset  {
+	width: 250px; height: 485px;
+}
+
+
+.pongFormInputccpContentGrp1Col0 label {
+	display: block;  
+	float: right;
+	width: 220px;
+}
+.pongFormInputccpContentGrp1Col1 label {
+	display: block;  
+	float: right;
+	width: 250px;
+}
+.pongFormInputccpContentGrp1Col2 label {
+	display: block;  
+	float: right;
+	width: 220px;
+}
+
+.pongFormInputccpContentGrp2Col0 label {
+	display: block;  
+	float: right;
+	width: 270px; 
+}
+.pongFormInputccpContentGrp2Col1 label {
+	display: block;  
+	float: right;
+	width: 270px; 
+}
+.pongFormInputccpContentGrp2Col2 label {
+	display: block;  
+	float: right;
+	width: 270px; 
+}
+
+.pongFormInputccpContentGrp2Col0 {
+	height: 90px
+}
+.pongFormInputccpContentGrp2Col1 {
+	height: 90px
+}
+.pongFormInputccpContentGrp2Col2 {
+	height: 90px
+}
+
+
+
+
+.pongFormInputccpContentGrp3Col0 {
+	height: 210px; width:290px; 
+}
+.pongFormInputccpContentGrp3Col1 {
+	height: 210px; width:310px;
+}
+.pongFormInputccpContentGrp3Col2 {
+	height: 210px;
+}
+
+.pongFormInputccpContentGrp3Col0 fieldset {
+	width: 260px; height: 185px;
+}
+.pongFormInputccpContentGrp3Col1 fieldset  {
+	width: 280px; height: 185px;
+}
+.pongFormInputccpContentGrp3Col2 fieldset  {
+	width: 250px; height: 185px;
+}
+
+
+.pongFormInputccpContentGrp3Col0 label {
+	display: block;  
+	float: right;
+	width: 220px;
+}
+.pongFormInputccpContentGrp3Col1 label {
+	display: block;  
+	float: right;
+	width: 250px;
+}
+.pongFormInputccpContentGrp3Col2 label {
+	display: block;  
+	float: right;
+	width: 220px;
+}
+
+
+
+
+.pongFormAction {
+	position: relative;
+}
+
+#Sec {
+	position : absolute;
+	top: 5px;
+	right: 50px;
+	font-size: 10pt;
+	color:#CCC;
+	height: 20px;
+}
+#Sec select { 
+	font-size: 10pt;
+	color:#AAA;
+	background: #333;
+	padding: 1px;
+	line-height: 1;
+   	border: 0;
+   	border-radius: 0;
+   	-webkit-appearance: none;
+}

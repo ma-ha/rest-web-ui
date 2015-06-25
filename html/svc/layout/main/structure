@@ -1,0 +1,32 @@
+{
+  "layout": {
+    "title": "New Portal",
+    "header": {
+      "logoURL": "img/logo.png",
+      "linkList": [
+      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
+      ],
+      "modules" : [ 
+      	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
+      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } }
+      ] 
+    },
+    "rows": [
+      {
+        "rowId": "home",
+        "title": "Home",
+        "resourceURL": "svc/info",
+        "height": "400px",
+        "decor" : "decor"
+      }
+    ],
+    "footer": {
+      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha\">'Portal NG' v0.5.7</a>, &copy; 2014, MH.",
+      "linkList": [
+      	{ "text":"About", "url": "index.html?layout=about"},
+      	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
+      	{ "text":"Wiki", "url": "http://mh-svr.de/mw/index.php/Portal_as_a_Service"}
+      ]	
+    }
+  }
+}

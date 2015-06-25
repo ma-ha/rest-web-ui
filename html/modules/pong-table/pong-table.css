@@ -1,0 +1,27 @@
+.pongTable {
+	font-size:10pt;
+}
+
+div.editable { 
+	width: 100%;
+	height: 100%;
+}
+
+ 
+.pongTableFrm button { 
+	font-size:10pt; font-style: normal; font-weight: normal;  
+}
+
+.pongTableFrm p { 
+	margin: 2px; 
+}
+
+.pongTableFrm label { 
+	font-size:10pt; font-style: normal; font-weight: normal; 
+	width: 5em; 
+	display: block; float: left;
+}
+
+.pongTable th {
+		text-align: left;
+}
