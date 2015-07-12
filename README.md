@@ -20,7 +20,7 @@ create intuitively more complex Web UIs more easily: <a href="http://mh-svr.de/p
 ## You Want To Know Everything -- In Detail
 Please have a look at my <a href="http://mh-svr.de/mw/index.php/PoNG" target="_blank">WIKI</a>
 
-# Add Or Extend The Plug-Ins
+## Add Or Extend The Plug-Ins
 The framework is modular. Some elementary modules are already in the modules sub folder.
 You'll find a module template there, to start a new module.
 
