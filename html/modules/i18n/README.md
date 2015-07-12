@@ -14,7 +14,12 @@ Example [Structure Specification](https://github.com/ma-ha/rest-web-ui/wiki/Stru
 			"header": [
 				{
 					...
-					"modules": [ { "id": "Lang", '''"type": "i18n", "param": { "langList": ["EN","DE","FR"] }''' } ] 
+					"modules": [ 
+						{ "id": "Lang", 
+						  "type": "i18n", 
+						  "param": { "langList": ["EN","DE","FR"] } 
+					    } 
+					] 
 				},
 				...
 			],
