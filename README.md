@@ -8,9 +8,12 @@ The usage of the included set of essential modules is explained in my [WIKI](wik
 The most complex and flexible is the *form* module.  
 
 ## Try some examples
-* Form and result table demo: [EBay Search GUI](http://mh-svr.de/portal/show.php?layout=57aqwA687d)<br>Remark: The EBay API is *special*, not RESTful and everything is in arrays.
-* Content integration via MediaWIKI API: [Example using Wikipedia](http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh)
-* [Portal-as-a-Service](http://mh-svr.de/portal/) runs all examples above with a PHP/MySQL web service backend.
+* Form and result table demo: 
+<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search GUI</a>.
+<br>Remark: The EBay API is *special*, not RESTful and everything is in arrays.
+* Content integration via MediaWIKI API:
+<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia</a>.
+* <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
 
 ### What's it?
 It startet with some googling and evaluations, how to do light weight web GUIs. 
@@ -26,20 +29,20 @@ It is in a state, where you can do a lot of tasks out of the box.
 2. Open the `html/index.html` in your web browser. <br>You'll be ready to use a Web GUI (without a dynamic backend).
 2. Open the [html/svc/layout/main/structure](blob/master/html/svc/layout/main/structure) in an editor and start there to modify the web GUI to your needs.
 
-## Quick Start: Do More Complex Things Easier
+## 2nd Option Quick Start
 I run a *Portal-as-a-Service* web site, where you can sign in for free and
-create intuitively more complex Web UIs more easily: <a href="http://mh-svr.de/portal" target="_blank">http://mh-svr.de/portal</a>.
+create complex Web UIs intuitively: <a href="http://mh-svr.de/portal" target="_blank">http://mh-svr.de/portal</a>.
 
 You can host your portals and views this *Portal-as-a-Service* web site. 
 
-## You Want To Know Everything -- In Detail
+## You want to know everything -- in detail
 Please have a look at my [WIKI](wiki).
 
-## Available View Types
+## Available view types
 You'll find forms, tables, content, i18n plug in docu in the 
 [module plug-ins folder](html/modules/). 
 
-## Add Or Extend The Plug-Ins
+## Add or extend Plug-Ins
 The framework is modular. Some elementary modules are already in the modules sub folder.
 You'll find a module template there, to start a new module.
 
