@@ -1,7 +1,12 @@
-Module plug-ins do all the HTML rendering in the browser.
+Module plug-ins do all the HTML rendering in the browser. 
+
 The modules use RESTful web service as information sources.  
 
-## Standard Resource Modules coming with PoNG
+Modules are loaded by the framework if defined in the 
+[structure definiton of a portal page](https://github.com/ma-ha/rest-web-ui/wiki/Structure-Specification) 
+and methods are triggered in the lifecycle of the portal page.
+
+## Modules/Views 
 * [Form View](pong-form/)
 * [Help Dialog](pong-help/)
 * [List View](pong-list/)
@@ -13,18 +18,18 @@ The modules use RESTful web service as information sources.
 A special one is no real module: 
 If you don't specify a <code>type</code>, a HTML page will be loaded from the resource with <code>GET <resourceURL>/html</code>. This can also be used for HTML output from other modules, e.g. the "Form View" module uses this pattern to display the action results.
 
-## Standard Header Modules coming with PoNG 
+## Header Modules  
 * [Base Page Security](pong-security/)
 * [i18n = International language support](i18n/)
 * [Navigation Bar](pong-navbar/)
 * [OAuth](pong-oauth/)
 * [Session](pong-session)
 
-## Including Modules 
+## Including podules 
 Modules are loaded, only if required -- if they are referenced in the layout. 
 This dynamic include strategy avoids performance issues on client side due to unnecessarily loading and initializing code.
 
-## Module Programming 
+## Module programming 
 You can create your own module using the PoNG hooks. Please refer to the [module programming guide and reference](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming)
 
 ## Special modules:
