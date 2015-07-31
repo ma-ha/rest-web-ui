@@ -1,6 +1,7 @@
 {
    "navigations" : [
       { "layout":"main", "label":"Main"  },
-      { "layout":"test", "label":"Test"  }
+      { "layout":"test", "label":"Test"  },
+      { "layout":"demo_ebay", "label":"eBay"  }
    ]
 }
