@@ -3,7 +3,7 @@ The eBay API is not really RESTful, it's more ARRAYful.
 The sample shows some tricks to handle complex array structures and embedded result sets somewhere deep in the result tree.
 
 ##How to get it working
-This is not working out of the box, since eBay don't allow CORS requests and so you need a [proxy.php](https://duckduckgo.com/?q=php+proxy') reverse proxy.
+This is not working out of the box, since eBay don't allow CORS requests and so you need a [proxy.php](https://duckduckgo.com/?q=php+proxy) reverse proxy.
 
 You also need to [register at eBay](https://developer.ebay.com) to get a SECURITY-APPNAME key.
 
