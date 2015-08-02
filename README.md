@@ -4,7 +4,7 @@ Framework to create descriptive web applications for REST/JSON type web services
 The heart of the framework file is `html/js/portal-ng.js`, but you rarely need to touch it.
 
 Modular plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialogs, lists, tables, content, navigation etc.
-The usage of the included set of essential modules is explained in my [WIKI](wiki).
+The usage of the included set of essential modules is explained in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 The most complex and flexible is the *form* module.  
 
 ## Try some examples
@@ -36,7 +36,7 @@ create complex Web UIs intuitively: <a href="http://mh-svr.de/portal" target="_b
 You can host your portals and views this *Portal-as-a-Service* web site. 
 
 ## You want to know everything -- in detail
-Please have a look at my [WIKI](wiki).
+Please have a look at my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 
 ## Available view types
 You'll find forms, tables, content, i18n plug in docu in the 
@@ -46,4 +46,4 @@ You'll find forms, tables, content, i18n plug in docu in the
 The framework is modular. Some elementary modules are already in the modules sub folder.
 You'll find a module template there, to start a new module.
 
-You'll find a how-to in my [WIKI](wiki/Module-Programming).
+You'll find a how-to in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming).
