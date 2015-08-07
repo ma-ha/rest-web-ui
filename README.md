@@ -27,7 +27,7 @@ It is in a state, where you can do a lot of tasks out of the box.
 1. Clone this project:<br>
     `git clone https://github.com/ma-ha/rest-web-ui.git`
 2. Open the `html/index.html` in your web browser. <br>You'll be ready to use a Web GUI (without a dynamic backend).
-2. Open the [html/svc/layout/main/structure](blob/master/html/svc/layout/main/structure) in an editor and start there to modify the web GUI to your needs.
+2. Open the [html/svc/layout/main/structure](https://github.com/ma-ha/rest-web-ui/blob/master/html/svc/layout/main/structure) in an editor and start there to modify the web GUI to your needs.
 
 ## 2nd Option Quick Start
 I run a *Portal-as-a-Service* web site, where you can sign in for free and
