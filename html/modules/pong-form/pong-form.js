@@ -257,8 +257,9 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 			contentItems.push( '  $( function() { ' );
 			contentItems.push( '       $( "' +onChngSelector+ '" ).change(' );
 			contentItems.push( '          function() { ' );
+			contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
 			contentItems.push( '              $.ajax( ' );
-			contentItems.push( '                 { url: "'+action.actionURL+'", type: "'+method+'", ' );
+			contentItems.push( '                 { url: actionUrl, type: "'+method+'", dataType: "json", ' );
 			//alert ('headerLst.length '+headerLst.length );
 			contentItems.push( '                   	   beforeSend: function (request) { ' );
 			if ( action.oauth_scope != null ) {
@@ -367,12 +368,17 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		contentItems.push( '  $(function() { ' );
 		contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
 		contentItems.push( '          function() { ' );
+		//contentItems.push( '              var obj = jQuery.parseJSON( \'[ { "name": "John" } ]\' ); alert( "oooh "+obj[0].name ); ' );
+		//contentItems.push( '              var obj = jQuery.parseJSON( \'[{"Command":"/docker-entrypoint.sh postgres","Created":1431680184,"Id":"061c3c918707342c924865d06c3572b46652f21030092bdda57e1ca5a7038b0c","Image":"postgres:latest","Labels":{},"Names":["/evil_mayer"],"Ports":[{"PrivatePort":5432,"Type":"tcp"}],"Status":"Exited (0) 4 weeks ago"},{"Command":"/controller","Created":1431583964,"Id":"49f0a75f9fc8123a0cf4c96ca0a1b1a6673c641bb6f3aef13252b42c5e497475","Image":"shipyard/shipyard:latest","Labels":null,"Names":["/shipyard"],"Ports":[{"IP":"0.0.0.0","PrivatePort":8080,"PublicPort":8080,"Type":"tcp"}],"Status":"Exited (0) 4 weeks ago"},{"Command":"/usr/bin/rethinkdb --bind all","Created":1431583884,"Id":"936198bb2ea96fb437bb4e0729d29d1fbae3edc587682e67b7ce9878b3e2e7f3","Image":"shipyard/rethinkdb:latest","Labels":null,"Names":["/shipyard/rethinkdb","/shipyard-rethinkdb"],"Ports":[{"IP":"0.0.0.0","PrivatePort":29015,"PublicPort":32769,"Type":"tcp"},{"IP":"0.0.0.0","PrivatePort":8080,"PublicPort":32770,"Type":"tcp"},{"IP":"0.0.0.0","PrivatePort":28015,"PublicPort":32768,"Type":"tcp"}],"Status":"Exited (0) 4 weeks ago"},{"Command":"/bin/bash -l","Created":1431583671,"Id":"c4d35097087b8915f3ae190e3d21a99d521e943b33391c711fadc77823e4e8d2","Image":"shipyard/rethinkdb:latest","Labels":null,"Names":["/shipyard-rethinkdb-data"],"Ports":[{"PrivatePort":28015,"Type":"tcp"},{"PrivatePort":29015,"Type":"tcp"},{"PrivatePort":8080,"Type":"tcp"}],"Status":"Exited (0) 4 weeks ago"},{"Command":"apache2 -D FOREGROUND","Created":1431189130,"Id":"622334cf6ff473151ee89fae441ea189138b7d3e2080af5062625b2143b7a38f","Image":"apache2:latest","Labels":null,"Names":["/angry_hypatia"],"Ports":[{"IP":"0.0.0.0","PrivatePort":8880,"PublicPort":88,"Type":"tcp"}],"Status":"Exited (0) 4 weeks ago"}]\' ); alert( "oooh "+obj[0].Command ); ' );
 		/*
 		contentItems.push( ' 	             var request = createCORSRequest( "GET", "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&GLOBAL-ID=EBAY-DE&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=MaHa2cd74-4cc1-4c27-b657-c4bd01b8554&RESPONSE-DATA-FORMAT=JSON&keywords=Sinar%20Case" );' );
 		contentItems.push( ' 	             request.onload = function(){ alert("Uiii"); alert( this.responseText ); }; ' );
 		contentItems.push( ' 	             request.send();');
 		*/
-		contentItems.push( '              var request = $.ajax( { url: "'+action.actionURL+'", type: "'+method+'", ' );
+		
+		//TODO fix CORS logic
+		contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
+		contentItems.push( '              var request = $.ajax( { url: actionUrl, type: "'+method+'", ' );
 		contentItems.push( '                       crossDomain: true, ' );
 		contentItems.push( '                   	   beforeSend: function ( request ) { ' );
 		if ( basicAuth != null ) {
@@ -397,7 +403,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		}
 		//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 		contentItems.push( '              } ).done(  ' );
-		contentItems.push( '                 function( dta ) { ' );
+		contentItems.push( '                 function( dta ) { //alert( "uuuuh"+dta ); ' );
 		if ( action.target != null ) {
 			if ( action.target == '_parent' ) {
 				contentItems.push( '                       window.location.replace( dta );');
@@ -442,6 +448,30 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 	}
 	return contentItems;
 }
+
+/** replaces ${xyz} in str by the value of the input text field with ID xyz */
+function parsePlaceHolders( divId, str ) {
+	//TODO
+	var pmd = moduleConfig[ divId ];
+	alert( "Start value: "+ str );
+	if ( pmd.fieldGroups != null ) {
+		for ( var i = 0; i < pmd.fieldGroups.length; i++ ) {
+			var grp = pmd.fieldGroups[i];
+			for ( var j = 0; j < grp.columns.length; j++ ) {
+				var col = grp.columns[j];
+				for ( var k = 0; k < col.formFields.length; k++ ) {
+					var field = col.formFields[k];
+					if ( field.type = 'text' ) {
+						str = str.replace( '${'+field.id+'}', $( '#'+divId+field.id ).val() );
+					}
+				}
+			}
+		}
+	}
+	alert( "Processed value: "+ str );
+	return str;
+}
+
 /*
 function createCORSRequest(method, url){
     var xhr = new XMLHttpRequest({mozSystem: true});
