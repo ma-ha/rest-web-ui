@@ -13,8 +13,7 @@ The most complex and flexible is the *form* module.
 * Form and result table demo: 
 <a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search GUI</a>.
 <br>*Remark: The EBay API is special, not RESTful and everything is in arrays.*
-* Docker GUI shows installed containers (requires local Docker installation):
-<a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a>.
+* <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
 
 ### What's it?
