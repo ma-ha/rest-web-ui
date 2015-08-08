@@ -453,7 +453,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 function parsePlaceHolders( divId, str ) {
 	//TODO
 	var pmd = moduleConfig[ divId ];
-	alert( "Start value: "+ str );
+	//alert( "Start value: "+ str );
 	if ( pmd.fieldGroups != null ) {
 		for ( var i = 0; i < pmd.fieldGroups.length; i++ ) {
 			var grp = pmd.fieldGroups[i];
@@ -468,7 +468,7 @@ function parsePlaceHolders( divId, str ) {
 			}
 		}
 	}
-	alert( "Processed value: "+ str );
+	//alert( "Processed value: "+ str );
 	return str;
 }
 
