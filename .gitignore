@@ -1,4 +1,8 @@
 *.class
+*.md.html
+.project
+.settings/*
+.buildpath
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
