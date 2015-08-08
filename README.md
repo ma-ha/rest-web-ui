@@ -1,4 +1,4 @@
-# ReST-Web-UI
+# ReST Web GUI
 Framework to create descriptive web applications for REST/JSON type web services. All you need is a modern web browser -- and a web service somewhere.
 
 The heart of the framework file is `html/js/portal-ng.js`, but you rarely need to touch it.
@@ -8,11 +8,13 @@ The usage of the included set of essential modules is explained in my [WIKI](htt
 The most complex and flexible is the *form* module.  
 
 ## Try some examples
-* Form and result table demo: 
-<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search GUI</a>.
-<br>Remark: The EBay API is *special*, not RESTful and everything is in arrays.
 * Content integration via MediaWIKI API:
 <a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia</a>.
+* Form and result table demo (requires [eBay registration](https://developer.ebay.com)): 
+<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search GUI</a>.
+<br>*Remark: The EBay API is special, not RESTful and everything is in arrays.*
+* Docker GUI shows installed containers (requires local Docker installation):
+<a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a>.
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
 
 ### What's it?
