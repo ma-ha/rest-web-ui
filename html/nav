@@ -2,6 +2,7 @@
    "navigations" : [
       { "layout":"main", "label":"Main"  },
       { "layout":"test", "label":"Test"  },
+      { "layout":"demo_docker", "label":"Docker"  },
       { "layout":"demo_ebay", "label":"eBay"  }
    ]
 }

@@ -1,0 +1,134 @@
+{
+	"layout":{
+		"title":"PoNG Demo: Docker Containers",
+		"includeHeader":"main",
+        "rows": [
+            {
+                "rowId": "91",
+                "height": "100px",
+                "cols": [
+                    {
+                        "columnId": "151",
+                        "width": "400px",
+                        "resourceURL": "xxxx",
+                        "title": "Request Docker @localhost",
+                        "moduleConfig": {
+                            "description": "shows docker containers",
+                            "fieldGroups": [
+                                {
+                                    "columns": [
+                                        {
+                                            "formFields": [
+                                                {
+                                                    "id": "all",
+                                                    "label": "All",
+                                                    "type": "text",
+                                                    "defaultVal": "1"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "actions": [
+                                {
+                                    "id": "ShwCnt",
+                                    "actionName": "Show Containers",
+                                    "method": "GET",
+                                    "actionURL": "http://127.0.0.1:4243/containers/json",
+                                    "setData": [
+                                        {
+                                            "resId": "152"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "type": "pong-form",
+                        "type_id": "7",
+                        "decor": "decor"
+                    },
+                    {
+                        "columnId": "153",
+                        "width": "590px",
+                        "resourceURL": "change_me",
+                        "title":"README",
+                        "type":"pong-form",
+                        "moduleConfig":{
+							"id":"helpFormId",
+							"fieldGroups":[
+								{
+									"columns":[
+										{
+											"formFields":[
+												{
+													"id":"docperapi",
+													"type":"label",
+													"label":"You need to enable docker remote API"
+												},
+												{
+													"id":"docperapi2",
+													"type":"label",
+													"label":"in the <tt>/etc/default/docker</tt> file:"
+												},
+												{
+													"id":"docerkapienable",
+													"type":"label",
+													"label":"<font size=\"-1\"><tt>DOCKER_OPTS=\"-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --api-enable-cors\"</tt></font>"
+												}
+											]
+										}
+									]
+								}
+							],
+							"actions":[
+								
+							]
+						},						
+                        "decor": "decor"
+                    }
+                ]
+            },
+            {
+                "rowId": "152",
+                "height": "500px",
+                "resourceURL": "-",
+                "title": "change me",
+                "moduleConfig": {
+                    "rowId": "productId",
+                    "cols": [
+                        {
+                            "id": "Image",
+                            "label": "Image",
+                            "cellType": "text",
+                            "width": "20%"
+                        },
+                        {
+                            "id": "Names.0",
+                            "label": "Name",
+                            "cellType": "text",
+                            "width": "20%"
+                        },
+                        {
+                            "id": "Status",
+                            "label": "Status",
+                            "cellType": "text",
+                            "width": "20%"
+                        },
+                        {
+                            "id": "Id",
+                            "label": "Id",
+                            "cellType": "text",
+                            "width": "40%"
+                        }
+                    ],
+                    "maxRows": "10"
+                },
+                "type": "pong-table",
+                "type_id": "5",
+                "decor": "decor"
+            }
+        ],
+        "includeFooter":"main"
+	}
+}
