@@ -101,14 +101,19 @@ function mkLoginDialog ( params ) {
 								}
 								log( "PoNG-OAuth", "set headers ... "	 );
 								if ( params.client_id != null && params.client_id != '' ) {
-									settings.data += "&client_id="+params.client_id+"&client_secret="+params.client_secret;
+									if ( params.client_secret != null && params.client_secret != '' ) {
+										settings.data += "&client_id="+params.client_id+"&client_secret="+params.client_secret;
+									} else {
+										settings.data += "&client_id="+params.client_id+"&client_secret=";
+									} 
+										
 								}
 							},
 							data: { 
 								"grant_type":"password",
 								"username": $( '#oauthUser' ).val(),
 								"password": $( '#oauthPwd' ).val(),
-								"scope":"TNT" 
+								"scope": params.scope 
 							 }
 						} ).done(
 							function( dta ) {
@@ -128,13 +133,13 @@ function mkLoginDialog ( params ) {
 					},				
 					Cancel:  function() { 
 						$( this ).dialog( "close" );
-						alert( "close" );
+						//alert( "close" );
 						if ( params.exit_page != null ) { 
 							window.location.replace( params.exit_page ); 
 						}
 					},
 					close: function () { // TODO
-						alert( "close evt" );
+						//alert( "close evt" );
 					} 
 				} 
 			}
