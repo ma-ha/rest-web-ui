@@ -17,7 +17,7 @@ All you need is a modern web browser -- and a web service somewhere.
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
 
 ### What's it?
-It startet with some googling and evaluations, how to do light weight web GUIs. 
+It started with some googling and evaluations, how to do light weight web GUIs. 
 I decided to write a prototype, of how I would solve the challenge. 
 After some lines of JS code it was doing first things. 
 Pushed by this I couldn't stop ;-) Now I use it for a lot of tasks myself and if you like you can also do.
