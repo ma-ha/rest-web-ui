@@ -16,6 +16,8 @@ All you need is a modern web browser -- and a web service somewhere.
 * <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
 
+These examples are [documented more detailled in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
+
 ### What's it?
 It started with some googling and evaluations, how to do light weight web GUIs. 
 I decided to write a prototype, of how I would solve the challenge. 
