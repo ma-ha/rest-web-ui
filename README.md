@@ -8,7 +8,7 @@ All you need is a modern web browser -- and a web service somewhere.
 2. An empty HTML file loads the JS framework and the page definition JSON file
 3. The framework replaces the empty page by the fully rendered portal page with all logic injected.
 
-## Click and try some examples
+## Click and try examples
 * Content integration via MediaWIKI API:
 <a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia</a>.
 * Form and table demo: 
