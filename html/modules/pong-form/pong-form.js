@@ -286,7 +286,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 			}
 			contentItems.push( '                       return false;' ); 
 			contentItems.push( '                  }  ' );
-			contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( "Error: "+textStatus ); } ); ');
+			contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
 			contentItems.push( '              return false;' ); 
 			contentItems.push( '          }' );
 			contentItems.push( '       ); ' );
@@ -433,7 +433,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		}
 		contentItems.push( '                       return false;' ); 
 		contentItems.push( '                  }  ' );
-		contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( "Error: "+textStatus ); } ); ');
+		contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
 
 		if ( action.target == 'modal' ) {
 			contentItems.push( '               request.fail(  function(jqXHR, textStatus) { alert( "Failed: "+textStatus ); } ); ' );
