@@ -415,14 +415,26 @@ function tblCells( divId ) {
 					var contentItems = [];
 					var ajaxType = 'POST';
 					var param = '';
+					var icon = 'ui-icon-gear';
 					if ( ( cellDef.method != null ) && ( cellDef.method.length != null ) ) {
 						if ( cellDef.method == 'DEL-POST' ) {
 							param = ',"actn":"DEL"';
+							icon = 'ui-icon-trash';
 						} else {
-							ajaxType = cellDef.method; 
+							ajaxType = cellDef.method;
+							if ( ajaxType == 'DELETE' ) {
+								icon = 'ui-icon-trash';								
+							} else if ( ajaxType == 'POST' ) {
+								icon = 'ui-icon-check';								
+							} else if ( ajaxType == 'GET' ) {
+								icon = 'ui-icon-arrowrefresh-1-w';								
+							} 	 
 						}
 					} 
-					
+					if ( ( cellDef.icon != null ) && ( cellDef.icon.length != null ) ) {
+						icon = cellDef.icon;								
+					}					
+					log( "Pong-Form", cellDef.label+" icon="+icon );
 					var url = poTbl[ divId ].resourceURL;
 					if ( cellDef.URL != null ) {
 						url = cellDef.URL;
@@ -440,45 +452,58 @@ function tblCells( divId ) {
 					contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'">'+cellDef.label+'</button>' );
 					contentItems.push( '<script>' );
 					contentItems.push( '  $( function() { ' );
-					contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
-					contentItems.push( '          function() {  '); //alert( "'+ajaxType+' data: { rowId : '+ poTbl[ divId ].pongTableDef.rowId+'='+cellDta[ poTbl[ divId ].pongTableDef.rowId ] +' }"); ' );
-					contentItems.push( '              $.ajax( ' );
-					contentItems.push( '                 { url: "'+url+'", ');
-					contentItems.push( '                   type: "'+ajaxType+'", ' );
-					if ( ajaxType == 'POST' ) {
-						contentItems.push( '                   data: { '+param+' } ' );						
-					}
-					contentItems.push( '              } ).done(  ' );
-					contentItems.push( '                 function( dta ) { '); // alert( dta ); ' );
-					if ( cellDef.target != null ) {
-						if ( cellDef.target == '_parent' ) {
-							contentItems.push( '                       window.location.replace( dta );');
-						} else if ( cellDef.target == '_blank' ) {
-							contentItems.push( '                       window.open( dta );');
-						} else if ( cellDef.target == 'modal' ) {
-							contentItems.push( '                       alert( dta );  ' );
-						} else {
-							contentItems.push( '                       $( "#'+cellDef.target+'Content" ).html( dta );  ' );									
+					if ( icon.lenght != 0 ) {
+						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).button( { icons: { primary: "'+icon+'" } } )' );						
+					} 
+					if ( ajaxType == 'JS'  ) {
+						if ( cellDef.js != null ) {
+							contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+							contentItems.push( '          function() {  ' );
+							contentItems.push( '              '+cellDef.js);
+							contentItems.push( '              return false;');
+							contentItems.push( '          }');
+							contentItems.push( '       ); ' );
 						}
-					}
-					if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
-						for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
-							var resToUpd = cellDef.update[upCnt].resId + 'Content';
-							if ( resToUpd == 'thisContent' ) { resToUpd = divId }
-							if ( cellDef.method == 'DELETE' ) {
-								contentItems.push( '                 udateModuleData( "'+resToUpd+'", { }  ); ' ); // otherwise deleted ID is requested and result is empty
+					} else {
+						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+						contentItems.push( '          function() {  '); //alert( "'+ajaxType+' data: { rowId : '+ poTbl[ divId ].pongTableDef.rowId+'='+cellDta[ poTbl[ divId ].pongTableDef.rowId ] +' }"); ' );
+						contentItems.push( '              $.ajax( ' );
+						contentItems.push( '                 { url: "'+url+'", ');
+						contentItems.push( '                   type: "'+ajaxType+'", ' );
+						if ( ajaxType == 'POST' ) {
+							contentItems.push( '                   data: { '+param+' } ' );						
+						}
+						contentItems.push( '              } ).done(  ' );
+						contentItems.push( '                 function( dta ) { '); // alert( dta ); ' );
+						if ( cellDef.target != null ) {
+							if ( cellDef.target == '_parent' ) {
+								contentItems.push( '                       window.location.replace( dta );');
+							} else if ( cellDef.target == '_blank' ) {
+								contentItems.push( '                       window.open( dta );');
+							} else if ( cellDef.target == 'modal' ) {
+								contentItems.push( '                       alert( dta );  ' );
 							} else {
-								contentItems.push( '                 udateModuleData( "'+resToUpd+'", { '+param+' }  ); ' ); 													
+								contentItems.push( '                       $( "#'+cellDef.target+'Content" ).html( dta );  ' );									
 							}
 						}
+						if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
+							for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
+								var resToUpd = cellDef.update[upCnt].resId + 'Content';
+								if ( resToUpd == 'thisContent' ) { resToUpd = divId }
+								if ( cellDef.method == 'DELETE' ) {
+									contentItems.push( '                 udateModuleData( "'+resToUpd+'", { }  ); ' ); // otherwise deleted ID is requested and result is empty
+								} else {
+									contentItems.push( '                 udateModuleData( "'+resToUpd+'", { '+param+' }  ); ' ); 													
+								}
+							}
+						}
+						contentItems.push( '                       return false;' ); 
+						contentItems.push( '                  }  ' );
+						contentItems.push( '              ); ');
+						contentItems.push( '              return false;' ); 
+						contentItems.push( '          }' );
+						contentItems.push( '       ); ' );
 					}
-					contentItems.push( '                       return false;' ); 
-					contentItems.push( '                  }  ' );
-					contentItems.push( '              ); ');
-					contentItems.push( '              return false;' ); 
-					contentItems.push( '          }' );
-					contentItems.push( '       ); ' );
-
 					contentItems.push( '  } ); ' ); 
 					contentItems.push( '</script>' );
 					$( cellId ).html( contentItems.join( "\n" ) );
