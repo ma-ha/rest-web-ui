@@ -130,7 +130,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	
 	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
 	// create table head
-	contentItems.push( "<tr>" );
+	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
 	if ( tbl.cols != null ) {
 		for ( var i = 0; i < tbl.cols.length; i ++ ) {
 			var colWidth = ''; if ( tbl.cols[i].width != null ) { colWidth = ' width="'+tbl.cols[i].width+'" '; }
@@ -149,7 +149,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( '</script> ' );
 	contentItems.push( "</tr>" );
 	for ( var r = 0; r < tbl.maxRows; r ++ ) {
-		contentItems.push( "<tr>" );
+		contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
 		for ( var c = 0; c < tbl.cols.length; c ++ ) {
 				if ( tbl.cols[c].cellType != 'tooltip' ) {
 					contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
@@ -459,6 +459,7 @@ function tblCells( divId ) {
 						if ( cellDef.js != null ) {
 							contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
 							contentItems.push( '          function() {  ' );
+							contentItems.push( '              var theRowId = "'+divId+'R'+r+'";');
 							contentItems.push( '              '+cellDef.js);
 							contentItems.push( '              return false;');
 							contentItems.push( '          }');
