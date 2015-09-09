@@ -373,8 +373,12 @@ function tblCells( divId ) {
 					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
 						editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
 						$( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
-					} else {
-						$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );
+					} else { 
+						if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
+							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'">'+ cellVal +'</a></span>' );
+						} else {
+							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );							
+						}
 					}
 				} else if ( cellType == 'checkbox' ) {
 					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
