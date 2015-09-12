@@ -132,6 +132,28 @@ function inits() {
 }
 
 //=====================================================================================================
+var cssPath = 'css/';
+var jsPath  = ' js/';
+var modulesPath  = 'modules/';
+var themeCssPath = 'css/';
+
+function loadCSS( cssFile ) {
+	var cssLnk = document.createElement( 'link' );
+	cssLnk.setAttribute( 'rel', 'stylesheet' );
+	cssLnk.setAttribute( 'type', 'text/css' );
+	cssLnk.setAttribute( 'href', cssPath+cssFile );
+	document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
+}
+
+function loadThemeCSS( cssFile ) {
+	var cssLnk = document.createElement( 'link' );
+	cssLnk.setAttribute( 'rel', 'stylesheet' );
+	cssLnk.setAttribute( 'type', 'text/css' );
+	cssLnk.setAttribute( 'href', themeCssPath+cssFile );
+	document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
+}
+
+//=====================================================================================================
 
 
 function loadLang() {
