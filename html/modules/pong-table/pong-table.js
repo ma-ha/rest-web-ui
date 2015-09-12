@@ -515,6 +515,13 @@ function tblCells( divId ) {
 					
 				} else if ( cellType == 'tooltip'  ) {
 					$( '#'+divId+'R'+i+cellDef.label ).attr( 'title' , cellVal );
+				} else if ( cellType == 'rating'  ) {
+					ratingType = "5star";
+					if ( cellVal == null ) { cellVal = 0; }
+					if ( cellDef.ratingType != null ) {
+						ratingType = cellDef.ratingType;
+					}
+					$( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );												
 				} else {
 					// ???
 				}	
