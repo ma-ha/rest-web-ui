@@ -24,9 +24,11 @@ THE SOFTWARE.
 
 /*
  Library: Portal-NG (PoNG)
- Version: 0.5
  http://mh-svr.de/mw/index.php/PoNG
 */
+var labeldefs = new Array();
+labeldefs['PONGVER'] = '0.5.12';
+var PONGVER = '0.5.12';
 
 var moduleMap = {};
 var reqModules = {};
@@ -161,6 +163,20 @@ function loadLang() {
     			function(){ ajaxOngoing--; } 
     		);    	
     }
+
+    $.extend( $.i18n.parser.emitter, {
+    	// Handle PONGVER keywords
+    	pongver: function () {
+    		return PONGVER;
+    	}
+    } );
+
+    /* hook vor init call back to define other i18n extends */
+    if (typeof initI18n === "function") { 
+        // safe to use the function
+    	initI18n();
+    }
+    
 	pageInfo["lang"] = locale;
 }
 
@@ -567,12 +583,18 @@ function headerHTML( header ) {
 					+ '</script>' );
 		}
 		*/
-		// load links
+		// load links 
+		//TODO support target
 		if ( header.linkList != null ) {
 			content.push( '<div class="header-links">' );
 			for ( var i = 0; i < header.linkList.length; i++ ) {
 				var lnk = header.linkList[i]; 
-				content.push( '<a href="' + $.i18n( lnk.url )+ '" class="transferSessionLink">'+ $.i18n( lnk.text ) +'</a>' );
+				if ( lnk.target != null ) {
+					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );
+				} else {
+					content.push( '<a href="'+ $.i18n( lnk.url )+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );					
+				}
+
 			}
 			content.push( "</div>" );
 		}
@@ -593,16 +615,21 @@ function footerHTML( footer ) {
 	var content = [];
 	content.push( '<div class="footer-cnt"></div>' );
 	if ( footer != null ) {
+		// footer links
 		if ( footer.linkList != null ) {
 			content.push( '<div class="footer-links">' );
 			for ( var i = 0; i < footer.linkList.length; i++ ) {
 				var lnk = footer.linkList[i];
-				content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );
+				if ( lnk.target != null ) {
+					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a> 	' );
+				} else {
+					content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );					
+				}
 			}
 			content.push( "</div>" );
 		}
 		if ( footer.copyrightText != null ) {
-			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText )  +'</div>' );
+			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
 		} else {
 			content.push( '<div class="copyright-div">&copy; MH 2015</div>' );
 		}
@@ -632,6 +659,20 @@ function footerHTML( footer ) {
 		}
 	}
 	$( '#footer' ).html( content.join("\n") );
+}
+
+function replaceVar( str ) {
+	console.log("replaceVar");
+	var rStr = str;
+	
+	if ( str.indexOf( "{{.pongVersion}}" ) != -1 ) {
+		var find = 'abc';
+		var re = new RegExp( find, "{{.pongVersion}}" );
+
+		str = str.replace( re, pongVersion );
+	}
+	
+	return rStr;
 }
 
 function colsToHTML( colsLayout ) {
@@ -1055,7 +1096,7 @@ var loggerModule = false;
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( func=='getHookMethod' || 
-		//func=='PoNG-OAuth' || 
+		func=='PoNG-MediaWiki' || 
 		//func=='getSubData' || 
 		func=='Pong-Form' || 
 		func=='layout-editor' ) { 

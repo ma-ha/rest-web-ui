@@ -55,12 +55,30 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
 		lang = "EN";
 	}
 	
+	url = url.replace( '${lang}', lang );
+	log( "PoNG-MediaWiki",  "url="+url);
 
+	
 	if ( param != null && param.page != null  && param.wikiRef != null  && param.wikiImg != null ) {
+		
+		var startPage = "Main_Page";
+		if ( typeof param.page === 'string' ) {
+			startPage = param.page;
+			log( "PoNG-MediaWiki",  "string startPage="+startPage);
+		} else {
+			if ( param.page['EN'] != null ) {
+				startPage = param.page['EN'];	
+			}
+			if ( param.page[ lang ] != null ) {
+				startPage = param.page[ lang ];	
+				log( "PoNG-MediaWiki",  "startPage["+lang+"]="+startPage);
+			}
+		}
+
 		$.getJSON(
 			url, 
 			{ 
-				page: param.page,
+				page: startPage,
 				limit:1,
 				prop:"text|images",
 				uselang: lang.toLowerCase()
