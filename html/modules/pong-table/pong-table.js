@@ -375,7 +375,7 @@ function tblCells( divId ) {
 						$( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
 					} else { 
 						if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
-							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'">'+ cellVal +'</a></span>' );
+							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
 						} else {
 							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );							
 						}
