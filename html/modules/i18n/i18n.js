@@ -49,12 +49,12 @@ function addI18NHeaderHtml( divId, type , params ) {
 			if ( mode == 'php' ) {
 				if ( params != null && params.get != null ) { // else makes no sense
 					divHtml.push( '<a href="show.php?lang='+lang+layout+role+'" class="transferSessionLink">'+
-							'<img src="img/i18n/png/'+lang.toLowerCase()+'.png"'
+							'<img src="'+modulesPath+'i18n/flag-icons/png/'+lang.toLowerCase()+'.png"'
 							+' alt="'+lang+'" title="'+ $.i18n( 'Switch to' ) +' '+lang+'" border="0"></a>' );
 				}
 			} else {
 				divHtml.push( '<a href="index.html?lang='+lang+layout+role+'" class="transferSessionLink">'+
-						'<img src="img/i18n/png/'+lang.toLowerCase()+'.png"'
+						'<img src="'+modulesPath+'i18n/flag-icons/png/'+lang.toLowerCase()+'.png"'
 						+' alt="'+lang+'" title="'+ $.i18n( 'Switch to' ) +' '+lang+'" border="0"></a>' );				
 			}
 			divHtml.push( '</div>' );
