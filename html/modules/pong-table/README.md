@@ -71,6 +71,7 @@ Remark: The rowId must not be in the cols array, it must only be in the result o
 * linkLink
 * button
 * tooltip
+* rating
 
 The img type and link type will expect a URL as content.
 
@@ -179,6 +180,16 @@ Currently this feature is only available for text and checkbox columns.
 
 '''Important''': The URL ending is a diva. If you implement a service endpoint (e.g. using <code>svc/myservice/index.php</code>) the URL may have to end with a slash. If you specify <code>"resourceUrl":"svc/myservice"</code> you can use <code>"dataURL":"/"</code> to get the POST request working correctly. The "developer tools" are your friend to identify, what request is going out -- and if it works.
 
+### Rating Column Type
+The rating expects a typically a number as result, but can be anything. 
+You have to define a rating Type, e.g. <code>"ratingType":"3star"<code>. 
+The logic is to load a image by appending the rating value to the rating type and append ".png".
+
+Currently the table module supports:
+* <code>"ratingType":"3star"<code>: rating values= [ "0", "1", "2", "3" ]
+* <code>"ratingType":"5star"<code>:rating values= [ "0", "1", "2", "3", "4", "5" ]
+* <code>"ratingType":"prio"<code>: rating values= [ "0", "1", "2", "3" ]
+
 ## Simple example
 	{
 	    "dataURL": "webdata",
@@ -191,6 +202,7 @@ Currently this feature is only available for text and checkbox columns.
 	           { "id": "link", "label": "Data Sheet", "cellType": "linkLink" }, 
 	           { "id": "descr", "label": "name", "cellType": "tooltip" },  
 	           { "id": "img", "label": "Picture", "cellType": "img" },  
+               { "id": "rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
 	           { "id": "order", "label": "Add", "cellType": "button" }  
 	        ],         
 	        "maxRows":"5"

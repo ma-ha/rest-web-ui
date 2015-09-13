@@ -12,7 +12,7 @@ Example structure file extract:
 	      "rows": [
 	      {
 	        "rowId": "bla",
-	        '''"type" : "pong-mediawiki",'''
+	        "type" : "pong-mediawiki",
 	        "resourceURL": "http://mh-svr.de/mw/",        
 	        "resourceParam": { "page": "PoNG", "wikiRef":"/mw/index.php/", "wikiImg":"/mw/images/" },
 	        ...
@@ -29,3 +29,33 @@ You have to provide the fields:
 * <code>page</code>: The initial page to be displayed.
 * <code>wikiRef</code>: WIKI internal href start with this string.
 * <code>wikiImg</code>: WIKI internal image src start with this string.
+
+## i18n Support
+The language is passed in the REST API call as uselang parameter.
+
+However, in Wikipedia the language code is part of the URL, so you can use a placeholder <code>${lang}</code> in the <code>ressourceURL</code> to direct to the Wikipedia instance set by the i18n header module.
+
+Since the page can also vary with the language (e.g. "Hauptseite", "Main page", ...) the page param can configured as object with attributes.
+
+Example:
+
+	{
+	  "layout": {
+	     ...
+		 "rows": [
+	       {
+	         "rowId": "bla",
+	         "type" : "pong-mediawiki",
+	         "resourceURL": "http://${lang}.wikipedia.org/w/",        
+	         "resourceParam": { 
+	            "page": {
+	               "DE":"Wikipedia:Hauptseite",
+	               "IT":"Pagina_principale",
+	               "EN":"Main page"
+	             }, 
+	            "wikiRef":"/mw/index.php/", 
+	            "wikiImg":"/mw/images/" 
+	         },
+	         ...
+           }
+           ...
