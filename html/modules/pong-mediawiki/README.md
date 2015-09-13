@@ -37,25 +37,45 @@ However, in Wikipedia the language code is part of the URL, so you can use a pla
 
 Since the page can also vary with the language (e.g. "Hauptseite", "Main page", ...) the page param can configured as object with attributes.
 
-Example:
-
+## Full Working Example
+                   
 	{
-	  "layout": {
-	     ...
-		 "rows": [
-	       {
-	         "rowId": "bla",
-	         "type" : "pong-mediawiki",
-	         "resourceURL": "http://${lang}.wikipedia.org/w/",        
-	         "resourceParam": { 
-	            "page": {
-	               "DE":"Wikipedia:Hauptseite",
-	               "IT":"Pagina_principale",
-	               "EN":"Main page"
-	             }, 
-	            "wikiRef":"/mw/index.php/", 
-	            "wikiImg":"/mw/images/" 
-	         },
-	         ...
-           }
-           ...
+	    "layout": {
+	        "title": "Wikipedia",
+	        "descr": "Wikipedia Main Page",
+	        "page_width": "990",
+	        "header": {
+	            "logoText": "WIKI Demo",
+	            "modules": [
+	                {
+	                    "type": "i18n",
+	                    "param": {
+	                        "langList": [ "EN", "DE" ]
+	                    }
+	                }
+	            ]
+	        },
+	        "rows": [
+	            {
+	                "rowId": "WikiDemo",
+	                "height": "700px",
+	                "resourceURL": "http://${lang}.wikipedia.org/w/",
+	                "title": "Wikipedia per REST API",
+	                "moduleConfig": {
+	                    "page": {
+	                        "EN": "Main_Page",
+	                        "DE": "Wikipedia:Hauptseite",
+	                        "IT": "Pagina_principale"
+	                    },
+	                    "wikiRef": "/wiki/",
+	                    "wikiImg": "images/"
+	                },
+	                "type": "pong-mediawiki",
+	                "decor": "decor"
+	            }
+	        ],
+	        "footer": {
+	            "copyrightText": "... by PoNG"
+	        }
+	    }
+	}
