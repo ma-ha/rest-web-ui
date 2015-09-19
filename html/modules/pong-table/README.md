@@ -111,13 +111,13 @@ After pressing the button, the data in the table is updated.
 Optional parameters (for actions after a successful POST call):
 * <code>"update"</code> is an (optional) array of resource (column/row) ids, where further data updates should be triggered. Example: <code>"update": [ { "resId":"xyz" } ] }</code>
 * <code>"target"</code> 
-**  target can be a resource Id: <code>"target": "customerActionOut"</code>
+** target can be a resource Id: <code>"target": "customerActionOut"</code>
 ** target can be "_parent", the result of the AJAX call must be an URL
 ** target may me "modal", to show the call result in a modal dialog
-
+* <code>"setData"</code>: define array of <code>resId</code> and optional <code>dataDocSubPath</code> 	 
 For POST; GET, DELETE methods the rowId(s) are used as params to identify the row of the table.
 
-Example:
+#### Example:
 
 	 "rowId": "id",
 	 "cols" : [ 
@@ -131,6 +131,37 @@ If you press the "Load" button then it will do:
 POST param: { "id":"123" }</code>
 
 call update JS of aForm, which results in <code>GET /<ressource-URL-of-aForm>?id=123</code>
+
+#### Create Custom Data For Button-Request 
+A practical option is to form a completely new request and merge data of the table row into the request.
+The <code>params</code> array must define the new custom parameters <code>key</code> and <code>value</code>. 
+To reuse values of the current table row, placeholders can be specified by <code>${columnname}</code>.
+ 
+practical example passing data from SugarCRM to OpenStreeMap Nominatim search:
+	{
+	 "dataURL": "tbldata", 
+	 "rowId": "id", 
+	 "cols" : [ 
+	   { "id": "name", "label": "Name", "cellType": "text", "width":"20%" }, 
+	   { "id": "map", "label": "Map", 
+	     "cellType": "button", 
+	     "URL":"http://open.mapquestapi.com/nominatim/v1/search.php", 
+	     "method":"GET",
+	     "params":[ 
+	         { "name":"key", "value":"custome-rsecret" }, 
+	         { "name":"format", "value":"json" }, 
+	         { "name":"city", "value":"${primary_address_city}" }, 
+	         { "name":"street", "value":"${primary_address_street}" }, 
+	         { "name":"country", "value":"${primary_address_country}" }, 
+	         { "name":"addressdetails", "value":"1" }, 
+	         { "name":"limit", "value":"5" }
+	      ], 
+	     "setData":[ {"resId":"osmSearchResult"} ],
+	     "width":"5%" 
+	   }
+	 ],  
+	 "maxRows":"10"
+	}
 
 ### Data loading 
 The data will be requested from the URL <code><nowiki>svc/[resourceURL]/[dataURL]?productSearchString=[productSearchString]&productType=[productType>]</nowiki></code>. 
