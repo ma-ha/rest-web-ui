@@ -137,7 +137,8 @@ A practical option is to form a completely new request and merge data of the tab
 The <code>params</code> array must define the new custom parameters <code>key</code> and <code>value</code>. 
 To reuse values of the current table row, placeholders can be specified by <code>${columnname}</code>.
  
-practical example passing data from SugarCRM to OpenStreeMap Nominatim search:
+Practical example passing data from SugarCRM to OpenStreeMap Nominatim search:
+
 	{
 	 "dataURL": "tbldata", 
 	 "rowId": "id", 
