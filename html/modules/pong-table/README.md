@@ -219,9 +219,9 @@ You have to define a rating Type, e.g. <code>"ratingType":"3star"</code>.
 The logic is to load a image by appending the rating value to the rating type and append ".png".
 
 Currently the table module supports:
-* <code>"ratingType":"3star"<code>: rating values= [ "0", "1", "2", "3" ]</code>
-* <code>"ratingType":"5star"<code>:rating values= [ "0", "1", "2", "3", "4", "5" ]</code>
-* <code>"ratingType":"prio"<code>: rating values= [ "0", "1", "2", "3" ]</code>
+* <code>"ratingType":"3star"</code>: rating values= [ "0", "1", "2", "3" ]
+* <code>"ratingType":"5star"</code>:rating values= [ "0", "1", "2", "3", "4", "5" ]
+* <code>"ratingType":"prio"</code>: rating values= [ "0", "1", "2", "3" ]
 
 ## Simple example
 	{
