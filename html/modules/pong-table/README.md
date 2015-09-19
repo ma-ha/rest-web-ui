@@ -191,7 +191,9 @@ Example:
 GET/POST example:
 
 	 "action" : { "method":"GET" ,"actionURL": "svc/customer", "update": "customerForm" }
-	update (=module ID) is optional
+
+update (=module ID) is optional
+
 	 "action" : { "method":"POST" ,"actionURL": "svc/customer" }
 
 Link example:
@@ -207,7 +209,7 @@ where id is a table column
 ### Editable Cells 
 If you specify <code>"editable":"true"</code> for a column, you can click into the cell and edit. When you leave the focus of the cell, the cell data and the "rowId" and its ID value are JSON encoded and POSTed back to the resource, to store them modified. Example HTTP request to save the modified cell data of cell column "name": 
 
-	<code>POST /svc/Products/webdata { "productId": "03", "name": "Hello" }</code>
+	POST /svc/Products/webdata { "productId": "03", "name": "Hello" }
 
 Currently this feature is only available for text and checkbox columns.
 
