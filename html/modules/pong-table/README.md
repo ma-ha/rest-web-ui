@@ -179,6 +179,7 @@ Special definitions for "cols":
 Tooltip does not render an individual column.
 
 Example:
+
 	 "cols" : [ 
 	    { "id":"name", "label":"Type", "cellType": "text", "width":"80%" },
 	    { "id":"descr", "label":"name",  "cellType":"tooltip" },
@@ -214,7 +215,7 @@ Currently this feature is only available for text and checkbox columns.
 
 ### Rating Column Type
 The rating expects a typically a number as result, but can be anything. 
-You have to define a rating Type, e.g. <code>"ratingType":"3star"<code>. 
+You have to define a rating Type, e.g. <code>"ratingType":"3star"</code>. 
 The logic is to load a image by appending the rating value to the rating type and append ".png".
 
 Currently the table module supports:
@@ -241,6 +242,7 @@ Currently the table module supports:
 	}
 
 And a HTTP GET to webdata gives
+
 	{
 	    "bla": "blub",
 	    "struc1": {
