@@ -13,7 +13,7 @@ Simply <code>"type": "pong-form"</code> to the <code>rows</code> or <code>cols</
 	      {
 	        "rowId": "bla",
 	        "resourceURL": "customer",
-	        '''"type": "pong-form"''',
+	        "type": "pong-form",
 	        ...
 	      },
 	      ...
@@ -78,7 +78,7 @@ The <code>fieldset</code> is optional and will render a fieldset (border) for th
 The idea is to have a two column form. 
 
 For all fields is supported:
-* hide fields with '''hidden''' attribute
+* hide fields with hidden attribute
 ** <code>"hidden":"true"</code> 
 ** <code>"hidden":"false"</code> ''(default)'' 
 * put field int HTTP request header or only in the request params or both
@@ -115,16 +115,16 @@ Optional attribute:
 ### Select 
 <code>"type:"select"</code>
 
-'''Static options:''' <code>options</code> array, e.g. 
+Static options: <code>options</code> array, e.g. 
 *  <code>"options": [ { "option":"ABC" }, { "option":"XYZ" } ]</code>
 *  <code>"options": [ { "value":"1", "option":"ABC" }, { "value":"2", "option":"XYZ" } ]</code>
 
-'''Dynamic options:''' <code>optionsResource</code>, e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionField":"name", "optionValue":"id" } </code>
+Dynamic options: <code>optionsResource</code>, e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionField":"name", "optionValue":"id" } </code>
 
 ''Warning: The dynamic options will perform a blocking call. If there fails something, it will block the browser.''
 
 ### Checkbox 
-'''<code>"type:"checkbox"</code>'''
+<code>"type:"checkbox"</code>
 
 You should specify <code>"name":"..."</code> attribute, so the values can be collected for that name. If no name given, the id is a stand alone comitting field.
 
@@ -140,7 +140,7 @@ Example
 	     { "id":"c2", "type":"checkbox"  "name":"extras", "value":"double", "label":"double size" }
 	]
 
-<strike>'''<code>"type:"checkboxList"</code>'''
+<strike><code>"type:"checkboxList"</code>
 
 You can load checkbox inputs from a resource per HTTP GET:
 

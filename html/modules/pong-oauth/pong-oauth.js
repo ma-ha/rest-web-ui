@@ -90,6 +90,20 @@ function mkLoginDialog ( params ) {
 				buttons: {  
 					"OK":  function() { 
 						// do oatuh call
+						var dta = { 
+								"grant_type":"password",
+								"username": $( '#oauthUser' ).val(),
+								"password": $( '#oauthPwd' ).val(),
+								"scope": params.scope 
+							 };
+						if ( endsWith( params.tokenURL, "/rest/v10/oauth2/token" ) ) { // SugarCRM REST Oauth URL 
+							dta = { 
+									"grant_type":"password",
+									"username": $( '#oauthUser' ).val(),
+									"password": $( '#oauthPwd' ).val(),
+									"platform": "base" // SugarCRM special: must get platform instead of scope
+								 };
+						}
 						log( "PoNG-OAuth", "call "+params.tokenURL	 );
 						$.ajax( { 
 							url: params.tokenURL, 
@@ -108,13 +122,8 @@ function mkLoginDialog ( params ) {
 									} 
 										
 								}
-							},
-							data: { 
-								"grant_type":"password",
-								"username": $( '#oauthUser' ).val(),
-								"password": $( '#oauthPwd' ).val(),
-								"scope": params.scope 
-							 }
+							}, 	
+							data: dta
 						} ).done(
 							function( dta ) {
 								if ( dta.access_token != null ) {
@@ -129,7 +138,7 @@ function mkLoginDialog ( params ) {
 									return false;
 								}
 							}
-						);
+						).fail( function( jqXHR, textStatus, error ) { alert( "Request failed: " + textStatus + " " + error ); console.log(jqXHR); }  );
 					},				
 					Cancel:  function() { 
 						$( this ).dialog( "close" );

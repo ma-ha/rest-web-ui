@@ -403,7 +403,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		}
 		//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 		contentItems.push( '              } ).done(  ' );
-		contentItems.push( '                 function( dta ) { //alert( "uuuuh"+dta ); ' );
+		contentItems.push( '                 function( dta ) {  ' );
 		if ( action.target != null ) {
 			if ( action.target == '_parent' ) {
 				contentItems.push( '                       window.location.replace( dta );');
@@ -582,7 +582,7 @@ function pongFormUpdateFieldsData( divId, dta ) {
 				for ( var k = 0; k < col.formFields.length; k++ ) {
 					var field = col.formFields[k];
 					var fieldId = '#'+divId+field.id; 
-					if ( ( field.type == "text" ) || ( field.type == "email" ) ) {
+					if ( ( field.type == "text" ) || ( field.type == "email" ) || ( field.type == "password" ) ) {
 						log( "Pong-Form",  'pongFormUpdateFieldsData text: '+field.id+' '+dta[field.id] );
 						if ( dta[field.id] != null ) {
 							$( fieldId ).val( dta[field.id] );							

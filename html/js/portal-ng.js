@@ -27,8 +27,8 @@ THE SOFTWARE.
  http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.5.12';
-var PONGVER = '0.5.12';
+labeldefs['PONGVER'] = '0.5.17';
+var PONGVER = '0.5.17';
 
 var moduleMap = {};
 var reqModules = {};
