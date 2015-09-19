@@ -85,6 +85,7 @@ For all fields is supported:
 ** <code>"request":"header"</code>
 ** <code>"request":"header+param"</code>
 ** <code>"request":"param"</code> ''(default)''
+** <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
 or in combination.
  
 ### Text 
@@ -155,6 +156,39 @@ You can load checkbox inputs from a resource per HTTP GET:
 ### Text in Form 
 * <code>"type:"label"</code> adds the text in label as a simple text w/o any form related things, good for hints or explanations
 * <code>descr</code> field adds a tool tip to the field.
+
+### Substitue and Variable
+As mentioned, you can set the  <code>"request":"substitute"</code> or <code>"request":"variable"</code> for a field.
+With this you construct can pass complex structures as parameter, if you want for example pass this parameter in a POST:
+	"filter":[
+	   {
+	     "$or":[
+	        { "name":"Nelson Inc" },
+	        { "name":"Nelson LLC" }
+	      ]
+	   }
+	]
+You can specify a form like this:
+	{ 
+	  "id": "cloudFormId", 
+	  "fieldGroups":[ 
+	     {  "columns":[  
+	           { "fieldset":"Col1", 
+	             "formFields":[   
+	                 { "id":"filter", "request":"substitute", "defaultVal":"[{or:[{name:${name1}},{name:${name2}}]}]", "hidden":"true" },
+	                 { "id":"name1",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
+	                 { "id":"name2",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
+	             ] 
+	          } 
+	       ]  
+	     } 
+	  ], 
+	  "actions" : [  
+	  		...
+	   ] 
+	}
+
+
 
 ## Form Actions 
 ### Simple Action 

@@ -100,6 +100,20 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
 						if ( field.request != null ) {
 							if ( field.request == "header" || field.request == "header+param") {
 								headerLst.push( '"'+field.id+'"'+", $( '#"+divId+field.id+"' ).val()" );
+							} else if ( field.request == "substitute" && field.defaultVal != null ) {
+								var x = field.defaultVal;
+								for ( var kk = 0; kk < col.formFields.length; kk++ ) {
+									var fieldKK = col.formFields[kk];
+									if ( fieldKK.request != null && fieldKK.request == "variable" ) {
+										x = x.replace( "${"+fieldKK.id+"}", "$( '#"+divId+fieldKK.id+"' ).val()" );
+									}
+								}
+								log( "Pong-Form", field.id+"= "+x );
+								postLst.push( '"'+field.id+'"'+": "+x );	
+								//alert( JSON.stringify(x) );
+								getLst.push( field.id + '='+x  );	
+							} else if ( field.request == "variable"  ) {
+								// ignoere here
 							} else {
 								postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" );	
 							}
@@ -387,11 +401,13 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 			contentItems.push( '                   	      request.setRequestHeader( "Authorization", "Basic "+'+basicAuthStr+' );' );
 		} else 
 		if ( action.oauth_scope != null ) {
-			contentItems.push( '                          if ( sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {');
-			contentItems.push( '                   	      request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); } ');
+			contentItems.push( '                             if ( sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {');
+			contentItems.push( '                   	             request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); ');
+			contentItems.push( '                   	             request.setRequestHeader( "oauth-token", sessionInfo["OAuth"]["access_token"] ); '); // huuhaaaaa SugarCRM special -- hope it won't hurt elsewhere!!
+			contentItems.push( '                   	         } ');
 		}
 		for ( var i = 0; i < headerLst.length; i++ ) {
-			contentItems.push( '                   	      request.setRequestHeader( ' +headerLst[i] + '); ');
+			contentItems.push( '                   	         request.setRequestHeader( ' +headerLst[i] + '); ');
 		}
 		contentItems.push( '                   	   },' )
 		if ( ( action.dataEncoding != null ) || ( action.dataEncoding == "GETstyle")  ) { // funny request, but some standard
@@ -562,7 +578,7 @@ function pongFormSetData( divId, data ) {
 			log( "Pong-Form", 'pathToken['+i+'] ' + pathToken[i] );	
 			subdata = subdata[ pathToken[i] ];
 		}
-		// console.log( ' subdata = ' + JSON.stringify( subdata ) );
+		log( "Pong-Form", ' subdata = ' + JSON.stringify( subdata ) );
 		//poList[ divId ].pongListData = subdata;
 		// TODO add update code
 		//alert( "Update form w/o dataDocSubPath..." );
