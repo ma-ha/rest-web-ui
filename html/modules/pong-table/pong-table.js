@@ -313,9 +313,13 @@ function pongTableUpdateData( divId, paramsObj ) {
 }
 
 /** hook and used by update hook */
-function pongTableSetData( divId, data ) {
-	log( "Pong-Table",  'set data hook: '+divId );
-	poTbl[ divId ].pongTableData = data;
+function pongTableSetData( divId, data, dataDocSubPath ) {
+	log( "Pong-Table",  'set data hook: '+divId+ " "+dataDocSubPath );
+	if ( dataDocSubPath != null ) {
+		poTbl[ divId ].pongTableData = getSubData( data, tblDef.dataDocSubPath );	
+	} else {
+		poTbl[ divId ].pongTableData = data;		
+	}
 	tblCells( divId ); 
 }
 
@@ -364,7 +368,7 @@ function tblCells( divId ) {
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
 				var cellVal = getSubData( cellDta, cellDef.id );
-				log( "Pong-Table", cellDef );
+				log( "Pong-Table", JSON.stringify( cellDef ) );
 				var cellId =  '#'+divId+'R'+i+'C'+c; 
 				var cellType = cellDef.cellType;
 				var editable = '';	
@@ -380,6 +384,8 @@ function tblCells( divId ) {
 							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );							
 						}
 					}
+				} else if ( cellType == 'email' ) {
+					$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );					
 				} else if ( cellType == 'checkbox' ) {
 					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
 						editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'"';
@@ -445,10 +451,17 @@ function tblCells( divId ) {
 					}
 					
 					// rowId can be a String or an Array	
-					if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
-						url = addRowIdGetParam ( divId, url, cellDta );
-					} 
-					param = getRowIdPostParam ( divId, cellDta );					
+					if ( cellDef.params != null ) { 
+						if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
+							url = addGetParam ( cellDef.params, divId, url, cellDta );
+						} 
+						param = getPostParam ( cellDef.params, divId, cellDta );																	
+					} else {
+						if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
+							url = addRowIdGetParam ( divId, url, cellDta );
+						} 
+						param = getRowIdPostParam ( divId, cellDta );											
+					}
 				
 					if ( ( cellDef.url != null ) && ( cellDef.url.length != null ) ) {
 						url = cellDef.url;
@@ -502,6 +515,17 @@ function tblCells( divId ) {
 								}
 							}
 						}
+						if ( ( cellDef.setData != null ) && ( cellDef.setData.length != null ) ) {
+							log( "Pong-Table", "button with setData..." );
+							for ( var sd = 0; sd < cellDef.setData.length; sd++ ) {
+								log( "Pong-Table", "button: "+ cellDef.id + " setResponse resId:"+cellDef.setData[sd].resId );
+								if ( cellDef.setData[sd].dataDocSubPath != null ) {
+									contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, "'+cellDef.setData[sd].dataDocSubPath+'" );' );										
+								} else {
+									contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, null );' );									
+								}
+							}			
+						}
 						contentItems.push( '                       return false;' ); 
 						contentItems.push( '                  }  ' );
 						contentItems.push( '              ); ');
@@ -536,6 +560,35 @@ function tblCells( divId ) {
 	}	
 }
 
+function addGetParam ( params, divId, url, cellDta ) {
+	log( "Pong-Table", "addGetParam "+ JSON.stringify( params ) );
+	if ( Array.isArray( params ) ) {
+		var first = true;
+		for ( var x = 0; x < params.length; x++ ) {
+			if ( url.indexOf("?") > -1 ) {	url += '&';	} else { url += '?'; }
+			var val = params[x].value;
+			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
+				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
+				//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
+				if ( val.indexOf( "${"+cellDef.id+"}" ) > -1 ) {
+					val = val.replace( "${"+cellDef.id+"}", cellDta[ cellDef.id ] );
+					log( "Pong-Table", "val="+val );
+				}
+			}
+			url += params[x].name+'='+val;								
+		}
+	}
+	log( "Pong-Table", "URL: "+url );
+	return url;
+}
+
+
+function getPostParam ( params, divId, cellDta ) {
+	var param = "";
+	//TODO
+	return param;
+}
+
 function addRowIdGetParam ( divId, url, cellDta ) {
 	var rid = poTbl[ divId ].pongTableDef.rowId;
 	if ( typeof rid === 'string' ) {
@@ -554,7 +607,7 @@ function addRowIdGetParam ( divId, url, cellDta ) {
 	}
 	return url;
 }
- 
+
 function getRowIdPostParam ( divId, cellDta ) {
 	var rid = poTbl[ divId ].pongTableDef.rowId;
 	var param = "";
