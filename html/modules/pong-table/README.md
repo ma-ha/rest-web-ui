@@ -109,13 +109,40 @@ Button <code>method</code> is optional, default is <code>"method":"POST"</code>
 After pressing the button, the data in the table is updated.
 
 Optional parameters (for actions after a successful POST call):
-* <code>"update"</code> is an (optional) array of resource (column/row) ids, where further data updates should be triggered. Example: <code>"update": [ { "resId":"xyz" } ] }</code>
+* <code>"update"</code> is an (optional) array of resource (column/row) ids, where further data updates should be triggered. Example: <code>"update": [ { "resId":"xyz" } ] </code>
 * <code>"target"</code> 
 ** target can be a resource Id: <code>"target": "customerActionOut"</code>
 ** target can be "_parent", the result of the AJAX call must be an URL
 ** target may me "modal", to show the call result in a modal dialog
-* <code>"setData"</code>: define array of <code>resId</code> and optional <code>dataDocSubPath</code> 	 
+* <code>"setData"</code>: define array of <code>resId</code> and optional <code>dataDocSubPath</code> 	  
 For POST; GET, DELETE methods the rowId(s) are used as params to identify the row of the table.
+
+#### Update a resource
+<code>"method":"UPDATE"</code> must be set. The update is specified by <code>"update"</code> array.
+
+Example:
+
+	{ 
+	 ...
+	 "cols" : [ 
+	    ...
+	    { "id": "btn", 
+	      "label": "Show in Map", 
+	      "cellType": "button",
+	      "method":"UPDATE",
+	      "update":[
+	         { "resId":"Map",
+	           "params":[ 
+	              { "name":"center","value":"${lat},${lon}" }, 
+	              { "name":"zoom",  "value":"10" }
+	           ]
+	        }
+	      ], 
+	      "width":"10%"
+	    }
+	    ...
+	  ]
+	}
 
 #### Example:
 

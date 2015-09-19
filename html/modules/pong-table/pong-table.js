@@ -476,12 +476,31 @@ function tblCells( divId ) {
 						if ( cellDef.js != null ) {
 							contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
 							contentItems.push( '          function() {  ' );
-							contentItems.push( '              var theRowId = "'+divId+'R'+r+'";');
+							contentItems.push( '              var theRowId   = "'+divId+'R'+r+'";');
+							contentItems.push( '              var theRowData = '+JSON.stringify( cellDta )+';');
 							contentItems.push( '              '+cellDef.js);
 							contentItems.push( '              return false;');
 							contentItems.push( '          }');
 							contentItems.push( '       ); ' );
 						}
+					} else if ( ajaxType == 'UPDATE'  ) {
+						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+						contentItems.push( '          function() {  ' );
+						if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
+							for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
+								var resToUpd = cellDef.update[upCnt].resId + 'Content';
+								var updParam = "";
+								if ( cellDef.update[upCnt].params != null ) {
+									updParam = getPostParam ( cellDef.update[upCnt].params, divId, cellDta );
+								}
+								if ( resToUpd == 'thisContent' ) { resToUpd = divId }
+								contentItems.push( '              udateModuleData( "'+resToUpd+'", { '+updParam+' }  ); ' ); // otherwise deleted ID is requested and result is empty
+								
+							}
+						}
+						contentItems.push( '              return false;');
+						contentItems.push( '          }');
+						contentItems.push( '       ); ' );
 					} else {
 						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
 						contentItems.push( '          function() {  '); //alert( "'+ajaxType+' data: { rowId : '+ poTbl[ divId ].pongTableDef.rowId+'='+cellDta[ poTbl[ divId ].pongTableDef.rowId ] +' }"); ' );
@@ -584,7 +603,25 @@ function addGetParam ( params, divId, url, cellDta ) {
 
 
 function getPostParam ( params, divId, cellDta ) {
+	log( "Pong-Table", "getPostParam "+ JSON.stringify( params ) );
 	var param = "";
+	if ( Array.isArray( params ) ) {
+		var first = true;
+		for ( var x = 0; x < params.length; x++ ) {
+			if ( ! first ) { param += ', '; } 
+			var val = params[x].value;
+			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
+				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
+				//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
+				if ( val.indexOf( "${"+cellDef.id+"}" ) > -1 ) {
+					val = val.replace( "${"+cellDef.id+"}", cellDta[ cellDef.id ] );
+					log( "Pong-Table", "val="+val );
+				}
+			}
+			param += '"'+params[x].name+'":"'+val+'"';
+			first = false;
+		}
+	}
 	//TODO
 	return param;
 }
