@@ -159,10 +159,10 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	}
 	// paginator buttons
 	contentItems.push( "</table>" );
-	contentItems.push( '<button id="'+divId+'BtFirst"></button>' );
-	contentItems.push( '<button id="'+divId+'BtPrev"></button>' );
-	contentItems.push( '<button id="'+divId+'BtNext"></button>' );
-	contentItems.push( '<button id="'+divId+'BtLast"></button>' );
+	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
+	contentItems.push( '<button id="'+divId+'BtPrev" class="pong-table-paginator"></button>' );
+	contentItems.push( '<button id="'+divId+'BtNext" class="pong-table-paginator"></button>' );
+	contentItems.push( '<button id="'+divId+'BtLast" class="pong-table-paginator"></button>' );
 	
 	// paginator script
 	contentItems.push( "<script>" );
@@ -586,14 +586,15 @@ function addGetParam ( params, divId, url, cellDta ) {
 		for ( var x = 0; x < params.length; x++ ) {
 			if ( url.indexOf("?") > -1 ) {	url += '&';	} else { url += '?'; }
 			var val = params[x].value;
-			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
-				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
-				//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
-				if ( val.indexOf( "${"+cellDef.id+"}" ) > -1 ) {
-					val = val.replace( "${"+cellDef.id+"}", cellDta[ cellDef.id ] );
-					log( "Pong-Table", "val="+val );
-				}
-			}
+			$.each( cellDta, 
+					function( key, value ) {
+						//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
+						if ( val.indexOf( "${"+key+"}" ) > -1 ) {
+							val = val.replace( "${"+key+"}", value );
+							log( "Pong-Table", "val="+val );
+						}
+					}
+			);
 			url += params[x].name+'='+val;								
 		}
 	}
@@ -610,14 +611,16 @@ function getPostParam ( params, divId, cellDta ) {
 		for ( var x = 0; x < params.length; x++ ) {
 			if ( ! first ) { param += ', '; } 
 			var val = params[x].value;
-			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
-				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
-				//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
-				if ( val.indexOf( "${"+cellDef.id+"}" ) > -1 ) {
-					val = val.replace( "${"+cellDef.id+"}", cellDta[ cellDef.id ] );
-					log( "Pong-Table", "val="+val );
+//			log( "Pong-Table", "cellDta "+ JSON.stringify( cellDta ) );
+			$.each( cellDta, 
+				function( key, value ) {
+					//log( "Pong-Table", "     check: "+"${"+cellDef.id+"}" );
+					if ( val.indexOf( "${"+key+"}" ) > -1 ) {
+						val = val.replace( "${"+key+"}", value );
+						log( "Pong-Table", "val="+val );
+					}
 				}
-			}
+			);
 			param += '"'+params[x].name+'":"'+val+'"';
 			first = false;
 		}
