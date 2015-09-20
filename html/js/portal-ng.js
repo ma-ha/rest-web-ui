@@ -340,10 +340,10 @@ function loadModules() {
 	checkModules( );
 	for ( var module in reqModules ) {
 		log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
-		jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
-		if ( module != 'pong-XX' ) { 
+		if ( module != 'pong-XX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html 
+			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
 			ajaxOngoing++;
-		    $.getScript( modulesPath+'/'+module+'/'+module+".js" )
+		    $.getScript( modulesPath+module+'/'+module+".js" )
 			.done(
 				function( script, textStatus ) {
 					log( 'loadModules', textStatus );
@@ -356,6 +356,25 @@ function loadModules() {
 					ajaxOngoing--;
 				}
 			);
+		    // TODO: include from modules-map
+		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) && 
+		    	 ( moduleMap[module].loadCSS.lenght != null ) && ( moduleMap[module].loadCSS.lenght > 0 ) ) {
+		    	alert( "loadCC" );
+		    	for ( var cssUrl in moduleMap[module].loadCSS ) {
+			    	alert( "load CSS: "+csssUrl );
+					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+cssUrl+'" type="text/css" />');		    		
+		    	}
+		    }
+		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) && 
+			    	 ( moduleMap[module].loadJS.lenght != null ) && ( moduleMap[module].loadJS.lenght > 0 ) ) {
+		    	alert( "loadJS" );
+		    	for ( var jsUrl in moduleMap[module].loadCSS ) {
+			    	alert( "load JS: "+jsUrl );
+				    $.getScript( jsUrl )
+		    	}
+		    }
+
+		    
 		}
 	}
 	ajaxOngoing--;
@@ -1119,7 +1138,7 @@ function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( func=='getHookMethod' || 
 		func=='PoNG-MediaWiki' || 
-		//func=='getSubData' || 
+		func=='Pong-Table' || 
 		func=='Pong-Form' || 
 		func=='layout-editor' ) { 
 		console.log( "["+func+"] "+msg );
