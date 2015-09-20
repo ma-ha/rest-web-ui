@@ -13,6 +13,7 @@ All you need is a modern web browser -- and a web service somewhere.
 <a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia</a>.
 * Form and table demo: 
 <a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search</a>.
+* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with location search</a>.
 * <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> as web copy buffer ([Source on GitHub](https://github.com/ma-ha/copypaste)).
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.

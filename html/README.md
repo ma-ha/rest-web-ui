@@ -4,6 +4,7 @@ General Improvements
 * [Client side session handling](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming#Client_Side_Session)
 Modules Improvement:
 * [OAuth Module](modules/pong-oauth/)
+* [Map: Display Map View](modules/pong-map/) 
 * [Table: column sorting](modules/pong-table/)
 * [Form: AJAX error handling](modules/pong-form/) 
 * several minor improvements
