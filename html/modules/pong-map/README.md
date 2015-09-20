@@ -27,7 +27,8 @@ Optional you can define values for "lat", "lan" and "zoom", e.g.
 You can trigger a map search, by updating and sending a "search".
 
 Example table module:
-  moduleConfig": {
+
+	moduleConfig": {
 	  "dataURL": "tbldata", 
 	  "rowId": "id", 
 	  "cols" : [ 
