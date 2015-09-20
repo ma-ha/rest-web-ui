@@ -324,9 +324,25 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 			contentItems.push( '  } ); ' );
 			contentItems.push( '</script>' );
 			
-		}
+		}  
 		
-	} else 	if ( action. afterUpdate != null ) {
+	} else if ( ( action.updateButton != null ) && ( action.updateButton.length != null ) ) {
+
+		contentItems.push( '<button id="'+divId+'Bt'+action.id+'">'+  $.i18n( action.name ) +'</button>' );
+		contentItems.push( '<script>' );
+		contentItems.push( '  $(function() { ' );
+		contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
+		contentItems.push( '          function() { ' );
+		for ( var i = 0; i < action.updateButton.length; i++ ) {
+			contentItems.push( '                   udateModuleData( "'+action.updateButton[i].resId+'Content", { '+postLst+' } );' );	
+		}
+		contentItems.push( '              return false;' ); 
+		contentItems.push( '          }' );
+		contentItems.push( '       ); ' );
+		contentItems.push( '  } ); ' );
+		contentItems.push( '</script>' );
+		
+	} else if ( action. afterUpdate != null ) {
 		// do nothing
 		
 	} else if ( action.link != null && action.linkURL != null ) { // simple link with id-field as GET parameter

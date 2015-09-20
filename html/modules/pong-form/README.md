@@ -222,6 +222,30 @@ You can add add further actions to you button:
 * update
 * setData
 
+A button doing an update only has to sprecify the "updateButton" array and a "name" for the button, e.g.
+
+	{ 
+	  "fieldGroups":[ 
+	     {  "columns":[  
+	           { 
+	             "formFields":[   
+	                  { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
+	             ]
+	          } 
+	       ]  
+	     } 
+	  ], 
+	  "actions":[
+	     {  "id":"Search",
+	        "name":"Search",
+			"updateButton":[ 
+	             { "resId":"MapView" }
+			]
+	     }
+	  ]
+	}
+
+
 #### Update 
 Action <code>update</code> parameter in the action is an (optional) array of resource (column/row) ids, where data updates should be triggered. 
 Example: 
