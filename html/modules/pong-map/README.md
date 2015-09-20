@@ -3,6 +3,7 @@ Utilizing "Leaflet" to integrate maps into a view.
 ## Module Config
 
 The config is easy, you simply have to provide the mapKey, provided by MapQuest:
+
 	{
         "rowId": "MyMapView",
         "resourceURL": "change_me",
