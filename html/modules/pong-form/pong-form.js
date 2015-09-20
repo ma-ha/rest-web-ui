@@ -420,6 +420,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 		contentItems.push( '              } ).done(  ' );
 		contentItems.push( '                 function( dta ) {  ' );
+		contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
 		if ( action.target != null ) {
 			if ( action.target == '_parent' ) {
 				contentItems.push( '                       window.location.replace( dta );');

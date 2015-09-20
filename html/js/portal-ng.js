@@ -340,7 +340,8 @@ function loadModules() {
 	checkModules( );
 	for ( var module in reqModules ) {
 		log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
-		if ( module != 'pong-XX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html 
+		if ( module != 'pong-XX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
 			ajaxOngoing++;
 		    $.getScript( modulesPath+module+'/'+module+".js" )
@@ -357,20 +358,22 @@ function loadModules() {
 				}
 			);
 		    // TODO: include from modules-map
-		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) && 
-		    	 ( moduleMap[module].loadCSS.lenght != null ) && ( moduleMap[module].loadCSS.lenght > 0 ) ) {
-		    	alert( "loadCC" );
-		    	for ( var cssUrl in moduleMap[module].loadCSS ) {
-			    	alert( "load CSS: "+csssUrl );
-					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+cssUrl+'" type="text/css" />');		    		
+		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
+		    	log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
+		    	//log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length	 );
+				for ( var i = 0; i < moduleMap[ module ].loadCSS.length; i++ ) {
+		    		log( 'loadModules', "load CSS file: "+ moduleMap[ module ].loadCSS[i] );
+					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+moduleMap[ module ].loadCSS[i]+'" type="text/css" />');		    		
 		    	}
 		    }
-		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) && 
-			    	 ( moduleMap[module].loadJS.lenght != null ) && ( moduleMap[module].loadJS.lenght > 0 ) ) {
-		    	alert( "loadJS" );
-		    	for ( var jsUrl in moduleMap[module].loadCSS ) {
-			    	alert( "load JS: "+jsUrl );
-				    $.getScript( jsUrl )
+		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) ) {
+		    	log( 'loadModules', "loadJS" );
+				for ( var i = 0; i < moduleMap[ module ].loadJS.length; i++ ) {
+		    		log( 'loadModules', "load JS: "+ moduleMap[ module ].loadJS[i] );
+					ajaxOngoing++;
+				    $.getScript( moduleMap[ module ].loadJS[i] )
+						.done( function( script, textStatus ) { log( 'loadModules', textStatus ); ajaxOngoing--; } )
+						.fail( function( jqxhr, settings, exception ) { log( 'loadModules', exception ); ajaxOngoing--; } );
 		    	}
 		    }
 
@@ -571,7 +574,7 @@ function getHook( resId, hookName ) {
 function layoutToHTML( d ) {
 	var content = [];
 	content.push( '<div id="header"></div>' );
-	content = content.concat( rowsToHTML( d.rows ) );
+	content = content.concat( rowsToHTML( d.rows, d.page_width ) );
 	content.push( '<div id="footer"></div>' );
 	return content;
 }
@@ -716,7 +719,7 @@ function replaceVar( str ) {
 	return rStr;
 }
 
-function colsToHTML( colsLayout ) {
+function colsToHTML( colsLayout, h ) {
 	log( 'colsToHTML', "COL >>>>>>>>>>>>>>>>>>>>>>>>LEN="+colsLayout.length );		
 	var cols = [];
 	for ( var i = 0; i < colsLayout.length; i++ ) {
@@ -730,6 +733,10 @@ function colsToHTML( colsLayout ) {
 		if ( aCol.width != null ) {
 			style += " width:"+aCol.width+";";
 		}
+		if ( h != null ) {
+			style += " height:"+h+";";  
+			aCol.height = h;
+		}
 		if ( aCol.resourceURL != null ) {
 			cols.push( '<div id="'+id+'" class="coldiv '+(aCol.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative; height:100%;">' );
 			//cols.push( id+" "+ aCol.resourceURL ); 
@@ -742,7 +749,7 @@ function colsToHTML( colsLayout ) {
 			cols.push( "</div>");
 		} else if ( aCol.rows != null ) {
 			cols.push( '<div id="'+id+'" class="coldiv" style="'+style+' position:relative; height:100%;">' );
-			cols = cols.concat( rowsToHTML( aCol.rows ) );
+			cols = cols.concat( rowsToHTML( aCol.rows, aCol.width ) );
 			cols.push( "</div>");
 		} else {
 			cols.push( '<div id="'+id+'" class="coldiv" style="'+style+' position:relative; height:100%;">empty</div>' );
@@ -752,7 +759,7 @@ function colsToHTML( colsLayout ) {
 	return cols;
 }
 
-function rowsToHTML( rowsLayout ) {
+function rowsToHTML( rowsLayout, w ) {
 	log( 'rowsToHTML', "ROW >>>>>>>>>>>>>>>>>>>>>>>>LEN="+rowsLayout.length );		
 	var rows = [];
 	for ( var i = 0; i < rowsLayout.length; i++ ) {
@@ -777,7 +784,7 @@ function rowsToHTML( rowsLayout ) {
 			rows.push( "</div>");
 		} else if ( aRow.cols != null ) {
 			rows.push( '<div id="'+id+'" class="rowdiv" style="'+style+' position:relative;">' );
-			rows = rows.concat( colsToHTML( aRow.cols ) );
+			rows = rows.concat( colsToHTML( aRow.cols, aRow.height ) );
 			rows.push( "</div>");
 		} else {
 			rows.push( '<div id="'+id+'" class="rowdiv" style="'+style+' position:relative; height:100%;">empty</div>' );
@@ -825,7 +832,7 @@ function resToHTML( id, res, style ) {
 	if ( res.decor == null ) {
 		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"></div>';		
 	} else {
-		var h = ""; if ( res.height != null ) { h = ' height="'+getCorrectedHeight( res.height, res.decor )+'"'; }
+		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, res.decor )+'"'; }
 		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"'+h+'></div>'+
 			'<div class="'+res.decor+'-tm">'+(res.title == null ? '' : '<div id="'+id+'Title" class="decor-tm-title">'+ $.i18n( res.title )+'</div>')+'</div>'+
 			'<div class="'+res.decor+'-bm"></div><div class="'+res.decor+'-lm"></div><div class="'+res.decor+'-rm"></div>'+
@@ -1137,10 +1144,10 @@ var loggerModule = false;
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( func=='getHookMethod' || 
-		func=='PoNG-MediaWiki' || 
+		func=='pong_map' || 
 		func=='Pong-Table' || 
 		func=='Pong-Form' || 
-		func=='layout-editor' ) { 
+		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 	}
 	
