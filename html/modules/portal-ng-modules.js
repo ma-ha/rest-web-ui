@@ -139,16 +139,16 @@ moduleMap[ "pong-log" ] = {
 	    ]
 	};
 
-moduleMap[ "pong-maps" ] = {
-		"name": "pong-maps",
+moduleMap[ "pong-map" ] = {
+		"name": "pong-map",
 		"loadCSS": [ 
-		    { url: "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" } 
+		    "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"  
 		 ],
 		"loadJS": [ 
-		    { url: "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"}
+		    "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js" 
 		 ],
 	    "hooks": [
-  	        { hook:"loadResourcesHtml", method:"pong_maps_DivHTML" },
-	        { hook:"update", method:"pong_maps_Update" }
+  	        { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
+	        { hook:"update", method:"pong_map_Update" }
 	    ]
 	};
