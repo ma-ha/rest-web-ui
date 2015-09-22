@@ -183,7 +183,7 @@ function pong_map_addSearchPin ( search, label, setView ) {
 				
 				if ( setView ) {
 					pong_map_dta.setView( latlng, 12 );					
-					}
+				}
 				pong_map_route.push( search );
 				 
 				log( "pong_map", "pong_map_Update best set marker " );
