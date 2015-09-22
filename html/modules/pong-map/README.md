@@ -52,3 +52,9 @@ Example table module:
 	  ],  
 	  "maxRows":"10"
 	}
+	
+	
+Update can be
+* "search":"<location search string>"
+* "routeTo":"<location>" (needs one search in a prior call or in the update)
+* "clearRoute":"true"

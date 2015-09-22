@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 log( "pong_map", "load module"); // print this on console, when module is loaded
 pong_map_dta = null;
+pong_map_route = [];
 
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pong_map_DivHTML( divId, resourceURL, paramObj ) {
@@ -55,16 +56,23 @@ function pong_map_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	
 	var mapJsUrl = "http://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js";
 	var geocoderJsUrl = "https://www.mapquestapi.com/sdk/leaflet/v1.s/mq-geocoding.js";
-
+	var routingJsUrl = "http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js";
+	
     $.getScript( mapJsUrl+"?key="+pmd.mapKey ).done( 
 		function ( script, textStatus ) { 
-    	    $.getScript( geocoderJsUrl+"?key="+pmd.mapKey ).done( 
+			$.getScript( geocoderJsUrl+"?key="+pmd.mapKey ).done( 
 				function ( script, textStatus ) { 
 					log( 'pong_map', ' load '+mapJsUrl+': '+textStatus );
-					pong_map_createMap( divId, pmd );
+					$.getScript( routingJsUrl+"?key="+pmd.mapKey ).done( 
+						function ( script, textStatus ) { 
+							pong_map_createMap( divId, pmd );
+						}
+					).fail( 
+						function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+routingJsUrl+': '+exception ); } 
+					); 
 				} 
 			).fail( 
-				function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+mapJsUrl+': '+exception ); } 
+				function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+geocoderJsUrl+': '+exception ); } 
 			); 
 		} 
 	).fail(
@@ -90,27 +98,27 @@ function pong_map_createMap( divId, pmd ) {
 	}
 	var mapTimerId = setInterval( 
 			
-			function () {	
-				if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] == '' ) {
-					log( "pong_map", "--------> Uiiiiii --- should wait for oauth ..." );		   
-				} else {
-					clearInterval( mapTimerId );
-					log( "pong_map", " ... oauth done ;-)" );
-
-					log( "pong_map", " CREATE MAP" );
-					pong_map_dta =
-						L.map( divId+'_pong_map' , 
-								{
-								    layers: MQ.mapLayer(),
-								    center: [ lat, lon ],
-								    zoom: zoom
-								}
-						);
-					log( "pong_map", " Map Done!!!" );
-
-				}	
-			}, 
-			500 // timer interval 
+		function () {	
+			if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] == '' ) {
+				log( "pong_map", "--------> Uiiiiii --- should wait for oauth ..." );		   
+			} else {
+				clearInterval( mapTimerId );
+				log( "pong_map", " ... oauth done ;-)" );
+		
+				log( "pong_map", " CREATE MAP" );
+				pong_map_dta =
+					L.map( divId+'_pong_map' , 
+							{
+							    layers: MQ.mapLayer(),
+							    center: [ lat, lon ],
+							    zoom: zoom
+							}
+					);
+				log( "pong_map", " Map Done!!!" );
+		
+			}	
+		}, 
+		500 // timer interval 
 	); 		
 
 }
@@ -132,33 +140,61 @@ function pong_map_Update( divId, pmd ) {
 	
 	// search mode:
 	if ( pmd.search != null ) {
-		log( "pong_map", "pong_map_Update searching: '"+pmd.search+"' " );		
-		 MQ.geocode(  ).search( pmd.search )
-		 .on( 'success', 
-			     function( e ) {	
-				        var best = e.result.best,
-				            latlng = best.latlng;
-						log( "pong_map", "pong_map_Update best result: "+latlng );		
-				
-						pong_map_dta.setView( latlng, 12 );
-				
-						log( "pong_map", "pong_map_Update best set marker " );
-						if ( pmd.label != null ) {
-					        L.marker( [ latlng.lat, latlng.lng ] )
-				        	.addTo( pong_map_dta )
-				        	.bindPopup( pmd.label )
-				        	.openPopup();							
-						} else {
-					        L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta );			
-						}
-						log( "pong_map", "pong_map_Update best result done. " );		
-				 }
-		    );		
-		log( "pong_map", "pong_map_Update geocode done. " );		
+		pong_map_addSearchPin ( pmd.search, pmd.label, true );		
+	}
+	
+	if ( pmd.routeTo != null && pong_map_route.length > 0 ) {
+		
+		log( "pong_map", "pong_map_Update route to: '"+pong_map_route[ pong_map_route.length-1 ]+"' > '"+pmd.routeTo+"' " );		        
+		pong_map_addSearchPin ( pmd.routeTo, pmd.label, false );
+		pong_map_addRoute (  pong_map_route[ pong_map_route.length-1 ], pmd.routeTo );
+        pong_map_route.push( pmd.routeTo );	
+		log( "pong_map", "pong_map_Update route to done. "+JSON.stringify( pong_map_route )  );
+		
+	} else 
+		log( "pong_map", "pong_map_Update routeTo == null " );		
+	
+	if ( pmd.clearRoute != null ) {
+		log( "pong_map", "pong_map_Update clearRoute" );		
+		pong_map_route = [];
 	}
 	
 	// other modes required? e.g. reverse geocoding or route
 	
 	log( "pong_map", "pong_map_Update end.");
+}
+
+function pong_map_addRoute ( a, b ) {
+    dir = MQ.routing.directions();
+    dir.route( { locations: [ a, b ] } );
+    pong_map_dta.addLayer(
+    	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
+    );
+}
+
+function pong_map_addSearchPin ( search, label, setView ) {
+	log( "pong_map", "pong_map_Update searching: '"+search+"' " );		
+	MQ.geocode(  ).search( search )
+ 	.on( 'success', 
+	     function( e ) {	
+		        var best = e.result.best,
+		            latlng = best.latlng;
+				log( "pong_map", "pong_map_Update best result: "+latlng );		
+		
+				if ( setView ) {
+					pong_map_dta.setView( latlng, 12 );					
+				}
+				pong_map_route.push( search );
+		 
+				log( "pong_map", "pong_map_Update best set marker " );
+				if ( label != null ) {
+					L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta ).bindPopup( label ).openPopup();							
+				} else {
+			        L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta );			
+				}
+				log( "pong_map", "pong_map_Update best result done. " );		
+		 }
+    );		
+	log( "pong_map", "pong_map_Update geocode done. " );		
 }
 
