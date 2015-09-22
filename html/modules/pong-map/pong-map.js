@@ -175,26 +175,26 @@ function pong_map_addRoute ( a, b ) {
 function pong_map_addSearchPin ( search, label, setView ) {
 	log( "pong_map", "pong_map_Update searching: '"+search+"' " );		
 	MQ.geocode(  ).search( search )
- 	.on( 'success', 
-	     function( e ) {	
-		        var best = e.result.best,
-		            latlng = best.latlng;
+		.on( 'success', 
+			function( e ) {	
+				var best = e.result.best,
+				    latlng = best.latlng;
 				log( "pong_map", "pong_map_Update best result: "+latlng );		
-		
+				
 				if ( setView ) {
 					pong_map_dta.setView( latlng, 12 );					
-				}
+					}
 				pong_map_route.push( search );
-		 
+				 
 				log( "pong_map", "pong_map_Update best set marker " );
 				if ( label != null ) {
 					L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta ).bindPopup( label ).openPopup();							
 				} else {
-			        L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta );			
+				    L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta );			
 				}
 				log( "pong_map", "pong_map_Update best result done. " );		
-		 }
-    );		
+			}
+		);		
 	log( "pong_map", "pong_map_Update geocode done. " );		
 }
 
