@@ -512,9 +512,13 @@ function getSubData( data, subPath ) {
 		var subdata = data[ pathToken[0] ];
 		log( "getSubData", ">>"+JSON.stringify(subdata) );
 		for ( i = 1; i < pathToken.length; i++ ) {
-			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );	
-			subdata = subdata[ pathToken[i] ];
-			log( "getSubData", ">>"+JSON.stringify(subdata) );
+			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
+			if ( subdata != null ) {
+				subdata = subdata[ pathToken[i] ];
+				log( "getSubData", ">>"+JSON.stringify(subdata) );				
+			} else {
+				log( "getSubData", ">> NULL" );				
+			}
 		}
 		result = subdata;
 	}

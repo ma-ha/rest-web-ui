@@ -25,6 +25,7 @@ THE SOFTWARE.
 log( "pong_map", "load module"); // print this on console, when module is loaded
 pong_map_dta = null;
 pong_map_route = [];
+pong_map_route_data = [];
 
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pong_map_DivHTML( divId, resourceURL, paramObj ) {
@@ -54,9 +55,9 @@ function pong_map_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	$( "#"+divId ).html( contentItems.join( "\n" ) );
 	
 	
-	var mapJsUrl = "http://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js";
+	var mapJsUrl      = "https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js";
 	var geocoderJsUrl = "https://www.mapquestapi.com/sdk/leaflet/v1.s/mq-geocoding.js";
-	var routingJsUrl = "http://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js";
+	var routingJsUrl  = "https://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js";
 	
     $.getScript( mapJsUrl+"?key="+pmd.mapKey ).done( 
 		function ( script, textStatus ) { 
@@ -125,7 +126,7 @@ function pong_map_createMap( divId, pmd ) {
 		
 /** update data call back hook */
 function pong_map_Update( divId, pmd ) {
-	log( "pong_map", "pong_map_Update start (divId: "+divId+"): "+JSON.stringify( pmd ) );
+	log( "pong_map", "pong_map_Update start (divId: "+divId+"): "+JSON.stringify( pmd ) + "  ------------------------------------------------");
 
 	if ( pmd == null ) {
 		log( "pong_map", "pong_map_Update OUCH! param==null -> end.");
@@ -147,7 +148,7 @@ function pong_map_Update( divId, pmd ) {
 		
 		log( "pong_map", "pong_map_Update route to: '"+pong_map_route[ pong_map_route.length-1 ]+"' > '"+pmd.routeTo+"' " );		        
 		pong_map_addSearchPin ( pmd.routeTo, pmd.label, false );
-		pong_map_addRoute (  pong_map_route[ pong_map_route.length-1 ], pmd.routeTo );
+		pong_map_addRoute (  pong_map_route[ pong_map_route.length-1 ], pmd.routeTo, pmd.label, moduleConfig[ divId ].setRouteData );
         pong_map_route.push( pmd.routeTo );	
 		log( "pong_map", "pong_map_Update route to done. "+JSON.stringify( pong_map_route )  );
 		
@@ -157,6 +158,7 @@ function pong_map_Update( divId, pmd ) {
 	if ( pmd.clearRoute != null ) {
 		log( "pong_map", "pong_map_Update clearRoute" );		
 		pong_map_route = [];
+		pong_map_route_data = [];
 	}
 	
 	// other modes required? e.g. reverse geocoding or route
@@ -164,16 +166,47 @@ function pong_map_Update( divId, pmd ) {
 	log( "pong_map", "pong_map_Update end.");
 }
 
-function pong_map_addRoute ( a, b ) {
-    dir = MQ.routing.directions();
-    dir.route( { locations: [ a, b ] } );
+function pong_map_addRoute ( a, b, label, setData ) {
+	if ( label == null ) { label = b; }
+	log( "pong_map", "pong_map_addRoute('"+a+"','"+b+"','"+label+"') ------------------------------------------------" );
+    dir = MQ.routing.directions().on( 'success', 
+	    	function ( data ) {
+				log( "pong_map", "formattedTime: "+data.route.formattedTime );
+				log( "pong_map", "distance:      "+data.route.distance );
+				if ( data.route.formattedTime && data.route.distance ) {
+					var theRoute = {
+							route_label: label,
+							route_from:  a,
+							route_to:    b,
+							route_dist:  data.route.distance+' km',
+							route_time:  data.route.formattedTime,
+							route:       data.route
+						}
+					log( "pong_map", "x1" );
+					pong_map_route_data.push( theRoute );
+					//log( "pong_map", "x2 "+JSON.stringify( pong_map_route_data ) );
+					if ( setData && setData.length ) {
+						log( "pong_map", "x3" );
+						for ( var sd = 0; sd < setData.length; sd++ ) {
+							log( "pong_map", " setData resId:"+setData[sd].resId+" ("+pong_map_route_data.length+" routes)" );
+							log( "pong_map", "x5" );
+							setModuleData( setData[sd].resId+'Content', pong_map_route_data, null );										
+						}			
+					}					
+				}
+			}
+	    );
+    dir.route( { 
+    	locations: [ a, b ], 
+   		options: { unit: 'k' }
+    } );
     pong_map_dta.addLayer(
     	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
     );
 }
 
 function pong_map_addSearchPin ( search, label, setView ) {
-	log( "pong_map", "pong_map_Update searching: '"+search+"' " );		
+	log( "pong_map", "pong_map_Update searching: '"+search+"'  ------------------------------------------------" );		
 	MQ.geocode(  ).search( search )
 		.on( 'success', 
 			function( e ) {	
