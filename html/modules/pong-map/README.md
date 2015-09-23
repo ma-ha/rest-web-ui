@@ -22,6 +22,13 @@ Optional you can define values for "lat", "lan" and "zoom", e.g.
 		"lon":  "7.186241",
 		"zoom": "10"
 	}
+	
+By defining a <code>setRouteData</code> array the module will pass route result data to other views (resId):
+
+	{
+  		"mapKey":"...",
+  		"setRouteData":[ {"resId":"65"} ]
+	} 
 
 ## Map Interaction
 You can trigger a map search, by updating and sending a "search".
