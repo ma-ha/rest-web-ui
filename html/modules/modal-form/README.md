@@ -1,9 +1,9 @@
-## Descrtiption
+## Description
 This module enables you to use forms in modal dialogs. 
 
 Typically you can add a configuration dialog to your resource view. You only have to define the fields of the configuration form, that's it. 
 
-##= Usage in "structure" 
+## Usage in "structure" 
 Simply add a action to the <code>actions</code> array with <code>"type": "modal-form"</code>
 
 Example structure file extract:
