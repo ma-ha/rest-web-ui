@@ -318,6 +318,7 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 	if ( dataDocSubPath != null ) {
 		poTbl[ divId ].pongTableData = getSubData( data, tblDef.dataDocSubPath );	
 	} else {
+		//log( "Pong-Table", "set: "+JSON.stringify( data )  )
 		poTbl[ divId ].pongTableData = data;		
 	}
 	tblCells( divId ); 
@@ -368,6 +369,7 @@ function tblCells( divId ) {
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
 				var cellVal = getSubData( cellDta, cellDef.id );
+				if ( cellVal == null ) { cellVal = ''; }
 				log( "Pong-Table", JSON.stringify( cellDef ) );
 				var cellId =  '#'+divId+'R'+i+'C'+c; 
 				var cellType = cellDef.cellType;
