@@ -1147,11 +1147,11 @@ var loggerModule = false;
 
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if ( func=='getHookMethod' || 
-		func=='pong_map' || 
-		func=='Pong-Table' || 
-		func=='Pong-Form' || 
-		func=='loadModules' ) { 
+	if ( //func=='getHookMethod' || 
+		//func=='pong_map' || 
+		//func=='Pong-Table' || 
+		func=='pong-io' || 
+		func=='loadModulesXX' ) { 
 		console.log( "["+func+"] "+msg );
 	}
 	

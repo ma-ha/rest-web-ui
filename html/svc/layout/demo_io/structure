@@ -1,0 +1,118 @@
+{
+	"layout":{
+		"title":"PoNG Demo: IO module",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"io123",
+				"height":"500px",
+				"resourceURL":"io",
+				"title":"IO",
+				"moduleConfig":{
+					"imgURL":"svc/io/img.png",
+					"dataURL":"svc/io/",
+					"poll":"1000",
+					"io":[
+						{
+							"id":"switchMain",
+							"type":"Switch",
+							"pos":{ "x":"850", "y":"380" },
+							"values":[ "Power ON", "Power OFF" ]
+						},
+						{
+							"id":"ledRP",
+							"type":"LED",
+							"pos":{ "x":"560", "y":"326" }
+						},
+						{
+							"id":"ledTMP",
+							"type":"LED",
+							"pos":{ "x":"392", "y":"196" }
+						},
+						{
+							"id":"ledValveN2",
+							"type":"LED",
+							"pos":{ "x":"123", "y":"359" }
+						},
+						{
+							"id":"ledValveTMP",
+							"type":"LED",
+							"pos":{ "x":"515", "y":"258" }
+						},
+						{
+							"id":"ledValveChHi",
+							"type":"LED",
+							"pos":{ "x":"513", "y":"155" }
+						},
+						{
+							"id":"ledValveChLo",
+							"type":"LED",
+							"pos":{ "x":"628", "y":"258" }
+						},
+						{
+							"id":"switchRP",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"27" },
+							"values":[ "ON", "OFF" ]
+						},
+						{
+							"id":"switchTMP",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"62" },
+							"values":[ "ON", "OFF" ]
+						},
+						{
+							"id":"switchValveN2",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"97" },
+							"values":[ "open", "close" ]
+						},
+						{
+							"id":"switchValveTMP",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"168" },
+							"values":[ "open", "close" ]
+						},
+						{
+							"id":"switchValveChHi",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"204" },
+							"values":[ "open", "close" ]
+						},
+						{
+							"id":"switchValveChLo",
+							"type":"Switch",
+							"pos":{ "x":"80", "y":"239" },
+							"values":[ "open", "close" ]
+						},
+						{
+							"id":"displayG1",
+							"type":"Display", "width":"10",
+							"pos":{ "x":"300", "y":"30" }
+						},
+						{
+							"id":"displayG2",
+							"type":"Display", "width":"10",
+							"pos":{ "x":"770", "y":"30" }
+						},
+						{
+							"id":"switchValveInflate",
+							"type":"Poti",
+							"width":"80", "min":"0", "max":"100",
+							"pos":{ "x":"70", "y":"260" }
+						},
+						{
+							"id":"switchValveN2n",
+							"type":"Poti",
+							"width":"80", "min":"0", "max":"100",
+							"pos":{ "x":"70", "y":"120" }
+						}
+					]
+				},
+				"type":"pong-io",
+				"decor":"decor"
+			}
+		],
+		"includeFooter":"main"
+	}
+}
