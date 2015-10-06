@@ -152,3 +152,11 @@ moduleMap[ "pong-map" ] = {
 	        { hook:"update", method:"pong_map_Update" }
 	    ]
 	};
+
+moduleMap[ "pong-io" ] = {
+		"name": "pong-io",
+	    "hooks": [
+	        { hook: "loadResourcesHtml", method:"pong-io_DivHTML" },
+	        { hook: "updateData", method:"pong-io_UpdateData" }
+	    ]
+	};
