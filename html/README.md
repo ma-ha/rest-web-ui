@@ -1,4 +1,7 @@
 # Release Notes
+## Version 0.6
+Modules Improvement:
+* [I/O Module](modules/pong-io/) 
 ## Version 0.5 
 General Improvements
 * [Client side session handling](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming#Client_Side_Session)

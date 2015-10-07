@@ -9,6 +9,7 @@ and methods are triggered in the lifecycle of the portal page.
 ## Modules/Views 
 * [Form View](pong-form/)
 * [Help Dialog](pong-help/)
+* [I/O View](pong-io/)
 * [List View](pong-list/)
 * [Master Details View](pong-master-details/)
 * [MediaWiki View](pong-mediawiki/)
