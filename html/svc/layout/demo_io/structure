@@ -76,14 +76,8 @@
 						{
 							"id":"switchValveChHi",
 							"type":"Switch",
-							"pos":{ "x":"80", "y":"204" },
-							"values":[ "open", "close" ]
-						},
-						{
-							"id":"switchValveChLo",
-							"type":"Switch",
 							"pos":{ "x":"80", "y":"239" },
-							"values":[ "open", "close" ]
+							"values":[ "V3", "inflate", "V4" ]
 						},
 						{
 							"id":"displayG1",
