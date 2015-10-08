@@ -42,6 +42,11 @@ The LED needs only a unique ID and coordinates where to place it.
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
 
+Optional settings:
+
+ 				"ledWidth":"4",
+ 				"ledHeight":"8"
+
 LEDs values are:
 * -1: red
 * 0: black
@@ -60,6 +65,14 @@ Switches can have 2 or 3 values, defined in a array.
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
 
+Optional settings:
+
+ 				"font":"14px Courier",
+ 				"textFillColor":"#00F",
+ 				"textStrokeColor":"#FFF",
+				"lineCol":"#00A",
+				"fillCol":"#DDD"
+
 A switch by mouse click will do a POST with the id and value to to 'dataURL'.
 
 ### Display
@@ -74,6 +87,14 @@ Displays can display any text or value (like LCD):
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
 
+Optional settings:
+
+ 				"font":"14px Courier",
+ 				"textFillColor":"#00F",
+ 				"textStrokeColor":"#FFF",
+				"lineCol":"#00A",
+				"fillCol":"#DDD"
+
 ### Poti
 A poti is a horizontal slider:
 
@@ -87,6 +108,11 @@ A poti is a horizontal slider:
 				"max":"100",
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
+
+Optional settings:
+
+				"lineCol":"#00A",
+				"fillCol":"#DDD"
 
 A change of the poti by mouse click will do a POST request with the new vaue to the backend.
 

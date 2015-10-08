@@ -206,7 +206,7 @@ function pongIOrenderData( divId,  dta ) {
 				} else if ( io.type == 'Gauge') {
 					pongIOrenderGauge( ctx, io, ioDta );
 				} else if ( io.type == 'Display') {
-					pongIOrenderDisplay( ctx, io, ioDta );
+					pongIOrenderDisplay(  divId, ctx, io, ioDta );
 				} else if ( io.type == 'Graph') {
 					pongIOrenderGraph( ctx, io, ioDta );
 				} else if ( io.type == 'Img') {
@@ -237,13 +237,14 @@ function pongIOrenderSwitch( divId, ctx, def, dta ) {
 	ioSense[ divId ][ def.id ] = new Array();
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
-	ctx.font = "14px Courier";
 	ctx.textAlign = "start";
 	ctx.textBaseline = "middle";
 	if ( def.values && def.values.length ) { 
 		ctx.beginPath();
 		ctx.strokeStyle = "#00F";
 		ctx.fillStyle   = "#DDD";
+		if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+		if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
 		ctx.arc( x, y, 15, 0 ,2*Math.PI );
 		ctx.stroke();		
 		ctx.fill();
@@ -252,40 +253,35 @@ function pongIOrenderSwitch( divId, ctx, def, dta ) {
 		var xx = x + 17
 		if ( def.values.length == 2 ) {
 			var yy = y - 8;
-			ctx.fillStyle   = "#00F";
-			ctx.fillText( def.values[0], xx, yy );
+			textOut( divId, def, ctx, def.values[0], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[0], xx, yy );
 			if ( dta && dta.value && def.values[0] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y-10 );
+				pongIOrenderSwitchLine( ctx, x+10, y-10, def );
 			}
 			yy = y + 8;
-			ctx.fillStyle   = "#00F";
-			ctx.fillText( def.values[1], xx, yy );
+			textOut( divId, def, ctx, def.values[1], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[1], xx, yy );
 			if ( dta && dta.value && def.values[1] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y+10 );
+				pongIOrenderSwitchLine( ctx, x+10, y+10, def );
 			}
 		} else if ( def.values.length == 3 ) {
 			var yy = y - 12;
-			ctx.fillStyle   = "#00F";
-			ctx.fillText( def.values[0], xx, yy );
+			textOut( divId, def, ctx, def.values[0], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[0], xx, yy );
 			if ( dta && dta.value && def.values[0] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y-10 );
+				pongIOrenderSwitchLine( ctx, x+10, y-10, def );
 			}
 			yy = y;
-			ctx.fillStyle   = "#00F";
-			ctx.fillText( def.values[1], xx, yy );
+			textOut( divId, def, ctx, def.values[1], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[1], xx, yy );
 			if ( dta && dta.value && def.values[1] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+15, y );
+				pongIOrenderSwitchLine( ctx, x+15, y, def );
 			}
 			yy = y + 12;
-			ctx.fillStyle   = "#00F";
-			ctx.fillText( def.values[2], xx, yy );
+			textOut( divId, def, ctx, def.values[2], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[2], xx, yy );
 			if ( dta && dta.value && def.values[2] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y+10 );
+				pongIOrenderSwitchLine( ctx, x+10, y+10, def );
 			}
 		}
 	}
@@ -293,10 +289,35 @@ function pongIOrenderSwitch( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderSwitch end.");
 }
 
-function pongIOrenderSwitchLine( ctx, xt, yt ) {
+function textOut( divId, def, ctx, txt, x, y, opt ) {
+	var pmd = moduleConfig[ divId ];
+	
+	if ( def.font ) {	ctx.font = def.font; } 
+		else if ( pmd.font ) { ctx.font   = pmd.font; } 
+			else if ( opt && opt.font ) { ctx.font   = opt.font; } 
+				else { ctx.font   = "14px Courier"; }
+
+	if ( def.textFillColor ) {	ctx.fillStyle = def.textFillColor; } 
+		else if ( pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
+			else if ( opt && opt.fillStyle ) { ctx.fillStyle   = opt.fillStyle; } 
+				else { ctx.fillStyle   = "#00F"; }
+	
+	if ( def.textStrokeColor ) {	ctx.strokeStyle = def.textStrokeColor; } 
+		else if ( pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
+			else if ( opt && opt.strokeStyle ) { ctx.strokeStyle   = opt.strokeStyle; } 
+				else { ctx.strokeStyle   = "#FFF"; }
+	
+	ctx.strokeText( txt, x, y );
+	ctx.fillText(   txt, x, y );
+	
+}
+
+function pongIOrenderSwitchLine( ctx, xt, yt, def ) {
 	log( "pong-io", xt +" / " + yt );
 	ctx.strokeStyle = "#00F";
 	ctx.fillStyle   = "#DDD";
+	if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+	if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
 	ctx.lineTo( xt, yt ); 
 	ctx.stroke();	
 }
@@ -321,6 +342,8 @@ function pongIOrenderPoti( divId, ctx, def, dta ) {
 	ctx.lineWidth   = "2";
 	ctx.strokeStyle = "#00F";
 	ctx.fillStyle   = "#DDD";
+	if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+	if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
 	ctx.rect( x, y, w, 20 );
 	ctx.stroke();
 	ctx.fill();  	
@@ -331,7 +354,7 @@ function pongIOrenderPoti( divId, ctx, def, dta ) {
 	ioSense[ divId ][ def.id ].y2 = y + 20;
 	ioSense[ divId ][ def.id ].min = min;
 	ioSense[ divId ][ def.id ].max = max;
-	if ( dta && dta.value ) {
+	if ( dta && dta.value != null ) {
 		log( "pong-io", "pongIOrenderPoti "+x+" + "+w+" * "+dta.value+" / ( "+max+" -"+ min+" )" );
 		ctx.beginPath();
 		var xx = x + ( w - 5 ) * dta.value / ( max - min );
@@ -340,6 +363,8 @@ function pongIOrenderPoti( divId, ctx, def, dta ) {
 		ctx.rect( xx, y, 5, 20 );
 		ctx.strokeStyle = "#00A";
 		ctx.fillStyle   = "#117";
+		if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+		if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
 		ctx.stroke();
 		ctx.fill();  	
 	}
@@ -347,7 +372,7 @@ function pongIOrenderPoti( divId, ctx, def, dta ) {
 }
 
 
-function pongIOrenderDisplay( ctx, def, dta ) {
+function pongIOrenderDisplay( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderDisplay '"+def.id+"': "+JSON.stringify(dta) );
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
@@ -355,20 +380,24 @@ function pongIOrenderDisplay( ctx, def, dta ) {
 	log( "pong-io", x+"/"+y+"/"+w );
 	ctx.beginPath();
 	ctx.lineWidth   = "2";
-	ctx.strokeStyle = "#0F0";
+	ctx.strokeStyle = "#00A";
 	ctx.fillStyle   = "#DDD";
+	if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+	if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
 	ctx.rect( x, y, w, 20 );
 	ctx.stroke();
 	ctx.fill();  		
-	if ( dta  || dta.value  ) {
-		ctx.fillStyle   = "#040";
-		ctx.font = "14px Courier";
+	if ( dta  && dta.value  ) {
+		var opt = new Object();
+		opt.fillStyle   = "#040";
+		opt.strokeStyle = "#0F0";
 		ctx.textAlign = "end"; 
 		ctx.textBaseline = "bottom"; 
 		var xx = x + w - 4;
-		var yy = y + 15;
+		var yy = y + 17;
 		log( "pong-io", "ctx.fillText( "+dta.value+","+ xx+","+yy+" );" );
-		ctx.fillText( dta.value, xx, yy );
+//		ctx.fillText( dta.value, xx, yy );
+		textOut( divId, def, ctx, dta.value, xx, yy, opt );
 	}	
 	log( "pong-io", "pongIOrenderDisplay end.");
 }
@@ -397,38 +426,32 @@ function pongIOrenderLED( ctx, def, dta ) {
 		log( "pong-io", "null" );
 		ctx.strokeStyle = "grey";
 		ctx.fillStyle   = "grey";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  		
 	} else if ( dta.value == "1" ) {
 		log( "pong-io", "green" );
 		ctx.strokeStyle = "#0f0";
 		ctx.fillStyle   = "#0f0";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  		
 	} else if ( dta.value == "0" ) {
 		log( "pong-io", "black" );
 		ctx.strokeStyle = "black";
 		ctx.fillStyle   = "black";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  		
 	}  else if ( dta.value == "-1" ) {
 		log( "pong-io", "red" );
 		ctx.strokeStyle = "red";
 		ctx.fillStyle   = "red";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  		
 	}  else if ( dta.value == "2" ) {
 		log( "pong-io", "red" );
 		ctx.strokeStyle = "yellow";
 		ctx.fillStyle   = "yellow";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  		
 	} else {
 		log( "pong-io", "other" );
 		ctx.strokeStyle = "grey";
 		ctx.fillStyle   = "grey";
-		ctx.rect( x, y, 7, 7 );
-		ctx.fill();  				
 	}
+	var ledW = 7, ledH = 7;
+	if ( def.ledWidth  ) { ledW = def.ledWidth; }
+	if ( def.ledHeight ) { ledW = def.ledHeight; }
+	ctx.rect( x, y, ledW, ledH );
+	ctx.fill();  		
 	log( "pong-io", "pongIOrenderLED end.");
 }
+

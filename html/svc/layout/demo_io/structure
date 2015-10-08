@@ -16,23 +16,26 @@
 						{
 							"id":"switchMain",
 							"type":"Switch",
+							"textFillColor":"#F00",
+							"lineCol":"#F00",
+							"fillCol":"#DAA",
 							"pos":{ "x":"850", "y":"380" },
 							"values":[ "Power ON", "Power OFF" ]
 						},
 						{
 							"id":"ledRP",
 							"type":"LED",
-							"pos":{ "x":"560", "y":"326" }
+							"pos":{ "x":"563", "y":"326" }
 						},
 						{
 							"id":"ledTMP",
 							"type":"LED",
-							"pos":{ "x":"392", "y":"196" }
+							"pos":{ "x":"395", "y":"196" }
 						},
 						{
 							"id":"ledValveN2",
 							"type":"LED",
-							"pos":{ "x":"123", "y":"359" }
+							"pos":{ "x":"130", "y":"359" }
 						},
 						{
 							"id":"ledValveTMP",
@@ -76,24 +79,29 @@
 						{
 							"id":"switchValveChHi",
 							"type":"Switch",
-							"pos":{ "x":"80", "y":"239" },
+							"pos":{ "x":"80", "y":"204" },
 							"values":[ "V3", "inflate", "V4" ]
 						},
 						{
 							"id":"displayG1",
 							"type":"Display", "width":"10",
-							"pos":{ "x":"300", "y":"30" }
+							"pos":{ "x":"300", "y":"35" }
 						},
 						{
 							"id":"displayG2",
 							"type":"Display", "width":"10",
-							"pos":{ "x":"770", "y":"30" }
+							"pos":{ "x":"780", "y":"35" }
+						},
+						{
+							"id":"displayG3",
+							"type":"Display", "width":"10",
+							"pos":{ "x":"670", "y":"405" }
 						},
 						{
 							"id":"switchValveInflate",
 							"type":"Poti",
 							"width":"80", "min":"0", "max":"100",
-							"pos":{ "x":"70", "y":"260" }
+							"pos":{ "x":"70", "y":"230" }
 						},
 						{
 							"id":"switchValveN2n",
