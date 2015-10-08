@@ -58,23 +58,40 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 	log( "pong-io", w+"px/"+h+"px" );
 	contentItems.push( '<canvas id="'+divId+'Canvas" width="'+w+'px" height="'+h+'px">' );
 	contentItems.push( '</canvas></div>' );
+	contentItems.push( '<script>' );
+	contentItems.push( '  function pongIoUpdateTimer'+divId+'() { ' );
+	contentItems.push( '      pongIoUpdateData( "'+divId+'", null ); ' );
+	contentItems.push( '  }' );
+	contentItems.push( '</script>' );
 	
 	$( "#"+htmlDivId ).html( contentItems.join( "\n" ) );
 
 	var ctx = document.getElementById( divId+'Canvas' ).getContext("2d");
 
+	// draw background
 	if ( pmd.imgURL != null ) {
 		var background = new Image();
 		background.src = pmd.imgURL;
 		ctx.drawImage( background, 0, 0 );   
 	}
 	
+	// draw panel
 	pongIoUpdateData( divId, { makeJS: true } );
-		
-	// output
+	
+	// create polling "loop"
+	log( "pong-io", ">>>>> Try to create poolDataTimerId "+pmd.poll  );
+	if ( pmd.poll ) {
+		var t = parseInt( pmd.poll );
+		log( "pong-io", ">>>>> create poolDataTimerId t="+t );
+		if  ( ! isNaN( t ) ) {			
+			poolDataTimerId = setInterval( "pongIoUpdateTimer"+divId+"()", t );
+			log( "pong-io", ">>>>> startet poolDataTimerId"+divId+"()" );
+		}
+	}
+	
 	log( "pong-io", "pongIoRenderHTML end.");
-
 }
+
 
 function pongIOmakeJS( divId  ) {
 	log( "pong-io", "pongIOmakeJS "+divId );

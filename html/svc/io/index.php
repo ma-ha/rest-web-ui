@@ -11,6 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ( ! isset( $_SESSION["p1"] ) ) {
+	$_SESSION["p1t"] = 100;
+	$_SESSION["p2t"] = 100;
+	$_SESSION["p3t"] = 100;
+	
 	$_SESSION["p1"] = 100;
 	$_SESSION["p2"] = 100;
 	$_SESSION["p3"] = 100;
@@ -100,42 +104,48 @@ if ( $_SESSION["ledTMP"] == '2' ) {
 	}
 }
 if ( $_SESSION["ledTMP"]  == '1') {
-	$_SESSION["p1"] = 2;
+	$_SESSION["p1t"] = 0.1;
 	error_log( "p1 = 2" );
 } else {
 	if ( $_SESSION["ledValveTMP"] == '1' && $_SESSION["switchRP"] == 'ON') {
-		$_SESSION["p1"] = 10;
+		$_SESSION["p1t"] = 10;
 		error_log( "p1 = 10" );
 	} else {
-		$_SESSION["p1"] = 100;
+		$_SESSION["p1t"] = 100;
 		error_log( "p1 = 100" );
 	}
 }
 if ( $_SESSION["ledValveChHi"] == '1' ) {	
-	$_SESSION["p2"] = $_SESSION["p1"];
+	$_SESSION["p2t"] = $_SESSION["p1t"];
 }
 if ( $_SESSION["switchRP"] == 'ON') { 
-	$_SESSION["p3"] = 10;
+	$_SESSION["p3t"] = 10;
 	if ( $_SESSION["switchValveInflate"] < 10) {
 		if ( $_SESSION["ledValveChLo"] == '1' ) {
-			$_SESSION["p2"] = 10;
+			$_SESSION["p2t"] = 10;
 		} 
 		if ( $_SESSION["ledValveChHi"] == '1' ) {
-			$_SESSION["p2"] = $_SESSION["p1"];
+			$_SESSION["p2t"] = $_SESSION["p1t"];
 		} 
 	} else {
 		if ( $_SESSION["ledValveChLo"] == '1' ) {
-			$_SESSION["p2"] = 80;
+			$_SESSION["p2t"] = 80;
 		} else if ( $_SESSION["ledValveChHi"] == '1' ) {
-			$_SESSION["p2"] = $_SESSION["p1"];
+			$_SESSION["p2t"] = $_SESSION["p1t"];
 		} else {
-			$_SESSION["p2"] = 100;
+			$_SESSION["p2t"] = 100;
 		}
 	}
 } else {
-	$_SESSION["p3"] = 100;
+	$_SESSION["p3t"] = 100;
 }
 
+$_SESSION["p1"] += ( $_SESSION["p1t"] - $_SESSION["p1"] ) / 2; 
+$_SESSION["p2"] += ( $_SESSION["p2t"] - $_SESSION["p2"] ) / 2;
+$_SESSION["p3"] += ( $_SESSION["p3t"] - $_SESSION["p3"] ) / 2;
+$_SESSION["p1"] = round( $_SESSION["p1"] , 2 );
+$_SESSION["p2"] = round( $_SESSION["p2"] , 2 );
+$_SESSION["p3"] = round( $_SESSION["p3"] , 2 );
 
 $data = array();
 $data['switchMain'] = array( 'value' => $_SESSION["switchMain"] );

@@ -1,6 +1,6 @@
 ## IO Plug In Module Config
-The IO plug-in can create a control panel.
-On the underlying (optional) image you can arrage different
+Use the IO plug-in to create a control panel.
+On the underlying (optional) image you can arrange different
 input and output controllers. Basic 'moduleConfig' is like this:
 
 	"moduleConfig":{
@@ -29,7 +29,7 @@ The response should be an "array" of the values:
 	    ...
 	}
 	
-Changes are POSTed to the 'dataURL' and the response wil be set as update.
+Changes are POSTed to the 'dataURL' and the response will be set as update.
 
 ### LEDs
 The LED needs only a unique ID and coordinates where to place it.
@@ -114,7 +114,7 @@ Optional settings:
 				"lineCol":"#00A",
 				"fillCol":"#DDD"
 
-A change of the poti by mouse click will do a POST request with the new vaue to the backend.
+A change of the poti by mouse click will do a POST request with the new value to the backend.
 
 
 ### TODOs
