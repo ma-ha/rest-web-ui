@@ -12,6 +12,8 @@ input and output controllers. Basic 'moduleConfig' is like this:
 		]
 	}
 
+[Online Demo](http://mh-svr.de/pong_v0.6.0/index.html?layout=demo_io)
+
 To get the values a GET call is done to 'dataURL'. 
 The response should be an "array" of the values:
 
