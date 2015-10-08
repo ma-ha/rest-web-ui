@@ -11,7 +11,7 @@
 				"moduleConfig":{
 					"imgURL":"svc/io/img.png",
 					"dataURL":"svc/io/",
-					"poll":"1000",
+					"poll":"60000",
 					"io":[
 						{
 							"id":"switchMain",
@@ -45,7 +45,7 @@
 						{
 							"id":"ledValveChHi",
 							"type":"LED",
-							"pos":{ "x":"513", "y":"155" }
+							"pos":{ "x":"485", "y":"155" }
 						},
 						{
 							"id":"ledValveChLo",
@@ -90,7 +90,7 @@
 						{
 							"id":"displayG2",
 							"type":"Display", "width":"10",
-							"pos":{ "x":"780", "y":"35" }
+							"pos":{ "x":"690", "y":"35" }
 						},
 						{
 							"id":"displayG3",
@@ -108,6 +108,21 @@
 							"type":"Poti",
 							"width":"80", "min":"0", "max":"100",
 							"pos":{ "x":"70", "y":"120" }
+						},
+						{
+							"id":"graphP",
+							"type":"Graph",
+							"width":"150", "height":"150",
+							"layout":{
+								"graphType":"timeLog",
+								"yAxis":{
+									"axisType":"logarithmic",
+									"min":"0.01",
+									"max":"110",
+									"labels":["0.1","1","10","100"]
+								}
+							},
+							"pos":{ "x":"820", "y":"5" }
 						}
 					]
 				},

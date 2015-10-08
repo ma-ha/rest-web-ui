@@ -42,9 +42,11 @@ function pongIoDivHTML( divId, resourceURL, paramObj ) {
 	}	
 }
 
+//---------------------------------------------------------------------------------------
+
 function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 	log( "pong-io", "pongIoRenderHTML img:'"+pmd.imgURL+"'");
-	
+	var background = new Image();	
 	var contentItems = [];
 	var dStyle = 'style="width=:100%; height:100%;"';
 	var htmlDivId = divId+'pong-io_Div';
@@ -70,9 +72,11 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 
 	// draw background
 	if ( pmd.imgURL != null ) {
-		var background = new Image();
 		background.src = pmd.imgURL;
-		ctx.drawImage( background, 0, 0 );   
+		background.onload = function() {
+			ctx.drawImage( background, 0, 0 ); 
+	    };
+//		ctx.drawImage( background, 0, 0 );   
 	}
 	
 	// draw panel
@@ -92,6 +96,7 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 	log( "pong-io", "pongIoRenderHTML end.");
 }
 
+//---------------------------------------------------------------------------------------
 
 function pongIOmakeJS( divId  ) {
 	log( "pong-io", "pongIOmakeJS "+divId );
@@ -142,40 +147,7 @@ function pongIOmakeJS( divId  ) {
 	log( "pong-io", "pongIOmakeJS end." );
 }
 
-function pongIOcheckPotiSense( divId, x, y, id, s ) {
-	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
-		var val = s.min + ( x - s.x1 ) * ( s.max - s.min ) / ( s.x2 - s.x1 );
-		log( "pong-io", "Poti: "+id +" >> "+val );
-		$.ajax( 
-			{ url: moduleConfig[ divId ].dataURL, 
-			  type: "POST", 
-			  dataType: "json",
-			  data: { id:id, value:val, type:"Poti" }
-			}
-		).done(
-			function( dta) {
-				pongIOrenderData( divId, dta );
-			}
-		);
-	}
-}
-
-function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
-	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
-		log( "pong-io", "Switch: "+id+" >> "+val );
-		$.ajax( 
-			{ url: moduleConfig[ divId ].dataURL, 
-			  type: "POST", 
-			  dataType: "json",
-			  data: { id:id, value:val, type:"Switch" }
-			}
-		).done(
-			function( dta) {
-				pongIOrenderData( divId, dta );
-			}
-		);		  
-	}
-}
+//---------------------------------------------------------------------------------------
 
 /** update data call back hook */
 function pongIoUpdateData( divId, paramsObj ) {
@@ -225,7 +197,7 @@ function pongIOrenderData( divId,  dta ) {
 				} else if ( io.type == 'Display') {
 					pongIOrenderDisplay(  divId, ctx, io, ioDta );
 				} else if ( io.type == 'Graph') {
-					pongIOrenderGraph( ctx, io, ioDta );
+					pongIOrenderGraph( divId, ctx, io, ioDta );
 				} else if ( io.type == 'Img') {
 					pongIOrenderImg( ctx, io, ioDta );
 				}  
@@ -235,6 +207,8 @@ function pongIOrenderData( divId,  dta ) {
 	log( "pong-io", "pongIOrenderData data end");
 }
 
+//---------------------------------------------------------------------------------------
+
 function pongIOrenderGauge( ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderGauge '"+def.id+"': "+JSON.stringify(dta) );
 	// TODO IO: implement gauge
@@ -242,11 +216,7 @@ function pongIOrenderGauge( ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderGauge end.");
 }
 
-function pongIOswitchClick( def, x, y ) {
-	log( "pong-io", "pongIOgetSwitchJS ("+x+"/"+y+")  "+JSON.stringify(def) );
-	// TODO
-	log( "pong-io", "pongIOgetSwitchJS: end" );
-}
+//---------------------------------------------------------------------------------------
 
 
 function pongIOrenderSwitch( divId, ctx, def, dta ) {
@@ -306,29 +276,6 @@ function pongIOrenderSwitch( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderSwitch end.");
 }
 
-function textOut( divId, def, ctx, txt, x, y, opt ) {
-	var pmd = moduleConfig[ divId ];
-	
-	if ( def.font ) {	ctx.font = def.font; } 
-		else if ( pmd.font ) { ctx.font   = pmd.font; } 
-			else if ( opt && opt.font ) { ctx.font   = opt.font; } 
-				else { ctx.font   = "14px Courier"; }
-
-	if ( def.textFillColor ) {	ctx.fillStyle = def.textFillColor; } 
-		else if ( pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
-			else if ( opt && opt.fillStyle ) { ctx.fillStyle   = opt.fillStyle; } 
-				else { ctx.fillStyle   = "#00F"; }
-	
-	if ( def.textStrokeColor ) {	ctx.strokeStyle = def.textStrokeColor; } 
-		else if ( pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
-			else if ( opt && opt.strokeStyle ) { ctx.strokeStyle   = opt.strokeStyle; } 
-				else { ctx.strokeStyle   = "#FFF"; }
-	
-	ctx.strokeText( txt, x, y );
-	ctx.fillText(   txt, x, y );
-	
-}
-
 function pongIOrenderSwitchLine( ctx, xt, yt, def ) {
 	log( "pong-io", xt +" / " + yt );
 	ctx.strokeStyle = "#00F";
@@ -347,6 +294,25 @@ function pongIOaddSwitchSense( divId, id, val, xx, yy ) {
 	ioSense[ divId ][ id ][ val ].y1 = yy - 7;
 	ioSense[ divId ][ id ][ val ].y2 = yy + 7;	
 }
+
+function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
+	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
+		log( "pong-io", "Switch: "+id+" >> "+val );
+		$.ajax( 
+			{ url: moduleConfig[ divId ].dataURL, 
+			  type: "POST", 
+			  dataType: "json",
+			  data: { id:id, value:val, type:"Switch" }
+			}
+		).done(
+			function( dta) {
+				pongIOrenderData( divId, dta );
+			}
+		);		  
+	}
+}
+
+//---------------------------------------------------------------------------------------
 
 function pongIOrenderPoti( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderPoti '"+def.id+"': "+JSON.stringify(dta) );
@@ -389,6 +355,25 @@ function pongIOrenderPoti( divId, ctx, def, dta ) {
 }
 
 
+function pongIOcheckPotiSense( divId, x, y, id, s ) {
+	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
+		var val = s.min + ( x - s.x1 ) * ( s.max - s.min ) / ( s.x2 - s.x1 );
+		log( "pong-io", "Poti: "+id +" >> "+val );
+		$.ajax( 
+			{ url: moduleConfig[ divId ].dataURL, 
+			  type: "POST", 
+			  dataType: "json",
+			  data: { id:id, value:val, type:"Poti" }
+			}
+		).done(
+			function( dta) {
+				pongIOrenderData( divId, dta );
+			}
+		);
+	}
+}
+//---------------------------------------------------------------------------------------
+
 function pongIOrenderDisplay( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderDisplay '"+def.id+"': "+JSON.stringify(dta) );
 	var x = parseInt( def.pos.x );
@@ -419,6 +404,8 @@ function pongIOrenderDisplay( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderDisplay end.");
 }
 
+//---------------------------------------------------------------------------------------
+
 function pongIOrenderImg( ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderImg '"+def.id+"': "+JSON.stringify(dta) );
 	// TODO IO: implement img
@@ -427,12 +414,7 @@ function pongIOrenderImg( ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderImg end.");
 }
 
-function pongIOrenderGrapgh( ctx, def, dta ) {
-	log( "pong-io", "pongIOrenderImg '"+def.id+"': "+JSON.stringify(dta) );
-	// TODO IO: implement graph
-
-	log( "pong-io", "pongIOrenderImg end.");
-}
+//---------------------------------------------------------------------------------------
 
 function pongIOrenderLED( ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderLED '"+def.id+"': "+JSON.stringify(dta) );
@@ -470,5 +452,84 @@ function pongIOrenderLED( ctx, def, dta ) {
 	ctx.rect( x, y, ledW, ledH );
 	ctx.fill();  		
 	log( "pong-io", "pongIOrenderLED end.");
+}
+
+// ---------------------------------------------------------------------------------------
+
+function pongIOrenderGraph( divId, ctx, def, dta ) {
+	log( "pong-io", "pongIOrenderGraph '"+def.id+"': "+JSON.stringify(def) );
+	if ( def.pos  &&  def.pos.x != null  &&  def.pos.y != null  &&  def.width  &&  def.height &&
+		 def.layout && def.layout.yAxis  &&  def.layout.yAxis.min != null  &&  def.layout.yAxis.max != null ) {} else { 
+		log( "pong-io", "pongIOrenderGraph: Config not OK! End.");
+		return;
+	}
+	var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
+		yMin = def.layout.yAxis.min , yMax = def.layout.yAxis.max;
+	ctx.beginPath();
+	ctx.strokeStyle = "#00A";
+	ctx.fillStyle   = "#DDD";
+	ctx.lineWidth    = "1";
+	if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+	if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
+	ctx.rect( x, y, w, h );
+	ctx.stroke();
+	ctx.fill();  		
+	
+	log( "pong-io", "Graph y-min="+Math.log( yMin ) );	
+	log( "pong-io", "Graph y-max="+Math.log( yMax ) );	
+	var lYmin = Math.log( yMin ) , lYmax = Math.log( yMax );
+	
+	ctx.textAlign = "end";
+	ctx.textBaseline = "middle";
+	if ( def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
+		var xx = x + 4, xt= x - 3;
+		for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
+			var l = parseFloat( def.layout.yAxis.labels[c] );
+			if ( ! isNaN( l ) ) {
+				var ly = h * ( (  Math.log(l) - lYmin ) / ( lYmax - lYmin ) );
+				var lyy = Math.round( y	 + h - ly ); 
+				log( "pong-io", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+				log( "pong-io", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
+				ctx.moveTo( x,  lyy );
+				ctx.strokeStyle = "#00A";
+				ctx.fillStyle   = "#DDD";
+				ctx.lineTo( xx, lyy );
+				ctx.stroke();
+				textOut(  divId, def, ctx, l, xt, lyy, {"font":"8pt Arial"} );
+			}
+		}
+	}
+	
+	
+	
+	// TODO IO: implement graph
+	log( "pong-io", "pongIOrenderGraph end.");
+}
+
+
+//---------------------------------------------------------------------------------------
+
+/** helper */
+function textOut( divId, def, ctx, txt, x, y, opt ) {
+	var pmd = moduleConfig[ divId ];
+	
+	if ( def.font ) {	ctx.font = def.font; } 
+		else if ( pmd.font ) { ctx.font   = pmd.font; } 
+			else if ( opt && opt.font ) { ctx.font   = opt.font; } 
+				else { ctx.font   = "14px Courier"; }
+
+	if ( def.textFillColor ) {	ctx.fillStyle = def.textFillColor; } 
+		else if ( pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
+			else if ( opt && opt.fillStyle ) { ctx.fillStyle   = opt.fillStyle; } 
+				else { ctx.fillStyle   = "#00F"; }
+	
+	if ( def.textStrokeColor ) {	ctx.strokeStyle = def.textStrokeColor; } 
+		else if ( pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
+			else if ( opt && opt.strokeStyle ) { ctx.strokeStyle   = opt.strokeStyle; } 
+				else { ctx.strokeStyle   = "#FFF"; }
+	
+	ctx.strokeText( txt, x, y );
+	ctx.fillText(   txt, x, y );
+	
 }
 

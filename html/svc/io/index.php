@@ -143,9 +143,9 @@ if ( $_SESSION["switchRP"] == 'ON') {
 $_SESSION["p1"] += ( $_SESSION["p1t"] - $_SESSION["p1"] ) / 2; 
 $_SESSION["p2"] += ( $_SESSION["p2t"] - $_SESSION["p2"] ) / 2;
 $_SESSION["p3"] += ( $_SESSION["p3t"] - $_SESSION["p3"] ) / 2;
-$_SESSION["p1"] = round( $_SESSION["p1"] , 2 );
-$_SESSION["p2"] = round( $_SESSION["p2"] , 2 );
-$_SESSION["p3"] = round( $_SESSION["p3"] , 2 );
+$p1 = round( $_SESSION["p1"] , 2 );
+$p2 = round( $_SESSION["p2"] , 2 );
+$p3 = round( $_SESSION["p3"] , 2 );
 
 $data = array();
 $data['switchMain'] = array( 'value' => $_SESSION["switchMain"] );
@@ -155,9 +155,9 @@ $data['ledValveChHi'] = array( 'value' => $_SESSION["ledValveChHi"] );
 $data['ledValveChLo'] = array( 'value' => $_SESSION["ledValveChLo"] );
 $data['ledTMP'] = array( 'value' => $_SESSION["ledTMP"] );
 $data['ledRP'] = array( 'value' => $_SESSION["ledRP"] );
-$data['displayG1'] = array( 'value' => $_SESSION["p1"].' kPa' );
-$data['displayG2'] = array( 'value' => $_SESSION["p2"].' kPa' );
-$data['displayG3'] = array( 'value' => $_SESSION["p3"].' kPa' );
+$data['displayG1'] = array( 'value' => $p1.' kPa' );
+$data['displayG2'] = array( 'value' => $p2.' kPa' );
+$data['displayG3'] = array( 'value' => $p3.' kPa' );
 $data['switchRP']  = array( 'value' => $_SESSION["switchRP"] );
 $data['switchTMP'] = array( 'value' => $_SESSION["switchTMP"] );
 $data['switchValveN2']   = array( 'value' => $_SESSION["switchValveN2"]  );
