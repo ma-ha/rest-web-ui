@@ -12,7 +12,7 @@ input and output controllers. Basic 'moduleConfig' is like this:
 		]
 	}
 
-[Online Demo](http://mh-svr.de/pong_v0.6.0/index.html?layout=demo_io)
+[Online Demo](http://mh-svr.de/pong_v0.6.1/index.html?layout=demo_io)
 
 To get the values a GET call is done to 'dataURL'. 
 The response should be an "array" of the values:
@@ -118,8 +118,45 @@ Optional settings:
 
 A change of the poti by mouse click will do a POST request with the new value to the backend.
 
+### Graph
+Example config:
+
+	"moduleConfig":{ ...
+		{
+			"id":"graphExample",
+			"type":"Graph",
+			"width":"200", "height":"150",
+			"layout":{
+				"name":"P[kPa]",
+				"yAxis":{
+					"axisType":"logarithmic",
+					"min":"0.07",
+					"max":"120",
+					"labels":["0.1","1","10","100"]
+				}
+			},
+			"pos":{ "x":"10", "y":"10" }
+		}, ...
+
+If there is no axisType defined it will be linear.
+
+The graph expects data in following structure:
+
+	"graphExample": [
+        {
+            "name": "chamber",
+            "data": [
+                [  0   , 80.000152587891 ],
+                [  1.5 , 80.000076293945 ],
+                ...
+            ]
+        }
+    ]
+    
+The graph will render all values from xMin to xMax (if yAxis.min < y-value < yAxis.max). 
+
+Hint: Add a form to tell the backend, if you want to get a limited value range.
 
 ### TODOs
 - Gauges
 - Analog
-- Graphs
