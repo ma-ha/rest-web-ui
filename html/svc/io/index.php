@@ -24,6 +24,12 @@ $_SESSION['graphP2'][] = $pVal;
 
 $_SESSION['graphTx'] = $_SESSION['graphTx'] + 1;
 
+error_log( " graphP1 ". count( $_SESSION['graphP1'] ) );
+error_log( " graphP2 ". count( $_SESSION['graphP2'] ) );
+$_SESSION['graphP1'] = array_slice( $_SESSION['graphP1'] , count( $_SESSION['graphP1'] ) - 100 );
+$_SESSION['graphP2'] = array_slice( $_SESSION['graphP2'] , count( $_SESSION['graphP2'] ) - 100 );
+$_SESSION['graphT']  = array_slice( $_SESSION['graphT']  , count( $_SESSION['graphT'] )  - 100 );
+
 $tVal = array();
 if ( ! isset( $_SESSION["p1"] ) ) {	
 	$_SESSION['graphT'] = array();
@@ -150,30 +156,31 @@ if ( $_SESSION["ledTMP"]  == '1') {
 	error_log( "p1 = 2" );
 } else {
 	if ( $_SESSION["ledValveTMP"] == '1' && $_SESSION["switchRP"] == 'ON') {
-		$_SESSION["p1t"] = 10;
+		$_SESSION["p1t"] = $_SESSION["p3"];
 		error_log( "p1 = 10" );
-	} else {
-		$_SESSION["p1t"] = 100;
-		error_log( "p1 = 100" );
 	}
 }
-if ( $_SESSION["ledValveChHi"] == '1' ) {	
-	$_SESSION["p2t"] = $_SESSION["p1t"];
+if ( $_SESSION["ledValveChHi"] == '1' ) {
+	$_SESSION["p1"] =  $_SESSION["p1"] + ( $_SESSION["p2"] - $_SESSION["p1"] ) / 10; 
+	$_SESSION["p2t"] = $_SESSION["p1"];
 }
 if ( $_SESSION["switchRP"] == 'ON') { 
 	$_SESSION["p3t"] = 10;
 	if ( $_SESSION["switchValveInflate"] < 10) {
 		if ( $_SESSION["ledValveChLo"] == '1' ) {
-			$_SESSION["p2t"] = 10;
+			$_SESSION["p3"] =  $_SESSION["p2"] + ( $_SESSION["p3"] - $_SESSION["p2"] ) / 10; 
+			$_SESSION["p2t"] = $_SESSION["p3"];
 		} 
 		if ( $_SESSION["ledValveChHi"] == '1' ) {
-			$_SESSION["p2t"] = $_SESSION["p1t"];
+			$_SESSION["p1"] =  $_SESSION["p1"] + ( $_SESSION["p2"] - $_SESSION["p1"] ) / 10; 
+			$_SESSION["p2t"] = $_SESSION["p1"];
 		} 
 	} else {
 		if ( $_SESSION["ledValveChLo"] == '1' ) {
 			$_SESSION["p2t"] = 80;
 		} else if ( $_SESSION["ledValveChHi"] == '1' ) {
-			$_SESSION["p2t"] = $_SESSION["p1t"];
+			$_SESSION["p1"] =  $_SESSION["p1"] + ( $_SESSION["p2"] - $_SESSION["p1"] ) / 10; 
+			$_SESSION["p2t"] = $_SESSION["p1"];
 		} else {
 			$_SESSION["p2t"] = 100;
 		}
