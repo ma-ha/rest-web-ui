@@ -10,7 +10,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 }
 
-if ( ! isset( $_SESSION["p1"] ) ) {
+// append values to T and P graph
+$tVal[0] = $_SESSION['graphTx']; 
+$tVal[1] = 20;
+$_SESSION['graphT'][] = $tVal;
+
+$pVal[0] = $_SESSION['graphTx'];
+$pVal[1] = $_SESSION["p1"];
+$_SESSION['graphP1'][] = $pVal;
+
+$pVal[1] = $_SESSION["p2"];
+$_SESSION['graphP2'][] = $pVal;
+
+$_SESSION['graphTx'] = $_SESSION['graphTx'] + 1;
+
+$tVal = array();
+if ( ! isset( $_SESSION["p1"] ) ) {	
+	$_SESSION['graphT'] = array();
+	$_SESSION['graphTx'] = 0;
+	
+	error_log( $_SESSION['graphTx'] );
+	$tVal[0] = $_SESSION['graphTx']; $_SESSION['graphTx'] = $_SESSION['graphTx'] +1;
+	$tVal[1] = 20;
+	$_SESSION['graphT'][] = $tVal;
+	error_log( $_SESSION['graphTx'] );
+	$tVal[0] = $_SESSION['graphTx']; $_SESSION['graphTx'] = $_SESSION['graphTx'] +1;
+	$_SESSION['graphT'][] = $tVal;
+		error_log( $_SESSION['graphTx'] );
+	$tVal[0] = $_SESSION['graphTx']; $_SESSION['graphTx'] = $_SESSION['graphTx'] +1;
+	$_SESSION['graphT'][] = $tVal;
+		error_log( $_SESSION['graphTx'] );
+	$tVal[0] = $_SESSION['graphTx']; $_SESSION['graphTx'] = $_SESSION['graphTx'] +1;
+	$_SESSION['graphT'][] = $tVal;
+	error_log( $_SESSION['graphTx'] );
+	
 	$_SESSION["p1t"] = 100;
 	$_SESSION["p2t"] = 100;
 	$_SESSION["p3t"] = 100;
@@ -37,6 +70,15 @@ if ( ! isset( $_SESSION["p1"] ) ) {
 	$_SESSION["ledValveChHi"] = '-1';
 	$_SESSION["ledValveChLo"] = '-1';
 	
+	$_SESSION['graphP1'] = array();
+	$pVal[0] = $_SESSION['graphTx']; 
+	$pVal[1] = $_SESSION["p1"];
+	$_SESSION['graphP1'][] = $pVal;
+
+	$_SESSION['graphP2'] = array();
+	$pVal[0] = $_SESSION['graphTx']; 
+	$pVal[1] = $_SESSION["p2"];
+	$_SESSION['graphP2'][] = $pVal;
 }
 
 
@@ -165,5 +207,8 @@ $data['switchValveTMP']  = array( 'value' => $_SESSION["switchValveTMP"]  );
 $data['switchValveChHi'] = array( 'value' => $_SESSION["switchValveChHi"]  );
 $data['switchValveN2n']     = array( 'value' => $_SESSION["switchValveN2n"] );
 $data['switchValveInflate'] = array( 'value' => $_SESSION["switchValveInflate"] );
+$data['graphT'] = array( array( 'name' => 'chamber', 'data' => $_SESSION["graphT"] ) );
+$data['graphP'] = array( array( 'name' => 'pump', 'data' => $_SESSION["graphP1"] ), array( 'name' => 'chamber', 'data' => $_SESSION["graphP2"] ) );
+
 echo json_encode( $data , JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES  );
 ?>

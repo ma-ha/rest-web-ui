@@ -464,7 +464,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		return;
 	}
 	var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
-		yMin = def.layout.yAxis.min , yMax = def.layout.yAxis.max;
+		yMin = parseFloat( def.layout.yAxis.min ) , yMax = parseFloat( def.layout.yAxis.max );
 	ctx.beginPath();
 	ctx.strokeStyle = "#00A";
 	ctx.fillStyle   = "#DDD";
@@ -475,10 +475,22 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ctx.stroke();
 	ctx.fill();  		
 	
-	log( "pong-io", "Graph y-min="+Math.log( yMin ) );	
-	log( "pong-io", "Graph y-max="+Math.log( yMax ) );	
-	var lYmin = Math.log( yMin ) , lYmax = Math.log( yMax );
-	
+	if ( def.layout.name ) {
+		var xx = x + w/2, yy = y-6;
+		ctx.textAlign = "center";
+		ctx.textBaseline = "bottom";
+		textOut(  divId, def, ctx, def.layout.name, xx, y, {"font":"10pt Arial"} );		
+	}
+		
+	// draw y axis
+	var lYmin = yMin , lYmax = yMax , yLogType = false ;
+	if ( def.layout.yAxis.axisType && def.layout.yAxis.axisType == "logarithmic" ) {  
+		yLogType = true;
+		lYmin = Math.log( yMin );
+		lYmax = Math.log( yMax );		
+	}
+	log( "pong-io", "Graph y-min="+lYmin );	
+	log( "pong-io", "Graph y-max="+lYmax );	
 	ctx.textAlign = "end";
 	ctx.textBaseline = "middle";
 	if ( def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
@@ -486,9 +498,12 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labels[c] );
 			if ( ! isNaN( l ) ) {
-				var ly = h * ( (  Math.log(l) - lYmin ) / ( lYmax - lYmin ) );
+				var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+				if ( yLogType ) {
+					ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+					log( "pong-io", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+				}
 				var lyy = Math.round( y	 + h - ly ); 
-				log( "pong-io", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
 				log( "pong-io", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
 				ctx.moveTo( x,  lyy );
 				ctx.strokeStyle = "#00A";
@@ -500,7 +515,50 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		}
 	}
 	
-	
+	// draw graphs
+	if ( dta  ) {
+		for ( var c = 0; c < dta.length; c++ ) {
+			var g = dta[c];
+			log( "pong-io", ">>>>>>>>>>> #d="+ g.data.length  );
+			if ( g.data && g.data.length ) {
+				var xMin = g.data[0][0]; xMax = g.data[0][0];
+				for ( var i = 0; i < g.data.length; i++ ) {
+					if ( xMax < g.data[i][0] ) { xMax = g.data[i][0] }
+					if ( xMin > g.data[i][0] ) { xMin = g.data[i][0] }
+				}
+				if ( xMin == xMax ) { xMax += 1; }
+				log( "pong-io", " xMin="+xMin+" xMax="+xMax );
+				var drawL = false;
+				ctx.beginPath();
+				ctx.strokeStyle = "#99F";
+				ctx.fillStyle   = "#DDD";
+				for ( var i = 0; i < g.data.length; i++ ) {
+					var xx = x + Math.round(  w * ( g.data[i][0] - xMin ) / ( xMax - xMin) );
+					//log( "pong-io", " xx = "+xx +"    > "+g.data[i][0]+" "+w+" "+x );
+					var yy = y;
+					if ( yLogType ) {
+						yy = y + h - Math.round( h * ( Math.log( g.data[i][1] ) - lYmin ) / ( lYmax - lYmin ) );
+						//log( "pong-io", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
+					} else {
+						yy = y + h - Math.round( h * ( g.data[i][1] - lYmin ) / ( lYmax - lYmin ) );
+					}
+					//log( "pong-io", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
+					if ( drawL ) {
+						//log( "pong-io", " lineto( "+xx+" / "+yy+" )" );
+						ctx.lineTo( xx, yy );												
+						ctx.stroke();
+					} else {
+						//log( "pong-io", " moveto( "+xx+" / "+yy+" )" );
+						ctx.moveTo( xx, yy );						
+					}
+					if ( yMin < g.data[i][1] && g.data[i][1] < yMax ) { drawL = true; } else { drawL = false; }
+				}
+			}
+			//if ( g.length ) {
+			//}
+			
+		}
+	}
 	
 	// TODO IO: implement graph
 	log( "pong-io", "pongIOrenderGraph end.");

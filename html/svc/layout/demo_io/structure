@@ -11,7 +11,7 @@
 				"moduleConfig":{
 					"imgURL":"svc/io/img.png",
 					"dataURL":"svc/io/",
-					"poll":"60000",
+					"poll":"5000",
 					"io":[
 						{
 							"id":"switchMain",
@@ -19,7 +19,7 @@
 							"textFillColor":"#F00",
 							"lineCol":"#F00",
 							"fillCol":"#DAA",
-							"pos":{ "x":"850", "y":"380" },
+							"pos":{ "x":"870", "y":"400" },
 							"values":[ "Power ON", "Power OFF" ]
 						},
 						{
@@ -114,6 +114,7 @@
 							"type":"Graph",
 							"width":"150", "height":"150",
 							"layout":{
+								"name":"P[kPa] (Chamber)",
 								"graphType":"timeLog",
 								"yAxis":{
 									"axisType":"logarithmic",
@@ -122,7 +123,22 @@
 									"labels":["0.1","1","10","100"]
 								}
 							},
-							"pos":{ "x":"820", "y":"5" }
+							"pos":{ "x":"820", "y":"50" }
+						},
+						{
+							"id":"graphT",
+							"type":"Graph",
+							"width":"150", "height":"100",
+							"layout":{
+								"name":"T[°C] (Chamber)",
+								"graphType":"timeLog",
+								"yAxis":{
+									"min":"-50",
+									"max":"450",
+									"labels":["0","100","200","300","400"]
+								}
+							},
+							"pos":{ "x":"820", "y":"225" }
 						}
 					]
 				},
