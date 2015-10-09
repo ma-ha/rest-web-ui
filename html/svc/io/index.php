@@ -22,13 +22,22 @@ $_SESSION['graphP1'][] = $pVal;
 $pVal[1] = $_SESSION["p2"];
 $_SESSION['graphP2'][] = $pVal;
 
+$pVal[1] = $_SESSION["p3"];
+$_SESSION['graphP3'][] = $pVal;
+
 $_SESSION['graphTx'] = $_SESSION['graphTx'] + 1;
 
-error_log( " graphP1 ". count( $_SESSION['graphP1'] ) );
-error_log( " graphP2 ". count( $_SESSION['graphP2'] ) );
-$_SESSION['graphP1'] = array_slice( $_SESSION['graphP1'] , count( $_SESSION['graphP1'] ) - 100 );
-$_SESSION['graphP2'] = array_slice( $_SESSION['graphP2'] , count( $_SESSION['graphP2'] ) - 100 );
-$_SESSION['graphT']  = array_slice( $_SESSION['graphT']  , count( $_SESSION['graphT'] )  - 100 );
+// error_log( " graphP1 ". count( $_SESSION['graphP1'] ) );
+// error_log( " graphP2 ". count( $_SESSION['graphP2'] ) );
+if (  count( $_SESSION['graphP1'] ) > 100 ) {
+	$_SESSION['graphP1'] = array_slice( $_SESSION['graphP1'] , count( $_SESSION['graphP1'] ) - 100 );
+}
+if (  count( $_SESSION['graphP2'] ) > 100 ) {
+	$_SESSION['graphP2'] = array_slice( $_SESSION['graphP2'] , count( $_SESSION['graphP2'] ) - 100 );
+}
+if (  count( $_SESSION['graphT'] ) > 100 ) {
+	$_SESSION['graphT']  = array_slice( $_SESSION['graphT']  , count( $_SESSION['graphT'] )  - 100 );
+}
 
 $tVal = array();
 if ( ! isset( $_SESSION["p1"] ) ) {	
@@ -85,6 +94,11 @@ if ( ! isset( $_SESSION["p1"] ) ) {
 	$pVal[0] = $_SESSION['graphTx']; 
 	$pVal[1] = $_SESSION["p2"];
 	$_SESSION['graphP2'][] = $pVal;
+
+	$_SESSION['graphP3'] = array();
+	$pVal[0] = $_SESSION['graphTx']; 
+	$pVal[1] = $_SESSION["p3"];
+	$_SESSION['graphP3'][] = $pVal;
 }
 
 
@@ -153,11 +167,11 @@ if ( $_SESSION["ledTMP"] == '2' ) {
 }
 if ( $_SESSION["ledTMP"]  == '1') {
 	$_SESSION["p1t"] = 0.1;
-	error_log( "p1 = 2" );
+// 	error_log( "p1 = 2" );
 } else {
 	if ( $_SESSION["ledValveTMP"] == '1' && $_SESSION["switchRP"] == 'ON') {
 		$_SESSION["p1t"] = $_SESSION["p3"];
-		error_log( "p1 = 10" );
+// 		error_log( "p1 = 10" );
 	}
 }
 if ( $_SESSION["ledValveChHi"] == '1' ) {
@@ -215,7 +229,12 @@ $data['switchValveChHi'] = array( 'value' => $_SESSION["switchValveChHi"]  );
 $data['switchValveN2n']     = array( 'value' => $_SESSION["switchValveN2n"] );
 $data['switchValveInflate'] = array( 'value' => $_SESSION["switchValveInflate"] );
 $data['graphT'] = array( array( 'name' => 'chamber', 'data' => $_SESSION["graphT"] ) );
-$data['graphP'] = array( array( 'name' => 'pump', 'data' => $_SESSION["graphP1"] ), array( 'name' => 'chamber', 'data' => $_SESSION["graphP2"] ) );
+$data['graphP'] = 
+	array( 
+		array( 'name' => 'pump', 'data' => $_SESSION["graphP1"] ), 
+		array( 'name' => 'chamber', 'data' => $_SESSION["graphP2"] ), 
+		array( 'name' => 'prevac', 'data' => $_SESSION["graphP3"] ) 
+	);
 
 echo json_encode( $data , JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES  );
 ?>
