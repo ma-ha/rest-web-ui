@@ -50,7 +50,7 @@ You can host your portals and views this *Portal-as-a-Service* web site.
 Please have a look at my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 
 ## Available view types
-You'll find forms, tables, content, i18n plug in docu in the 
+You'll find forms, tables, content, I/O, i18n plug-in docu in the 
 [module plug-ins folder](html/modules/). 
 
 ## Add or extend Plug-Ins
