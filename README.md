@@ -17,6 +17,7 @@ All you need is a modern web browser -- and a web service somewhere.
 * <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> as web copy buffer ([Source on GitHub](https://github.com/ma-ha/copypaste)).
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
+* <a href="http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io" target="_blank">Vacuum lab simulation</a>: I/O demo with LEDs, switches, graphs ...
 
 These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 
