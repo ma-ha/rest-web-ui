@@ -531,7 +531,9 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 				var drawL = false;
 				ctx.beginPath();
 				ctx.strokeStyle = "#99F";
-				ctx.fillStyle   = "#DDD";
+				if ( def.layout.colors && def.layout.colors[ g.name ] ) {
+					ctx.strokeStyle = def.layout.colors[ g.name ];
+				}
 				for ( var i = 0; i < g.data.length; i++ ) {
 					var xx = x + Math.round(  w * ( g.data[i][0] - xMin ) / ( xMax - xMin) );
 					//log( "pong-io", " xx = "+xx +"    > "+g.data[i][0]+" "+w+" "+x );

@@ -1,4 +1,4 @@
-## IO Plug In Module Config
+## IO Plug In Module Configuration
 Use the IO plug-in to create a control panel.
 On the underlying (optional) image you can arrange different
 input and output controllers. Basic 'moduleConfig' is like this:
@@ -12,7 +12,7 @@ input and output controllers. Basic 'moduleConfig' is like this:
 		]
 	}
 
-[Online Demo](http://mh-svr.de/pong_v0.6.1/index.html?layout=demo_io)
+[Online Demo](http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io)
 
 To get the values a GET call is done to 'dataURL'. 
 The response should be an "array" of the values:
@@ -119,7 +119,7 @@ Optional settings:
 A change of the poti by mouse click will do a POST request with the new value to the backend.
 
 ### Graph
-Example config:
+Example configuration:
 
 	"moduleConfig":{ ...
 		{
@@ -138,13 +138,27 @@ Example config:
 			"pos":{ "x":"10", "y":"10" }
 		}, ...
 
-If there is no axisType defined it will be linear.
+If there is no axisType defined it will be linear. 
 
+Optional you can define colors and fonts:
+
+	moduleConfig":{ ...
+		{
+			"id":"graphExample",
+			"type":"Graph",
+			"font":"8px Arial", 
+			"textFillColor":"#00F",
+			"lineCol":"#00A",
+			"fillCol":"#DDD",
+			"layout":{
+				"colors":{ "data1":"#5A5", "data2":"#55A"},
+				...
+			
 The graph expects data in following structure:
 
 	"graphExample": [
         {
-            "name": "chamber",
+            "name": "data1",
             "data": [
                 [  0   , 80.000152587891 ],
                 [  1.5 , 80.000076293945 ],
@@ -153,10 +167,10 @@ The graph expects data in following structure:
         }
     ]
     
-The graph will render all values from xMin to xMax (if yAxis.min < y-value < yAxis.max). 
+The graph will render all given values from xMin to xMax (if yAxis.min < y-value < yAxis.max). 
 
 Hint: Add a form to tell the backend, if you want to get a limited value range.
 
 ### TODOs
 - Gauges
-- Analog
+- Images (e.g. web cam)

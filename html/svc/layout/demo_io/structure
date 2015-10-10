@@ -114,8 +114,9 @@
 							"type":"Graph",
 							"width":"150", "height":"150",
 							"layout":{
-								"name":"P[kPa] (Chamber)",
+								"name":"P[kPa]",
 								"graphType":"timeLog",
+								"colors":{"pump":"#5A5","chamber":"#0D0"},
 								"yAxis":{
 									"axisType":"logarithmic",
 									"min":"0.01",
@@ -130,8 +131,8 @@
 							"type":"Graph",
 							"width":"150", "height":"100",
 							"layout":{
-								"name":"T[°C] (Chamber)",
-								"graphType":"timeLog",
+								"name":"T[°C] ",
+								"colors":{"pump":"#5A5","chamber":"#55A"},
 								"yAxis":{
 									"min":"-50",
 									"max":"450",
