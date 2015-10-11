@@ -11,7 +11,7 @@
 				"moduleConfig":{
 					"imgURL":"svc/io/img.png",
 					"dataURL":"svc/io/",
-					"poll":"35000",
+					"poll":"5000",
 					"io":[
 						{
 							"id":"switchMain",
