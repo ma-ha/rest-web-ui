@@ -137,7 +137,16 @@ function pongIOmakeJS( divId  ) {
 						contentItems.push( '      pongIOcheckPotiSense( "'+divId+'", x, y, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
 					}
 					
+				}  else if ( io.type == 'Button' ) {
+
+					log( "pong-io", io.type+' '+io.id );		
+					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
+						var s = ioSense[ divId ][ io.id ];
+						contentItems.push( '      pongIOcheckButtonSense( "'+divId+'", x, y, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+					}
+					
 				}
+
 			}
 		}
 	}
@@ -190,6 +199,8 @@ function pongIOrenderData( divId,  dta ) {
 					pongIOrenderLED( ctx, io, ioDta );
 				} else if ( io.type == 'Switch') {
 					pongIOrenderSwitch( divId, ctx, io, ioDta );
+				} else if ( io.type == 'Button' ) {
+					pongIOrenderButton( divId, ctx, io, ioDta );
 				} else if ( io.type == 'Poti') {
 					pongIOrenderPoti( divId, ctx, io, ioDta );
 				} else if ( io.type == 'Gauge') {
@@ -218,6 +229,84 @@ function pongIOrenderGauge( ctx, def, dta ) {
 
 //---------------------------------------------------------------------------------------
 
+function pongIOrenderButton( divId, ctx, def, dta ) {
+	log( "pong-io", "pongIOrenderButton '"+def.id+"': "+JSON.stringify(dta) );
+	var x = parseInt( def.pos.x );
+	var y = parseInt( def.pos.y );
+	var w = parseInt( def.width );
+	var h = parseInt( def.height );
+	ctx.beginPath();
+	ctx.lineWidth   = "2";
+	ctx.strokeStyle = "#00F";
+	ctx.fillStyle   = "#DDD";
+	if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+	if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
+	ctx.rect( x, y, w, h );
+	ctx.stroke();
+	ctx.fill();  	
+	ioSense[ divId ][ def.id ] = new Object();
+	ioSense[ divId ][ def.id ].x1 = x;
+	ioSense[ divId ][ def.id ].x2 = x + w;
+	ioSense[ divId ][ def.id ].y1 = y;
+	ioSense[ divId ][ def.id ].y2 = y + h;
+	
+	if ( def.values  &&  def.values.length  ) {
+			
+			var ledDef = new Object;
+			if ( def.led ) {
+				ledDef = def.led;
+			} else {
+				ledDef.id = def.id+"LED";
+				ledDef.pos = new Object();
+				ledDef.pos.x = x + 2;
+				ledDef.pos.y = y + 2;
+				ledDef.ledHeight = 3;
+			}
+			var ledDta = new Object();
+			ledDta.value = 0;
+			if ( dta && dta.value ) {
+				for ( var i = 0; i < def.values.length; i++ ) {
+					var btVal = def.values[ i ];
+				    //log( "pong-io", "btnVal is " + JSON.stringify( btVal ) );
+					if ( btVal.buttonState == dta.value ) { 
+						ledDta.value = btVal.led; 
+					    //log( "pong-io", " led: " + btVal.led );
+					}				    
+				}
+			}
+			pongIOrenderLED( ctx, ledDef, ledDta );	
+		
+	}
+	
+	if ( def.label ) {
+		var xx = x + w/2, yy = y + h/2; 
+		ctx.textAlign = "center"; 
+		ctx.textBaseline = "middle"; 
+		textOut( divId, def, ctx, def.label, xx, yy, { strokeStyle:"#DDD" } );
+	}
+	
+	log( "pong-io", "pongIOrenderButton end.");
+}
+
+function pongIOcheckButtonSense( divId, x, y, id, s ) {
+	log( "pong-io", "pongIOcheckButtonSense: "+x+"/"+y+"  "+s.x1+"-"+s.x2+"/"+s.y1+"-"+s.y2);
+	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
+		log( "pong-io", "Button: "+id );
+		$.ajax( 
+			{ url: moduleConfig[ divId ].dataURL, 
+			  type: "POST", 
+			  dataType: "json",
+			  data: { id:id, type:"Button" } // backend is responsible for state and value
+			}
+		).done(
+			function( dta) {
+				pongIOrenderData( divId, dta );
+			}
+		);		  
+	}
+}
+
+//---------------------------------------------------------------------------------------
 
 function pongIOrenderSwitch( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderSwitch '"+def.id+"': "+JSON.stringify(dta) );
@@ -417,7 +506,7 @@ function pongIOrenderImg( ctx, def, dta ) {
 //---------------------------------------------------------------------------------------
 
 function pongIOrenderLED( ctx, def, dta ) {
-	log( "pong-io", "pongIOrenderLED '"+def.id+"': "+JSON.stringify(dta) );
+	log( "pong-io", "pongIOrenderLED '"+JSON.stringify(def) +"': "+JSON.stringify(dta) );
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
 	ctx.beginPath();
@@ -448,7 +537,7 @@ function pongIOrenderLED( ctx, def, dta ) {
 	}
 	var ledW = 7, ledH = 7;
 	if ( def.ledWidth  ) { ledW = def.ledWidth; }
-	if ( def.ledHeight ) { ledW = def.ledHeight; }
+	if ( def.ledHeight ) { ledH = def.ledHeight; }
 	ctx.rect( x, y, ledW, ledH );
 	ctx.fill();  		
 	log( "pong-io", "pongIOrenderLED end.");

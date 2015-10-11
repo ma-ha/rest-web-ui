@@ -11,7 +11,7 @@
 				"moduleConfig":{
 					"imgURL":"svc/io/img.png",
 					"dataURL":"svc/io/",
-					"poll":"5000",
+					"poll":"35000",
 					"io":[
 						{
 							"id":"switchMain",
@@ -51,18 +51,6 @@
 							"id":"ledValveChLo",
 							"type":"LED",
 							"pos":{ "x":"628", "y":"258" }
-						},
-						{
-							"id":"switchRP",
-							"type":"Switch",
-							"pos":{ "x":"80", "y":"27" },
-							"values":[ "ON", "OFF" ]
-						},
-						{
-							"id":"switchTMP",
-							"type":"Switch",
-							"pos":{ "x":"80", "y":"62" },
-							"values":[ "ON", "OFF" ]
 						},
 						{
 							"id":"switchValveN2",
@@ -140,6 +128,22 @@
 								}
 							},
 							"pos":{ "x":"820", "y":"225" }
+						},
+						{
+							"id":"buttonRP",
+							"type":"Button",
+							"label":"On/Off",
+							"width":"50", "height":"25",
+							"pos":{ "x":"70", "y":"17" },
+							"values":[ {"buttonState":"ON","led":"1"}, {"buttonState":"OFF","led":"-1"} ]
+						},
+						{
+							"id":"buttonTMP",
+							"type":"Button",
+							"label":"On/Off",
+							"width":"50", "height":"25",
+							"pos":{ "x":"70", "y":"52" },
+							"values":[ {"buttonState":"ON","led":"1"}, {"buttonState":"OFF","led":"-1"} ]
 						}
 					]
 				},

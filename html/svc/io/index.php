@@ -68,10 +68,10 @@ if ( ! isset( $_SESSION["p1"] ) ) {
 	$_SESSION["p3"] = 100;
 	
 	$_SESSION["switchMain"] = 'Power ON';
-	$_SESSION["switchTMP"]  = 'OFF';
+	$_SESSION["buttonTMP"]  = 'OFF';
 	$_SESSION["ledTMP"]     = '-1';
 	$_SESSION["TMP"]     = '-';
-	$_SESSION["switchRP"]   = 'OFF';
+	$_SESSION["buttonRP"]   = 'OFF';
 	$_SESSION["ledRP"]      = '-1';
 	$_SESSION["switchValveInflate"] = 100;
 	$_SESSION["switchValveN2n"] = 0;
@@ -105,16 +105,24 @@ if ( ! isset( $_SESSION["p1"] ) ) {
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' && 	$_SESSION["switchMain"] != 'Power OFF' ) {
 
 	error_log( $_POST['id'] .'='. $_POST['value'] );
-	$_SESSION[ $_POST['id'] ] = $_POST['value'];
+	if ( $_POST['type'] == "Button" ) {
+		if ( $_SESSION[ $_POST['id'] ] == 'OFF') {
+			$_SESSION[ $_POST['id'] ]  = 'ON';
+		} else {
+			$_SESSION[ $_POST['id'] ]  = 'OFF';
+		}
+	} else {
+		$_SESSION[ $_POST['id'] ] = $_POST['value'];
+	}
 
-	if ( $_POST['id'] == 'switchTMP' ) {
+	if ( $_POST['id'] == 'buttonTMP' ) {
 		if ( $_POST['value'] == 'ON' ) {
 			$_SESSION["ledTMP"] = '2';
 		} else {
 			$_SESSION["ledTMP"] = '2';
 		}
 	}
-	if ( $_POST['id'] == 'switchRP' ) {
+	if ( $_POST['id'] == 'buttonRP' ) {
 		if ( $_POST['value'] == 'ON' ) {
 			$_SESSION["ledRP"] = '1';
 		} else {
@@ -157,10 +165,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' && 	$_SESSION["switchMain"] != 'Power
 
 
 if ( $_SESSION["ledTMP"] == '2' ) {
-	if ( $_SESSION["switchTMP"]  == 'OFF') { // Power down done
+	if ( $_SESSION["buttonTMP"]  == 'OFF') { // Power down done
 		$_SESSION["ledTMP"] = '-1';
 	} else {
-		if ( $_SESSION["switchRP"]  == 'ON' && $_SESSION["switchValveTMP"] == 'open') { // Power up done if PR is ON
+		if ( $_SESSION["buttonRP"]  == 'ON' && $_SESSION["switchValveTMP"] == 'open') { // Power up done if PR is ON
 			$_SESSION["ledTMP"] = '1';
 		}
 	}
@@ -169,7 +177,7 @@ if ( $_SESSION["ledTMP"]  == '1') {
 	$_SESSION["p1t"] = 0.1;
 // 	error_log( "p1 = 2" );
 } else {
-	if ( $_SESSION["ledValveTMP"] == '1' && $_SESSION["switchRP"] == 'ON') {
+	if ( $_SESSION["ledValveTMP"] == '1' && $_SESSION["buttonRP"] == 'ON') {
 		$_SESSION["p1t"] = $_SESSION["p3"];
 // 		error_log( "p1 = 10" );
 	}
@@ -178,7 +186,7 @@ if ( $_SESSION["ledValveChHi"] == '1' ) {
 	$_SESSION["p1"] =  $_SESSION["p1"] + ( $_SESSION["p2"] - $_SESSION["p1"] ) / 10; 
 	$_SESSION["p2t"] = $_SESSION["p1"];
 }
-if ( $_SESSION["switchRP"] == 'ON') { 
+if ( $_SESSION["buttonRP"] == 'ON') { 
 	$_SESSION["p3t"] = 10;
 	if ( $_SESSION["switchValveInflate"] < 10) {
 		if ( $_SESSION["ledValveChLo"] == '1' ) {
@@ -221,8 +229,8 @@ $data['ledRP'] = array( 'value' => $_SESSION["ledRP"] );
 $data['displayG1'] = array( 'value' => $p1.' kPa' );
 $data['displayG2'] = array( 'value' => $p2.' kPa' );
 $data['displayG3'] = array( 'value' => $p3.' kPa' );
-$data['switchRP']  = array( 'value' => $_SESSION["switchRP"] );
-$data['switchTMP'] = array( 'value' => $_SESSION["switchTMP"] );
+$data['buttonRP']  = array( 'value' => $_SESSION["buttonRP"] );
+$data['buttonTMP'] = array( 'value' => $_SESSION["buttonTMP"] );
 $data['switchValveN2']   = array( 'value' => $_SESSION["switchValveN2"]  );
 $data['switchValveTMP']  = array( 'value' => $_SESSION["switchValveTMP"]  );
 $data['switchValveChHi'] = array( 'value' => $_SESSION["switchValveChHi"]  );
