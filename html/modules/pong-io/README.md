@@ -61,7 +61,7 @@ Switches can have 2 or 3 values, defined in a array.
 	"moduleConfig":{ ...
 		"io":[ ...
 			{
-				"id":"ledIdXY",
+				"id":"switchIdXY",
 				"type":"Switch",
 				"values":[ "ON", "OFF" ],
 				"pos":{ "x":"123", "y":"345" }
@@ -76,6 +76,36 @@ Optional settings:
 				"fillCol":"#DDD"
 
 A switch by mouse click will do a POST with the id and value to to 'dataURL'.
+
+### Button
+A button sends only a button press event to the backend. 
+The state can be indicated by a LED, if the values array defines a mapping into LED colors.
+
+	"moduleConfig":{ ...
+		"io":[ ...
+			{
+				"id":"buttonIdXY",
+				"type":"Button",
+				"label":"On/Off",
+				"width":"50", "height":"25",
+				"pos":{ "x":"70", "y":"17" },
+				"values":[ 
+					{"buttonState":"ON","led":"1"}, 
+					{"buttonState":"OFF","led":"-1"} 
+				]
+			}, ...			
+
+Optional settings:
+
+ 				"font":"14px Arial",
+ 				"textFillColor":"#00F",
+ 				"textStrokeColor":"#FFF",
+				"lineCol":"#00A",
+				"fillCol":"#DDD"
+				
+A "led" sub-structure may be defined as well. 
+
+A button by mouse click will do a POST with the id to to 'dataURL'.
 
 ### Display
 Displays can display any text or value (like LCD):
