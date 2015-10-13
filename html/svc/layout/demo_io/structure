@@ -144,7 +144,15 @@
 							"width":"50", "height":"25",
 							"pos":{ "x":"70", "y":"52" },
 							"values":[ {"buttonState":"ON","led":"1"}, {"buttonState":"OFF","led":"-1"} ]
+						},
+						{
+							"id":"cam",
+							"type":"Img",
+							"imgURL":"svc/io/cam.jpg",
+							"width":"70", "height":"50",
+							"pos":{ "x":"590", "y":"40" }
 						}
+						
 					]
 				},
 				"type":"pong-io",

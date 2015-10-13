@@ -201,6 +201,20 @@ The graph will render all given values from xMin to xMax (if yAxis.min < y-value
 
 Hint: Add a form to tell the backend, if you want to get a limited value range.
 
+### Image
+Configuration example:
+
+	moduleConfig":{ ...
+		{
+			"id":"cam",
+			"type":"Img",
+			"imgURL":"svc/io/cam.jpg",
+			"width":"70", "height":"50",
+			"pos":{ "x":"590", "y":"40" }
+		}
+
+The parameters "width" and "height" are optional.
+
 ### TODOs
 - Gauges
 - Images (e.g. web cam)
