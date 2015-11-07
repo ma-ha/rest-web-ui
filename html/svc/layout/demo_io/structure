@@ -14,6 +14,20 @@
 					"poll":"5000",
 					"io":[
 						{
+							"id":"mainLED",
+							"type":"Light",
+							"pos":{ "x":"860", "y":"430" },
+							"ledWidth":"100",
+ 							"ledHeight":"20",
+			 				"values": [
+			 					{ "value":"OK", "color":"#0F0" },
+			 					{ "value":"FAILED", "color":"#F00" }
+			 				],
+			 				"labels": [
+			 					{ "data":"value", "format":"(%s)", "posX":"910", "posY":"448" }
+			 				]
+						},
+						{
 							"id":"switchMain",
 							"type":"Switch",
 							"textFillColor":"#F00",

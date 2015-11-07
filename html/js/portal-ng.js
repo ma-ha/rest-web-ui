@@ -499,32 +499,6 @@ function setModuleData ( resId, paramObj, subPath ) {
 	}
 }
 
-
-function getSubData( data, subPath ) {
-	log( "getSubData",  'start ' );
-	var result = data;
-	if ( subPath == null ) {
-		log( "getSubData",  'no subPath' );
-	} else {
-		log( "getSubData",  'tbl.dataDocSubPath='+subPath );
-		var pathToken = subPath.split('.');
-		log( "getSubData",  'pathToken[0] ' + pathToken[0] );
-		var subdata = data[ pathToken[0] ];
-		log( "getSubData", ">>"+JSON.stringify(subdata) );
-		for ( i = 1; i < pathToken.length; i++ ) {
-			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
-			if ( subdata != null ) {
-				subdata = subdata[ pathToken[i] ];
-				log( "getSubData", ">>"+JSON.stringify(subdata) );				
-			} else {
-				log( "getSubData", ">> NULL" );				
-			}
-		}
-		result = subdata;
-	}
-	return result;
-}
-
 //=====================================================================================================
 
 function udateModuleData ( resId, paramObj ) {
@@ -1143,14 +1117,44 @@ Array.prototype.inArray = function( value ){
 	return false;
 };
 
+//=====================================================================================================
+
+function getSubData( data, subPath ) {
+	log( "getSubData",  'start ' );
+	log( "getSubData",  JSON.stringify(data) );
+	var result = data;
+	if ( subPath == null ) {
+		log( "getSubData",  'no subPath' );
+	} else {
+		log( "getSubData",  'tbl.dataDocSubPath='+subPath );
+		var pathToken = subPath.split('.');
+		log( "getSubData",  'pathToken[0] ' + pathToken[0] );
+		var subdata = data[ pathToken[0] ];
+		log( "getSubData", ">>"+JSON.stringify(subdata) );
+		for ( i = 1; i < pathToken.length; i++ ) {
+			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
+			if ( subdata != null ) {
+				subdata = subdata[ pathToken[i] ];
+				log( "getSubData", ">>"+JSON.stringify(subdata) );				
+			} else {
+				log( "getSubData", ">> NULL" );				
+			}
+		}
+		result = subdata;
+	}
+	return result;
+}
+
+//=====================================================================================================
+
 var loggerModule = false; 
 
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( //func=='getHookMethod' || 
 		//func=='pong_map' || 
-		//func=='Pong-Table' || 
-		func=='pong-io' || 
+		func=='getSubData' || 
+		func=='pong-ioX' || 
 		func=='loadModulesXX' ) { 
 		console.log( "["+func+"] "+msg );
 	}
@@ -1165,3 +1169,4 @@ function logErr( func, msg ){
 		console.log( "["+func+"] ERROR: "+msg );
 	//}
 }
+

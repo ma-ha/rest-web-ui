@@ -33,8 +33,8 @@ The response should be an "array" of the values:
 	
 Changes are POSTed to the 'dataURL' and the response will be set as update.
 
-### LEDs
-The LED needs only a unique ID and coordinates where to place it.
+### Lights / LEDs
+The Lights or LEDs needs only a unique ID and coordinates where to place it.
 
 	"moduleConfig":{ ...
 		"io":[ ...
@@ -44,16 +44,45 @@ The LED needs only a unique ID and coordinates where to place it.
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
 
-Optional settings:
+Alternate definition is:
 
- 				"ledWidth":"4",
- 				"ledHeight":"8"
+			"type":"Light",
 
 LEDs values are:
 * -1: red
 * 0: black
 * 1: green
 * 2: yellow
+* and additionally these from "values" array
+
+Optional settings:
+
+ 				"ledWidth":"4",
+ 				"ledHeight":"8",
+ 				"values": [
+ 					{ "value":"OK", "color":"#0F0" },
+ 					{ "value":"FAILED", "color":"#F00" },
+ 					...
+ 				],
+ 				"labels": [
+ 					{ "label":"XY"  },
+ 					{ "data":"value", "format":"%d B/s", "posX":"123", "posy":"345" },
+ 					...
+ 				]
+
+Setting of posX and posY are optional. The values are absolute values to the view.
+
+### Labels 
+
+	"moduleConfig":{ ...
+		"io":[ ...
+			{
+ 				"labels": [
+ 					{ "label":"XY", "posX":"123", "posY":"345" },
+ 					{ "data":"result.probe[0].speed", "format":"%d B/s", "posX":"123", "posy":"345" },
+ 					...
+ 				]
+ 			...
 
 ### Switches
 Switches can have 2 or 3 values, defined in a array.
@@ -70,6 +99,8 @@ Switches can have 2 or 3 values, defined in a array.
 Optional settings:
 
  				"font":"14px Courier",
+ 				"textAlign":"center",
+ 				"textBaseline":"middle",
  				"textFillColor":"#00F",
  				"textStrokeColor":"#FFF",
 				"lineCol":"#00A",
@@ -215,6 +246,13 @@ Configuration example:
 
 The parameters "width" and "height" are optional.
 
-### TODOs
+## Load data per IO
+
+Optional field "dataURL" defines to do a inner AJAX request. 
+
+Additional "data" field defines a path insinde the JSON to set as "value".
+
+
+## TODOs
 - Gauges
 - Images (e.g. web cam)

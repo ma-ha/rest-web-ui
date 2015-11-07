@@ -219,6 +219,7 @@ $p2 = round( $_SESSION["p2"] , 2 );
 $p3 = round( $_SESSION["p3"] , 2 );
 
 $data = array();
+$data['mainLED'] = array( 'value' => 'OK' );
 $data['switchMain'] = array( 'value' => $_SESSION["switchMain"] );
 $data['ledValveN2']   = array( 'value' => $_SESSION["ledValveN2"] );
 $data['ledValveTMP']  = array( 'value' => $_SESSION["ledValveTMP"] );
