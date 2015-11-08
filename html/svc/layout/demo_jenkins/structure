@@ -1,0 +1,37 @@
+{
+	"layout":{
+		"title":"PoNG Demo: Jenkins (with IO module)",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"io123",
+				"height":"500px",
+				"resourceURL":"io",
+				"title":"Jenkins Dashboard",
+				"moduleConfig":{
+					"dataURL":"svc/io/",
+					"poll":"60000",
+					"io":[
+						{
+							"id":"mainLED",
+							"type":"Light",
+							"pos":{ "x":"50", "y":"50" },
+							"ledWidth":"100",
+ 							"ledHeight":"70",
+			 				"values": [
+			 					{ "value":"OK", "color":"#0F0" },
+			 					{ "value":"FAILED", "color":"#F00" }
+			 				],
+			 				"labels": [
+			 					{ "data":"value", "format":"(%s)" }
+			 				]
+						}						
+					]
+				},
+				"type":"pong-io",
+				"decor":"decor"
+			}
+		],
+		"includeFooter":"main"
+	}
+}
