@@ -162,20 +162,41 @@ function pongIOmakeJS( divId  ) {
 function pongIoUpdateData( divId, paramsObj ) {
 	log( "pong-io", "pongIoUpdateData start ");
 	
-	$.getJSON( 
-		moduleConfig[ divId ].dataURL, 
-		function( dta ) {
-			log( "pong-io", "pongIoUpdateData data start");
-					
-			pongIOrenderData( divId, dta );
-			
-			if ( paramsObj && paramsObj.makeJS ) {
-				pongIOmakeJS( divId );				
+	$.ajax( {
+		method: "GET",
+		url: moduleConfig[ divId ].dataURL, 
+		dataType: "json",
+		beforeSend: function( request ) {
+			if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
+				request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
 			}
-	
-			log( "pong-io", "pongIoUpdateData data end.");	
 		}
-	);
+	} ).done( function( dta ) {
+		log( "pong-io", "pongIoUpdateData data start");
+		
+		pongIOrenderData( divId, dta );
+		
+		if ( paramsObj && paramsObj.makeJS ) {
+			pongIOmakeJS( divId );				
+		}
+	
+		log( "pong-io", "pongIoUpdateData data end.");	
+	} );
+
+//	$.getJSON( 
+//		moduleConfig[ divId ].dataURL, 
+//		function( dta ) {
+//			log( "pong-io", "pongIoUpdateData data start");
+//					
+//			pongIOrenderData( divId, dta );
+//			
+//			if ( paramsObj && paramsObj.makeJS ) {
+//				pongIOmakeJS( divId );				
+//			}
+//	
+//			log( "pong-io", "pongIoUpdateData data end.");	
+//		}
+//	);
 	
 	log( "pong-io", "pongIoUpdateData end.");
 }
@@ -191,23 +212,47 @@ function pongIOrenderData( divId,  dta ) {
 			log( "pong-io", io.type+' '+io.id );			
 			
 			if ( io.dataURL ) {		// perform inner AJAX request
-			
-				$.getJSON( 
-					io.dataURL, 
-					function( dta ) {
-						log( "pong-ioX", "inner data loader");
-						if ( io.data ) {	
-							var ioDta = null;
-							if ( dta  ) {
-								ioDta = new Object();
-								ioDta.value = getSubData( dta, io.data );
-							}
-							pongIOrender( divId, ctx, io, ioDta );
-						} else {
-							pongIOrender( divId, ctx, io, dta );							
+
+				$.ajax( {
+					method: "GET",
+					url: io.dataURL, 
+					dataType: "json",
+					beforeSend: function( request ) {
+						if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
+							request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
 						}
 					}
-				);
+				} ).done( function( dta ) {
+					log( "pong-ioX", "inner data loader");
+					if ( io.data ) {	
+						var ioDta = null;
+						if ( dta  ) {
+							ioDta = new Object();
+							ioDta.value = getSubData( dta, io.data );
+						}
+						pongIOrender( divId, ctx, io, ioDta );
+					} else {
+						pongIOrender( divId, ctx, io, dta );							
+					}
+					log( "pong-io", "inner data loader data end.");	
+				} );
+
+//				$.getJSON( 
+//					io.dataURL, 
+//					function( dta ) {
+//						log( "pong-ioX", "inner data loader");
+//						if ( io.data ) {	
+//							var ioDta = null;
+//							if ( dta  ) {
+//								ioDta = new Object();
+//								ioDta.value = getSubData( dta, io.data );
+//							}
+//							pongIOrender( divId, ctx, io, ioDta );
+//						} else {
+//							pongIOrender( divId, ctx, io, dta );							
+//						}
+//					}
+//				);
 			
 			} else if ( io.data ) {		// point to data to evaluate
 				
@@ -340,7 +385,12 @@ function pongIOcheckButtonSense( divId, x, y, id, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, type:"Button" } // backend is responsible for state and value
+			  data: { id:id, type:"Button" }, // backend is responsible for state and value
+			  beforeSend: function( request ) {
+					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
+						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
+					}
+				}				
 			}
 		).done(
 			function( dta) {
@@ -435,7 +485,12 @@ function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, value:val, type:"Switch" }
+			  data: { id:id, value:val, type:"Switch" },
+			  beforeSend: function( request ) {
+					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
+						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
+					}
+				}				
 			}
 		).done(
 			function( dta) {
@@ -496,7 +551,12 @@ function pongIOcheckPotiSense( divId, x, y, id, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, value:val, type:"Poti" }
+			  data: { id:id, value:val, type:"Poti" },
+			  beforeSend: function( request ) {
+					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
+						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
+					}
+				}				
 			}
 		).done(
 			function( dta) {
