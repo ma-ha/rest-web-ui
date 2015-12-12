@@ -225,6 +225,7 @@ function pongIOrenderData( divId,  dta ) {
 					ioDta = dta[ io.id ];
 				}
 				pongIOrender( divId, ctx, io, ioDta );
+				
 			}
 						
 		} // loop		
@@ -270,11 +271,14 @@ function pongIOrenderGauge( ctx, def, dta ) {
 //---------------------------------------------------------------------------------------
 
 function pongIOrenderButton( divId, ctx, def, dta ) {
-	log( "pong-io", "pongIOrenderButton '"+def.id+"': "+JSON.stringify(dta) );
+	log( "pong-ioX", "pongIOrenderButton '"+def.id+"': "+JSON.stringify(dta) );
+	if ( ! def.pos || ! def.pos.x || ! def.pos.y ) { log( "pong-ioX", "pos.x or pos.y  not set"); return; }
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
-	var w = parseInt( def.width );
-	var h = parseInt( def.height );
+	var w = 50;
+	var h = 25;
+	if ( def.width  ) {  w = parseInt( def.width ); }
+	if ( def.height ) {  h = parseInt( def.height ); }
 	ctx.beginPath();
 	ctx.lineWidth   = "2";
 	ctx.strokeStyle = "#00F";
@@ -292,29 +296,29 @@ function pongIOrenderButton( divId, ctx, def, dta ) {
 	
 	if ( def.values  &&  def.values.length  ) {
 			
-			var ledDef = new Object;
-			if ( def.led ) {
-				ledDef = def.led;
-			} else {
-				ledDef.id = def.id+"LED";
-				ledDef.pos = new Object();
-				ledDef.pos.x = x + 2;
-				ledDef.pos.y = y + 2;
-				ledDef.ledHeight = 3;
+		var ledDef = new Object;
+		if ( def.led ) {
+			ledDef = def.led;
+		} else {
+			ledDef.id = def.id+"LED";
+			ledDef.pos = new Object();
+			ledDef.pos.x = x + 2;
+			ledDef.pos.y = y + 2;
+			ledDef.ledHeight = 3;
+		}
+		var ledDta = new Object();
+		ledDta.value = 0;
+		if ( dta && dta.value ) {
+			for ( var i = 0; i < def.values.length; i++ ) {
+				var btVal = def.values[ i ];
+			    //log( "pong-io", "btnVal is " + JSON.stringify( btVal ) );
+				if ( btVal.buttonState == dta.value ) { 
+					ledDta.value = btVal.led; 
+				    //log( "pong-io", " led: " + btVal.led );
+				}				    
 			}
-			var ledDta = new Object();
-			ledDta.value = 0;
-			if ( dta && dta.value ) {
-				for ( var i = 0; i < def.values.length; i++ ) {
-					var btVal = def.values[ i ];
-				    //log( "pong-io", "btnVal is " + JSON.stringify( btVal ) );
-					if ( btVal.buttonState == dta.value ) { 
-						ledDta.value = btVal.led; 
-					    //log( "pong-io", " led: " + btVal.led );
-					}				    
-				}
-			}
-			pongIOrenderLED( ctx, ledDef, ledDta );	
+		}
+		pongIOrenderLED( divId, ctx, ledDef, ledDta );	
 		
 	}
 	
@@ -325,7 +329,7 @@ function pongIOrenderButton( divId, ctx, def, dta ) {
 		textOut( divId, def, ctx, def.label, xx, yy, { strokeStyle:"#DDD" } );
 	}
 	
-	log( "pong-io", "pongIOrenderButton end.");
+	log( "pong-ioX", "pongIOrenderButton end.");
 }
 
 function pongIOcheckButtonSense( divId, x, y, id, s ) {
@@ -554,7 +558,7 @@ function pongIOrenderImg( ctx, def ) {
 //---------------------------------------------------------------------------------------
 
 function pongIOrenderLED( divId, ctx, def, dta ) {
-	log( "pong-ioX", "pongIOrenderLED '"+JSON.stringify(def) +"': "+JSON.stringify(dta) );
+	log( "pong-io", "pongIOrenderLED '"+def.id+"': "+JSON.stringify(dta) );
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
 	ctx.beginPath();
