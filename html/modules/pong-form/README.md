@@ -1,7 +1,7 @@
 ## Description
 This [module](../) creates an input form with button(s) to post data to backend services. 
 
-It is the most complex plug-in and combination with the [table module](./pong-table/) you have a powerful GUI for RESTfule web service out there.
+It is the most complex plug-in and combination with the [table module](./pong-table/) you have a powerful GUI for RESTful web service out there.
 
 ## Usage in "structure" 
 Simply <code>"type": "pong-form"</code> to the <code>rows</code> or <code>cols</code> resource. Example [[PoNG Structure Specification|structure file]] extract:
