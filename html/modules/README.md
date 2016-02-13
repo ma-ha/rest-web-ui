@@ -7,6 +7,8 @@ Modules are loaded by the framework if defined in the
 and methods are triggered in the lifecycle of the portal page.
 
 ## Modules/Views 
+* [Form View](pong-easyform/)
+* *TODO* [Table View](pong-easytable/) 
 * [Form View](pong-form/)
 * [Help Dialog](pong-help/)
 * [I/O View](pong-io/)
