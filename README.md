@@ -1,9 +1,9 @@
 # ReST Web GUI
-*No programming:* 
+## No programming: 
 
 Framework to create descriptive web applications for REST/JSON type web services. 
 
-*Everything runs in browser:*
+## Everything runs in browser:
 
 All you need is a modern web browser -- and a web service somewhere. I.e. no application server is required to run the Web GUI!
 
