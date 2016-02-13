@@ -24,9 +24,54 @@ Simply <code>"type": "pong-easyform"</code> to the <code>rows</code> or <code>co
 	}
 
 ## Form Definition 
-The resource will load the form definition from the URL <code>../svc/<resourceUrl>/pong-form</code>
+The resource will load the form definition from the URL <code>../svc/<resourceUrl>/pong-easyform</code>
+
+### Field specification Conventions
+In the original form plug in, you specify everything in a propper JSON hierarchy. 
+To make this easier, we now offer to use a naming convention in the following ways:
+* c*X*_*fieldname* 
+** for text fields
+** or if fieldname is a type, like password or email
+* c*X*_*fieldname*_*fieldtype+specs*
+** to specify a field type explicitly
+* *fielname*
+** for hidden fields
+
+Example
+
+	{
+	    "id": "Customers"
+	    "easyFormFields": [ 
+	    	"id",
+	    	"c1_Name",
+	    	"c1_Remark_4rows",
+	    	"c2_Email",
+	    	"c2_separator",
+	    	"c2_Phone",
+	    	"c2_Fax",	 
+	    	"c3_Mailings_label",   	
+	    	"c3_SendAds_checkbox_infomails_ads",
+	    	"c3_Newsletter_checkbox_infomails_newsletter"
+	    ],
+	    "actions" : [ 
+	    	...
+	    ]
+	}
+
+Isn't it easy?
+
+Remark:
+* the "label" field is optional, if no "label" is specified, the the "id" is used as label.
+* in real use cases you should add a "descripton", to make the HTML more barrier free.
+
+
+
+
+
+
+
 ### Two column form layout 
-An easy one or two column layout (formFields2 is optional) is available. Example JSON definition from <code><nowiki>../svc/customer/pong-form</nowiki></code>
+An easy one or two column layout (formFields2 is optional) is available. Example JSON definition from <code><nowiki>../svc/customer/pong-easyform</nowiki></code>
 
 	{
 	    "label": "Customers",
@@ -58,8 +103,8 @@ You can do a more flexible form set up by arranging groups and columns, but you 
 	    "fieldGroups":[
 	       {
 	         "fieldset":"name",
-	         "columns":[
-	            {
+	         "columns":[	    	"c1_Phone",
+
 	               "fieldset":"name",
 	               "formFields":[     
 	                  { ... field def ... }
@@ -164,7 +209,7 @@ As mentioned, you can set the  <code>"request":"substitute"</code> or <code>"req
 With this you construct can pass complex structures as parameter, if you want for example pass this parameter in a POST:
 	"filter":[
 	   {
-	     "$or":[
+	     "or":[
 	        { "name":"Nelson Inc" },
 	        { "name":"Nelson LLC" }
 	      ]
