@@ -339,8 +339,8 @@ function loadModuleList() {
 function loadModules() {
 	checkModules( );
 	for ( var module in reqModules ) {
-		log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
-		if ( module != 'pong-XX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+		if ( module != 'pong-easyformXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
 			ajaxOngoing++;
@@ -1154,8 +1154,8 @@ function log( func, msg ){
 	if ( //func=='getHookMethod' || 
 		//func=='pong_map' || 
 		func=='getSubData' || 
-		func=='pong-ioX' || 
-		func=='loadModulesXX' ) { 
+		//func=='Pong-EaysForm' || 
+		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 	}
 	
