@@ -4,26 +4,60 @@
 		"includeHeader":"main",
 		"rows":[
 			{
-				"rowId":"io123",
+				"rowId":"d1",
 				"height":"500px",
 				"resourceURL":"io",
 				"title":"Jenkins Dashboard",
 				"moduleConfig":{
-					"dataURL":"svc/io/",
+					"dataURL":"http://localhost/mh/ws/portal-ng-php-backend/web/pong-proxy.php?p_url=http://localhost:8080/api/json?pretty=true",
 					"poll":"60000",
 					"io":[
 						{
-							"id":"mainLED",
+							"id":"j1",
 							"type":"Light",
+							"dataURL":"http://localhost/mh/ws/portal-ng-php-backend/web/pong-proxy.php?p_url=http://localhost:8080/job/AxisTest/lastBuild/api/json?pretty=true",
 							"pos":{ "x":"50", "y":"50" },
 							"ledWidth":"100",
  							"ledHeight":"70",
+ 							"data":"result",
 			 				"values": [
-			 					{ "value":"OK", "color":"#0F0" },
-			 					{ "value":"FAILED", "color":"#F00" }
+			 					{ "value":"SUCCESS", "color":"#0F0" },
+			 					{ "value":"FAILURE", "color":"#F00" }
 			 				],
 			 				"labels": [
-			 					{ "data":"value", "format":"(%s)" }
+			 					{ "label":"Axis Test" }
+			 				]
+						},
+						{
+							"id":"j2",
+							"type":"Light",
+							"dataURL":"http://localhost/mh/ws/portal-ng-php-backend/web/pong-proxy.php?p_url=http://localhost:8080/job/CRM/lastBuild/api/json?pretty=true",
+							"pos":{ "x":"200", "y":"50" },
+							"ledWidth":"100",
+ 							"ledHeight":"70",
+ 							"data":"result",
+			 				"values": [
+			 					{ "value":"SUCCESS", "color":"#0F0" },
+			 					{ "value":"FAILURE", "color":"#F00" }
+			 				],
+			 				"labels": [
+			 					{ "label":"CRM" }
+			 				]
+						},
+						{
+							"id":"j2",
+							"type":"Light",
+							"dataURL":"http://localhost/mh/ws/portal-ng-php-backend/web/pong-proxy.php?p_url=http://localhost:8080/job/CarTest/lastBuild/api/json?pretty=true",
+							"pos":{ "x":"350", "y":"50" },
+							"ledWidth":"100",
+ 							"ledHeight":"70",
+ 							"data":"result",
+			 				"values": [
+			 					{ "value":"SUCCESS", "color":"#0F0" },
+			 					{ "value":"FAILURE", "color":"#F00" }
+			 				],
+			 				"labels": [
+			 					{ "label":"CAR Test" }
 			 				]
 						}						
 					]
