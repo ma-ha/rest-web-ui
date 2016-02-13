@@ -27,7 +27,7 @@ Simply <code>"type": "pong-easyform"</code> to the <code>rows</code> or <code>co
 The resource will load the form definition from the URL <code>../svc/<resourceUrl>/pong-easyform</code>
 
 ### Field specification Conventions
-In the original form plug in, you specify everything in a propper JSON hierarchy. 
+In the original form plug in, you specify everything in a proper JSON hierarchy. 
 To make this easier, we now offer to use a naming convention. 
 We use "|" (pipe symbol) to put all information in one string in the following ways:
 * "c*X*|*fieldname*" 
@@ -35,7 +35,7 @@ We use "|" (pipe symbol) to put all information in one string in the following w
  * or if *fieldname* (to lowercase) is a type, like password, separator or email
 * "c*X*|*fieldname*|*fieldtype_specs*"
  * to specify a field type explicitly
-* "*fielname*"
+* "*fieldname*"
  * for hidden fields 
 
 c*X* defines the column for the field.
