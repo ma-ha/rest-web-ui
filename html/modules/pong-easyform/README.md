@@ -28,14 +28,15 @@ The resource will load the form definition from the URL <code>../svc/<resourceUr
 
 ### Field specification Conventions
 In the original form plug in, you specify everything in a propper JSON hierarchy. 
-To make this easier, we now offer to use a naming convention in the following ways:
+To make this easier, we now offer to use a naming convention. 
+We use "_" to put all information in one string in the following ways:
 * c*X*_*fieldname* 
 ** for text fields
 ** or if fieldname is a type, like password or email
 * c*X*_*fieldname*_*fieldtype+specs*
 ** to specify a field type explicitly
 * *fielname*
-** for hidden fields
+** for hidden fields 
 
 Example
 
@@ -61,11 +62,11 @@ Example
 Isn't it easy?
 
 Remark:
-* the "label" field is optional, if no "label" is specified, the the "id" is used as label.
-* in real use cases you should add a "descripton", to make the HTML more barrier free.
-
-
-
+* the *fieldname* must be unique, it will be the ID of the field
+* the *fieldname* can't contain spaces or "_". If you need a space in a label use "~" as placeholder
+* in real use cases you should add a "description", to make the HTML more barrier free.
+* as a limitation, you "only" can structure the fields in columns
+* currently no header fields are supported
 
 
 

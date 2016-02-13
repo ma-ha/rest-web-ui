@@ -101,12 +101,13 @@ moduleMap[ "pong-form" ] = {
 };
 
 moduleMap[ "pong-easyform" ] = {
-		"name": "pong-eaysyform",
-	    "hooks": [
-	        { hook: "loadResourcesHtml", method:"pongEasyFormDivHTML" },
-	        { hook: "update", method:"pongEasyFormUpdateData" },
-	        { hook: "setData", method:"pongEasyFormSetData" }
-	    ]
+	"name": "pong-eaysyform",
+	"requires": [ "pong-form" ],
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongEasyFormDivHTML" },
+        { hook: "update", method:"pongEasyFormUpdateData" },
+        { hook: "setData", method:"pongEasyFormSetData" }
+    ]
 	};
 
 moduleMap[ "pong-master-details" ] = {

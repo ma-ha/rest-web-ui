@@ -584,7 +584,7 @@ function pongFormSetData( divId, data ) {
 		log( "Pong-Form",  'no tbl.dataDocSubPath' );
 		// TODO add update code
 		//alert( "Update form with dataDocSubPath..." );
-		pongFormUpdateFieldsData( divId, data ); 
+		pongFormUpdateFieldsData( divId, moduleConfig[ divId ], data ); 
 	} else {
 		log( "Pong-Form",  'tbl.dataDocSubPath='+def.dataDocSubPath );
 		// table is somewhere in the DOM tree
@@ -599,14 +599,13 @@ function pongFormSetData( divId, data ) {
 		//poList[ divId ].pongListData = subdata;
 		// TODO add update code
 		//alert( "Update form w/o dataDocSubPath..." );
-		pongFormUpdateFieldsData( divId, subdata ); 
+		pongFormUpdateFieldsData( divId, moduleConfig[ divId ], subdata ); 
 	}
 }
 
 
-function pongFormUpdateFieldsData( divId, dta ) {
+function pongFormUpdateFieldsData( divId, pmd, dta ) {
 	log( "Pong-Form",  'pongFormUpdateFieldsData: DIV='+divId );
-	var pmd = moduleConfig[ divId ];
 	if ( pmd.fieldGroups != null ) {
 		for ( var i = 0; i < pmd.fieldGroups.length; i++ ) {
 			var grp = pmd.fieldGroups[i];
