@@ -85,7 +85,7 @@ function pongEzFrmParseLabel( field, colName ) {
 	var label = colName.substr( 3 );
 	if ( label.indexOf('|') > 0 )
 		label = label.substr( 0, label.indexOf('|') );
-	field.label = label.replace( /~/ , " " );
+	field.label = label.replace( /~/g , " " );
 	return field;
 }
 
