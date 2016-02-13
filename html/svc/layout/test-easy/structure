@@ -14,13 +14,13 @@
 		    "id":"tstFormId", 
 			"easyFormFields": [ 
 		    	"id",
-		    	"c1_Name",
-		    	"c1_separator",
-		    	"c1_Remark_4rows",
-		    	"c2_Mailings_label",   	
-		    	"c2_Send~Ads_checkbox_infomails_ads",
-		    	"c2_Newsletter_checkbox_infomails_newsletter",
-		    	"c2_Pass~Word"
+		    	"c1|Name",
+		    	"c1|separator",
+		    	"c1|Remark|4rows",
+		    	"c2|Mailings|label",   	
+		    	"c2|Send~Ads|checkbox_infomails_ads",
+		    	"c2|Newsletter|checkbox_infomails_newsletter",
+		    	"c2|Pass~Word"
 		    ],
 		    "actions" : [ 
 		    	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 

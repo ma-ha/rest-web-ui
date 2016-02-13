@@ -51,7 +51,7 @@ function pongEasyFormRenderHTML( divId, resourceURL, params, pmdEZ ) {
 
 function pongEzFrmParseColNo( colName ) {
 	var result = parseInt( colName.substr( 1, 1 ) );
-	if ( result  ) {
+	if ( result ) {
 		return result;
 	} else {
 		return 1;
@@ -59,15 +59,15 @@ function pongEzFrmParseColNo( colName ) {
 }
 
 function pongEzFrmParseId( field, colName ) {
-	if ( colName.indexOf('_') < 0 ){
+	if ( colName.indexOf('|') < 0 ){
 		field.id = colName;
 		field.hidden = "true";
 		return field;
 	}
 	
 	var id = colName.substr( 3 );
-	if ( id.indexOf('_') > 0 )
-		id = id.substr( 0, id.indexOf('_') );
+	if ( id.indexOf('|') > 0 )
+		id = id.substr( 0, id.indexOf('|') );
 	field.id = id.replace( /~/ , "" );
 	
 	if ( field.id.toLowerCase() == "email" ) {
@@ -83,20 +83,20 @@ function pongEzFrmParseId( field, colName ) {
 
 function pongEzFrmParseLabel( field, colName ) {
 	var label = colName.substr( 3 );
-	if ( label.indexOf('_') > 0 )
-		label = label.substr( 0, label.indexOf('_') );
+	if ( label.indexOf('|') > 0 )
+		label = label.substr( 0, label.indexOf('|') );
 	field.label = label.replace( /~/ , " " );
 	return field;
 }
 
 function pongEzFrmParseType( field, colName ) {
-	if ( colName.indexOf('_') < 0 ) {
+	if ( colName.indexOf('|') < 0 ) {
 		field.type = "text";
 		return field;
 	}
 	var tp = colName.substr( 3 );
-	if ( tp.indexOf('_') > 0 )
-		field.type = tp.substr( tp.indexOf('_') +1  );
+	if ( tp.indexOf('|') > 0 )
+		field.type = tp.substr( tp.indexOf('|') +1  );
 	else {
 		field.type = "text";
 		return field;

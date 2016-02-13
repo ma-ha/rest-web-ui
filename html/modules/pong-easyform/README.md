@@ -29,7 +29,7 @@ The resource will load the form definition from the URL <code>../svc/<resourceUr
 ### Field specification Conventions
 In the original form plug in, you specify everything in a propper JSON hierarchy. 
 To make this easier, we now offer to use a naming convention. 
-We use "_" to put all information in one string in the following ways:
+We use "|" (pipe symbol) to put all information in one string in the following ways:
 * c*X*_*fieldname* 
 ** for text fields
 ** or if *fieldname* (to lowercase) is a type, like password, separator or email
@@ -38,22 +38,24 @@ We use "_" to put all information in one string in the following ways:
 * *fielname*
 ** for hidden fields 
 
+c*X* defines the column for the field.
+
 Example
 
 	{
 	    "id": "Customers"
 	    "easyFormFields": [ 
 	    	"id",
-	    	"c1_Name",
-	    	"c1_Remark_4rows",
-	    	"c2_Email",
-	    	"c2_Pass~word",
-	    	"c2_separator",
-	    	"c2_Phone",
-	    	"c2_Fax",	 
-	    	"c3_Mailings_label",   	
-	    	"c3_SendAds_checkbox_infomails_ads",
-	    	"c3_Newsletter_checkbox_infomails_newsletter"
+	    	"c1|Name",
+	    	"c1|Remark|4rows",
+	    	"c2|Email",
+	    	"c2|Pass~word",
+	    	"c2|separator",
+	    	"c2|Phone",
+	    	"c2|Fax",	 
+	    	"c3|Mailings~~|label",   	
+	    	"c3|SendAds~~~|checkbox_infomails_ads",
+	    	"c3|Newsletter|checkbox_infomails_newsletter"
 	    ],
 	    "actions" : [ 
 	    	...
@@ -64,7 +66,7 @@ Isn't it easy?
 
 Remark:
 * the *fieldname* must be unique, it will be the ID of the field
-* the *fieldname* can't contain spaces or "_". If you need a space in a label use "~" as placeholder
+* the *fieldname* can't contain spaces or "|". If you need a space in a label use "~" as placeholder. The generated "id" will be stripped by all "~" characters.
 * in real use cases you should add a "description", to make the HTML more barrier free.
 * as a limitation, you "only" can structure the fields in columns
 * currently no header fields are supported
