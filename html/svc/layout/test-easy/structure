@@ -22,8 +22,6 @@
 		    	"c2_Newsletter_checkbox_infomails_newsletter",
 		    	"c2_Pass~Word"
 		    ],
-		    "fieldGroups":[
-		    ],
 		    "actions" : [ 
 		    	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
 		    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "target": "out2" } 
