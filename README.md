@@ -1,7 +1,7 @@
 # ReST Web GUI
-Framework to create descriptive web applications for REST/JSON type web services. 
+No programming: Framework to create descriptive web applications for REST/JSON type web services. 
 
-All you need is a modern web browser -- and a web service somewhere.
+Everything runs in Browser: All you need is a modern web browser -- and a web service somewhere. I.e. no aplication server is required to run the Web GUI!
 
 ## How does it work
 1. Portal pages are defined via a JSON file. 
@@ -52,6 +52,29 @@ Please have a look at my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 ## Available view types
 You'll find forms, tables, content, I/O, i18n plug-in docu in the 
 [module plug-ins folder](html/modules/). 
+
+## Supported Browser
+Should run in all modern browsers on PC, tablet and phones:
+* Chrome
+* Firefox
+* Opera
+* Safari (also iPad)
+* ...
+
+IE may have some problems, but who cares ;-)
+
+(Volunteer testers are welcome, i've only some very limited devices for tests.)
+
+## Tested APIs
+* [Docker}(http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
+* [eBay](http://developer.ebay.com/Devzone/finding/CallRef/findItemsByKeywords.html)
+* [MapQuest](http://www.mapquestapi.com/)
+* [MediaWiki / Wikipedia](http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
+* [Jenkins}(https://wiki.jenkins-ci.org/display/JENKINS/Remote+access+API)
+* [SugarCRM](http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.7/Application_Framework/Web_Services/REST/)
+and of course you can use your own custom REST/JSON Web Services.
+
+Please let me know, if you need a specific API example or demo.
 
 ## Add or extend Plug-Ins
 The framework is modular. Some elementary modules are already in the modules sub folder.
