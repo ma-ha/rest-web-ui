@@ -1,7 +1,11 @@
 # ReST Web GUI
-No programming: Framework to create descriptive web applications for REST/JSON type web services. 
+*No programming:* 
 
-Everything runs in Browser: All you need is a modern web browser -- and a web service somewhere. I.e. no aplication server is required to run the Web GUI!
+Framework to create descriptive web applications for REST/JSON type web services. 
+
+*Everything runs in browser:*
+
+All you need is a modern web browser -- and a web service somewhere. I.e. no application server is required to run the Web GUI!
 
 ## How does it work
 1. Portal pages are defined via a JSON file. 
