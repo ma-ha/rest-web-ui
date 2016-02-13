@@ -31,12 +31,12 @@ In the original form plug in, you specify everything in a propper JSON hierarchy
 To make this easier, we now offer to use a naming convention. 
 We use "|" (pipe symbol) to put all information in one string in the following ways:
 * "c*X*|*fieldname*" 
-** for text fields
-** or if *fieldname* (to lowercase) is a type, like password, separator or email
+ * for text fields
+ * or if *fieldname* (to lowercase) is a type, like password, separator or email
 * "c*X*|*fieldname*|*fieldtype_specs*"
-** to specify a field type explicitly
+ * to specify a field type explicitly
 * "*fielname*"
-** for hidden fields 
+ * for hidden fields 
 
 c*X* defines the column for the field.
 
