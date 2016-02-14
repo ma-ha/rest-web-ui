@@ -163,7 +163,7 @@ With this you construct can pass complex structures as parameter, if you want fo
 
 	"filter":[
 	   {
-	     "$or":[
+	     "name":[
 	        { "name":"Nelson Inc" },
 	        { "name":"Nelson LLC" }
 	      ]
@@ -178,7 +178,9 @@ You can specify a form like this:
 	     {  "columns":[  
 	           { "fieldset":"Col1", 
 	             "formFields":[   
-	                 { "id":"filter", "request":"substitute", "defaultVal":"[{or:[{name:${name1}},{name:${name2}}]}]", "hidden":"true" },
+	                 { "id":"filter", "request":"substitute", 
+	                 	"defaultVal":"[ {name:[{name:${name1}},{name:${name2}}]} ]", 
+	                 	"hidden":"true" },
 	                 { "id":"name1",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
 	                 { "id":"name2",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
 	             ] 
