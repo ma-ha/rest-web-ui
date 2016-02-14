@@ -3,7 +3,7 @@ This module creates a table for any kind of data for you in a resource view.
 
 In combination with the [form module](../pong-easyform/) you have a powerful GUI for RESTfule web service out there.
 
-This "easy table" plug-in is a wrapper for [form module](../pong-table/). Specification is simplified to make design quicker. 
+This "easy table" plug-in is a wrapper for [table module](../pong-table/). Specification is simplified to make design quicker. 
 
 # Usage in "structure"
 
@@ -16,7 +16,7 @@ Simply <code>"type": "pong-table"</code> to the <code>rows</code> or <code>cols<
 	      {
 	        "rowId": "123",
 	        "resourceURL": "Products",
-	        '''"type": "pong-easytable"''',
+	        **"type": "pong-easytable"**,
 	        ...
 	      },
 	      ...
@@ -54,8 +54,8 @@ Alternatively you can embed the table specification in the portal page specifica
 	      {
 	        "rowId": "123",
 	        "resourceURL": "Products",
-	        '''"type": "pong-easytable"''',
-            "moduleConfig":{
+	        "type": "pong-easytable",
+            **"moduleConfig"**:{
 			    "dataURL": "webdata",			    
                	"easyCols": [
                 	"Product_img",
@@ -84,7 +84,7 @@ If you need to specify a different column type, you can do this by appending the
 
 
 ### Column Types 
-<code>"cellType"</code> property can be:
+Available options:
 * text 
 * checkbox
 * img
