@@ -5,6 +5,7 @@
       { "layout":"demo_docker", "label":"Docker"  },
       { "layout":"demo_ebay", "label":"eBay"  },
       { "layout":"demo_wiki", "label":"Wiki"  },
-      { "layout":"demo_io", "label":"IO Lab"  }
+      { "layout":"demo_io", "label":"IO Lab"  },
+      { "layout":"test-easy", "label":"Ez-Test"  }
    ]
 }
