@@ -99,7 +99,7 @@ IE may have some problems, but who cares ;-)
 * [eBay](http://developer.ebay.com/Devzone/finding/CallRef/findItemsByKeywords.html)
 * [MapQuest](http://www.mapquestapi.com/)
 * [MediaWiki / Wikipedia](http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
-* [Jenkins}(https://wiki.jenkins-ci.org/display/JENKINS/Remote+access+API)
+* [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Remote+access+API)
 * [SugarCRM](http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.7/Application_Framework/Web_Services/REST/)
 and of course you can use your own custom REST/JSON Web Services.
 
