@@ -95,7 +95,7 @@ IE may have some problems, but who cares ;-)
 (Volunteer testers are welcome, i've only some very limited devices for tests.)
 
 ## Tested APIs
-* [Docker}(http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
+* [Docker](http://docs.docker.com/reference/api/docker_remote_api_v1.17)
 * [eBay](http://developer.ebay.com/Devzone/finding/CallRef/findItemsByKeywords.html)
 * [MapQuest](http://www.mapquestapi.com/)
 * [MediaWiki / Wikipedia](http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
