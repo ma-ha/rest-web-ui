@@ -24,7 +24,7 @@
 		    ],
 		    "actions" : [ 
 		    	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
-		    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "target": "out2" } 
+		    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "target": "out2" }
 		    ]
         },
         "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ] 

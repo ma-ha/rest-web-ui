@@ -149,7 +149,7 @@ function pongEasyFormNormalize( pmd ) {
 			pmd.fieldGroups[0].columns[ fieldCol ].formFields.push( field );
 		}
 	}
-	//alert( JSON.stringify( pmd, null, '\t' ) );
+	if ( pmd.debugAlert ){ alert( JSON.stringify( pmd, null, '\t' ) ); }
 	return pmd;
 }
 

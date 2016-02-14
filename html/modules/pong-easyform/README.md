@@ -72,5 +72,19 @@ Remark:
 * currently no header fields are supported
 * currently no substitution is supported
 
+## Back to "normal" form JSON spec
+If you need all the features of the "normal" form plug-in, you can configure to show an alert box with the generated JSON code. 
+
+	{
+	    "id": "Customers"
+		"debugAlert":"true"
+	    "easyFormFields": [
+	    	...
+	    ]
+	    ...
+	} 
+
+Simply copy paste the  "fieldGroups" section and change "tpye" back to "pong-form". 
+
 ## Form Actions 
 ref.: "[Form View](../pong-form/)" 
