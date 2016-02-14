@@ -3,14 +3,33 @@
 
 Framework to create descriptive web applications for REST/JSON type web services. 
 
+Basic functionality of a Web Portal is provided out of the box:
+* arrange data and content views on GUI
+* lot of view types available: form, table, lists, map/route, content, I/O, modal dialogs/forms
+* configuration and help functions per view
+* header and footer offering lots of functionality
+* i18n: switch languages without changing anything -- just provide a translation map (or web service for that)
+* user sessions (transfer data between views and pages)
+* OAauth2 security for web serives
+
+
 ### Everything runs in browser:
 
-All you need is a modern web browser -- and a web service somewhere. I.e. no application server is required to run the Web GUI!
+All you need is a modern web browser -- and a web service somewhere. 
+
+No application server (like Tomcat, NodeJS, ...) is required to run the GUI!
+
+### Plug-In Architecture
+The framework offers the basic page lifecycle. 
+All the views, the session functionality, security, i18n is implemented as plug-ins. 
+An open plug-in interface and pre-defined hooks make it easy to add or modify funtionality -- if you're really unhappy and a JS programmer
+(ref: Add or extend Plug-Ins).
 
 ## How does it work
 1. Portal pages are defined via a JSON file. 
-2. An empty HTML file loads the JS framework and the page definition JSON file
-3. The framework replaces the empty page by the fully rendered portal page with all logic injected.
+2. An empty HTML file just defines the JSON page you want to view and loads the JS framework.
+3. The framework injects all the logic: HTML, JS and CSS into the empty page to set up all the views, header and footer. All that within milliseconds!
+4. The views load additional configuration and data via web service as required
 
 ## Click and try examples
 * Content integration via MediaWIKI API:
@@ -50,8 +69,8 @@ create complex Web UIs intuitively: <a href="http://mh-svr.de/portal" target="_b
 
 You can host your portals and views this *Portal-as-a-Service* web site. 
 
-## You want to know everything -- in detail
-Please have a look at my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
+## You want to know everything 
+You'll find [all the details in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 
 ## Available view types
 You'll find forms, tables, content, I/O, i18n plug-in docu in the 

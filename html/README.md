@@ -1,4 +1,9 @@
 # Release Notes
+## Version 0.6 (beta)
+Modules Improvement:
+* [Easy Form Mdule](modules/pong-easyform/) (new) 
+* [Easy Table Module](modules/pong-easytable/) (new)
+* TODO: improved table paginator
 ## Version 0.6
 Modules Improvement:
 * [I/O Module](modules/pong-io/) 
