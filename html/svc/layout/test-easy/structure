@@ -5,7 +5,7 @@
     "rows": [
       {
         "rowId":"instform",
-        "title":"This is a Test",
+        "title":"Eazy Form",
         "height":"200px",
         "resourceURL":"svc/test",
         "type":"pong-easyform",
@@ -30,8 +30,47 @@
         "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ] 
       },
       {
-        "rowId": "r1",
-        "height": "230px",
+	        "rowId": "r1",
+	        "height": "200px",
+            "type": "pong-easytable",
+            "resourceURL": "-",
+            "title": "Easy Tabke",
+            "moduleConfig": {
+                "rowId": "productId",
+                "cols": [
+                    {
+                        "id": "Image",
+                        "label": "Image",
+                        "cellType": "text",
+                        "width": "20%"
+                    },
+                    {
+                        "id": "Names.0",
+                        "label": "Name",
+                        "cellType": "text",
+                        "width": "20%"
+                    },
+                    {
+                        "id": "Status",
+                        "label": "Status",
+                        "cellType": "text",
+                        "width": "20%"
+                    },
+                    {
+                        "id": "Id",
+                        "label": "Id",
+                        "cellType": "text",
+                        "width": "40%"
+                    }
+                ],
+                "maxRows": "5"
+            },
+            "type_id": "5",
+            "decor": "decor"
+      },
+      {
+        "rowId": "r2",
+        "height": "100px",
         "cols": [
           {
             "columnId": "out1",

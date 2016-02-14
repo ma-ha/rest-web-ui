@@ -83,6 +83,16 @@ moduleMap[ "pong-table" ] = {
     ]
 };
 
+moduleMap[ "pong-easytable" ] = {
+	"name": "pong-easytable",
+	"requires": [ "pong-table" ],
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongEzTableDivHTML" },
+        { hook: "update", method:"pongEzTableUpdateData" },
+        { hook: "setData", method:"pongEzTableSetData" }
+    ]
+};
+
 moduleMap[ "pong-list" ] = {
 	"name":  "pong-list",
     "hooks": [

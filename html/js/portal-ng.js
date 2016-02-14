@@ -353,7 +353,7 @@ function loadModules() {
 			)
 			.fail(
 				function( jqxhr, settings, exception ) {
-					log( 'loadModules', exception );
+					log( 'loadModules', module+".js "+exception );
 					ajaxOngoing--;
 				}
 			);
