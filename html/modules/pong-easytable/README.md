@@ -16,7 +16,7 @@ Simply <code>"type": "pong-table"</code> to the <code>rows</code> or <code>cols<
 	      {
 	        "rowId": "123",
 	        "resourceURL": "Products",
-	        **"type": "pong-easytable"**,
+	        "type": "pong-easytable",
 	        ...
 	      },
 	      ...
@@ -31,13 +31,9 @@ Example JSON definiton from <code><nowiki>../svc/[resourceUrl]/pong-easytable</n
  
 	 {
 	    "dataURL": "webdata",
-	    "filter" : {
-	         "dataReqParams": [ {"id":"productSearchString", "label":"Product"}, {"id":"productType", "label":"Type"} ],
-	         "dataReqParamsSrc": "Form"
-		},
-       "easyCols": [
-        	"Image",
+		"easyCols": [
         	"Name=Name.0",
+        	"Product_img",
         	"Status",
         	"*ID|40%"
         ],
@@ -55,13 +51,13 @@ Alternatively you can embed the table specification in the portal page specifica
 	        "rowId": "123",
 	        "resourceURL": "Products",
 	        "type": "pong-easytable",
-            **"moduleConfig"**:{
+            "moduleConfig":{
 			    "dataURL": "webdata",			    
                	"easyCols": [
-                	"Product_img",
-                	"Name=Name.0",
-                	"Status",
-                	"*ID|40%"
+                	"*ID|10%",
+                	"Name",
+                	...
+                	"Product~Page_link"
                 ],
 			    "maxRows":"10"
             }
@@ -76,18 +72,22 @@ Alternatively you can embed the table specification in the portal page specifica
 Rather than specifying a full fledged JSON structure you can  rely here on a naming convention:
 * Name is equals the ID of the data
 * the row ID column start with a "*"
-* if you need to secify another ID, you can use  "*name*=*id*"
+* if you need to specify another ID, you can use  "*name*=*id*"
 * all fields will have an automatic width -- you can append a "|*XX*%" to specify any or only single columne widths
 
 By default all columns are text columns. 
-If you need to specify a different column type, you can do this by appending the type to the name with a "_" in between:
 
+If you need to specify a different column type, you can do this by appending the type to the name with a "_" in between.
+The "_*column-type* will be stripped of to the name. If you don't want this stripping, please use "~" instead. 
+
+If your column name contains the words "Rating", "Picture", Image", "Link", 
+this indicates also the column type.
 
 ### Column Types 
 Available options:
 * text 
 * checkbox
-* img
+* img (or picture or image)
 * link 
 * linkLink
 * button

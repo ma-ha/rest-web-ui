@@ -37,10 +37,12 @@
             "title": "Easy Tabke",
             "moduleConfig": {
                 "easyCols": [
-                	"Product_img",
+                	"*ID|10%",
                 	"Name=Name.0",
-                	"Status",
-                	"*ID|40%"
+                	"Picture",
+                	"Status_checkbox",
+                	"Rating",
+                	"Product~Page_link"
                 ],
                 "cols": [
                     {
