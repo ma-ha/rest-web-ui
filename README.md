@@ -12,19 +12,25 @@ Basic functionality of a Web Portal is provided out of the box:
 * user sessions (transfer data between views and pages)
 * OAauth2 security for web services
 
-
 ### Everything runs in browser:
 
 All you need is a modern web browser -- and a web service somewhere. 
 
 No application server (like Tomcat, NodeJS, ...) is required to run the GUI!
 
-### Plug-In Architecture
-The **framework** (= [portal-ng.js](html/js/)) implements the page life-cycle and contains only some core functions.
- 
-All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directory](html/modules/)). 
-An open plug-in interface and predefined hooks make it easy to add or modify functionality -- if you're really unhappy and a JS programmer
-(see: *Add or extend Plug-Ins*).
+## Click and try examples
+Here are some demos of view type and demo of real world web seb service integrarion:
+* Content integration via MediaWIKI API:
+<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Serive API to load some content</a>.
+* Form and table demo: 
+<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search via EBay API</a>.
+* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geocoding API)</a>.
+* <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
+* <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
+* <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
+* <a href="http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io" target="_blank">Vacuum lab simulation</a>: I/O demo with LEDs, switches, graphs ...
+
+These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 
 ## How does it work
 1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
@@ -34,29 +40,26 @@ An open plug-in interface and predefined hooks make it easy to add or modify fun
 
 The User can now interact with the page, work with the data, modify it in AJAX mode (no page reload), load further data or navigate to other pages. 
 
-## Click and try examples
-* Content integration via MediaWIKI API:
-<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia</a>.
-* Form and table demo: 
-<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search</a>.
-* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with location search</a>.
-* <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
-* <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> as web copy buffer ([Source on GitHub](https://github.com/ma-ha/copypaste)).
-* <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
-* <a href="http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io" target="_blank">Vacuum lab simulation</a>: I/O demo with LEDs, switches, graphs ...
+### Plug-In Architecture
+The **framework** (= [portal-ng.js](html/js/)) implements the page life-cycle and contains only some core functions.
+ 
+All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directory](html/modules/)). 
+An open plug-in interface and predefined hooks make it easy to add or modify functionality -- if you're really unhappy and a JS programmer
+(see: *Add or extend Plug-Ins*).
 
-These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
+### Why?
+It started with some googling and evaluations, how to set up a light weight web application (without coding JS). 
+Of course i found a lot rapid application frameworks on the on hand -- but they need an application server. That's not light weight. 
+On the other hand there are frameworks like AngularJS, but they don't do the last step: Creating a web GUI without writing JS code.
 
-### What's it?
-It started with some googling and evaluations, how to do light weight web GUIs. 
-I decided to write a prototype, of how I would solve the challenge. 
-After some lines of JS code it was doing first things. 
+I decided to think of a prototype, of how I would solve the challenge. 
+After some lines of JS code, it was doing first things more quickly than expected. 
 Pushed by this I couldn't stop ;-) Now I use it for a lot of tasks myself and if you like you can also do.
 It is in a state, where you can do a lot of tasks out of the box.
 
-The heart of the framework file is `html/js/portal-ng.js`, but you rarely need to touch it.
+The heart of the framework file is `html/js/portal-ng.js`, but you rarely need to touch it -- most things are done in plug ins now.
 
-Modular plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialogs, lists, tables, content, navigation etc.
+The plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialogs, lists, tables, content, navigation etc.
 The usage of the included set of essential modules is explained in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 The most complex and flexible is the *form* module.  
 
