@@ -161,6 +161,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( "</table>" );
 	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
 	contentItems.push( '<button id="'+divId+'BtPrev" class="pong-table-paginator"></button>' );
+	contentItems.push( '<span id="'+divId+'PaginLbl" class="pong-table-paginator-text">...</span>' );
 	contentItems.push( '<button id="'+divId+'BtNext" class="pong-table-paginator"></button>' );
 	contentItems.push( '<button id="'+divId+'BtLast" class="pong-table-paginator"></button>' );
 	
@@ -305,7 +306,7 @@ function pongTableUpdateData( divId, paramsObj ) {
 		$.getJSON( tblDef.dataUrlFull, paramsObj ,
 			function( data ) { 	
 				var subdata = getSubData( data, tblDef.dataDocSubPath );
-				pongTableSetData( divId, subdata ); 					
+				pongTableSetData( divId, subdata ); 
 			} 
 		);
 		
@@ -363,6 +364,12 @@ function tblCells( divId ) {
 		//alert( "Sort "+poTbl[ divId ].sortCol );
 		dtaArr.sort( pongTableCmpFields );
 	}
+	log( "Pong-Table", "update paginator label" );	
+	var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
+	var maxP = Math.ceil( dtaArr.length / rPP );
+	var curP = rowEn / rPP;
+	$( "#"+divId+'PaginLbl' ).html( $.i18n( "page ")+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
+	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
 		if ( r < dtaArr.length ) {
 			var cellDta = dtaArr[r];

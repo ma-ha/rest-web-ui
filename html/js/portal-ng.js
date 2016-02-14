@@ -23,8 +23,11 @@ THE SOFTWARE.
 */
 
 /*
- Library: Portal-NG (PoNG)
- http://mh-svr.de/mw/index.php/PoNG
+ REST-Web-GUI Framework
+ A framework to create web portals w/o coding and w/o application servers
+ https://github.com/ma-ha/rest-web-ui
+  
+ former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
 labeldefs['PONGVER'] = '0.6.0';

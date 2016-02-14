@@ -25,3 +25,7 @@ div.editable {
 .pongTable th {
 		text-align: left;
 }
+
+.pong-table-paginator-text {
+	font-size: 8pt;	
+}
