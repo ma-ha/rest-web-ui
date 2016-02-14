@@ -30,12 +30,13 @@
         "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ] 
       },
       {
-	        "rowId": "r1",
-	        "height": "200px",
-            "type": "pong-easytable",
-            "resourceURL": "-",
-            "title": "Easy Tabke",
+	        "rowId":"r1",
+	        "height":"200px",
+            "type":"pong-easytable",
+            "resourceURL":"-",
+            "title":"Easy Table",
             "moduleConfig": {
+            	"debugAlert":"true",
                 "easyCols": [
                 	"*ID|10%",
                 	"Name=Name.0",
@@ -44,36 +45,10 @@
                 	"Rating",
                 	"Product~Page_link"
                 ],
-                "cols": [
-                    {
-                        "id": "Image",
-                        "label": "Image",
-                        "cellType": "text",
-                        "width": "20%"
-                    },
-                    {
-                        "id": "Names.0",
-                        "label": "Name",
-                        "cellType": "text",
-                        "width": "20%"
-                    },
-                    {
-                        "id": "Status",
-                        "label": "Status",
-                        "cellType": "text",
-                        "width": "20%"
-                    },
-                    {
-                        "id": "Id",
-                        "label": "Id",
-                        "cellType": "text",
-                        "width": "40%"
-                    }
-                ],
-                "maxRows": "5"
+                "maxRows":"5"
             },
-            "type_id": "5",
-            "decor": "decor"
+            "type_id":"5",
+            "decor":"decor"
       },
       {
         "rowId": "r2",

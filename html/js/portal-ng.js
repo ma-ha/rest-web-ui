@@ -1154,7 +1154,8 @@ function log( func, msg ){
 	if ( //func=='getHookMethod' || 
 		//func=='pong_map' || 
 		func=='getSubData' || 
-		//func=='Pong-EaysForm' || 
+		func=='Pong-EzTable' || 
+		func=='Pong-Table' || 
 		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 	}

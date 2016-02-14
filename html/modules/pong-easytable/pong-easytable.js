@@ -72,29 +72,39 @@ function pongEzTableDivHTML( divId, resourceURL, params ) {
 function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	log( "Pong-EzTable", "cre table" );
 	if ( tbl.easyCols && tbl.easyCols.length && ! tbl.cols ) {
+		log( "Pong-EzTable", " create Pong-Table JSON sctructure" );
 		tbl.cols = [];
+		var autoWidhtCnt = 0;
 		for ( var i = 0; i < tbl.easyCols.length; i++ ) {
 			var cStr = tbl.easyCols[i];
+			var col = {};
+			var isId = false;
 			if ( cStr.startsWith("*") ) {
 				cStr = cStr.substr(1);
-				tbl.rowId = cStr;
+				isId = true;
 			}
 			if ( cStr.indexOf("|") > 0 ) {
-				//TODO
+				col.width = cStr.substr( cStr.indexOf("|") + 1 );
+				//alert( "mod = "+mod );
 				cStr = cStr.substr( 0, cStr.indexOf("|") );
-			}
+			} else { autoWidhtCnt++; col.width = "20%"; }
+			col.id = cStr;
 			if ( cStr.indexOf("=") > 0 ) {
-				//TODO
+				col.id = cStr.substr( cStr.indexOf("=") + 1 );
+				//alert( "name = "+name );
 				cStr = cStr.substr( 0, cStr.indexOf("=") );
 			}
-			
-			var col = {};
-			col.id = cStr;
 			col.label = cStr;
+			col.cellType = "text";
 			tbl.cols.push( col );
+			if ( isId ) { tbl.rowId = cStr; }
 		}
 	}
+//	if ( tbl.debugAlert ){ 
+		alert( JSON.stringify( tbl, null, '\t' ) ); 
+//	}
 	// call "old constructor"
+	log( "Pong-EzTable", " call pongTableDivRenderHTML" );
 	pongTableDivRenderHTML( divId, resourceURL, params, tbl );
 	
 	
