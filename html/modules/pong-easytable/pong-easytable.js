@@ -79,6 +79,7 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			var cStr = tbl.easyCols[i];
 			var col = {};
 			var isId = false;
+			var hasIdDef = false;
 			if ( cStr.startsWith("*") ) {
 				cStr = cStr.substr(1);
 				isId = true;
@@ -93,9 +94,40 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				col.id = cStr.substr( cStr.indexOf("=") + 1 );
 				//alert( "name = "+name );
 				cStr = cStr.substr( 0, cStr.indexOf("=") );
+				hasIdDef = true;
 			}
 			col.label = cStr;
 			col.cellType = "text";
+			var cStrLC = cStr.toLowerCase();
+			if ( cStr.indexOf( "_checkbox" ) > 0 ) {
+				col.cellType = "checkbox";			
+				col.label = cStr.substr( 0, cStr.length - 9 );
+				if ( ! hasIdDef ) {
+					col.id = cStr.substr( 0, cStr.length - 9 );					
+				}
+			} else if ( cStr.indexOf( "_img" ) > 0 ) {
+				col.cellType = "img";								
+				col.label = cStr.substr( 0, cStr.length - 4 );
+				if ( ! hasIdDef ) {
+					col.id = cStr.substr( 0, cStr.length - 4 );					
+				}
+			} else if ( cStrLC.indexOf( "image" ) >= 0 ) {
+				col.cellType = "img";				
+			} else if ( cStrLC.indexOf( "picture" ) >= 0 ) {
+				col.cellType = "img";				
+			} else if ( cStrLC.indexOf( "rating" ) >= 0 ) {
+				col.cellType = "rating";				
+			} else if ( cStr.indexOf( "_link" ) > 0 ) {
+				col.cellType = "link";				
+				col.label = cStr.substr( 0, cStr.length - 5 );
+				if ( ! hasIdDef ) {
+					col.id = cStr.substr( 0, cStr.length - 5 );					
+				}
+			} 
+			col.id    = col.id.replace( /~/g , "" );
+			col.label = col.label.replace( /~/g , " " );
+
+			
 			tbl.cols.push( col );
 			if ( isId ) { tbl.rowId = cStr; }
 		}
