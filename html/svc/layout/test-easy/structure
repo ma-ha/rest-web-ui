@@ -36,7 +36,12 @@
             "resourceURL": "-",
             "title": "Easy Tabke",
             "moduleConfig": {
-                "rowId": "productId",
+                "easyCols": [
+                	"Product_img",
+                	"Name=Name.0",
+                	"Status",
+                	"*ID|40%"
+                ],
                 "cols": [
                     {
                         "id": "Image",
