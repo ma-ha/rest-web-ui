@@ -36,8 +36,6 @@
             "resourceURL":"svc/tbl-data",
             "title":"Easy Table",
             "moduleConfig": {
-            	
-            	"debugAlert":"true",
                 "easyCols": [
                 	"*ID|5%",
                 	"Name=Name.0",
