@@ -20,10 +20,11 @@ All you need is a modern web browser -- and a web service somewhere.
 No application server (like Tomcat, NodeJS, ...) is required to run the GUI!
 
 ### Plug-In Architecture
-The framework offers the basic page lifecycle. 
-All the views, the session functionality, security, i18n is implemented as plug-ins. 
+The **framework** (= [portal-ng.js](blob/master/html/js/portal-ng.js)) implements the page lifecycle and some core functions.
+ 
+All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the module directoy](html/modules/)). 
 An open plug-in interface and pre-defined hooks make it easy to add or modify funtionality -- if you're really unhappy and a JS programmer
-(ref: Add or extend Plug-Ins).
+(see: *Add or extend Plug-Ins*).
 
 ## How does it work
 1. Portal pages are defined via a JSON file. 
