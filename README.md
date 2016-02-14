@@ -10,7 +10,7 @@ Basic functionality of a Web Portal is provided out of the box:
 * header and footer offering lots of functionality
 * i18n: switch languages without changing anything -- just provide a translation map (or web service for that)
 * user sessions (transfer data between views and pages)
-* OAauth2 security for web serives
+* OAauth2 security for web services
 
 
 ### Everything runs in browser:
@@ -20,17 +20,19 @@ All you need is a modern web browser -- and a web service somewhere.
 No application server (like Tomcat, NodeJS, ...) is required to run the GUI!
 
 ### Plug-In Architecture
-The **framework** (= [portal-ng.js](html/js/)) implements the page lifecycle and contains only some core functions.
+The **framework** (= [portal-ng.js](html/js/)) implements the page life-cycle and contains only some core functions.
  
-All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directoy](html/modules/)). 
-An open plug-in interface and pre-defined hooks make it easy to add or modify funtionality -- if you're really unhappy and a JS programmer
+All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directory](html/modules/)). 
+An open plug-in interface and predefined hooks make it easy to add or modify functionality -- if you're really unhappy and a JS programmer
 (see: *Add or extend Plug-Ins*).
 
 ## How does it work
-1. Portal pages are defined via a JSON file. 
-2. An empty HTML file just defines the JSON page you want to view and loads the JS framework.
-3. The framework injects all the logic: HTML, JS and CSS into the empty page to set up all the views, header and footer. All that within milliseconds!
+1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
+2. An empty HTML file just defines the JSON page you want to view and calls the framework to start.
+3. The framework injects and initialize all the required page logic: HTML, JS and CSS into the empty page to set up all the views, header and footer. All that within milliseconds!
 4. The views load additional configuration and data via web service as required
+
+The User can now interact with the page, work with the data, modify it in AJAX mode (no page reload), load further data or navigate to other pages. 
 
 ## Click and try examples
 * Content integration via MediaWIKI API:
