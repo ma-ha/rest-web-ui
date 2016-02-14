@@ -83,16 +83,17 @@ The "_*column-type* will be stripped of to the name. If you don't want this stri
 If your column name contains the words "Rating", "Picture", Image", "Link", 
 this indicates also the column type.
 
-### Column Types 
+### Easy Column Types 
 Available options:
 * text 
 * checkbox
 * img (or picture or image)
 * link 
-* linkLink
-* button
-* tooltip
 * rating
 
 The img type and link type will expect a URL as content.
 
+## Advanced Features
+You can also append "_editable" to text columns.
+
+If you need actions, or filters, you find the documetation of these features in the [table module](../pong-table/).

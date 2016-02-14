@@ -74,7 +74,6 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	if ( tbl.easyCols && tbl.easyCols.length && ! tbl.cols ) {
 		log( "Pong-EzTable", " create Pong-Table JSON sctructure" );
 		tbl.cols = [];
-		var autoWidhtCnt = 0;
 		for ( var i = 0; i < tbl.easyCols.length; i++ ) {
 			var cStr = tbl.easyCols[i];
 			var col = {};
@@ -88,7 +87,7 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				col.width = cStr.substr( cStr.indexOf("|") + 1 );
 				//alert( "mod = "+mod );
 				cStr = cStr.substr( 0, cStr.indexOf("|") );
-			} else { autoWidhtCnt++; col.width = "20%"; }
+			} 
 			col.id = cStr;
 			if ( cStr.indexOf("=") > 0 ) {
 				col.id = cStr.substr( cStr.indexOf("=") + 1 );
@@ -99,7 +98,13 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			col.label = cStr;
 			col.cellType = "text";
 			
-			// TODO: editable
+			if ( col.id .indexOf( "_editable" ) > 0 ) {
+				col.editable = "true";
+				if ( ! hasIdDef ) {
+					col.label = cStr.substr( 0, cStr.length - 9 );
+				}
+				col.id = col.id.substr( 0, col.id.length - 9 );					
+			}
 			
 			var cStrLC = cStr.toLowerCase();
 			if ( cStr.indexOf( "_checkbox" ) > 0 ) {

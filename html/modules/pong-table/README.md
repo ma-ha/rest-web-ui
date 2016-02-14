@@ -1,7 +1,9 @@
 # Description
 This module creates a table for any kind of data for you in a resource view. 
 
-In combination with the [form module](./pong-form/) you have a powerful GUI for RESTfule web service out there.
+In combination with the [easy form module](../pong-easyform/) or [form module](../pong-form/) you have a powerful GUI for RESTfule web service out there.
+
+If you start your first table, perhaps it is easier to start with the [easy table module](../pong-easytable/)
 
 # Usage in "structure"
 
@@ -241,6 +243,8 @@ If you specify <code>"editable":"true"</code> for a column, you can click into t
 Currently this feature is only available for text and checkbox columns.
 
 '''Important''': The URL ending is a diva. If you implement a service endpoint (e.g. using <code>svc/myservice/index.php</code>) the URL may have to end with a slash. If you specify <code>"resourceUrl":"svc/myservice"</code> you can use <code>"dataURL":"/"</code> to get the POST request working correctly. The "developer tools" are your friend to identify, what request is going out -- and if it works.
+
+Limitation: The editable cells only work for plain table data, not for structured data. 
 
 ### Rating Column Type
 The rating expects a typically a number as result, but can be anything. 

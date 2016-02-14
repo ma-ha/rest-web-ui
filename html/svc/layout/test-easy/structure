@@ -36,12 +36,15 @@
             "resourceURL":"svc/tbl-data",
             "title":"Easy Table",
             "moduleConfig": {
+            	
+            	"debugAlert":"true",
                 "easyCols": [
-                	"*ID|10%",
+                	"*ID|5%",
                 	"Name=Name.0",
                 	"Picture",
                 	"Status_checkbox",
                 	"Rating",
+                	"Description_editable",
                 	"Product~Page_link"
                 ],
                 "maxRows":"3"
