@@ -3,7 +3,7 @@ This [module](../) creates an input form with action buttons to post data to bac
 
 This module has the same functionality as "[Form View](../pong-form/)" -- but using naming conventions rather then meta fields it is easier to use.
 
-It is the most complex plug-in and combination with the [table module](./pong-table/) you have a powerful GUI for RESTful web service out there.
+It is the most complex plug-in and combination with the [table module](../pong-table/) you have a powerful GUI for RESTful web service out there.
 
 ## Usage in "structure" 
 Simply <code>"type": "pong-easyform"</code> to the <code>rows</code> or <code>cols</code> resource. Example [[PoNG Structure Specification|structure file]] extract:
