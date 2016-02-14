@@ -6,7 +6,7 @@
       {
         "rowId":"instform",
         "title":"Eazy Form",
-        "height":"200px",
+        "height":"170px",
         "resourceURL":"svc/test",
         "type":"pong-easyform",
         "decor" :"decor",
@@ -31,12 +31,11 @@
       },
       {
 	        "rowId":"r1",
-	        "height":"200px",
+	        "height":"280px",
             "type":"pong-easytable",
-            "resourceURL":"-",
+            "resourceURL":"svc/tbl-data",
             "title":"Easy Table",
             "moduleConfig": {
-            	"debugAlert":"true",
                 "easyCols": [
                 	"*ID|10%",
                 	"Name=Name.0",
@@ -45,7 +44,7 @@
                 	"Rating",
                 	"Product~Page_link"
                 ],
-                "maxRows":"5"
+                "maxRows":"3"
             },
             "type_id":"5",
             "decor":"decor"

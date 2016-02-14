@@ -98,6 +98,9 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			}
 			col.label = cStr;
 			col.cellType = "text";
+			
+			// TODO: editable
+			
 			var cStrLC = cStr.toLowerCase();
 			if ( cStr.indexOf( "_checkbox" ) > 0 ) {
 				col.cellType = "checkbox";			
@@ -117,8 +120,26 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				col.cellType = "img";				
 			} else if ( cStrLC.indexOf( "rating" ) >= 0 ) {
 				col.cellType = "rating";				
+				if ( cStr.indexOf( "_3star" ) > 0 ) {
+					col.ratingType = "3star";					
+					col.id = cStr.substr( 0, cStr.length - 5 );					
+				} else if ( cStr.indexOf( "_5star" ) > 0 ) {
+					col.ratingType = "5star";
+					col.id = cStr.substr( 0, cStr.length - 5 );										
+				} else if ( cStr.indexOf( "_prio" ) > 0 ) {
+					col.ratingType = "prio";
+					col.id = cStr.substr( 0, cStr.length - 5 );					
+				} else {
+					col.ratingType = "3star";
+				}
+				if ( cStr.indexOf( "_rating" ) >= 0 ) {
+					if ( ! hasIdDef ) {
+						col.id = cStr.substr( 0, cStr.length - 7 );
+					}
+					col.label = cStr.substr( 0, cStr.length - 7 );					
+				}	
 			} else if ( cStr.indexOf( "_link" ) > 0 ) {
-				col.cellType = "link";				
+				col.cellType = "linkLink";				
 				col.label = cStr.substr( 0, cStr.length - 5 );
 				if ( ! hasIdDef ) {
 					col.id = cStr.substr( 0, cStr.length - 5 );					
@@ -127,33 +148,16 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			col.id    = col.id.replace( /~/g , "" );
 			col.label = col.label.replace( /~/g , " " );
 
-			
 			tbl.cols.push( col );
 			if ( isId ) { tbl.rowId = cStr; }
 		}
 	}
-//	if ( tbl.debugAlert ){ 
+	if ( tbl.debugAlert ){ 
 		alert( JSON.stringify( tbl, null, '\t' ) ); 
-//	}
+	}
 	// call "old constructor"
 	log( "Pong-EzTable", " call pongTableDivRenderHTML" );
 	pongTableDivRenderHTML( divId, resourceURL, params, tbl );
-	
-	
-//	var dataUrl = resourceURL;
-//	if ( tbl.dataURL != null ) {
-//		dataUrl = dataUrl+"/"+tbl.dataURL;
-//	}
-//
-//	poTbl[ divId ].pongTableDef = tbl;
-//	poTbl[ divId ].resourceURL = resourceURL;
-//	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
-//	poTbl[ divId ].sortCol = ''
-//	// crunch form
-//	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
-//	
-//	if ( tbl.filter != null && tbl.filter.dataReqParamsSrc != null && tbl.filter.dataReqParams != null ) {
-//	...
 }
 
 /** update data call back hook */
