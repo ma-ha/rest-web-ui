@@ -101,7 +101,8 @@ IE may have some problems, but who cares ;-)
 * [MediaWiki / Wikipedia](http://docs.docker.com/reference/api/docker_remote_api_v1.17/#list-containers)
 * [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Remote+access+API)
 * [SugarCRM](http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.7/Application_Framework/Web_Services/REST/)
-and of course you can use your own custom REST/JSON Web Services.
+
+... and of course you can use your own custom REST/JSON Web Services.
 
 Please let me know, if you need a specific API example or demo.
 
