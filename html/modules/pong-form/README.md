@@ -160,6 +160,7 @@ You can load checkbox inputs from a resource per HTTP GET:
 ### Substitue and Variable
 As mentioned, you can set the  <code>"request":"substitute"</code> or <code>"request":"variable"</code> for a field.
 With this you construct can pass complex structures as parameter, if you want for example pass this parameter in a POST:
+
 	"filter":[
 	   {
 	     "$or":[
@@ -168,7 +169,9 @@ With this you construct can pass complex structures as parameter, if you want fo
 	      ]
 	   }
 	]
+	
 You can specify a form like this:
+
 	{ 
 	  "id": "cloudFormId", 
 	  "fieldGroups":[ 
@@ -312,14 +315,14 @@ Value should be
 
 Example
 
- {
-    "label": "Product Configuration",
-    ...
-    "actions" : [ 
-       ...
-       { "id":"OnInit", "onInit":{ "getInitValues":"defaultValues" }, "actionURL":"svc/product/calcQuote/", "target":"quote" } 
-    ]
- }
+	{
+    	"label": "Product Configuration",
+    	...
+    	"actions" : [ 
+       		...
+       		{ "id":"OnInit", "onInit":{ "getInitValues":"defaultValues" }, "actionURL":"svc/product/calcQuote/", "target":"quote" } 
+    	]
+    }
 
 ### OnChange 
 A special action is the on-change-action <code>"onChange":"*"</code>. The * means, it listen to changes on all fields. You may limit the event-action to dedicated field IDs (comma separated). Multiple action specification with different on-change definitions are allowed.
