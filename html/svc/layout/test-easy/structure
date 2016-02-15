@@ -1,76 +1,91 @@
 {
-  "layout": {
-    "title":"Portal: Test 'Easy' Features",
-    "includeHeader":"main",
-    "rows": [
-      {
-        "rowId":"instform",
-        "title":"Eazy Form",
-        "height":"170px",
-        "resourceURL":"svc/test",
-        "type":"pong-easyform",
-        "decor" :"decor",
-        "moduleConfig": {
-		    "id":"tstFormId", 
-			"easyFormFields": [ 
-		    	"id",
-		    	"c1|Name",
-		    	"c1|separator",
-		    	"c1|Remark|4rows",
-		    	"c2|Mailings|label",   	
-		    	"c2|Send~Ads~~|checkbox_infomails_ads",
-		    	"c2|Newsletter|checkbox_infomails_newsletter",
-		    	"c2|Pass~Word"
-		    ],
-		    "actions" : [ 
-		    	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
-		    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "target": "out2" }
-		    ]
-        },
-        "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ] 
-      },
-      {
-	        "rowId":"r1",
-	        "height":"280px",
-            "type":"pong-easytable",
-            "resourceURL":"svc/tbl-data",
-            "title":"Easy Table",
-            "moduleConfig": {
-                "easyCols": [
-                	"*ID|5%",
-                	"Name=Name.0",
-                	"Picture",
-                	"Status_checkbox",
-                	"Rating",
-                	"Description_editable",
-                	"Product~Page_link"
-                ],
-                "maxRows":"3"
-            },
-            "type_id":"5",
-            "decor":"decor"
-      },
-      {
-        "rowId": "r2",
-        "height": "100px",
-        "cols": [
-          {
-            "columnId": "out1",
-            "title": "Output 1",
-            "width": "40%",
-            "resourceURL": "svc/cloud/resinfo",
-            "decor" : "decor"
-          },
-          {
-            "columnId": "out2",
-            "title": "Output 2",
-            "width": "60%",
-            "decor" : "decor",
-            "resourceURL": "svc/cloud/setuplog"
-          }
-        ]
-      }
-    ],
-    "includeFooter": "main"
-  }
+	"layout":{
+		"title":"Portal: Test 'Easy' Features",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"instform",
+				"height":"170px",
+				"cols":[
+					{
+						"columnId":"ezFrm",
+						"title":"Eazy Form",
+						"width":"80%",
+						"resourceURL":"svc/test",
+						"type":"pong-easyform",
+						"decor":"decor",
+						"moduleConfig":{
+							"id":"tstFormId",
+							"easyFormFields":[
+								"id",
+								"c1|Name",
+								"c1|separator",
+								"c1|Remark|4rows",
+								"c2|Mailings|label",
+								"c2|Send~Ads~~|checkbox_infomails_ads",
+								"c2|Newsletter|checkbox_infomails_newsletter",
+								"c2|Pass~Word"
+							],
+							"actions":[
+								{
+									"id":"Chk",
+									"actionName":"Check",
+									"actionURL":"svc/test/check",
+									"target":"out2"
+								}
+								
+							]
+							
+						},
+						"actions":[
+							{
+								"actionName":"Help",
+								"type":"pong-help",
+								"param":{
+									"width":"400",
+									"height":"300"
+								}
+							}
+						]
+					},
+					{
+						"columnId":"out2",
+						"title":"Output 2",
+						"width":"20%",
+						"decor":"decor",
+						"resourceURL":"svc/cloud/setuplog"
+					}
+				]
+			},
+			{
+				"rowId":"r1",
+				"height":"280px",
+				"type":"pong-easytable",
+				"resourceURL":"svc/tbl-data",
+				"title":"Easy Table",
+				"moduleConfig":{
+					"easyCols":[
+						"*ID|5%",
+						"Name=Name.0",
+						"Picture",
+						"Status_checkbox",
+						"Rating",
+						"Description_editable",
+						"Product~Page_link"
+					],
+					"maxRows":"3"
+				},
+				"type_id":"5",
+				"decor":"decor"
+			},
+			{
+				"rowId":"log",
+				"title":"Debug Log",
+				"height":"250px",
+				"resourceURL":"svc/tbl-data",
+				"type":"pong-log"
+			}
+		],
+		"includeFooter":"main"
+	}
 }

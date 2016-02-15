@@ -371,10 +371,14 @@ function tblCells( divId ) {
 	$( "#"+divId+'PaginLbl' ).html( $.i18n( "page ")+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
 	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
+		log( "Pong-Table", "row loop" );	
 		if ( r < dtaArr.length ) {
+			log( "Pong-Table", "row "+r );	
 			var cellDta = dtaArr[r];
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
+				log( "Pong-Table", "col "+c );	
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
+				log( "Pong-Table", "call getSubData: "+JSON.stringify(cellDef)  );	
 				var cellVal = getSubData( cellDta, cellDef.id );
 				if ( cellVal == null ) { cellVal = ''; }
 				log( "Pong-Table", JSON.stringify( cellDef ) );

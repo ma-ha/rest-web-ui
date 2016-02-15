@@ -1151,7 +1151,7 @@ function getSubData( data, subPath ) {
 //=====================================================================================================
 
 var loggerModule = false; 
-
+var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( //func=='getHookMethod' || 
@@ -1161,6 +1161,7 @@ function log( func, msg ){
 		func=='Pong-Table' || 
 		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
+		loggerBuffer.push
 	}
 	
 	if ( loggerModule ) {

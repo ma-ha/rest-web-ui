@@ -26,7 +26,7 @@ log( "Pong-EzTable", "load module");
 var poTbl = [];
 
 function pongEzTableDivHTML( divId, resourceURL, params ) {
-	log( "Pong-EzTable",  "pongTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
+	log( "Pong-EzTable",  "pongEzTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
 	poTbl[ divId ] = 
 		{ 
 			pongTableDef: null,
@@ -70,7 +70,7 @@ function pongEzTableDivHTML( divId, resourceURL, params ) {
 
 
 function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
-	log( "Pong-EzTable", "cre table" );
+	log( "Pong-EzTable", "cre ez table" );
 	if ( tbl.easyCols && tbl.easyCols.length && ! tbl.cols ) {
 		log( "Pong-EzTable", " create Pong-Table JSON sctructure" );
 		tbl.cols = [];
@@ -79,7 +79,7 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			var col = {};
 			var isId = false;
 			var hasIdDef = false;
-			if ( cStr.startsWith("*") ) {
+			if ( cStr.indexOf("*") == 0 ) {
 				cStr = cStr.substr(1);
 				isId = true;
 			}
@@ -159,6 +159,8 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	}
 	if ( tbl.debugAlert ){ 
 		alert( JSON.stringify( tbl, null, '\t' ) ); 
+	} else {
+		log( "Pong-EzTable", JSON.stringify( tbl, null, '\t' ) ); 
 	}
 	// call "old constructor"
 	log( "Pong-EzTable", " call pongTableDivRenderHTML" );

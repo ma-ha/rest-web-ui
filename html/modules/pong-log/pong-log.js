@@ -29,7 +29,7 @@ log( "ponglog", "load module"); // print this on console, when module is loaded
 function ponglog_DivHTML( divId, resourceURL, paramObj ) {
 	log( "ponglog",  "divId="+divId  );
 	var contentItems = [];
-    var height = $( '#'+divId ).parent().height() -75;
+    var height = $( '#'+divId ).parent().height() -90;
     var width = $( '#'+divId ).parent().width() -30;
 	/*
 	contentItems.push( '<div id="PongLog" class="ponglog" style="height:'+height+'px; overflow: auto; width:100%; -webkit-overflow-scrolling: touch;">' );
@@ -56,7 +56,7 @@ function ponglog_debug_out( module, logline ) {
 	//$( '#PongLog' ).append( module+": "+logline+"<br/>" );
     $( "#PongLog" ).val( 
     		function( index, val ) {
-    			return val +"\n"+ module+": "+logline;
+    			return val +"\n["+ module+"] "+logline;
     		}
     );
 }
