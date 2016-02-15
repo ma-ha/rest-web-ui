@@ -60,11 +60,18 @@ moduleMap[ "i18n" ] = {
 };
 
 moduleMap[ "pong-navbar" ] = {
-	"name":  "pong-navbar",
-    "hooks": [
-        { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" } 
-    ]
-};
+		"name":  "pong-navbar",
+	    "hooks": [
+	        { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" } 
+	    ]
+	};
+
+moduleMap[ "pong-pulldown" ] = {
+		"name":  "pong-pulldown",
+	    "hooks": [
+	        { hook: "addHeaderHtml", method:"addPullDownHeaderHtml" } 
+	    ]
+	};
 
 moduleMap[ "modal-form" ] = {
 	"name": "modal-form",
