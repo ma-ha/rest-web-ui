@@ -1,5 +1,7 @@
 ## Description (This is in concept phase)
-This module is a uses header hook to add a pull down menu. 
+This module is a uses header hook to add a pull down menu. It cleans up the header by hiding prio 2 functionality. 
+
+You can use this module multiple times in the header, e.g. for "menu" and "user settings".
 
 ## Usage in "structure" 
 Simply add a action to the <code>actions</code> array with <code>"type": "modal-form"</code>
@@ -12,7 +14,7 @@ Example [[PoNG Structure Specification|structure file]] extract:
 	      "header": [
 	      {
 	         ...
-	         "modules" : [ { "id": "PMenu", '''"type": "pong-pulldown", "param": { "confURL":"nav" }''' } ] 
+	         "modules" : [ { "id": "PMenu", '''"type": "pong-pulldown", "param": { "confURL":"menu" }''' } ] 
 	      },
 	      ...
 	    ],
@@ -23,12 +25,18 @@ Example [[PoNG Structure Specification|structure file]] extract:
 The <code>confURL</code> should be like this example:
 
 	{
+		"title": "Menu",
 	    "menuItems" : [
-	       { ... },
-	       { ... }
+	       { "html":"<b>Menu:</b>" },
+	       { "pageLink":"mainPage", "label":"Home" },
+	       { "html":"<a href=\"help.html\" target=\"_blank\">help</a>" }
 	    }
 	}
 
+### menuItems
+"menuItems" can be:
+* "html" 
+* "pageLink"
 
 ## Usage with embedded configuration 
 Example:
@@ -44,6 +52,7 @@ Example:
 	               "id": "MainNav", 
 	               "type": "pong-navbar", 
 	               "moduleConfig": {
+						"title": "Menu",
 	                     "menuItems": [
 						       { ... },
 						       { ... }
