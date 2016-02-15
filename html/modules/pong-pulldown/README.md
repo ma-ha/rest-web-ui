@@ -14,7 +14,7 @@ Example [[PoNG Structure Specification|structure file]] extract:
 	      "header": [
 	      {
 	         ...
-	         "modules" : [ { "id": "PMenu", '''"type": "pong-pulldown", "param": { "confURL":"menu" }''' } ] 
+	         "modules" : [ { "id": "PMenu", "type": "pong-pulldown", "param": { "confURL":"menu" } } ] 
 	      },
 	      ...
 	    ],
@@ -22,7 +22,7 @@ Example [[PoNG Structure Specification|structure file]] extract:
 	}
 
 ## Configuration 
-The <code>confURL</code> should be like this example:
+A GET to <code>confURL</code> should return something like this:
 
 	{
 		"title": "Menu",
@@ -50,7 +50,7 @@ Example:
 	        "modules" : [ 
 	            {  
 	               "id": "MainNav", 
-	               "type": "pong-navbar", 
+	               "type": "pong-pulldown", 
 	               "moduleConfig": {
 						"title": "Menu",
 	                     "menuItems": [
