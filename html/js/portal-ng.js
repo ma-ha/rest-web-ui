@@ -346,6 +346,25 @@ function loadModules() {
 			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
+			
+			// include files
+			if ( moduleMap[ module ] && moduleMap[ module ].include ) {
+				log( 'loadModules', module+': Need includes...' );
+				for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
+					//for ( var includeJS in moduleMap[ module ].include ) {
+					var includeJS = moduleMap[ module ].include[i];
+					log( 'loadModules', module+' load: '+modulesPath+module+'/'+includeJS );
+					ajaxOngoing++;
+				    $.getScript( modulesPath+module+'/'+includeJS )
+						.done( function( script, textStatus ) { 
+							log( 'loadModules', textStatus ); ajaxOngoing--; } )
+						.fail( function( jqxhr, settings, exception ) { 
+							log( 'loadModules', includeJS+": "+exception ); ajaxOngoing--; }	);
+				}
+				// TODO: Wait for includes before proceeding?
+			}
+			
+			// load scripts
 			ajaxOngoing++;
 		    $.getScript( modulesPath+module+'/'+module+".js" )
 			.done(
