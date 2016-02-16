@@ -27,6 +27,8 @@ function addPullDownHeaderHtml( divId, type , params ) {
 	log( "PoNG-PullDown", "start addPullDownHeaderHtml");
 	if ( act == null ) { act = ''; }
 	
+	sessionInfo["tstUser"] = "MH";
+	
 	if  ( moduleConfig[ divId ] != null ) {
 		addPullDownRenderHtml( divId, type , params, moduleConfig[ divId ] );		
 	} else {
@@ -51,21 +53,21 @@ function addPullDownRenderHtml( divId, type , params, cfg ) {
 	}	
 	
 	html.push( '<div class="PullDownBtn">' );
-	html.push( ' <button id="'+divId+'PullDownButton" class="ui-state-default ui-corner-all">'+$.i18n( cfg.title )+'</button>' );
+	html.push( ' <button id="'+divId+'PullDownButton" class="ui-state-default ui-corner-all">'+parsePullDownPlaceHolders( $.i18n( cfg.title ) )+'</button>' );
 	html.push( '</div>' );
 	html.push( '<div id="'+divId+'PullDownMenu" class="PullDownMenu">' );
 	for ( var i = 0; i < cfg.menuItems.length; i++ ) {
 		var item = cfg.menuItems[i];
 		if ( item.html ) {
-			html.push( ' <div class="PullDownMenuItem">'+item.html+"</div>" );
+			html.push( ' <div class="PullDownMenuItem">'+parsePullDownPlaceHolders(item.html)+"</div>" );
 		} else if ( item.pageLink && item.label ) {
-			html.push( ' <div class="PullDownMenuItem"><a href="index.html?layout='+item.pageLink+'">'+item.label+'</a></div>' );
+			html.push( ' <div class="PullDownMenuItem"><a href="index.html?layout='+item.pageLink+'">'+parsePullDownPlaceHolders( $.i18n( item.label ) )+'</a></div>' );
 		}
 
 	}
 	html.push( ' <script>' );
 	html.push( '    $(function() { ' );
-	html.push( '      $( "#'+divId+'PullDownButton" ).click( function() { showPullDownMenu( "'+divId+'" ); } ); ' );
+	html.push( '      $( "#'+divId+'PullDownButton" ).click( function() { togglePullDownMenu( "'+divId+'" ); } ); ' );
 	html.push( '      $( "#'+divId+'PullDownMenu" ).hide(); ');
 	html.push( '    } );' );
 	html.push( ' </script>' );
@@ -74,6 +76,19 @@ function addPullDownRenderHtml( divId, type , params, cfg ) {
 	$( "#"+divId ).html( html.join( "\n" ) );
 }
 
-function showPullDownMenu( divId ) {
+function togglePullDownMenu( divId ) {
+	log( "PoNG-PullDown", "togglePullDownMenu " + divId );
     $( "#"+divId+"PullDownMenu" ).toggle( "blind" );
+}
+
+/** replaces ${xyz} in str by the value session map */
+function parsePullDownPlaceHolders( str ) {
+	log( "Pong-PullDown",  "parsePullDownPlaceHolders: "+ str );
+	for (var key in sessionInfo) {
+		if ( str.indexOf( '${'+key+'}' ) >=0 ) {
+			str = str.replace( '${'+key+'}', $.i18n( sessionInfo[key] ) );
+		}
+	}
+	log( "Pong-PullDown", "Processed value: "+ str );
+	return str;
 }

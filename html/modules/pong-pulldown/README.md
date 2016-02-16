@@ -65,3 +65,8 @@ Example:
 	   ],
 	   ...
 	}
+
+## Session Variables and i18n
+In the title and menuItems you can use place holders for *sessionInfo[ ]* variables, e.g. *"title":"User: ${loginUser}"*.
+
+Before replacement of variables, all labels re internationalized. So keep in mind to provide also place holders in the translations.
