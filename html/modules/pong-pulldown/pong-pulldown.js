@@ -27,6 +27,7 @@ function addPullDownHeaderHtml( divId, type , params ) {
 	log( "PoNG-PullDown", "start addPullDownHeaderHtml");
 	if ( act == null ) { act = ''; }
 	
+	// just for demo/test purposes
 	sessionInfo["tstUser"] = "MH";
 	
 	if  ( moduleConfig[ divId ] != null ) {
@@ -51,7 +52,7 @@ function addPullDownRenderHtml( divId, type , params, cfg ) {
 	if ( getParam( 'lang' ) != '' ) {
 		lang = "&lang=" + getParam( 'lang' );	
 	}	
-	
+
 	html.push( '<div class="PullDownBtn">' );
 	html.push( ' <button id="'+divId+'PullDownButton" class="ui-state-default ui-corner-all">'+parsePullDownPlaceHolders( $.i18n( cfg.title ) )+'</button>' );
 	html.push( '</div>' );
@@ -61,7 +62,7 @@ function addPullDownRenderHtml( divId, type , params, cfg ) {
 		if ( item.html ) {
 			html.push( ' <div class="PullDownMenuItem">'+parsePullDownPlaceHolders(item.html)+"</div>" );
 		} else if ( item.pageLink && item.label ) {
-			html.push( ' <div class="PullDownMenuItem"><a href="index.html?layout='+item.pageLink+'">'+parsePullDownPlaceHolders( $.i18n( item.label ) )+'</a></div>' );
+			html.push( ' <div class="PullDownMenuItem"><a href="index.html?layout='+item.pageLink+lang+'">'+parsePullDownPlaceHolders( $.i18n( item.label ) )+'</a></div>' );
 		}
 
 	}
