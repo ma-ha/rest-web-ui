@@ -368,7 +368,7 @@ function tblCells( divId ) {
 	var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
 	var maxP = Math.ceil( dtaArr.length / rPP );
 	var curP = Math.round( rowEn / rPP );
-	$( "#"+divId+'PaginLbl' ).html( $.i18n( "page ")+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
+	$( "#"+divId+'PaginLbl' ).html( $.i18n( "page" )+" "+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
 	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
 		log( "Pong-Table", "row loop" );	
