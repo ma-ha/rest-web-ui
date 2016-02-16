@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. 
  */
 log( "PoNG-PullDown", "Loading Module");
-var act = pageInfo[ 'layout' ];
 
 function addPullDownHeaderHtml( divId, type , params ) {
 	log( "PoNG-PullDown", "start addPullDownHeaderHtml");
@@ -43,45 +42,38 @@ function addPullDownHeaderHtml( divId, type , params ) {
 	}
 }
 
-function addPullDownRenderHtml( divId, type , params, nb ) {
-	log( "PoNG-PullDown", "add content " + JSON.stringify(nb) );
+function addPullDownRenderHtml( divId, type , params, cfg ) {
+	log( "PoNG-PullDown", "add content " + JSON.stringify( cfg ) );
 	var html = [];		
 	var lang = '';
 	if ( getParam( 'lang' ) != '' ) {
 		lang = "&lang=" + getParam( 'lang' );	
 	}	
-//	var role = '';
-//	if ( userRole != '' ) {
-//		role = "&role=" + getParam( 'role' );	
-//	}	
-//	for ( var i=0; i < nb.navigations.length; i++ ) {
-//		var showNav = true;
-//		if ( nb.navigations[i].userRoles != null ) {
-//			showNav = false;
-//			for ( var r = 0; r < nb.navigations[i].userRoles.length; r++ ) {
-//				if ( nb.navigations[i].userRoles[r] == userRole ) {
-//					 showNav = true;
-//				}
-//			}
-//		}
-//		if ( showNav ) {
-//			log( "PoNG-PullDown", "add "+i );
-//			var actClass = '';
-//			if ( nb.navigations[i].page_name == act && mode == 'php' ){
-//				actClass = 'pongNavBarItemActive';				
-//			} else 	if ( act == nb.navigations[i].layout ) {
-//				actClass = 'pongNavBarItemActive';
-//			}
-//			html.push( '<div class="pongNavBarItem '+actClass+'">' );
-//			if ( nb.navigations[i].page_name != null && mode == 'php' ){
-//				html.push( '<a href="show.php?layout='+nb.navigations[i].page_name+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );	
-//			} else if ( nb.navigations[i].layout != null) {
-//				html.push( '<a href="index.html?layout='+nb.navigations[i].layout+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );					
-//			}
-//
-//			html.push( '</div>' );						
-//		}
-//	}
-//
+	
+	html.push( '<div class="PullDownBtn">' );
+	html.push( ' <button id="'+divId+'PullDownButton" class="ui-state-default ui-corner-all">'+$.i18n( cfg.title )+'</button>' );
+	html.push( '</div>' );
+	html.push( '<div id="'+divId+'PullDownMenu" class="PullDownMenu">' );
+	for ( var i = 0; i < cfg.menuItems.length; i++ ) {
+		var item = cfg.menuItems[i];
+		if ( item.html ) {
+			html.push( ' <div class="PullDownMenuItem">'+item.html+"</div>" );
+		} else if ( item.pageLink && item.label ) {
+			html.push( ' <div class="PullDownMenuItem"><a href="index.html?layout='+item.pageLink+'">'+item.label+'</a></div>' );
+		}
+
+	}
+	html.push( ' <script>' );
+	html.push( '    $(function() { ' );
+	html.push( '      $( "#'+divId+'PullDownButton" ).click( function() { showPullDownMenu( "'+divId+'" ); } ); ' );
+	html.push( '      $( "#'+divId+'PullDownMenu" ).hide(); ');
+	html.push( '    } );' );
+	html.push( ' </script>' );
+	html.push( '</div>' );
+	
 	$( "#"+divId ).html( html.join( "\n" ) );
+}
+
+function showPullDownMenu( divId ) {
+    $( "#"+divId+"PullDownMenu" ).toggle( "blind" );
 }

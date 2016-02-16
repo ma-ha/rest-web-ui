@@ -8,7 +8,17 @@
       ],
       "modules" : [ 
       	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
-      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } }
+      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
+      	{ "id": "PullDownMenu", "type": "pong-pulldown", 
+      		"moduleConfig": {
+      			"title": "Test Cases",
+      			"menuItems" : [
+			       { "html":"<b>Regression Tests:</b>" },
+			       { "pageLink":"test-easy", "label":"Easy-Form/Easy-Table" },
+			       { "pageLink":"test", "label":"Action Test" }
+			    ]   
+      		} 
+      	}
       ] 
     },
     "rows": [

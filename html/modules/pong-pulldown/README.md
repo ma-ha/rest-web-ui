@@ -22,7 +22,7 @@ Example [[PoNG Structure Specification|structure file]] extract:
 	}
 
 ## Configuration 
-A GET to <code>confURL</code> should return something like this:
+A HTTP GET request to <code>confURL</code> should return something like this:
 
 	{
 		"title": "Menu",
@@ -30,7 +30,7 @@ A GET to <code>confURL</code> should return something like this:
 	       { "html":"<b>Menu:</b>" },
 	       { "pageLink":"mainPage", "label":"Home" },
 	       { "html":"<a href=\"help.html\" target=\"_blank\">help</a>" }
-	    }
+	    ]
 	}
 
 ### menuItems
