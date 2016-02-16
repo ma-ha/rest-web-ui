@@ -87,7 +87,8 @@ moduleMap[ "pong-table" ] = {
         { hook: "loadResourcesHtml", method:"pongTableDivHTML" },
         { hook: "update", method:"pongTableUpdateData" },
         { hook: "setData", method:"pongTableSetData" }
-    ]
+    ],
+    "include":[ "jquery.elevatezoom.js" ]
 };
 
 moduleMap[ "pong-easytable" ] = {
