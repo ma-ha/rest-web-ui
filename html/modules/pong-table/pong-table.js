@@ -431,11 +431,14 @@ function tblCells( divId ) {
 					
 				} else if ( cellType == 'img' ) {
 					
+					var tblImg  = cellVal; // TODO impl zoom image
 					var zoomImg = cellVal; // TODO impl zoom image
 					
-					$( cellId ).html( '<img src="'+cellVal+'" data-zoom-image="'+zoomImg+'" id=	"'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
+					$( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=	"'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
 					$( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
 					
+				} else if ( cellType == 'largeimg' ) {
+					// TODO 
 				} else if ( cellType == 'button'  ) {
 					
 					var contentItems = [];
