@@ -113,6 +113,11 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				if ( ! hasIdDef ) {
 					col.id = cStr.substr( 0, cStr.length - 9 );					
 				}
+			} else if ( cStrLC.indexOf( "_zooms_" ) >= 0 ) {
+				col.cellType = "largeimg";
+				col.id = col.id.substr( 0,  cStrLC.indexOf( "_zooms_" ) );					
+				col.forImg = cStr.substr( cStrLC.indexOf( "_zooms_" ) + 7 );
+//				alert( "col.cellType="+col.cellType+" col.id="+col.id+" col.forImg="+col.forImg );
 			} else if ( cStr.indexOf( "_img" ) > 0 ) {
 				col.cellType = "img";								
 				col.label = cStr.substr( 0, cStr.length - 4 );

@@ -68,6 +68,7 @@
 						"*ID|5%",
 						"Name=Name.0",
 						"Picture",
+						"ZoomImg_zooms_Picture",
 						"Status_checkbox",
 						"Rating",
 						"Description_editable",

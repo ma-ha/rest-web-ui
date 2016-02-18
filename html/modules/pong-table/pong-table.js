@@ -434,12 +434,19 @@ function tblCells( divId ) {
 					var tblImg  = cellVal; // TODO impl zoom image
 					var zoomImg = cellVal; // TODO impl zoom image
 					
+//					//search for zoom image def 
+					for ( var cZI = 0; cZI < poTbl[ divId ].pongTableDef.cols.length; cZI++ ) {
+						var cellDefZI = poTbl[ divId ].pongTableDef.cols[ cZI ];
+						if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
+							var cellValZI = getSubData( cellDta, cellDefZI.id );
+							if ( cellValZI != null ) { zoomImg = cellValZI }							
+						}
+					}
+					
 					$( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=	"'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
 					$( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
 					
-				} else if ( cellType == 'largeimg' ) {
-					// TODO 
-				} else if ( cellType == 'button'  ) {
+				}  else if ( cellType == 'button'  ) {
 					
 					var contentItems = [];
 					var ajaxType = 'POST';
