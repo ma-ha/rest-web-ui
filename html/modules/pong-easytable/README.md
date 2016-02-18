@@ -96,4 +96,16 @@ The img type and link type will expect a URL as content.
 ## Advanced Features
 You can also append "_editable" to text columns.
 
+For images in the table you can specify a large image for zooming in, by <largeImageId>_zooms_<imageId>, e.g.
+
+	"moduleConfig":{
+		"easyCols":[
+			...
+			"Picture",
+			"ZoomImg_zooms_Picture",
+			...
+		],
+		"maxRows":"3"
+	}
+
 If you need actions, or filters, you find the documetation of these features in the [table module](../pong-table/).
