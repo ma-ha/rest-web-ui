@@ -23,6 +23,8 @@ THE SOFTWARE.
  */
 log( "PoNG-List", "load module");
 
+// This uses heavily pong-table.js functions!!
+
 function pongListDivHTML( divId, resourceURL, params ) {
 	log( "PoNG-List",  "divId="+divId+" resourceURL="+resourceURL );
 	pongTanbleInit( divId );
@@ -94,38 +96,38 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 		}
 	}
 
-	pongListUpdateData( divId, null );
+	pongTableUpdateData( divId, params.get );
 		
 }
 
-/** update data call back hook */
-function pongListUpdateData( divId, paramsObj ) {
-	log( "PoNG-List",  'update '+divId );
-	var def = poTbl[ divId ].pongTableDef;
-	
-	$.getJSON( def.dataUrlFull, paramsObj ,
-		function( data ) { 	
-			if ( def.dataDocSubPath == null ) {
-				// table is the root of the doc
-				log( "PoNG-List",  'no tbl.dataDocSubPath' );
-				poTbl[ divId ].pongTableData = data; 					
-			} else {
-				log( "PoNG-List",  'tbl.dataDocSubPath='+def.dataDocSubPath );
-				// table is somewhere in the DOM tree
-				var pathToken = def.dataDocSubPath.split('.');
-				log( "PoNG-List",  'pathToken[0] ' + pathToken[0] );
-				var subdata = data[ pathToken[0] ];
-				for ( i = 1; i < pathToken.length; i++ ) {
-					log( "PoNG-List", 'pathToken['+i+'] ' + pathToken[i] );	
-					subdata = subdata[ pathToken[i] ];
-				}
-				// console.log( ' subdata = ' + JSON.stringify( subdata ) );
-				poTbl[ divId ].pongTableData = subdata;
-			}
-			listDivCnt( divId ); 
-		} 
-	);	
-}
+///** update data call back hook */
+//function pongListUpdateData( divId, paramsObj ) {
+//	log( "PoNG-List",  'update '+divId );
+//	var def = poTbl[ divId ].pongTableDef;
+//	
+//	$.getJSON( def.dataUrlFull, paramsObj ,
+//		function( data ) { 	
+//			if ( def.dataDocSubPath == null ) {
+//				// table is the root of the doc
+//				log( "PoNG-List",  'no tbl.dataDocSubPath' );
+//				poTbl[ divId ].pongTableData = data; 					
+//			} else {
+//				log( "PoNG-List",  'tbl.dataDocSubPath='+def.dataDocSubPath );
+//				// table is somewhere in the DOM tree
+//				var pathToken = def.dataDocSubPath.split('.');
+//				log( "PoNG-List",  'pathToken[0] ' + pathToken[0] );
+//				var subdata = data[ pathToken[0] ];
+//				for ( i = 1; i < pathToken.length; i++ ) {
+//					log( "PoNG-List", 'pathToken['+i+'] ' + pathToken[i] );	
+//					subdata = subdata[ pathToken[i] ];
+//				}
+//				// console.log( ' subdata = ' + JSON.stringify( subdata ) );
+//				poTbl[ divId ].pongTableData = subdata;
+//			}
+//			listDivCnt( divId ); 
+//		} 
+//	);	
+//}
 
 //function listDivCnt( divId ) {
 //	var rowSt = parseInt( poTbl[ divId ].pongTableStartRow );

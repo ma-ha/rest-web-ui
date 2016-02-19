@@ -71,6 +71,99 @@ function pongTableDivHTML( divId, resourceURL, params ) {
 	}
 }
 
+function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
+	log( "Pong-Table", "cre table" );
+	
+	var dataUrl = resourceURL;
+	if ( tbl.dataURL != null ) {
+		dataUrl = dataUrl+"/"+tbl.dataURL;
+	}
+
+	poTbl[ divId ].pongTableDef = tbl;
+	poTbl[ divId ].resourceURL = resourceURL;
+	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
+	poTbl[ divId ].sortCol = '';
+
+	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
+	var contentItems = [];
+	
+	// create form if required
+	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
+			
+	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
+	// create table head
+	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
+	if ( tbl.cols != null ) {
+		for ( var i = 0; i < tbl.cols.length; i ++ ) {
+			var colWidth = ''; if ( tbl.cols[i].width != null ) { colWidth = ' width="'+tbl.cols[i].width+'" '; }
+			if ( tbl.cols[i].cellType == 'button' ) { // Button column get no headline
+				contentItems.push( '<th'+colWidth+'>&nbsp;</th>'  );
+			} else	if ( tbl.cols[i].cellType == 'tooltip' ) {
+				// do noting				
+			} else if ( tbl.cols[i].cellType == 'largeimg' ) {
+				// do noting
+			} else {
+				contentItems.push( '<th'+colWidth+'>'+ $.i18n( (tbl.cols[i].label!=0 ? tbl.cols[i].label : '&nbsp;' ) ) +'&nbsp;<span class="'+divId+'TblSort" data-colid="'+tbl.cols[i].id+'" style="cursor: pointer;">^</span></th>'  );
+			}
+		}		
+	}
+	contentItems.push( '<script> ' );
+	contentItems.push( "$(function() { ");
+	contentItems.push( ' $( ".'+divId+'TblSort").on( "click", function( e ) { ' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); tblCells( "'+divId+'" ); ' );
+	contentItems.push( ' } ); } ); ' );
+	contentItems.push( '</script> ' );
+	contentItems.push( "</tr>" );
+	for ( var r = 0; r < tbl.maxRows; r ++ ) {
+		contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
+		for ( var c = 0; c < tbl.cols.length; c ++ ) {
+				if ( ( tbl.cols[c].cellType != 'tooltip' ) && ( tbl.cols[c].cellType != 'largeimg' ) ) {
+					contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
+				}
+		}
+		contentItems.push( "</tr>" );
+	}
+	contentItems.push( "</table>" );
+
+	// paginator buttons:
+	var paginatorJS = pongTableGenPaginator(divId, tbl);
+
+	// AJAX functions:
+	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
+
+	// create HTML
+	$( "#"+divId ).html( contentItems.join( "\n" ) );
+	$( "#"+divId ).append( paginatorJS.join("\n") );
+	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
+	
+
+	var first = true;
+	// add filter params to data URL
+	if ( params != null  && params.filter != null ) {
+		for ( var i = 0; i < params.filter.length; i++ ) {
+			if ( first ) { 
+				dataUrl += "?"+params.filter[i].field+'='+params.filter[i].value;
+				first = false;
+			} else {
+				dataUrl += "&"+params.filter[i].field+'='+params.filter[i].value; 						
+			}
+		}
+	}
+	log( "Pong-Table", "cre table 6" );
+
+	// add page params to data URL
+	if ( params.get != null ) {
+		for (var key in params.get) {
+			dataUrl += (first ? "?" :"&");
+			dataUrl += key + "=" + params.get[ key ];
+			first = false;
+		}
+	}
+	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
+
+	pongTableUpdateData( divId, params.get );
+}
+
 
 function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 	var contentItems = [];
@@ -128,95 +221,6 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 		}
 	}
 	return contentItems;
-}
-
-function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
-	log( "Pong-Table", "cre table" );
-	
-	var dataUrl = resourceURL;
-	if ( tbl.dataURL != null ) {
-		dataUrl = dataUrl+"/"+tbl.dataURL;
-	}
-
-	poTbl[ divId ].pongTableDef = tbl;
-	poTbl[ divId ].resourceURL = resourceURL;
-	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
-	poTbl[ divId ].sortCol = '';
-
-	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
-	var contentItems = [];
-	
-	// create form if required
-	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
-			
-	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
-	// create table head
-	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
-	if ( tbl.cols != null ) {
-		for ( var i = 0; i < tbl.cols.length; i ++ ) {
-			var colWidth = ''; if ( tbl.cols[i].width != null ) { colWidth = ' width="'+tbl.cols[i].width+'" '; }
-			if ( tbl.cols[i].cellType == 'button' ) { // Button column get no headline
-				contentItems.push( '<th'+colWidth+'>&nbsp;</th>'  );
-			} else	if ( tbl.cols[i].cellType != 'tooltip' ) { // tool tip will be added to another col, so no own col
-				contentItems.push( '<th'+colWidth+'>'+ $.i18n( (tbl.cols[i].label!=0 ? tbl.cols[i].label : '&nbsp;' ) ) +'&nbsp;<span class="'+divId+'TblSort" data-colid="'+tbl.cols[i].id+'" style="cursor: pointer;">^</span></th>'  );
-			}
-		}		
-	}
-	contentItems.push( '<script> ' );
-	contentItems.push( "$(function() { ");
-	contentItems.push( ' $( ".'+divId+'TblSort").on( "click", function( e ) { ' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); tblCells( "'+divId+'" ); ' );
-	contentItems.push( ' } ); } ); ' );
-	contentItems.push( '</script> ' );
-	contentItems.push( "</tr>" );
-	for ( var r = 0; r < tbl.maxRows; r ++ ) {
-		contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
-		for ( var c = 0; c < tbl.cols.length; c ++ ) {
-				if ( tbl.cols[c].cellType != 'tooltip' ) {
-					contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
-				}
-		}
-		contentItems.push( "</tr>" );
-	}
-	contentItems.push( "</table>" );
-
-	// paginator buttons:
-	var paginatorJS = pongTableGenPaginator(divId, tbl);
-
-	// AJAX functions:
-	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
-
-	// create HTML
-	$( "#"+divId ).html( contentItems.join( "\n" ) );
-	$( "#"+divId ).append( paginatorJS.join("\n") );
-	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
-	
-
-	var first = true;
-	// add filter params to data URL
-	if ( params != null  && params.filter != null ) {
-		for ( var i = 0; i < params.filter.length; i++ ) {
-			if ( first ) { 
-				dataUrl += "?"+params.filter[i].field+'='+params.filter[i].value;
-				first = false;
-			} else {
-				dataUrl += "&"+params.filter[i].field+'='+params.filter[i].value; 						
-			}
-		}
-	}
-	log( "Pong-Table", "cre table 6" );
-
-	// add page params to data URL
-	if ( params.get != null ) {
-		for (var key in params.get) {
-			dataUrl += (first ? "?" :"&");
-			dataUrl += key + "=" + params.get[ key ];
-			first = false;
-		}
-	}
-	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
-
-	pongTableUpdateData( divId, params.get );
 }
 
 function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
