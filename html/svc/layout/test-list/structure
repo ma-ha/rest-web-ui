@@ -5,7 +5,7 @@
 		"rows":[
 			{
 				"rowId":"r1",
-				"height":"4000px",
+				"height":"400px",
 				"type":"pong-list",
 				"resourceURL":"svc/tbl-data",
 				"title":"List2 Reuses Table Module",

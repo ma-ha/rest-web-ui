@@ -149,7 +149,6 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	// create form if required
 	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
 			
-	log( "Pong-Table", "cre table 2" );
 	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
 	// create table head
 	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
@@ -183,19 +182,15 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 
 	// paginator buttons:
 	var paginatorJS = pongTableGenPaginator(divId, tbl);
-	log( "Pong-Table", "cre table 3" );
 
 	// AJAX functions:
 	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
-	log( "Pong-Table", "cre table 4" );
 
 	// create HTML
 	$( "#"+divId ).html( contentItems.join( "\n" ) );
 	$( "#"+divId ).append( paginatorJS.join("\n") );
-	log( "Pong-Table", "cre table 5" );
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	
-	log( "Pong-Table", "cre table 6" );
 
 	var first = true;
 	// add filter params to data URL
@@ -221,7 +216,6 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	}
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
 
-	log( "Pong-Table", "cre table 7" );
 	pongTableUpdateData( divId, params.get );
 }
 
@@ -307,11 +301,13 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 
 function pongTableGenPaginator( divId, tbl ) {
 	var contentItems = [];
+	contentItems.push( '<div id="'+divId+'Pagin" class="pongListPagin">' );
 	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
 	contentItems.push( '<button id="'+divId+'BtPrev" class="pong-table-paginator"></button>' );
 	contentItems.push( '<span id="'+divId+'PaginLbl" class="pong-table-paginator-text">...</span>' );
 	contentItems.push( '<button id="'+divId+'BtNext" class="pong-table-paginator"></button>' );
 	contentItems.push( '<button id="'+divId+'BtLast" class="pong-table-paginator"></button>' );
+	contentItems.push(  '</div>' );
 	contentItems.push( "<script>" );
 	contentItems.push( "$(function() { ");
 	contentItems.push( ' $( "#'+divId+'BtFirst").button( {icons:{primary:"ui-icon-arrowthickstop-1-w"}} )');
