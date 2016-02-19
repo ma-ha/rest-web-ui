@@ -1,0 +1,44 @@
+{
+	"layout":{
+		"title":"Portal: List Test",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"4000px",
+				"type":"pong-list",
+				"resourceURL":"svc/tbl-data",
+				"title":"List2 Reuses Table Module",
+				"moduleConfig":{
+				    "filter": {
+				        "title":"Product Filter",
+				        "dataReqParams": [ {"id":"collor", "label":"Product Color"} ],
+				        "dataReqParamsSrc":"Form", 	
+				        "dataReqParamsBt":"Filter"
+				    },	
+					"rowId": "ID",
+					"divs" : [
+						{ "id":"ID", "label":"", "cellType":"text" }, 
+						{ "id":"Name", "label":"Name", "cellType":"text" }, 
+						{ "id":"Picture", "label":"Picture", "cellType":"img" }
+					],
+					"maxRows":"4",
+	
+					"easyCols":[
+						"*ID|5%",
+						"Name=Name.0",
+						"Picture",
+						"ZoomImg_zooms_Picture",
+						"Status_checkbox",
+						"Rating",
+						"Description_editable",
+						"Product~Page_link"
+					]
+				},
+				"type_id":"5",
+				"decor":"decor"
+			}
+		],
+		"includeFooter":"main"
+	}
+}

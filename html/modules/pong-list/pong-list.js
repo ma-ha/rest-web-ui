@@ -22,21 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. 
  */
 log( "PoNG-List", "load module");
-var poList = [];
 
 function pongListDivHTML( divId, resourceURL, params ) {
 	log( "PoNG-List",  "divId="+divId+" resourceURL="+resourceURL );
-	poList[ divId ] = 
-		{ 
-			pongListDef: null,
-			divId: null, 
-			pongListStartRow: 0, 
-			pongListEndRow: 0,
-			pongListData: null, 
-			pongListFilter: "" 
-		};
-	poList[ divId ].divId = divId;
-	
+	pongTanbleInit( divId );
+		
 	if ( moduleConfig[ divId ] != null ) {
 		renderPongListDivHTML( divId, resourceURL, params, moduleConfig[ divId ] );
 	} else {
@@ -57,56 +47,17 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	if ( tbl.dataURL != null ) {
 		dataUrl = dataUrl+"/"+tbl.dataURL;
 	}
-	poList[ divId ].pongListDef = tbl;
-	poList[ divId ].pongListDef.dataUrlFull = dataUrl
+	poTbl[ divId ].pongTableDef = tbl;
+	poTbl[ divId ].resourceURL = resourceURL;
+	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
+	poTbl[ divId ].sortCol = '';
 
-	// crunch form
-	poList[ divId ].pongListEndRow = tbl.maxRows;
+	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
 	var contentItems = [];
+
+	// create form, if required:
+	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
 	
-	if ( tbl.filter != null &&  tbl.filter.dataReqParamsSrc != null && tbl.filter.dataReqParams != null ) {
-		if ( tbl.filter.dataReqParamsSrc == 'Form' ) {
-			contentItems.push( '<div id="'+divId+'PongListFrmDiv" class="pongListFrm">' );
-			contentItems.push( '<form id="'+divId+'PongListFrm">' );
-			contentItems.push( '<fieldset><legend>'+ $.i18n( 'Filter' ) + '</legend>' );
-			
-			postLst = [];						
-			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
-				prop = tbl.filter.dataReqParams[y];
-				contentItems.push( '<div class="PongListFrmFld"><label for="'+divId+prop.id+'">'+ $.i18n( prop.label ) +'</label>' );
-				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'" class="text ui-widget-content ui-corner-all"'; 
-				postLst.push( prop.id+": $( '#"+divId+prop.id+"' ).val()" )
-				contentItems.push( '<input type="text" '+nameAndClass+'/></div>' );
-				// TODO add field types
-				
-			}
-			var btTxt = "Search";
-			if ( tbl.filter.dataReqParamsBt != null ) { btTxt = tbl.filter.dataReqParamsBt}
-			contentItems.push( '<button id="'+divId+'PongListSrchBt">'+  $.i18n( btTxt ) +'</button>' );
-			contentItems.push( '</fieldset>' );
-			contentItems.push( "</form>" );
-			contentItems.push( '</div>' );
-
-
-			poList[ divId ].pongListFilter = postLst.join( "," );
-
-			contentItems.push( "<script>" );
-			contentItems.push( '$(function() { ' );
-			contentItems.push( '    $( "#'+divId+'PongListSrchBt" ).button().click( ' );
-			contentItems.push( '       function( event ) { ' );
- 			contentItems.push( '           event.preventDefault(); ' );
-			contentItems.push( '           udateModuleData( "'+divId+'", ' );
-			contentItems.push( '             { dataFilter: { '+poList[ divId ].pongListFilter+' } } ); ' );
-			contentItems.push( '           return false;  ' );
-			contentItems.push( '       }' );
-			contentItems.push( '     );  ' );
-			contentItems.push( ' }); ' );
-			contentItems.push( "</script>" );
-			
-		} if ( tbl.filter.dataReqParamsSrc == 'sessionInfo' ) {
-			// TODO implement pongForm sessionInfo
-		}
-	}
 	
 	contentItems.push( '<div id="'+divId+'PongList" class="pongList" width="100%">' );
 	// cread table head
@@ -136,52 +87,52 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( "$(function() { ");
 	contentItems.push( ' $( "#'+divId+'BtFirst").button( {icons:{primary:"ui-icon-arrowthickstop-1-w"}} )');
 	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     poList[ "'+divId+'" ].StartRow =0; ' );
-	contentItems.push( '     poList[ "'+divId+'" ].pongListEndRow = '+tbl.maxRows+';' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].StartRow =0; ' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+';' );
 	contentItems.push( '     listDivCnt( "'+divId+'" ); } ); ' );
 	contentItems.push( ' $( "#'+divId+'BtLast" ).button( {icons:{primary:"ui-icon-arrowthickstop-1-e"}} )' );
 	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     poList[ "'+divId+'" ].pongListStartRow =  parseInt(poList[ "'+divId+'" ].pongListData.length)-parseInt('+tbl.maxRows+') ;' );
-	contentItems.push( '     poList[ "'+divId+'" ].pongListEndRow = poList[ "'+divId+'" ].pongListData.length;' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =  parseInt(poTbl[ "'+divId+'" ].pongTableData.length)-parseInt('+tbl.maxRows+') ;' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = poTbl[ "'+divId+'" ].pongTableData.length;' );
 	contentItems.push( '     listDivCnt( "'+divId+'" ); } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtPrevPg" ).button( {icons:{primary:"ui-icon-arrowthick-1-w"}} )' );
 	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     if ( poList[ "'+divId+'" ].pongListStartRow - '+tbl.maxRows+' >= 0 ) { ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow -= '+tbl.maxRows+'; ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow -= '+tbl.maxRows+';  ' );
+	contentItems.push( '     if ( poTbl[ "'+divId+'" ].pongTableStartRow - '+tbl.maxRows+' >= 0 ) { ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow -= '+tbl.maxRows+'; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow -= '+tbl.maxRows+';  ' );
 	contentItems.push( '     } else { ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow =0; ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow = '+tbl.maxRows+'; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+'; ' );
 	contentItems.push( '     } ' );
 	contentItems.push( '     listDivCnt( "'+divId+'" ); } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtNextPg" ).button( {icons:{primary:"ui-icon-arrowthick-1-e"}} ).click( ' );
 	contentItems.push( '  function() {' );
-	contentItems.push( '     var xx = parseInt(poList[ "'+divId+'" ].pongListStartRow) + parseInt('+tbl.maxRows +');' );
-	contentItems.push( '     if ( xx < poList[ "'+divId+'" ].pongListData.length ) {' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow = parseInt(poList[ "'+divId+'" ].pongListStartRow) + parseInt('+tbl.maxRows+'); ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow = parseInt(poList[ "'+divId+'" ].pongListEndRow) + parseInt('+tbl.maxRows+'); ' );
+	contentItems.push( '     var xx = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows +');' );
+	contentItems.push( '     if ( xx < poTbl[ "'+divId+'" ].pongTableData.length ) {' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows+'); ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = parseInt(poTbl[ "'+divId+'" ].pongTableEndRow) + parseInt('+tbl.maxRows+'); ' );
 	contentItems.push( '        listDivCnt( "'+divId+'" );' );
 	contentItems.push( '      }  } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtPrev" ).button( {icons:{primary:"ui-icon-carat-1-w"}} )' );
 	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     if ( poList[ "'+divId+'" ].pongListStartRow - 1 >= 0 ) { ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow-- ; ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow--;  ' );
+	contentItems.push( '     if ( poTbl[ "'+divId+'" ].pongTableStartRow - 1 >= 0 ) { ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow-- ; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow--;  ' );
 	contentItems.push( '     } else { ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow =0; ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow = '+tbl.maxRows+'; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+'; ' );
 	contentItems.push( '     } ' );
 	contentItems.push( '     listDivCnt( "'+divId+'" ); } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtNext" ).button( {icons:{primary:"ui-icon-carat-1-e"}} ).click( ' );
 	contentItems.push( '  function() {' );
-	contentItems.push( '     var xx = parseInt(poList[ "'+divId+'" ].pongListStartRow) + 1;' );
-	contentItems.push( '     if ( xx < poList[ "'+divId+'" ].pongListData.length ) {' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListStartRow = parseInt(poList[ "'+divId+'" ].pongListStartRow) + 1; ' );
-	contentItems.push( '        poList[ "'+divId+'" ].pongListEndRow = parseInt(poList[ "'+divId+'" ].pongListEndRow) + 1; ' );
+	contentItems.push( '     var xx = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + 1;' );
+	contentItems.push( '     if ( xx < poTbl[ "'+divId+'" ].pongTableData.length ) {' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + 1; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = parseInt(poTbl[ "'+divId+'" ].pongTableEndRow) + 1; ' );
 	contentItems.push( '        listDivCnt( "'+divId+'" );' );
 	contentItems.push( '      }  } ); ' );
 
@@ -199,8 +150,8 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( '     $this.parent().toggleClass( "edithighlight", false );' );
 	contentItems.push( '     if ($this.data("before") !== $this.html()) {' );
 	contentItems.push( '        $this.data("before", $this.html()); ' ); 
-	contentItems.push( '        var rowIdVal =  poList["'+divId+'"].pongListData[ $this.data("r") ]["'+tbl.rowId+'"]; ' );
-	contentItems.push( '        var colId =  poList["'+divId+'"].pongListDef.divs[ $this.data("c") ].id; ' );
+	contentItems.push( '        var rowIdVal =  poTbl["'+divId+'"].pongTableData[ $this.data("r") ]["'+tbl.rowId+'"]; ' );
+	contentItems.push( '        var colId =  poTbl["'+divId+'"].pongTableDef.divs[ $this.data("c") ].id; ' );
 	contentItems.push( '        var colVal =  $this.html(); ' );
 	//contentItems.push( '        alert( "Post Data Error: { '+tbl.rowId+': "+rowIdVal+", "+colId+": "+colVal+" }   (r="+$this.data("r") + "/c="+$this.data("c")+") not stored!!"  ); ' );
 	contentItems.push( '        $.post( "'+dataUrl+'", { '+tbl.rowId+': rowIdVal, colId: colVal  }, function(response) {  }, "json");'); // TODO error handling
@@ -230,7 +181,7 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 			if ( tbl.dataDocSubPath == null ) {
 				// table is the root of the doc
 				//console.log( 'no tbl.dataDocSubPath' );
-				poList[ divId ].pongListData = data; 					
+				poTbl[ divId ].pongTableData = data; 					
 			} else {
 				console.log( 'tbl.dataDocSubPath='+tbl.dataDocSubPath );
 				// table is somewhere in the DOM tree
@@ -242,7 +193,7 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 					subdata = subdata[ pathToken[i] ];
 				}
 				// console.log( ' subdata = ' + JSON.stringify( subdata ) );
-				poTbl[ divId ].pongListData = subdata;
+				poTbl[ divId ].pongTableData = subdata;
 			}
 			listDivCnt( divId ); 
 		} 
@@ -255,14 +206,14 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 /** update data call back hook */
 function pongListUpdateData( divId, paramsObj ) {
 	log( "PoNG-List",  'update '+divId );
-	var def = poList[ divId ].pongListDef;
+	var def = poTbl[ divId ].pongTableDef;
 	
 	$.getJSON( def.dataUrlFull, paramsObj ,
 		function( data ) { 	
 			if ( def.dataDocSubPath == null ) {
 				// table is the root of the doc
 				log( "PoNG-List",  'no tbl.dataDocSubPath' );
-				poList[ divId ].pongListData = data; 					
+				poTbl[ divId ].pongTableData = data; 					
 			} else {
 				log( "PoNG-List",  'tbl.dataDocSubPath='+def.dataDocSubPath );
 				// table is somewhere in the DOM tree
@@ -274,7 +225,7 @@ function pongListUpdateData( divId, paramsObj ) {
 					subdata = subdata[ pathToken[i] ];
 				}
 				// console.log( ' subdata = ' + JSON.stringify( subdata ) );
-				poList[ divId ].pongListData = subdata;
+				poTbl[ divId ].pongTableData = subdata;
 			}
 			listDivCnt( divId ); 
 		} 
@@ -282,15 +233,15 @@ function pongListUpdateData( divId, paramsObj ) {
 }
 
 function listDivCnt( divId ) {
-	var rowSt = parseInt( poList[ divId ].pongListStartRow );
-	var rowEn = parseInt( poList[ divId ].pongListEndRow );
-	log( "PoNG-List", "divId="+divId+"Data #"+poList[ divId ].pongListData.length + " rowSt="+rowSt + " rowEn="+rowEn );
+	var rowSt = parseInt( poTbl[ divId ].pongTableStartRow );
+	var rowEn = parseInt( poTbl[ divId ].pongTableEndRow );
+	log( "PoNG-List", "divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
 	var i = 0;
 	for ( var r = rowSt; r < rowEn; r++ ) {
-		if ( r < poList[ divId ].pongListData.length ) {
-			var cellDta = poList[ divId ].pongListData[r];
-			for ( var c = 0; c < poList[ divId ].pongListDef.divs.length; c++ ) {
-				var cellDef = poList[ divId ].pongListDef.divs[c];
+		if ( r < poTbl[ divId ].pongTableData.length ) {
+			var cellDta = poTbl[ divId ].pongTableData[r];
+			for ( var c = 0; c < poTbl[ divId ].pongTableDef.divs.length; c++ ) {
+				var cellDef = poTbl[ divId ].pongTableDef.divs[c];
 				var cellId =  '#'+divId+'R'+i+'C'+c; 
 				var cellType = cellDef.cellType;
 				
@@ -419,7 +370,7 @@ function listDivCnt( divId ) {
 				}	
 			}
 		} else { // clear the rest of the cells
-			for ( var c = 0; c < poList[ divId ].pongListDef.divs.length; c++ ) {
+			for ( var c = 0; c < poTbl[ divId ].pongTableDef.divs.length; c++ ) {
 				var cellId =  '#'+divId+'R'+i+'C'+c; 
 				$( cellId ).html( '&nbsp;' );
 			}

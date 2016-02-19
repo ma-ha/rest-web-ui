@@ -23,21 +23,10 @@ THE SOFTWARE.
  */
 log( "Pong-EzTable", "load module");
 
-var poTbl = [];
 
 function pongEzTableDivHTML( divId, resourceURL, params ) {
 	log( "Pong-EzTable",  "pongEzTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
-	poTbl[ divId ] = 
-		{ 
-			pongTableDef: null,
-			divId: null, 
-			pongTableStartRow: 0, 
-			pongTableEndRow: 0,
-			pongTableData: null, 
-			pongTableFilter: "" 
-		};
-	
-	poTbl[ divId ].divId = divId;
+	pongTanbleInit( divId );
 	
 	if  ( moduleConfig[ divId ] != null ) {
 		

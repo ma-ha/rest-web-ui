@@ -342,7 +342,7 @@ function loadModuleList() {
 function loadModules() {
 	checkModules( );
 	for ( var module in reqModules ) {
-		if ( module != 'pong-easyformXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+		if ( module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
 			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
@@ -407,7 +407,7 @@ function loadModules() {
 
 
 function checkModules() {
-	log( 'checkModules', 'checkModules' );
+	log( 'loadModules', 'checkModules' );
 	// allways req modules
 	addReqModule( "i18n" );
 	addReqModule( "pong-security" );
@@ -428,7 +428,7 @@ function checkModules() {
 function checkModulesRec( l ) {
 	if ( l.rows != null ) {
 		for ( var i = 0; i < l.rows.length; i++ ) {
-			log( 'checkModules', "row: "+ l.rows[i].rowId );
+			log( 'loadModules', "row: "+ l.rows[i].rowId );
 			if ( l.rows[i].type != null && l.rows[i].type != 'raw' ) {
 				addReqModule( l.rows[i].type );
 			}
@@ -440,7 +440,7 @@ function checkModulesRec( l ) {
 	}	
 	if ( l.cols != null ) {
 		for ( var i = 0; i < l.cols.length; i++ ) {
-			log( 'checkModules', "col: "+ l.cols[i].columnId );
+			log( 'loadModules', "col: "+ l.cols[i].columnId );
 			if ( l.cols[i].type != null && l.cols[i].type != 'raw' ) {
 				addReqModule( l.cols[i].type );
 			}
@@ -464,11 +464,11 @@ function checkModulesActn( l ) {
 
 function addReqModule( mType ) {
 	if ( ! reqModules.hasOwnProperty( mType ) ) {
-		log( 'checkModules', "module: "+mType  );
+		log( 'loadModules', "identified required module: "+mType  );
 		reqModules[ mType ] = mType;		
 		if ( ( moduleMap[ mType ] != null ) && ( moduleMap[ mType ].requires != null ) ) {
 			for ( var i = 0; i < moduleMap[ mType ].requires.length; i++ ) {
-				log( 'checkModules', "requires: "+ moduleMap[ mType ].requires[i] );
+				log( 'loadModules', mType+" requires: "+ moduleMap[ mType ].requires[i] );
 				addReqModule( moduleMap[ mType ].requires[i] );
 			}
 		} 

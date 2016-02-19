@@ -25,19 +25,23 @@ log( "Pong-Table", "load module");
 
 var poTbl = [];
 
+function pongTanbleInit( divId ) {
+	poTbl[ divId ] = 
+	{ 
+		pongTableDef: null,
+		divId: null, 
+		pongTableStartRow: 0, 
+		pongTableEndRow: 0,
+		pongTableData: null, 
+		pongTableFilter: "" 
+	};
+
+	poTbl[ divId ].divId = divId;
+}
+
 function pongTableDivHTML( divId, resourceURL, params ) {
 	log( "Pong-Table",  "pongTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
-	poTbl[ divId ] = 
-		{ 
-			pongTableDef: null,
-			divId: null, 
-			pongTableStartRow: 0, 
-			pongTableEndRow: 0,
-			pongTableData: null, 
-			pongTableFilter: "" 
-		};
-	
-	poTbl[ divId ].divId = divId;
+	pongTanbleInit( divId );
 	
 	if  ( moduleConfig[ divId ] != null ) {
 		
@@ -68,6 +72,63 @@ function pongTableDivHTML( divId, resourceURL, params ) {
 }
 
 
+function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
+	var contentItems = [];
+	if ( tbl.filter && tbl.filter.dataReqParamsSrc && tbl.filter.dataReqParams ) {
+		if ( tbl.filter.dataReqParamsSrc == 'Form' ) {
+			log( "Pong-Table", "cre filter" );
+			// add filter form for table
+			log( "Pong-Table", "cre filter 1" );
+			contentItems.push( '<div id="'+divId+'SrchFrmDiv" class="pongListFrm">' );
+			contentItems.push( '<form id="'+divId+'SrchFrm">' );
+			var titleTxt = "Filter";
+			if ( tbl.filter.title != null ) { titleTxt = tbl.filter.title; }
+			contentItems.push( '<fieldset><legend>' +$.i18n(titleTxt) +'</legend>' );
+			
+			log( "Pong-Table", "cre filter 2" );
+			postLst = [];						
+			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
+				prop = tbl.filter.dataReqParams[y];
+				contentItems.push( '<p><label for="'+divId+prop.id+'">'+ $.i18n( prop.label ) +'</label>' );
+				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'" class="text ui-widget-content ui-corner-all"'; 
+				postLst.push( prop.id+": $( '#"+divId+prop.id+"' ).val()" )
+				contentItems.push( '<input type="text" '+nameAndClass+'/></p>' );
+				// TODO add field types
+				
+			}
+			log( "Pong-Table", "cre filter 3" );
+			var btTxt = "Search";
+			if ( tbl.filter.dataReqParamsBt != null ) { btTxt = tbl.filter.dataReqParamsBt}
+			contentItems.push( '<button id="'+divId+'SrchBt">'+  $.i18n( btTxt ) +'</button>' );
+			contentItems.push( '</fieldset>' );
+			contentItems.push( "</form>" );
+			contentItems.push( '</div>' );
+
+
+			log( "Pong-Table", "cre filter 4" );
+			poTbl[ divId ].pongTableFilter = postLst.join( "," );
+
+			log( "Pong-Table", "cre filter 5" );
+			contentItems.push( "<script>" );
+			contentItems.push( '$(function() { ' );
+			contentItems.push( '    $( "#'+divId+'SrchBt" ).button().click( ' );
+			contentItems.push( '       function( event ) { ' );
+			contentItems.push( '           event.preventDefault(); ' );
+			contentItems.push( '           udateModuleData( "'+divId+'", { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ' );
+			contentItems.push( '          return false;  ' );
+			contentItems.push( '       }' );
+			contentItems.push( '     );  ' );
+			contentItems.push( ' }); ' );
+			contentItems.push( "</script>" );
+			
+			log( "Pong-Table", "cre filter 6" );
+		} if ( tbl.filter.dataReqParamsSrc == 'sessionInfo' ) {
+			log( "Pong-Table", "cre filter sessionInfo (TODO)" );
+			// TODO implement pongForm sessionInfo
+		}
+	}
+	return contentItems;
+}
 
 function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	log( "Pong-Table", "cre table" );
@@ -80,54 +141,15 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	poTbl[ divId ].pongTableDef = tbl;
 	poTbl[ divId ].resourceURL = resourceURL;
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
-	poTbl[ divId ].sortCol = ''
-	// crunch form
+	poTbl[ divId ].sortCol = '';
+
 	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
 	var contentItems = [];
 	
-	if ( tbl.filter != null && tbl.filter.dataReqParamsSrc != null && tbl.filter.dataReqParams != null ) {
-		if ( tbl.filter.dataReqParamsSrc == 'Form' ) {
-			// add filter form for table
-			contentItems.push( '<div id="'+divId+'PongTableFrmDiv" class="pongTableFrm">' );
-			contentItems.push( '<form id="'+divId+'PongTableFrm">' );
-			contentItems.push( '<fieldset><legend>' +$.i18n('Filter') +'</legend>' );
+	// create form if required
+	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
 			
-			postLst = [];						
-			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
-				prop = tbl.filter.dataReqParams[y];
-				contentItems.push( '<p><label for="'+divId+prop.id+'">'+ $.i18n( prop.label ) +'</label>' );
-				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'" class="text ui-widget-content ui-corner-all"'; 
-				postLst.push( prop.id+": $( '#"+divId+prop.id+"' ).val()" )
-				contentItems.push( '<input type="text" '+nameAndClass+'/></p>' );
-				// TODO add field types
-				
-			}
-			contentItems.push( '<button id="'+divId+'PongTableSrchBt">'+ $.i18n( 'Update Table' ) +'</button>' );
-			contentItems.push( '</fieldset>' );
-			contentItems.push( "</form>" );
-			contentItems.push( '</div>' );
-
-
-			poTbl[ divId ].pongTableFilter = postLst.join( "," );
-
-			contentItems.push( "<script>" );
-			contentItems.push( '$(function() { ' );
-			contentItems.push( '    $( "#'+divId+'PongTableSrchBt" ).button().click( ' );
-			contentItems.push( '       function( event ) { ' );
-			contentItems.push( '           event.preventDefault(); ' );
-			contentItems.push( '           udateModuleData( "'+divId+'", ' );
-			contentItems.push( '             { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ' );
-			contentItems.push( '          return false;  ' );
-			contentItems.push( '       }' );
-			contentItems.push( '     );  ' );
-			contentItems.push( ' }); ' );
-			contentItems.push( "</script>" );
-			
-		} if ( tbl.filter.dataReqParamsSrc == 'sessionInfo' ) {
-			// TODO implement pongForm sessionInfo
-		}
-	}
-	
+	log( "Pong-Table", "cre table 2" );
 	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
 	// create table head
 	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
@@ -157,49 +179,61 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 		}
 		contentItems.push( "</tr>" );
 	}
-	// paginator buttons
 	contentItems.push( "</table>" );
-	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
-	contentItems.push( '<button id="'+divId+'BtPrev" class="pong-table-paginator"></button>' );
-	contentItems.push( '<span id="'+divId+'PaginLbl" class="pong-table-paginator-text">...</span>' );
-	contentItems.push( '<button id="'+divId+'BtNext" class="pong-table-paginator"></button>' );
-	contentItems.push( '<button id="'+divId+'BtLast" class="pong-table-paginator"></button>' );
+
+	// paginator buttons:
+	var paginatorJS = pongTableGenPaginator(divId, tbl);
+	log( "Pong-Table", "cre table 3" );
+
+	// AJAX functions:
+	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
+	log( "Pong-Table", "cre table 4" );
+
+	// create HTML
+	$( "#"+divId ).html( contentItems.join( "\n" ) );
+	$( "#"+divId ).append( paginatorJS.join("\n") );
+	log( "Pong-Table", "cre table 5" );
+	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	
-	// paginator script
+	log( "Pong-Table", "cre table 6" );
+
+	var first = true;
+	// add filter params to data URL
+	if ( params != null  && params.filter != null ) {
+		for ( var i = 0; i < params.filter.length; i++ ) {
+			if ( first ) { 
+				dataUrl += "?"+params.filter[i].field+'='+params.filter[i].value;
+				first = false;
+			} else {
+				dataUrl += "&"+params.filter[i].field+'='+params.filter[i].value; 						
+			}
+		}
+	}
+	log( "Pong-Table", "cre table 6" );
+
+	// add page params to data URL
+	if ( params.get != null ) {
+		for (var key in params.get) {
+			dataUrl += (first ? "?" :"&");
+			dataUrl += key + "=" + params.get[ key ];
+			first = false;
+		}
+	}
+	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
+
+	log( "Pong-Table", "cre table 7" );
+	pongTableUpdateData( divId, params.get );
+}
+
+function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
+	var contentItems = [];
+	var dataUrl = resourceURL;
+	if ( tbl.dataURL != null ) {
+		dataUrl = dataUrl+"/"+tbl.dataURL;
+	}
+	// AJAX commit changes for checkboxes, etc
 	contentItems.push( "<script>" );
 	contentItems.push( "$(function() { ");
-	contentItems.push( ' $( "#'+divId+'BtFirst").button( {icons:{primary:"ui-icon-arrowthickstop-1-w"}} )');
-	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+';' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
-	contentItems.push( ' $( "#'+divId+'BtLast" ).button( {icons:{primary:"ui-icon-arrowthickstop-1-e"}} )' );
-	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =  parseInt(poTbl[ "'+divId+'" ].pongTableData.length)-parseInt('+tbl.maxRows+') ;' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = poTbl[ "'+divId+'" ].pongTableData.length;' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
-	
-	contentItems.push( ' $( "#'+divId+'BtPrev" ).button( {icons:{primary:"ui-icon-arrowthick-1-w"}} )' );
-	contentItems.push( '  .click( function() { ' );
-	contentItems.push( '     if ( poTbl[ "'+divId+'" ].pongTableStartRow - '+tbl.maxRows+' >= 0 ) { ' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow -= '+tbl.maxRows+'; ' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow -= '+tbl.maxRows+';  ' );
-	contentItems.push( '     } else { ' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+'; ' );
-	contentItems.push( '     } ' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
-	
-	contentItems.push( ' $( "#'+divId+'BtNext" ).button( {icons:{primary:"ui-icon-arrowthick-1-e"}} ).click( ' );
-	contentItems.push( '  function() {' );
-	contentItems.push( '     var xx = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows +');' );
-	contentItems.push( '     if ( xx < poTbl[ "'+divId+'" ].pongTableData.length ) {' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows+'); ' );
-	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = parseInt(poTbl[ "'+divId+'" ].pongTableEndRow) + parseInt('+tbl.maxRows+'); ' );
-	contentItems.push( '        tblCells( "'+divId+'" );' );
-	contentItems.push( '      }  } ); ' );
-
-	// AJAX commit changes for checkboxes, etc
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".postchange", ' );
 	contentItems.push( '         function( event ) { ' );
 	contentItems.push( '            var tbl = $(this); ' );
@@ -267,34 +301,53 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( '     return tbl;' );
 	contentItems.push( '  }); ');
 	contentItems.push( " }); </script>" );
- 
-	// create HTML
-	$( "#"+divId ).html( contentItems.join( "\n" ) );
-	
-	var first = true;
-	// add filter params to data URL
-	if ( params != null  && params.filter != null ) {
-		for ( var i = 0; i < params.filter.length; i++ ) {
-			if ( first ) { 
-				dataUrl += "?"+params.filter[i].field+'='+params.filter[i].value;
-				first = false;
-			} else {
-				dataUrl += "&"+params.filter[i].field+'='+params.filter[i].value; 						
-			}
-		}
-	}
-	// add page params to data URL
-	if ( params.get != null ) {
-		for (var key in params.get) {
-			dataUrl += (first ? "?" :"&");
-			dataUrl += key + "=" + params.get[ key ];
-			first = false;
-		}
-	}
-	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
 
-	pongTableUpdateData( divId, params.get );
+	return contentItems;
 }
+
+function pongTableGenPaginator( divId, tbl ) {
+	var contentItems = [];
+	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
+	contentItems.push( '<button id="'+divId+'BtPrev" class="pong-table-paginator"></button>' );
+	contentItems.push( '<span id="'+divId+'PaginLbl" class="pong-table-paginator-text">...</span>' );
+	contentItems.push( '<button id="'+divId+'BtNext" class="pong-table-paginator"></button>' );
+	contentItems.push( '<button id="'+divId+'BtLast" class="pong-table-paginator"></button>' );
+	contentItems.push( "<script>" );
+	contentItems.push( "$(function() { ");
+	contentItems.push( ' $( "#'+divId+'BtFirst").button( {icons:{primary:"ui-icon-arrowthickstop-1-w"}} )');
+	contentItems.push( '  .click( function() { ' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+';' );
+	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	contentItems.push( ' $( "#'+divId+'BtLast" ).button( {icons:{primary:"ui-icon-arrowthickstop-1-e"}} )' );
+	contentItems.push( '  .click( function() { ' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =  parseInt(poTbl[ "'+divId+'" ].pongTableData.length)-parseInt('+tbl.maxRows+') ;' );
+	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = poTbl[ "'+divId+'" ].pongTableData.length;' );
+	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	
+	contentItems.push( ' $( "#'+divId+'BtPrev" ).button( {icons:{primary:"ui-icon-arrowthick-1-w"}} )' );
+	contentItems.push( '  .click( function() { ' );
+	contentItems.push( '     if ( poTbl[ "'+divId+'" ].pongTableStartRow - '+tbl.maxRows+' >= 0 ) { ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow -= '+tbl.maxRows+'; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow -= '+tbl.maxRows+';  ' );
+	contentItems.push( '     } else { ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+'; ' );
+	contentItems.push( '     } ' );
+	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	
+	contentItems.push( ' $( "#'+divId+'BtNext" ).button( {icons:{primary:"ui-icon-arrowthick-1-e"}} ).click( ' );
+	contentItems.push( '  function() {' );
+	contentItems.push( '     var xx = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows +');' );
+	contentItems.push( '     if ( xx < poTbl[ "'+divId+'" ].pongTableData.length ) {' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows+'); ' );
+	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = parseInt(poTbl[ "'+divId+'" ].pongTableEndRow) + parseInt('+tbl.maxRows+'); ' );
+	contentItems.push( '        tblCells( "'+divId+'" );' );
+	contentItems.push( '      }  } ); ' );
+	contentItems.push( " }); </script>" );
+	return contentItems;
+}
+
 
 /** update data call back hook */
 function pongTableUpdateData( divId, paramsObj ) {
