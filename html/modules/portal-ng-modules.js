@@ -137,13 +137,22 @@ moduleMap[ "pong-master-details" ] = {
     ]
 };
 
+moduleMap[ "jquery-syntax" ] = {
+	"name": "jquery-syntax",
+	"hooks": [
+		{ hook: "init", method:"initJQuerySyntax" }
+	],
+    "include":[ "syntax/jquery.syntax.js", "syntax/jquery.syntax.cache.js" ]
+};
+
+
 moduleMap[ "pong-help" ] = {
 	"name": "pong-help",
+	"requires": [ "jquery-syntax" ],
     "hooks": [
         { hook: "addActionBtn", method:"pongHelpAddActionBtn" },
         { hook: "creModal", method:"pongHelpCreModalFromMeta" }
-    ],
-    "include":[ "syntax/jquery.syntax.js", "syntax/jquery.syntax.cache.js" ]
+    ]
 };
 
 moduleMap[ "pong-mediawiki" ] = {

@@ -105,7 +105,7 @@ ResourceLoader.prototype.get = function (name, callback) {
 };
 
 var Syntax = {
-	root: null, 
+	root: "modules/jquery-syntax/syntax/", 
 	aliases: {},
 	styles: {},
 	themes: {},
