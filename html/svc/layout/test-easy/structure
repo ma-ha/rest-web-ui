@@ -39,11 +39,9 @@
 						},
 						"actions":[
 							{
-								"actionName":"Help",
 								"type":"pong-help",
 								"param":{
-									"width":"400",
-									"height":"300"
+									"showConfig":"ezFrm"
 								}
 							}
 						]
@@ -53,7 +51,15 @@
 						"title":"Output 2",
 						"width":"20%",
 						"decor":"decor",
-						"resourceURL":"svc/cloud/setuplog"
+						"resourceURL":"svc/cloud/setuplog",
+						"actions":[
+							{
+								"type":"pong-help",
+								"param":{
+									"showConfig":"out2"
+								}
+							}
+						]
 					}
 				]
 			},
@@ -77,14 +83,30 @@
 					"maxRows":"3"
 				},
 				"type_id":"5",
-				"decor":"decor"
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"r1"
+						}
+					}
+				]
 			},
 			{
 				"rowId":"log",
 				"title":"Debug Log",
 				"height":"250px",
 				"resourceURL":"svc/tbl-data",
-				"type":"pong-log"
+				"type":"pong-log",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"log"
+						}
+					}
+				]
 			}
 		],
 		"includeFooter":"main"

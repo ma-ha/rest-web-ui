@@ -27,21 +27,14 @@
 						{ "id":"Description", "label":"Description", "cellType":"text","editable":"true" },
 						{ "id":"ProductPage", "label":"Product Page", "cellType":"linkLink" }
 					],
-					"maxRows":"4",
-	
-					"easyCols":[
-						"*ID|5%",
-						"Name=Name.0",
-						"Picture",
-						"ZoomImg_zooms_Picture",
-						"Status_checkbox",
-						"Rating",
-						"Description_editable",
-						"Product~Page_link"
-					]
+					"maxRows":"4"
 				},
 				"type_id":"5",
-				"decor":"decor"
+				"decor":"decor",
+				"actions":[
+					{ "type":"pong-help", "param":{ "showConfig":"r1" } }
+			
+				]
 			}
 		],
 		"includeFooter":"main"

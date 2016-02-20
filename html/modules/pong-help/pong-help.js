@@ -25,38 +25,97 @@ log( "PoNG-Help", "Loading Module");
 
 function pongHelpAddActionBtn( id, modalName, resourceURL, params ) {
 	log( "PoNG-Help", "modalFormAddActionBtn "+id);
+	if ( ! modalName ) { modalName = "Help"; }
+
+	sessionInfo[ id+"Help" ] = {
+		"show":"ReST-help"
+	}
 	//var action = res.actions[x];
 	var html = "";
 	log( "PoNG-Help", "Std Config Dlg:  " + modalName );
 	var icon = "ui-icon-help";
 	var jscall = '$( "#'+id+modalName+'Dialog" ).dialog( "open" );';
-	var width  = "650"; if ( params!= null && params.width  != null ) { width  = params.widht; }
-	var height = "500"; if ( params!= null && params.height != null ) { height = params.height; }
+	var width  = "600"; if ( params && params.width  ) { width  = params.width; }
+	var height = "600"; if ( params && params.height ) { height = params.height; }
 	html += '<div id="'+id+modalName+'Dialog">'+ resourceURL +" "+ modalName+"</div>";
+	log( "PoNG-Help", " cfg:  height: "+height+", width: "+width );
 	html += "<script> $(function() { $(  "+
 		"\"#"+id+modalName+"Dialog\" ).dialog( { autoOpen: false, height: "+height+", width: "+width+" , modal: true, "+ // TODO: Refresh resource
 		" buttons: { \"OK\": function() {  $( this ).dialog( \"close\" );  } } }); "+
 		"});</script>";			
-	html += '<button id="'+id+modalName+'Bt">'+modalName+'</button>';
+	html += '<button id="'+id+modalName+'Bt">'+$.i18n(modalName)+'</button>';
 	html += '<script>  $(function() { $( "#'+id+modalName+'Bt" ).button( { icons:{primary: "'+icon+'"}, text: false } ).click( '+
 		"function() { "+jscall+" }); }); </script>";		
+	
+	if ( params && params.showConfig ) {
+		log( "PoNG-Help", " mode:  JSON-config / "+params.showConfig );		
+		sessionInfo[ id+"Help" ].show  = "JSON-config";
+		sessionInfo[ id+"Help" ].resID = params.showConfig;
+	} else {
+		log( "PoNG-Help", " mode: standard " ); 
+	}
+	
 	return html;
 }
 
 function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
-	log( "PoNG-Help", "Get help: '"+resourceURL+"/help'");
-	var lang = getParam( 'lang' );
-	if ( lang == '' ) {
-		lang = "EN";
+	log( "PoNG-Help", "Create modal view content" );
+	if ( ! modalName ) { modalName = "Help"; }
+		
+	if ( sessionInfo[ id+"Help" ].show == "ReST-help" ) {
+
+		log( "PoNG-Help", "Get help: '"+resourceURL+"/help'");
+		var lang = getParam( 'lang' );
+		if ( lang == '' ) {
+			lang = "EN";
+		}	
+		$.get( resourceURL+"/help", { lang: lang }, 
+			function( div ) {
+				$(  "#"+id+modalName+"Dialog" ).html( '<div class="pong-help" style="font-size:10pt; width:100%; height:100%;">'+div+'</div>' );
+				log( "PoNG-Help", "loaded" );
+			}
+		).fail(
+			function() {
+				logErr( "PoNG-Help", "you have to add help content in '"+resourceURL+"/help'" );
+			}
+		);
+		
+	} else if ( sessionInfo[ id+"Help" ].show == "JSON-config" && sessionInfo[ id+"Help" ].resID ) {
+		
+		log( "PoNG-Help", "Get help: Get JSON for "+sessionInfo[ id+"Help" ].resID );
+		var jsonCfg = findSubJSON( layoutOrig, "", sessionInfo[ id+"Help" ].resID );	
+		//$( "#"+id+modalName+"Dialog" ).html( '<textarea id="'+id+'JSONcfg" style="font-size:10pt; font-family:Courier; width:100%; height:100%;">'+JSON.stringify( jsonCfg, null, " " )+'</textarea>' );
+	 	log( "PoNG-Help", "Add JSON to modal dialog." );
+	    $( "#"+id+modalName+"Dialog" ).html( '<div style="font-size:0.7em;"><pre class="syntax brush-yaml">'+JSON.stringify( jsonCfg, null, " " )+'</pre></div>' );
+	 	log( "PoNG-Help", "Calling jQuery.syntax..." );
+		jQuery.syntax( { theme: 'paper', blockLayout: 'fixed', root:'modules/pong-help/syntax/' } );
+		log( "PoNG-Help", "Calling jQuery.syntax done" );
+
+	} else {
+		log( "PoNG-Help", "WARNING: Configuration issue!" );
+	}
+	log( "PoNG-Help", "Done." );
+}
+
+function findSubJSON( l, rcId, seed ) {
+	log( 'PoNG-Help', " Check: "+rcId+" == "+ seed ); 
+	if ( rcId == seed ) {
+		log( 'PoNG-Help', " Found: "+rcId+" == "+ seed ); 
+		return l;
+	}
+	if ( l.rows != null ) {
+		for ( var i = 0; i < l.rows.length; i++ ) {
+			log( 'PoNG-Help', "row: "+ l.rows[i].rowId );
+			var cfg = findSubJSON( l.rows[i], l.rows[i].rowId, seed );
+			if ( cfg ) { return cfg; }
+		}
 	}	
-	$.get( resourceURL+"/help", { lang: lang }, 
-		function( div ) {
-			$(  "#"+id+modalName+"Dialog" ).html( '<div class"pong-help">'+div+'</div>' );
-			log( "PoNG-Help", "loaded" );
+	if ( l.cols != null ) {
+		for ( var i = 0; i < l.cols.length; i++ ) {
+			log( 'PoNG-Help', "col: "+ l.cols[i].columnId );
+			var cfg = findSubJSON( l.cols[i], l.cols[i].columnId, seed );
+			if ( cfg ) {  return cfg; }
 		}
-	).fail(
-		function() {
-			logErr( "PoNG-Help", "you have to add help content in '"+resourceURL+"/help'" );
-		}
-	);
+	}	
+	return null;
 }

@@ -51,6 +51,7 @@ var step = "load-lang";
 
 // stores content of the structure file
 var layout = null;
+var layoutOrig = null;
 
 pageInfo = new Array();
 
@@ -228,7 +229,7 @@ function loadStructure() {
 	$.getJSON( structureURL, 
 		function( d ) {
 			layout = d.layout;
-			
+			layoutOrig = JSON.parse( JSON.stringify( layout ) ); // backup w/o modification intentions
 			// load includes ...
 			if ( d.layout.includeHeader != null && d.layout.includeFooter != null &&  d.layout.includeHeader == d.layout.includeFooter ) {
 				// optimize to one additional load
@@ -346,14 +347,21 @@ function loadModules() {
 			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
+
+			// extra CSS files
+			if ( moduleMap[ module ] && moduleMap[ module ].css ) {
+				for ( var i = 0; i < moduleMap[ module ].css.length; i++ ) {
+					log( 'loadModules', module+' add extra CSS: '+modulesPath+module+'/'+moduleMap[ module ].css[i]  );
+					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+moduleMap[ module ].css[i] +'" type="text/css" />');
+				}
+			}
 			
 			// include files
 			if ( moduleMap[ module ] && moduleMap[ module ].include ) {
-				log( 'loadModules', module+': Need includes...' );
 				for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
 					//for ( var includeJS in moduleMap[ module ].include ) {
 					var includeJS = moduleMap[ module ].include[i];
-					log( 'loadModules', module+' load: '+modulesPath+module+'/'+includeJS );
+					log( 'loadModules', module+' load include: '+modulesPath+module+'/'+includeJS );
 					ajaxOngoing++;
 				    $.getScript( modulesPath+module+'/'+includeJS )
 						.done( function( script, textStatus ) { 
@@ -379,7 +387,7 @@ function loadModules() {
 					ajaxOngoing--;
 				}
 			);
-		    // TODO: include from modules-map
+		    // TODO: this is legacy, JS should be in module dir
 		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
 		    	log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
 		    	//log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length	 );
@@ -1174,10 +1182,10 @@ var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( //func=='getHookMethod' || 
-		//func=='pong_map' || 
-		func=='getSubData' || 
-		func=='Pong-EzTable' || 
-		func=='Pong-Table' || 
+		func=='PoNG-Help' || 
+		//func=='getSubData' || 
+		//func=='Pong-EzTable' || 
+		//func=='Pong-Table' || 
 		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 		loggerBuffer.push

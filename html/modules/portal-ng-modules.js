@@ -142,7 +142,8 @@ moduleMap[ "pong-help" ] = {
     "hooks": [
         { hook: "addActionBtn", method:"pongHelpAddActionBtn" },
         { hook: "creModal", method:"pongHelpCreModalFromMeta" }
-    ]
+    ],
+    "include":[ "syntax/jquery.syntax.js", "syntax/jquery.syntax.cache.js" ]
 };
 
 moduleMap[ "pong-mediawiki" ] = {

@@ -16,6 +16,7 @@
 			       { "html":"<b>Regression Tests:</b>" },
 			       { "pageLink":"test-easy", "label":"Easy-Form/Easy-Table" },
 			       { "pageLink":"test", "label":"Action Test" },
+			       { "pageLink":"test-list", "label":"List Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
