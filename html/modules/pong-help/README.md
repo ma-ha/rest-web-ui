@@ -27,5 +27,10 @@ The referenced <tt>help</tt> file may be a simple HTML fragment. For example:
 
 The content of the help dialog DIV will be filled GET request to <code><nowiki>/svc/<resourceUrl/help</nowiki></code>.
 
+## Show JSON config
+You can specify to show the JSON config of a view (rowID/colID):
+
+	"actions" : [ '''{ "actionName": "My Simple Help", "type": "pong-help" "param":{"showConfig":"bla"} }''', ... ]
+
 ## CSS 
 All you need to know, that the the content of the help in embedded in a DIV of class <code>pong-help</code>
