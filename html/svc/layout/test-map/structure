@@ -1,0 +1,60 @@
+{
+	"layout":{
+		"title":"Portal: Map Test",
+		"includeHeader":"main",
+		 "rows": [
+            {
+                "rowId":"63",
+                "type": "pong-form",
+                "height":"70px",
+                "resourceURL":"svc/dummy/",
+                "title":"Search On Map",
+                "moduleConfig": {
+                    "description":"Define filter",
+                    "id":"cloudFormId",
+                    "fieldGroups": [
+                        {
+                            "columns": [
+                                {
+                                    "formFields": [
+                                        {
+                                            "id":"search",
+                                            "type":"text",
+                                            "label":"Location",
+                                            "defaultVal":"Essen, Germany"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "id":"Search",
+                            "name":"Search",
+                            "updateButton": [
+                                {
+                                    "resId": "64"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "decor": "decor"
+            },
+            {
+                "rowId":"64",
+                "height":"600px",
+                "resourceURL":"change_me",
+                "title":"Map",
+                "moduleConfig": {
+                    "mapKey": "5c7GcAGnCtz0E83RHRnJnsk6wCj5Q63C"
+                },
+                "type":"pong-map",
+                "type_id":"11",
+                "decor":"decor"
+            }
+        ],
+		"includeFooter":"main"
+	}
+}
