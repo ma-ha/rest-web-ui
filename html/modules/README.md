@@ -14,9 +14,11 @@ and methods are triggered in the lifecycle of the portal page.
 * [I/O View](pong-io/)
 * [List View](pong-list/)
 * [Master Details View](pong-master-details/)
+* [Map View](pong-map/)
 * [MediaWiki View](pong-mediawiki/)
 * [Modal Form Dialog](modal-form/)
 * [Table View](pong-table/)
+* [Source Code View](pong-sourcecode/)
 
 A special one is no real module: 
 If you don't specify a <code>type</code>, a HTML page will be loaded from the resource with <code>GET <resourceURL>/html</code>. This can also be used for HTML output from other modules, e.g. the "Form View" module uses this pattern to display the action results.
@@ -26,6 +28,7 @@ If you don't specify a <code>type</code>, a HTML page will be loaded from the re
 * [i18n = International language support](i18n/)
 * [Navigation Bar](pong-navbar/)
 * [OAuth](pong-oauth/)
+* [Oull Down Menu](pong-pulldown/)
 * [Session](pong-session)
 
 ## Including podules 
