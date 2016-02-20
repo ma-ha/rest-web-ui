@@ -155,6 +155,17 @@ moduleMap[ "pong-help" ] = {
     ]
 };
 
+moduleMap[ "pong-sourcecode" ] = {
+	"name": "pong-sourcecode",
+	"requires": [ "jquery-syntax" ],
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongSrcCodeDivHTML" },
+        { hook: "update", method:"pongSrcCodeUpdateData" },
+        { hook: "setData", method:"pongSrcCodeSetData" }
+    ]
+};
+
+
 moduleMap[ "pong-mediawiki" ] = {
 	"name": "pong-mediawiki",
     "hooks": [

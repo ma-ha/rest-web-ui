@@ -1185,7 +1185,7 @@ function log( func, msg ){
 		func=='PoNG-Help' || 
 		//func=='getSubData' || 
 		//func=='Pong-EzTable' || 
-		//func=='Pong-Table' || 
+		func=='Pong-SrcCode' || 
 		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 		loggerBuffer.push

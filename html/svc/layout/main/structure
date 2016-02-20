@@ -17,6 +17,8 @@
 			       { "pageLink":"test-easy", "label":"Easy-Form/Easy-Table" },
 			       { "pageLink":"test", "label":"Action Test" },
 			       { "pageLink":"test-list", "label":"List Test" },
+			       { "pageLink":"test-sourcecode", "label":"Source Code View Test" },
+			       { "pageLink":"test-map", "label":"Map Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
@@ -33,7 +35,7 @@
       }
     ],
     "footer": {
-      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' v0.7</a>, &copy; 2014, MH.",
+      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' v0.7</a>, &copy; 2016, MH.",
       "linkList": [
       	{ "text":"About", "url": "index.html?layout=about"},
       	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
