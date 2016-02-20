@@ -1,33 +1,36 @@
 ## Description
-This is not a view module, but it can be used in any other module.
-
-This module is baed on [jquery-syntax](https://github.com/ioquatix/jquery-syntax).
+This [module](../) enables you to add a modal help dialogs to any resource. 
 
 ## Usage
-Mark this module as required in the module map:
+Simply add a action to the <code>actions</code> array with <code>"type": "modal-form"</code>
 
-	moduleMap[ "myModule" ] = {
-		"requires": [ "jquery-syntax" ],
-		...
-	}
+	 {
+	   "layout": {
+	      ...
+	      "rows": [
+	      {
+	        "rowId": "bla",
+	        "resourceURL": "XYZ",
+	        ...
+	        "actions" : [ '''{ "actionName": "My Simple Help", "type": "pong-help" }''', ... ]
+	      },
+	      ...
+	    ],
+	    ...
+	 }
 
-Example usage in JS code (high level function):
+## Help resource
+The referenced <tt>help</tt> file may be a simple HTML fragment. For example:
 
-	...
- 	$( '#myView' ).html( '<div id="myCodeBlock"></div>' );
- 	jQuerySyntaxInsertCode( 'myCodeBlock', javaCode, 'java', { theme: 'modern', blockLayout: 'fixed' }  );
-	...
+	 <p>This is a help example.</p>
+	 <p>You can add help easily to any resource.</p>
 
-Example usage in JS code (native):
+The content of the help dialog DIV will be filled GET request to <code><nowiki>/svc/<resourceUrl/help</nowiki></code>.
 
-	function myModuleInit () {
-		...
-	    $( "#myDialog" ).html( 
-	    	'<div class="syntax-div">' +
-	    	  '<pre class="syntax brush-yaml">' +
-	    	    theCode +
-	    	  '</pre>'+
-	    	'</div>' );
-		jQuery.syntax( { theme: 'modern', blockLayout: 'fixed' } );
-		...
-	}
+## Show JSON config
+You can specify to show the JSON config of a view (rowID/colID):
+
+	"actions" : [ '''{ "actionName": "My Simple Help", "type": "pong-help" "param":{"showConfig":"bla"} }''', ... ]
+
+## CSS 
+All you need to know, that the the content of the help in embedded in a DIV of class <code>pong-help</code>
