@@ -512,7 +512,7 @@ function initAModule( module ) {
 //=====================================================================================================
 
 function setModuleData ( resId, paramObj, subPath ) {
-	log( 'setModuleData', resId );
+	log( 'setModuleData', resId+"/"+subPath+" => "+JSON.stringify(paramObj) );
 	var data = getSubData( paramObj, subPath );
 	var updHook = getHook( resId, "setData" ); 
 	if ( ( updHook != null ) && ( updHook.resType == "html" ) ) {	
@@ -1181,11 +1181,11 @@ var loggerModule = false;
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if ( //func=='getHookMethod' || 
-		func=='PoNG-Help' || 
-		//func=='getSubData' || 
-		//func=='Pong-EzTable' || 
-		func=='Pong-SrcCode' || 
+	if ( func=='getSubData' || 
+		//func=='PoNG-Help' || 
+		func=='setModuleData' || 
+		func=='Pong-Form' || 
+		//func=='Pong-SrcCode' || 
 		func=='loadModules' ) { 
 		console.log( "["+func+"] "+msg );
 		loggerBuffer.push
