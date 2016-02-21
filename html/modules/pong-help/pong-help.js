@@ -83,7 +83,11 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
 	} else if ( sessionInfo[ id+"Help" ].show == "JSON-config" && sessionInfo[ id+"Help" ].resID ) {
 		
 		log( "PoNG-Help", "Get help: Get JSON for "+sessionInfo[ id+"Help" ].resID );
-		var jsonCfg = findSubJSON( layoutOrig, "", sessionInfo[ id+"Help" ].resID );	
+		var jsonCfg = findSubJSON( layoutOrig, "", sessionInfo[ id+"Help" ].resID );
+		if ( jsonCfg.moduleConfig && jsonCfg.moduleConfig.mapKey ) {
+			jsonCfg.moduleConfig.mapKey = ".....";
+		}
+		delete jsonCfg['actions'];
 		//$( "#"+id+modalName+"Dialog" ).html( '<textarea id="'+id+'JSONcfg" style="font-size:10pt; font-family:Courier; width:100%; height:100%;">'+JSON.stringify( jsonCfg, null, " " )+'</textarea>' );
 	 	log( "PoNG-Help", "Add JSON to modal dialog." );
 	    $( "#"+id+modalName+"Dialog" ).html( '<div class="syntax-div"><pre class="syntax brush-yaml">'+JSON.stringify( jsonCfg, null, "  " )+'</pre></div>' );
@@ -101,7 +105,7 @@ function findSubJSON( l, rcId, seed ) {
 	log( 'PoNG-Help', " Check: "+rcId+" == "+ seed ); 
 	if ( rcId == seed ) {
 		log( 'PoNG-Help', " Found: "+rcId+" == "+ seed ); 
-		return l;
+		return JSON.parse( JSON.stringify( l ) );
 	}
 	if ( l.rows != null ) {
 		for ( var i = 0; i < l.rows.length; i++ ) {
