@@ -1,8 +1,8 @@
 {
     "layout": {
-        "title": "Contacts",
+        "title": "SugarCRM + Map Demo",
         "descr": "Contacts",
-        "page_width": "1090px",
+        "page_width": "100%",
 		"includeHeader":"main",
         "rows": [
             {
@@ -11,7 +11,7 @@
                 "cols": [
                     {
                         "cloumnId": "44",
-                        "width": "500px",
+                        "width": "40%",
                         "rows": [
                             {
                                 "rowId": "66",
@@ -163,7 +163,7 @@
                     },
                     {
                         "columnId": "62",
-                        "width": "490px",
+                        "width": "60%",
                         "resourceURL": "change_me",
                         "title": "Contact On Map",
                         "moduleConfig": {

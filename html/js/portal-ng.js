@@ -299,6 +299,9 @@ function buildStructure( d ) {
 		{ "id": "maindiv", "class": "page-width" + pagename, html: contentItems.join( "" ) } 
 	).appendTo( "body" );
 	loadHeaderFooter( d );
+	if ( d.page_width ) {
+		$( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );		
+	}
 	ajaxOngoing--;
 }
 
