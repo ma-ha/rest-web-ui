@@ -2,5 +2,5 @@
 	font-size:0.7em; 
 	color:gray;
 	height:100%;
-	overflow: auto;
+	overflow: scroll;
 }

@@ -92,6 +92,12 @@ function inits() {
 			ajaxOngoing++;
 			log( 'init', 'Load Structure File ...');
 			loadStructure();
+			step = "loadincludes";
+		} else if ( step == "loadincludes" ) {
+			ajaxOngoing++;
+			log( 'init', 'Start to load include JS modules ...');
+			checkModules( );
+			loadIncludes();
 			step = "loadmodules";
 		} else if ( step == "loadmodules" ) {
 			ajaxOngoing++;
@@ -342,51 +348,60 @@ function loadModuleList() {
 }
 
 
+// load includes for modules
+function loadIncludes() {
+	for ( var module in reqModules ) {
+		if ( module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+
+			// extra CSS files
+			if ( moduleMap[ module ] ) {
+				if ( moduleMap[ module ].css ) {
+					for ( var i = 0; i < moduleMap[ module ].css.length; i++ ) {
+						log( 'loadModules', module+' add extra CSS: '+modulesPath+module+'/'+moduleMap[ module ].css[i]  );
+						jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+moduleMap[ module ].css[i] +'" type="text/css" />');
+					}
+				}
+			
+				// include files
+				if ( moduleMap[ module ].include ) {
+					for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
+						//for ( var includeJS in moduleMap[ module ].include ) {
+						var includeJS = moduleMap[ module ].include[i];
+						log( 'loadModules', module+' load include: '+modulesPath+module+'/'+includeJS );
+						ajaxOngoing++;
+					    $.getScript( modulesPath+module+'/'+includeJS )
+							.done( function( script, textStatus, jqxhr ) { 
+								log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
+							.fail( function( jqxhr, settings, exception ) { 
+								log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; }	);
+					}
+				}
+			}
+		}
+	}
+	ajaxOngoing--;
+}
+
 // load modules
 function loadModules() {
-	checkModules( );
 	for ( var module in reqModules ) {
 		if ( module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
 			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
-
-			// extra CSS files
-			if ( moduleMap[ module ] && moduleMap[ module ].css ) {
-				for ( var i = 0; i < moduleMap[ module ].css.length; i++ ) {
-					log( 'loadModules', module+' add extra CSS: '+modulesPath+module+'/'+moduleMap[ module ].css[i]  );
-					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+moduleMap[ module ].css[i] +'" type="text/css" />');
-				}
-			}
-			
-			// include files
-			if ( moduleMap[ module ] && moduleMap[ module ].include ) {
-				for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
-					//for ( var includeJS in moduleMap[ module ].include ) {
-					var includeJS = moduleMap[ module ].include[i];
-					log( 'loadModules', module+' load include: '+modulesPath+module+'/'+includeJS );
-					ajaxOngoing++;
-				    $.getScript( modulesPath+module+'/'+includeJS )
-						.done( function( script, textStatus ) { 
-							log( 'loadModules', textStatus ); ajaxOngoing--; } )
-						.fail( function( jqxhr, settings, exception ) { 
-							log( 'loadModules', includeJS+": "+exception ); ajaxOngoing--; }	);
-				}
-				// TODO: Wait for includes before proceeding?
-			}
 			
 			// load scripts
 			ajaxOngoing++;
 		    $.getScript( modulesPath+module+'/'+module+".js" )
 			.done(
 				function( script, textStatus ) {
-					log( 'loadModules', textStatus );
+					log( 'loadModules', this.url+' '+textStatus );
 					ajaxOngoing--;
 				}
 			)
 			.fail(
 				function( jqxhr, settings, exception ) {
-					log( 'loadModules', module+".js "+exception );
+					log( 'loadModules', this.url+' '+exception );
 					ajaxOngoing--;
 				}
 			);
@@ -405,8 +420,8 @@ function loadModules() {
 		    		log( 'loadModules', "load JS: "+ moduleMap[ module ].loadJS[i] );
 					ajaxOngoing++;
 				    $.getScript( moduleMap[ module ].loadJS[i] )
-						.done( function( script, textStatus ) { log( 'loadModules', textStatus ); ajaxOngoing--; } )
-						.fail( function( jqxhr, settings, exception ) { log( 'loadModules', exception ); ajaxOngoing--; } );
+						.done( function( script, textStatus ) { log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
+						.fail( function( jqxhr, settings, exception ) { log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; } );
 		    	}
 		    }
 
@@ -1184,7 +1199,7 @@ var loggerModule = false;
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if ( func=='getSubData' || 
+	if ( func=='init' || 
 		//func=='PoNG-Help' || 
 		func=='setModuleData' || 
 		func=='Pong-Form' || 

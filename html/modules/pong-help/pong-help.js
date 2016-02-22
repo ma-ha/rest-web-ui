@@ -87,12 +87,9 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
 		if ( jsonCfg.moduleConfig && jsonCfg.moduleConfig.mapKey ) {
 			jsonCfg.moduleConfig.mapKey = ".....";
 		}
-		delete jsonCfg['actions'];
-		//$( "#"+id+modalName+"Dialog" ).html( '<textarea id="'+id+'JSONcfg" style="font-size:10pt; font-family:Courier; width:100%; height:100%;">'+JSON.stringify( jsonCfg, null, " " )+'</textarea>' );
+		delete jsonCfg['actions']; //hide this dialog in config
 	 	log( "PoNG-Help", "Add JSON to modal dialog." );
-	    $( "#"+id+modalName+"Dialog" ).html( '<div class="syntax-div"><pre class="syntax brush-yaml">'+JSON.stringify( jsonCfg, null, "  " )+'</pre></div>' );
-	 	log( "PoNG-Help", "Calling jQuery.syntax..." );
-		jQuery.syntax( { theme: 'modern', blockLayout: 'fixed' } );
+	 	jQuerySyntaxInsertCode( id+modalName+"Dialog", JSON.stringify( jsonCfg, null, "  " ), 'yaml', { theme: 'modern', blockLayout: 'fixed' } );
 		log( "PoNG-Help", "Calling jQuery.syntax done" );
 
 	} else {
