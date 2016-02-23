@@ -161,6 +161,24 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	}
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
 
+	
+	// polling update:
+	if ( tbl.pollDataSec ) {
+		var t = parseInt( tbl.pollDataSec );
+		if  ( ! isNaN( t ) ) {	
+			var pollHTML = [];
+			pollHTML.push( '<script>' );
+			pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
+			pollHTML.push( '      pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+			pollHTML.push( '  }' );
+			pollHTML.push( '</script>' );
+			$( "#"+divId ).append( pollHTML.join("\n") );
+			log( "PoNG-Table", ">>>>> create pongTableUpdateTimer t="+t );
+			poolDataTimerId = setInterval( "pongTableUpdateTimer"+divId+"()", t*1000 );
+			log( "Pong-Table", ">>>>> startet pongTableUpdateTimer"+divId+"()" );
+		}else alert( "no parseInt tbl.pollDataSec" );
+	} else alert( "no tbl.pollDataSec" );
+	
 	pongTableUpdateData( divId, params.get );
 }
 

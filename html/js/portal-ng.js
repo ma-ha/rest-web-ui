@@ -1200,7 +1200,7 @@ var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if ( func=='init' || 
-		//func=='PoNG-Help' || 
+		func=='PoNG-Table' || 
 		func=='setModuleData' || 
 		func=='Pong-Form' || 
 		//func=='Pong-SrcCode' || 

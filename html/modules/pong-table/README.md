@@ -287,6 +287,16 @@ And a HTTP GET to webdata gives
 	        ]
 	    }
 	}
+## Polling reload
+Simply define the seconds in "pollDataSec":
+
+	{
+	    "dataURL": "webdata",
+	    "pollDataSec": "5",
+	    "rowId": "productId",
+	     "cols" : [ ... ]
+	     ...
+	}
 
 ## Table CSS 
 You can use the following CCS elements to define thy style of the table:
