@@ -166,22 +166,52 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	if ( tbl.pollDataSec ) {
 		var t = parseInt( tbl.pollDataSec );
 		if  ( ! isNaN( t ) ) {	
-			var pollHTML = [];
+			poTbl[ divId ].polling = true;
+ 			var pollHTML = [];
 			pollHTML.push( '<script>' );
 			pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
-			pollHTML.push( '      pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+			pollHTML.push( '      	if ( poTbl[ "'+divId+'" ].polling ) { ' );
+			pollHTML.push( '      		pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+			pollHTML.push( '        }' );
 			pollHTML.push( '  }' );
 			pollHTML.push( '</script>' );
 			$( "#"+divId ).append( pollHTML.join("\n") );
 			log( "PoNG-Table", ">>>>> create pongTableUpdateTimer t="+t );
 			poolDataTimerId = setInterval( "pongTableUpdateTimer"+divId+"()", t*1000 );
 			log( "Pong-Table", ">>>>> startet pongTableUpdateTimer"+divId+"()" );
-		}else alert( "no parseInt tbl.pollDataSec" );
+
+			// toggle pulling action button
+			var html = "";
+			html += '<button id="'+divId+'TableBt">'+$.i18n( 'Start/stop reload' )+'</button>';
+			html += '<script>';
+			html += '  $(function() { $( "#'+divId+'TableBt" ).button( ';
+			html += '    { icons:{primary: "ui-icon-refresh"}, text: false } ).click( function() { pongTableTogglePolling("'+divId+'"); } ); } ); ';
+			html += '</script>';
+			$( "#"+divId+"ActionBtn" ).html( html );
+		
+		} //else alert( "no parseInt tbl.pollDataSec" );
 	} else alert( "no tbl.pollDataSec" );
 	
 	pongTableUpdateData( divId, params.get );
 }
 
+function pongTableAddActionBtn( id, modalName, resourceURL, params ) {
+	log( "PoNG-Table", "pongTableAddActionBtn "+id);
+	var html = '<div id="'+id+'ContentActionBtn" />'; // just a placeholder
+	return html;
+}
+
+function pongTableTogglePolling( divId ) {
+	if ( poTbl[ divId ].polling ) {
+		//alert( "Toggle table data polling off" );
+		$( '#'+divId+'TableBt' ).button( "option", { icons: { primary: "ui-icon-locked" }, text: false } );
+		poTbl[ divId ].polling = false;
+	} else {	
+		//alert( "Toggle table data polling reload on" ); 
+		$( '#'+divId+'TableBt' ).button( "option", { icons: { primary: "ui-icon-refresh" }, text: false } );
+		poTbl[ divId ].polling = true;
+	}
+}
 
 function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 	var contentItems = [];

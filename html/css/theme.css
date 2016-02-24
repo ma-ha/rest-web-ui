@@ -97,4 +97,7 @@ div.edithighlight {
 .editdiv {  margin:2px; border: 1px solid silver;  
 }
 
-
+.menuBtn {
+	position:relative;
+	float:right;
+}

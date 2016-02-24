@@ -70,7 +70,7 @@
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
 				"moduleConfig":{
-					"pollDataSec":"30",	
+					"pollDataSec":"15",	
 					"easyCols":[
 						"*ID|5%",
 						"Name=Name.0",

@@ -866,10 +866,17 @@ function resToHTML( id, res, style ) {
 			'<div class="'+res.decor+'-bl"></div>'+
 			'<div class="'+res.decor+'-menu">';
 		if ( res.modal != null ) {
-			html += addDlgBtn( id, res );
+			html +=  '<div class="menuBtn">'+addDlgBtn( id, res ) +"</div>";
 		}
 		if ( res.actions != null ) {
-			html += addActionBtn( id, res );
+			html += '<div class="menuBtn">'+addActionBtn( id, res )+"</div>";
+		}
+		// view required action ?
+		var hook = getHookMethod( "addActionBtn", res.type );
+		if ( hook != "" ) {
+			log( 'addActionBtn', id+" "+hook);
+			html += '<div class="menuBtn">'+ eval( hook+"( id, '', res.resourceURL, {} )" ) + '</div>';
+			//dlgMap.push( [ id, "", res.resourceURL, "", {} ] );
 		}
 		html += "</div>";
 		if ( res.modal != null ) {
@@ -1105,7 +1112,7 @@ function getHookMethod( hook, type ) {
 	if ( ( type != null ) && ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) )
 	for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
 		moduleHook = moduleMap[ type ].hooks[i];
-		log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
+		//log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
 		if ( moduleHook.hook == hook ) {
 			log( 'getHookMethod', moduleHook.method+"( ... )");
 			fnName = moduleHook.method;
@@ -1199,12 +1206,12 @@ var loggerModule = false;
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if ( func=='init' || 
-		func=='PoNG-Table' || 
+	if (  func=='PoNG-Table' || 
 		func=='setModuleData' || 
-		func=='Pong-Form' || 
-		//func=='Pong-SrcCode' || 
-		func=='loadModules' ) { 
+		//func=='Pong-Form' || 
+		func=='getHookMethod' || 
+		//func=='loadModules'
+		func=='init' ) { 
 		console.log( "["+func+"] "+msg );
 		loggerBuffer.push
 	}

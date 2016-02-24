@@ -294,8 +294,8 @@ Simply define the seconds in "pollDataSec":
 	    "dataURL": "webdata",
 	    "pollDataSec": "5",
 	    "rowId": "productId",
-	     "cols" : [ ... ]
-	     ...
+	    "cols" : [ ... ]
+	    ...
 	}
 
 ## Table CSS 

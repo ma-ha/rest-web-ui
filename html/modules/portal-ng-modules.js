@@ -84,6 +84,7 @@ moduleMap[ "modal-form" ] = {
 moduleMap[ "pong-table" ] = {
 	"name": "pong-table",
     "hooks": [
+        { hook: "addActionBtn", method:"pongTableAddActionBtn" },
         { hook: "loadResourcesHtml", method:"pongTableDivHTML" },
         { hook: "update", method:"pongTableUpdateData" },
         { hook: "setData", method:"pongTableSetData" }
@@ -95,6 +96,7 @@ moduleMap[ "pong-easytable" ] = {
 	"name": "pong-easytable",
 	"requires": [ "pong-table" ],
     "hooks": [
+        { hook: "addActionBtn", method:"pongTableAddActionBtn" },
         { hook: "loadResourcesHtml", method:"pongEzTableDivHTML" },
         { hook: "update", method:"pongEzTableUpdateData" },
         { hook: "setData", method:"pongEzTableSetData" }
