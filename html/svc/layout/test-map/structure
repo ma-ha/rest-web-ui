@@ -87,6 +87,12 @@
                                     "rowId": "id",
                                     "cols": [
                                         {
+                                            "id": "selector",
+                                            "label": "",
+                                            "cellType": "selector",
+                                            "width": "5%"
+                                        },	
+                                        {
                                             "id": "name",
                                             "label": "Name",
                                             "cellType": "text",
@@ -145,7 +151,23 @@
                                             "width": "5%"
                                         }
                                     ],
-                                    "maxRows": "10"
+                                    "maxRows": "10",
+                                    "actions": [
+                                        {
+                                            "id":"findRoute",
+                                            "actionName":"Get Route",
+                                            "method": "GET",
+                                            "actionURL":"svc/travlOptimizer",
+                                            "params":[ { "city":"primary_address_city" }, {"street":"primary_address_street" }],
+                                            "setData": [
+                                                {
+                                                    "dataDocSubPath": "records",
+                                                    "resId": "60"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                    
                                 },
                                 "type": "pong-table",
                                 "type_id": "5",

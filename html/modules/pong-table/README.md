@@ -256,6 +256,17 @@ Currently the table module supports:
 * <code>"ratingType":"5star"</code>:rating values= [ "0", "1", "2", "3", "4", "5" ]
 * <code>"ratingType":"prio"</code>: rating values= [ "0", "1", "2", "3" ]
 
+### Selector
+A selector can be used once per row to link selected data to actions. 
+These data collection actions are web service. Data fields are used as parameter for the calls. 
+
+Example use case:
+* multiple deletes with one call (same resource)
+* send selected data to another service
+* hand over data to another view
+
+The actions are same like form actions (defined separately).
+
 ## Simple example
 	{
 	    "dataURL": "webdata",
@@ -287,6 +298,7 @@ And a HTTP GET to webdata gives
 	        ]
 	    }
 	}
+		
 ## Polling reload
 Simply define the seconds in "pollDataSec":
 
