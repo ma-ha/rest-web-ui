@@ -472,8 +472,8 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 			if ( ( action.update != null ) && ( action.update.length != null ) ) {
 				for ( var i = 0; i < action.update.length; i++ ) {
 					//contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", { "'+def.id+'": $( "#'+divId+def.id+'" ).val() } );' );					
-					contentItems.push( '                   var postLst = {}; ' );
-					contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", postLst );' );					
+//					contentItems.push( '                   var postLst = {}; ' );
+					contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", dta );' );					
 				}
 			}
 			if ( ( action.setData != null ) && ( action.setData.length != null ) ) {

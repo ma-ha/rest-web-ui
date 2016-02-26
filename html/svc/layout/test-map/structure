@@ -156,23 +156,36 @@
                                         {
                                             "id":"findRoute",
                                             "actionName":"Get Route",
-                                            "method":"GET",
-                                            "actionURL":"svc/travlOptimizer",
+                                            "method":"POST",
+                                            "actionURL":"/mh/ws/portal-ng-php-backend/web/optimizeRoute.php",
                                             "paramLstName":"destinations",
                                             "params": [
                                                 {
-                                                    "name":"address",
-                                                    "value":"${primary_address_street}, ${primary_address_city}, ${primary_address_country}"
+                                                    "name":"street",
+                                                    "value":"${primary_address_street}"
+                                                },
+                                                {
+                                                    "name":"city",
+                                                    "value":"${primary_address_city}"
+                                                },
+                                                {
+                                                    "name":"country",
+                                                    "value":"${primary_address_country}"
                                                 },
                                                 {
                                                     "name":"label",
                                                     "value":"${name}, ${account_name}"
                                                 }
                                             ],
-                                            "setData": [
+                                            "update": [
                                                 {
-                                                    "dataDocSubPath":"records",
-                                                    "resId":"60"
+                                                    "resId": "62",
+                                                    "params": [
+                                                        {
+                                                            "name": "routes",
+                                                            "value": "${routes}"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }

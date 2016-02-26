@@ -154,6 +154,21 @@ function pong_map_Update( divId, pmd ) {
 		
 	} else 
 		log( "pong_map", "pong_map_Update routeTo == null " );		
+
+	if ( pmd.routes != null && pmd.routes.length > 1) {
+		log( "pong_map", "pong_map_Update routes: "+ pmd.routes.length );		        
+		pong_map_route = [];
+		pong_map_route_data = [];
+        //pong_map_route.push( pmd.routes[0] );	
+		for ( var i = 1; i < pmd.routes.length; i++  ) {
+			pong_map_addRoute( pmd.routes[i-1], pmd.routes[i], "abc", null );
+	        pong_map_route.push( pmd.routes[i] );
+//	        if ( pmd.routes[i].label ) {
+//	    		pong_map_addSearchPin ( pmd.routes[i],  pmd.routes[i].label, false );
+//	        }
+		}
+	}
+
 	
 	if ( pmd.clearRoute != null ) {
 		log( "pong_map", "pong_map_Update clearRoute" );		
@@ -168,7 +183,7 @@ function pong_map_Update( divId, pmd ) {
 
 function pong_map_addRoute ( a, b, label, setData ) {
 	if ( label == null ) { label = b; }
-	log( "pong_map", "pong_map_addRoute('"+a+"','"+b+"','"+label+"') ------------------------------------------------" );
+	log( "pong_map", "pong_map_addRoute('"+JSON.stringify(a)+"','"+JSON.stringify(b)+"','"+label+"') ------------------------------------------------" );
     dir = MQ.routing.directions().on( 'success', 
 	    	function ( data ) {
 				log( "pong_map", "formattedTime: "+data.route.formattedTime );
@@ -184,7 +199,7 @@ function pong_map_addRoute ( a, b, label, setData ) {
 						}
 					log( "pong_map", "x1" );
 					pong_map_route_data.push( theRoute );
-					//log( "pong_map", "x2 "+JSON.stringify( pong_map_route_data ) );
+					log( "pong_map", "x2 "+JSON.stringify( pong_map_route_data ) );
 					if ( setData && setData.length ) {
 						log( "pong_map", "x3" );
 						for ( var sd = 0; sd < setData.length; sd++ ) {
@@ -196,17 +211,19 @@ function pong_map_addRoute ( a, b, label, setData ) {
 				}
 			}
 	    );
+	log( "pong_map", "dir.route" );    
     dir.route( { 
     	locations: [ a, b ], 
    		options: { unit: 'k' }
     } );
+	log( "pong_map", "pong_map_dta.addLayer" );    
     pong_map_dta.addLayer(
     	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
     );
 }
 
 function pong_map_addSearchPin ( search, label, setView ) {
-	log( "pong_map", "pong_map_Update searching: '"+search+"'  ------------------------------------------------" );		
+	log( "pong_map", "pong_map_Update searching: '"+JSON.stringify(search)+"'  ------------------------------------------------" );		
 	MQ.geocode(  ).search( search )
 		.on( 'success', 
 			function( e ) {	
