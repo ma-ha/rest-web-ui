@@ -281,9 +281,17 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	if ( tbl.dataURL != null ) {
 		dataUrl = dataUrl+"/"+tbl.dataURL;
 	}
-	// AJAX commit changes for checkboxes, etc
 	contentItems.push( "<script>" );
 	contentItems.push( "$(function() { ");
+	
+	// code to add/set selected attribute by selector-checkbox event
+	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".rowSelector", ' );
+	contentItems.push( '         function( event ) { ' );
+	contentItems.push( '            var tbl = $(this); ' );
+	contentItems.push( '            poTbl["'+divId+'"].pongTableData[ tbl.data("r") ]["selected"] = tbl.is(":checked"); ' );
+	contentItems.push( '         } ); ');
+
+	// code to commit imput/checkbox changes with AJAX call 
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".postchange", ' );
 	contentItems.push( '         function( event ) { ' );
 	contentItems.push( '            var tbl = $(this); ' );
@@ -304,13 +312,13 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 		contentItems.push( '            var postParam =  { }; ' );
 	}
 	contentItems.push( '            var colId =  poTbl["'+divId+'"].pongTableDef.cols[ tbl.data("c") ].id; ' );
-	contentItems.push( '            var colVal =  tbl.is(":checked"); ' );
+	contentItems.push( '            var colVal =  tbl.is(":checked"); ' ); // TODO: need if(checkbox) ???
 	contentItems.push( '            postParam[ colId ] =  colVal; ' );
 	//contentItems.push( '            alert( "Post '+dataUrl+' "+ JSON.stringify(postParam) ); ' );
 	contentItems.push( '            $.post( "'+dataUrl+'", postParam, function( response ) { }, "json");');
 	contentItems.push( '            event.preventDefault(); return false; ' );
 	contentItems.push( '         }' );
-	contentItems.push( '  )' );
+	contentItems.push( '  );' );
 
 	// AJAX commit changes for editable text cells
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "mouseover", ".editableTblCell", ' );
@@ -411,24 +419,18 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 			var headerLst = []; // TODO
 			var basicAuth = null; // TODO
 			
-			var postLst = []; 
-			var getLst  = []; 
-			// TODO :
-//			postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" )
-//			getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );	
-
 			var action = tblDef.actions[ x ];
 			var method = "POST";
 			if ( action.method != null ) { method = action.method; }
 
 			log( "PoNG-Table",  '  action '+action.id);
-			contentItems.push( '<button id="'+divId+action.id+'" class="pong-table-action">'+$.i18n(action.actionName)+'</button>' );	
+			contentItems.push( '<button id="'+divId+'Bt'+action.id+'" class="pong-table-action">'+$.i18n(action.actionName)+'</button>' );	
 			contentItems.push( '<script>' );
 			contentItems.push( '  $(function() { ' );
 			contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
-			contentItems.push( '          function() { ' );
+			contentItems.push( '          function() {  ' );
 			//TODO fix CORS logic
-			contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
+			contentItems.push( '              var actionUrl = "'+action.actionURL+'";' );
 			contentItems.push( '              var request = $.ajax( { url: actionUrl, type: "'+method+'", ' );
 			contentItems.push( '                       crossDomain: true, ' );
 			contentItems.push( '                   	   beforeSend: function ( request ) { ' );
@@ -443,16 +445,14 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 				contentItems.push( '                   	             request.setRequestHeader( "oauth-token", sessionInfo["OAuth"]["access_token"] ); '); // huuhaaaaa SugarCRM special -- hope it won't hurt elsewhere!!
 				contentItems.push( '                   	         } ');
 			}
-			for ( var i = 0; i < headerLst.length; i++ ) {
-				contentItems.push( '                   	         request.setRequestHeader( ' +headerLst[i] + '); ');
-			}
+//			for ( var i = 0; i < headerLst.length; i++ ) {
+//				contentItems.push( '                   	         request.setRequestHeader( ' +headerLst[i] + '); ');
+//			}
 			contentItems.push( '                   	   },' )
 			if ( ( action.dataEncoding != null ) || ( action.dataEncoding == "GETstyle")  ) { // funny request, but some standard
-				var dataStr = "";
-				dataStr = getLst.join("&");
-				contentItems.push( '                       data: "'+dataStr+'" ' );
+				contentItems.push( '                 data: pongTblGetDataStr( "'+divId+'", "'+action.id+'" ) ' );
 			} else { // default: JSON data encoding
-				contentItems.push( '                 data: { '+ postLst +' } ' );			
+				contentItems.push( '                 data: pongTblGetPostLst( "'+divId+'", "'+action.id+'" ) ' );			
 			}
 			//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 			contentItems.push( '              } ).done(  ' );
@@ -472,7 +472,8 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 			if ( ( action.update != null ) && ( action.update.length != null ) ) {
 				for ( var i = 0; i < action.update.length; i++ ) {
 					//contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", { "'+def.id+'": $( "#'+divId+def.id+'" ).val() } );' );					
-					contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", { '+postLst+' } );' );					
+					contentItems.push( '                   var postLst = {}; ' );
+					contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", postLst );' );					
 				}
 			}
 			if ( ( action.setData != null ) && ( action.setData.length != null ) ) {
@@ -504,6 +505,112 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 		contentItems.push( '</div>' );
 	}	
 	return contentItems;
+}
+
+function pongTblGetDataStr( divId, actionId ) {
+	var getLst = [];
+	var tblDef = poTbl[ divId ].pongTableDef;
+	// identify action def
+	if ( tblDef.actions && tblDef.actions.length ) {
+		for ( var x = 0; x < tblDef.actions.length; x++ ) {
+			if ( tblDef.actions[x].id == actionId ) {
+				// action found:
+				var actn =  tblDef.actions[x];
+
+				// search selected list rows
+				if ( poTbl[ divId ].pongTableData ) {
+					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+							// ok selected
+							alert(  JSON.stringify(actn) );
+							
+							// iterate action data fields
+							if ( actn.params ) {
+								for ( var f = 0; f < actn.params.length; f++ ) {
+									getLst.push( actn.params[f].name +"="+ parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f] ) );
+									alert( actn.params[f].name +"="+ parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f] ) );
+								}
+							}
+						}
+					}
+					//getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
+				}
+			}
+		}
+	}
+	
+	return getLst.join("&");
+}
+
+/** replaces ${xyz} in str by the value of the input text field with ID xyz */
+function parseRowPlaceHolders( row, str ) {
+	//TODO
+	log( "PoNG-Table",  "Start value: "+ str );
+	while ( str.indexOf( "${" ) >= 0 && str.indexOf( "${" ) < str.indexOf( "}" ) ) {
+		var plcHldStart = str.indexOf( "${" );
+		var plcHldEnd   = str.indexOf( "}" );
+		var varStr = str.substr( plcHldStart + 2,  plcHldEnd - plcHldStart - 2 );
+		log( "PoNG-Table",  'parsePlaceHolders "'+varStr+'"' );
+		str = str.substr( 0, plcHldStart ) +  getSubData(row,varStr) + str.substr( plcHldEnd+1 );  
+	}
+	log( "PoNG-Table", "Processed value: "+ str );
+	return str;
+}
+
+
+function pongTblGetPostLst( divId, actionId ) {
+	log( "PoNG-Table",  'pongTblGetPostLst' );
+	var tblDef = poTbl[ divId ].pongTableDef;
+	var result = {};
+	// identify action def
+	if ( tblDef.actions && tblDef.actions.length ) {
+		log( "PoNG-Table",  ' search actions' );
+		var postLst = [];
+		for ( var x = 0; x < tblDef.actions.length; x++ ) {
+			if ( tblDef.actions[x].id == actionId ) {
+				log( "PoNG-Table",  'found action' );
+				// action found:
+				var actn =  tblDef.actions[x];
+
+				// search selected list rows
+				if ( poTbl[ divId ].pongTableData ) {
+					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+							log( "PoNG-Table",  ' found selected' );
+							// ok selected
+							var params = {}
+							// iterate action data fields
+							if ( actn.params ) {
+								for ( var f = 0; f < actn.params.length; f++ ) {
+									params[ actn.params[f].name ] = parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f].value );
+								}
+							}
+							postLst.push( params );
+						}
+					}
+					//getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
+				}
+				if ( actn.paramLstName ) {
+					result[ actn.paramLstName ] = postLst;					
+				} else {
+					result[ "param" ] = postLst;
+				}
+			}
+		}
+	}
+
+//	if ( poTbl[ divId ].pongTableData ) {
+//		for ( r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+//			if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+//				alert( JSON.stringify( poTbl[ divId ].pongTableData[ r ] ) );
+//			}
+//		}
+//		getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
+//	}
+	// TODO :
+	//postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" )
+	alert( JSON.stringify( result ) );
+	return result;
 }
 
 

@@ -151,18 +151,28 @@
                                             "width": "5%"
                                         }
                                     ],
-                                    "maxRows": "10",
+                                    "maxRows":"10",
                                     "actions": [
                                         {
                                             "id":"findRoute",
                                             "actionName":"Get Route",
-                                            "method": "GET",
+                                            "method":"GET",
                                             "actionURL":"svc/travlOptimizer",
-                                            "params":[ { "city":"primary_address_city" }, {"street":"primary_address_street" }],
+                                            "paramLstName":"destinations",
+                                            "params": [
+                                                {
+                                                    "name":"address",
+                                                    "value":"${primary_address_street}, ${primary_address_city}, ${primary_address_country}"
+                                                },
+                                                {
+                                                    "name":"label",
+                                                    "value":"${name}, ${account_name}"
+                                                }
+                                            ],
                                             "setData": [
                                                 {
-                                                    "dataDocSubPath": "records",
-                                                    "resId": "60"
+                                                    "dataDocSubPath":"records",
+                                                    "resId":"60"
                                                 }
                                             ]
                                         }
