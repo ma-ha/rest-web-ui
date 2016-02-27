@@ -265,7 +265,50 @@ Example use case:
 * send selected data to another service
 * hand over data to another view
 
-The actions are same like form actions (defined separately).
+The actions are same like form actions (defined separately), example:
+
+ 	{
+	    "rowId": "contactTable",
+	    "height": "530px",
+	    "resourceURL": "/contacts",
+	    "title": "SugarCRM Contacts",
+        "type": "pong-table",
+	    "moduleConfig": {
+	        "dataURL": "/contacts",
+	        "rowId": "id",
+            "maxRows":"10",
+	        "cols": [
+	            {
+	                "id": "selector",
+	                "label": "",
+	                "cellType": "selector",
+	                "width": "5%"
+	            }, ...
+	        ]                     
+			"actions": [
+			    {
+			        "id":"findRoute",
+			        "actionName":"Caclulate Route",
+			        "method":"POST",
+			        "actionURL":"/mh/ws/portal-ng-php-backend/web/optimizeRoute",
+			        "paramLstName":"destinations",
+			        "params": [
+			            { "name":"street",  "value":"${primary_address_street}"  },
+			            { "name":"city",    "value":"${primary_address_city}"    },
+			            { "name":"country", "value":"${primary_address_country}" }
+			        ],
+			        "update": [
+			            {
+			                "resId": "mapView",
+			                "params": [
+			                    { "name": "routes", "value": "${routes}" }
+			                ]
+			            }
+			        ]
+			    }
+			]
+		}
+	}
 
 ## Simple example
 	{
