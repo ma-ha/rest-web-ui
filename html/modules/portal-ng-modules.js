@@ -193,15 +193,13 @@ moduleMap[ "pong-log" ] = {
 
 moduleMap[ "pong-map" ] = {
 		"name": "pong-map",
-		"loadCSS": [ 
-		    "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"  
-		 ],
-		"loadJS": [ 
-		    "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js" 
-		 ],
+		"loadCSS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" ],
+		"loadJS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js" ],
 	    "hooks": [
   	        { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
-	        { hook:"update", method:"pong_map_Update" }
+	        { hook:"addActionBtn", method:"pong_map_AddActionBtn" },
+	        { hook:"update", method:"pong_map_Update" },
+	        { hook:"setData", method:"pong_map_setData" }
 	    ]
 	};
 

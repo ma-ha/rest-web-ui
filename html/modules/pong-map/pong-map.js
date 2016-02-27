@@ -43,6 +43,21 @@ function pong_map_DivHTML( divId, resourceURL, paramObj ) {
 		);					
 	}	
 }
+
+function pong_map_AddActionBtn( id, modalName, resourceURL, params ) {
+	log( "PoNG-Table", "pong_mapAddActionBtn "+id);
+	var html = '<div id="'+id+'ContentClearMapAction" >'; // just a placeholder
+	html += '<button id="'+id+'ClearMapBt">'+$.i18n( 'Clear map' )+'</button>';
+	html += '<script>';
+	html += '  $(function() { $( "#'+id+'ClearMapBt" ).button( ';
+	html += '    { icons:{primary: "ui-icon-trash"}, text: false } ).click( function() { pong_map_Update("'+id+'Content", {"clearRoute":"true"} ); } ); } ); ';
+	html += '</script>';
+	html += '</div>';
+	return html;
+}
+
+
+
 var pong_map_jsLoad = false;
 
 function pong_map_RenderHTML( divId, resourceURL, paramObj, pmd ) {
@@ -56,17 +71,26 @@ function pong_map_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	
 	
 	var mapJsUrl      = "https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js";
-	var geocoderJsUrl = "https://www.mapquestapi.com/sdk/leaflet/v1.s/mq-geocoding.js";
-	var routingJsUrl  = "https://www.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js";
+	var geocoderJsUrl = "https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-geocoding.js";
+	var routingJsUrl  = "https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-routing.js";
+	var trafficJsUrl  = "https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js";
 	
     $.getScript( mapJsUrl+"?key="+pmd.mapKey ).done( 
 		function ( script, textStatus ) { 
 			$.getScript( geocoderJsUrl+"?key="+pmd.mapKey ).done( 
 				function ( script, textStatus ) { 
-					log( 'pong_map', ' load '+mapJsUrl+': '+textStatus );
+					log( 'pong_map', ' load '+geocoderJsUrl+': '+textStatus );
 					$.getScript( routingJsUrl+"?key="+pmd.mapKey ).done( 
 						function ( script, textStatus ) { 
-							pong_map_createMap( divId, pmd );
+							log( 'pong_map', ' load '+routingJsUrl+': '+textStatus );
+							$.getScript( trafficJsUrl+"?key="+pmd.mapKey ).done( 
+								function ( script, textStatus ) { 
+									log( 'pong_map', ' load '+trafficJsUrl+': '+textStatus );
+									pong_map_createMap( divId, pmd );
+								}
+							).fail( 
+								function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+trafficJsUrl+': '+exception ); } 
+							); 		
 						}
 					).fail( 
 						function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+routingJsUrl+': '+exception ); } 
@@ -107,14 +131,26 @@ function pong_map_createMap( divId, pmd ) {
 				log( "pong_map", " ... oauth done ;-)" );
 		
 				log( "pong_map", " CREATE MAP" );
+				var mapLayer = MQ.mapLayer();
+
 				pong_map_dta =
 					L.map( divId+'_pong_map' , 
 							{
-							    layers: MQ.mapLayer(),
+							    layers: mapLayer,
 							    center: [ lat, lon ],
 							    zoom: zoom
 							}
 					);
+				log( "pong_map", " Add Controls" );
+				L.control.layers( {
+					  'Map': mapLayer,
+					  'Satellite': MQ.satelliteLayer(),
+					  'Dark': MQ.darkLayer(),
+					  'Light': MQ.lightLayer()
+					}, {
+					  'Traffic Flow': MQ.trafficLayer({layers: ['flow']}),
+					  'Traffic Incidents': MQ.trafficLayer({layers: ['incidents']})
+					} ).addTo( pong_map_dta );
 				log( "pong_map", " Map Done!!!" );
 		
 			}	
@@ -124,6 +160,19 @@ function pong_map_createMap( divId, pmd ) {
 
 }
 		
+function pong_map_setData( divId, pmd ) {
+	log( "pong_map", "pong_map_setDate" );
+	log( "pong_map", "pong_map_Update clearRoute" );		
+	pong_map_route = [];
+	pong_map_route_data = [];
+	for ( var i=0 ; i < routeLayers.length; i++ ){ 
+		pong_map_dta.removeLayer( routeLayers[i] );
+	}
+	routeLayers = [];
+	log( "pong_map", "call update" );
+	pong_map_Update( divId, pmd );
+}
+
 /** update data call back hook */
 function pong_map_Update( divId, pmd ) {
 	log( "pong_map", "pong_map_Update start (divId: "+divId+"): "+JSON.stringify( pmd ) + "  ------------------------------------------------");
@@ -157,42 +206,48 @@ function pong_map_Update( divId, pmd ) {
 
 	if ( pmd.routes != null && pmd.routes.length > 1) {
 		log( "pong_map", "pong_map_Update routes: "+ pmd.routes.length );
-		pong_map_addViaRoute( pmd.routes , null );
-//		pong_map_route = [];
-//		pong_map_route_data = [];
-//        //pong_map_route.push( pmd.routes[0] );	
-//		for ( var i = 1; i < pmd.routes.length; i++  ) {
-//			pong_map_addRoute( pmd.routes[i-1], pmd.routes[i], "abc", null );
-//	        pong_map_route.push( pmd.routes[i] );
-////	        if ( pmd.routes[i].label ) {
-////	    		pong_map_addSearchPin ( pmd.routes[i],  pmd.routes[i].label, false );
-////	        }
-//		}
+		pong_map_addViaRoute( pmd.routes , null, true );
 	}
 
-	
+	if ( pmd.optimizedRoundTrip != null && pmd.optimizedRoundTrip.length > 1) {
+		log( "pong_map", "pong_map_Update optimizedRoundTrip: "+ pmd.optimizedRoundTrip.length );
+		pmd.optimizedRoundTrip.push( pmd.optimizedRoundTrip[0] );
+		pong_map_addViaRoute( pmd.optimizedRoundTrip , null, true );		
+	}
+
+	if ( pmd.roundTrip != null && pmd.roundTrip.length > 1) {
+		log( "pong_map", "pong_map_Update roundTrip: "+ pmd.roundTrip.length );
+		pmd.roundTrip.push( pmd.roundTrip[0] );
+		pong_map_addViaRoute( pmd.roundTrip , null, true );		
+	}
+
 	if ( pmd.clearRoute != null ) {
 		log( "pong_map", "pong_map_Update clearRoute" );		
 		pong_map_route = [];
 		pong_map_route_data = [];
+		for ( var i=0 ; i < routeLayers.length; i++ ){ 
+			pong_map_dta.removeLayer( routeLayers[i] );
+		}
+		routeLayers = [];
 	}
 	
 	// other modes required? e.g. reverse geocoding or route
 	
 	log( "pong_map", "pong_map_Update end.");
 }
-
-function pong_map_addViaRoute ( routes, setData ) {
+var routeLayers = []; 
+function pong_map_addViaRoute ( routes, setData, optimized ) {
 	log( "pong_map", "pong_map_addViaRoute "+JSON.stringify(routes) );
 	dir = MQ.routing.directions();
-	dir.route( { 
-    	locations: routes, 
-   		options: { unit: 'k' }
-    } );
-	log( "pong_map", "pong_map_dta.addLayer" );    
-    pong_map_dta.addLayer(
-    	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
-    );
+	if ( optimized ) {
+		dir.optimizedRoute( { locations: routes, options: { unit: 'k' } } );				
+	} else {
+		dir.route( { locations: routes, options: { unit: 'k' } } );		
+	}
+	log( "pong_map", "pong_map_dta.addLayer" );
+	var newRouteLayer = MQ.routing.routeLayer( { directions: dir, fitBounds: true } );
+	routeLayers.push( newRouteLayer );
+    pong_map_dta.addLayer( newRouteLayer );
 }
 
 function pong_map_addRoute ( a, b, label, setData ) {
@@ -230,10 +285,13 @@ function pong_map_addRoute ( a, b, label, setData ) {
     	locations: [ a, b ], 
    		options: { unit: 'k' }
     } );
-	log( "pong_map", "pong_map_dta.addLayer" );    
-    pong_map_dta.addLayer(
-    	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
-    );
+	log( "pong_map", "pong_map_dta.addLayer" );  
+	var newRouteLayer = MQ.routing.routeLayer( { directions: dir, fitBounds: true } );
+	routeLayers.push( newRouteLayer );
+    pong_map_dta.addLayer( newRouteLayer );
+//    pong_map_dta.addLayer(
+//    	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
+//    );
 }
 
 function pong_map_addSearchPin ( search, label, setView ) {

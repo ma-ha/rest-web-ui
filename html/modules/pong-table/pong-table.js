@@ -412,7 +412,7 @@ function pongTableGenPaginator( divId, tbl ) {
 function pongTableActions( divId, resourceURL, params, tbl ) {
 	log( "PoNG-Table",  'pongTableActions '+divId );
 	var contentItems = [];	
-	var tblDef = poTbl[ divId ].pongTableDef;
+	var tblDef = poTbl[ divId ].pongTableDef; 
 	if ( tblDef.actions && tblDef.actions.length ) {
 		contentItems.push( '<div id="'+divId+'Pagin" class="pongListPagin">' );
 		for ( var x = 0; x < tblDef.actions.length; x++ ) {
@@ -428,71 +428,46 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 			contentItems.push( '<script>' );
 			contentItems.push( '  $(function() { ' );
 			contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
-			contentItems.push( '          function() {  ' );
-			//TODO fix CORS logic
-			contentItems.push( '              var actionUrl = "'+action.actionURL+'";' );
-			contentItems.push( '              var request = $.ajax( { url: actionUrl, type: "'+method+'", ' );
-			contentItems.push( '                       crossDomain: true, ' );
-			contentItems.push( '                   	   beforeSend: function ( request ) { ' );
-			if ( basicAuth != null ) {
-			//	alert()
-				var basicAuthStr = 'btoa( $( "#'+divId+basicAuth.user+'" ).val() + ":" + $( "#'+divId+basicAuth.password+'" ).val() )';
-				contentItems.push( '                   	      request.setRequestHeader( "Authorization", "Basic "+'+basicAuthStr+' );' );
-			} else 
-			if ( action.oauth_scope != null ) {
-				contentItems.push( '                             if ( sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {');
-				contentItems.push( '                   	             request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); ');
-				contentItems.push( '                   	             request.setRequestHeader( "oauth-token", sessionInfo["OAuth"]["access_token"] ); '); // huuhaaaaa SugarCRM special -- hope it won't hurt elsewhere!!
-				contentItems.push( '                   	         } ');
-			}
-//			for ( var i = 0; i < headerLst.length; i++ ) {
-//				contentItems.push( '                   	         request.setRequestHeader( ' +headerLst[i] + '); ');
-//			}
-			contentItems.push( '                   	   },' )
-			if ( ( action.dataEncoding != null ) || ( action.dataEncoding == "GETstyle")  ) { // funny request, but some standard
-				contentItems.push( '                 data: pongTblGetDataStr( "'+divId+'", "'+action.id+'" ) ' );
-			} else { // default: JSON data encoding
-				contentItems.push( '                 data: pongTblGetPostLst( "'+divId+'", "'+action.id+'" ) ' );			
-			}
-			//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
-			contentItems.push( '              } ).done(  ' );
-			contentItems.push( '                 function( dta ) {  ' );
-			contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
-			if ( action.target != null ) {
-				if ( action.target == '_parent' ) {
-					contentItems.push( '                       window.location.replace( dta );');
-				} else if ( action.target == '_blank' ) {
-					contentItems.push( '                       window.open( dta );');
-				} else if ( action.target == 'modal' ) {
-					contentItems.push( '                       alert( dta );  ' );
-				} else {
-					contentItems.push( '                       $( "#'+action.target+'Content" ).html( dta );  ' );
+			contentItems.push( '          function() {  ' ); 
+			if ( action.actionURL ) { // otherwise no AJAX, only interaction
+				contentItems.push( '              var actionUrl = "'+action.actionURL+'";' );
+				contentItems.push( '              var request = $.ajax( { url: actionUrl, type: "'+method+'", ' );
+				contentItems.push( '                       crossDomain: true, ' ); //TODO fix CORS logic
+				contentItems.push( '                   	   beforeSend: function ( request ) { ' );
+				if ( basicAuth != null ) {
+				//	alert()
+					var basicAuthStr = 'btoa( $( "#'+divId+basicAuth.user+'" ).val() + ":" + $( "#'+divId+basicAuth.password+'" ).val() )';
+					contentItems.push( '                   	      request.setRequestHeader( "Authorization", "Basic "+'+basicAuthStr+' );' );
+				} else 
+				if ( action.oauth_scope != null ) {
+					contentItems.push( '                             if ( sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {');
+					contentItems.push( '                   	             request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); ');
+					contentItems.push( '                   	             request.setRequestHeader( "oauth-token", sessionInfo["OAuth"]["access_token"] ); '); // huuhaaaaa SugarCRM special -- hope it won't hurt elsewhere!!
+					contentItems.push( '                   	         } ');
 				}
-			}
-			if ( ( action.update != null ) && ( action.update.length != null ) ) {
-				for ( var i = 0; i < action.update.length; i++ ) {
-					//contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", { "'+def.id+'": $( "#'+divId+def.id+'" ).val() } );' );					
-//					contentItems.push( '                   var postLst = {}; ' );
-					contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", dta );' );					
+				contentItems.push( '                   	   },' )
+				if ( ( action.dataEncoding != null ) || ( action.dataEncoding == "GETstyle")  ) { // funny request, but some standard
+					contentItems.push( '                 data: pongTblGetDataStr( "'+divId+'", "'+action.id+'" ) ' );
+				} else { // default: JSON data encoding
+					// TODO: contentItems.push( '                 data: pongTblGetPostLst2( "'+divId+'", '+JSON.stringify(action)+' ) ' );			
+					contentItems.push( '                 data: pongTblGetPostLst( "'+divId+'", "'+action.id+'" ) ' );			
 				}
-			}
-			if ( ( action.setData != null ) && ( action.setData.length != null ) ) {
-				for ( var i = 0; i < action.setData.length; i++ ) {
-					log( "Pong-Form", "action: "+ action.id + " setResponse hook "+action.setData[i].resId );
-					if ( action.setData[i].dataDocSubPath != null ) {
-						contentItems.push( '                   setModuleData( "'+action.setData[i].resId+'Content", dta, "'+action.setData[i].dataDocSubPath+'" );' );										
-					} else {
-						contentItems.push( '                   setModuleData( "'+action.setData[i].resId+'Content", dta, null );' );									
-					}
-				}			
-			}
-			contentItems.push( '                       return false;' ); 
-			contentItems.push( '                  }  ' );
-			contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
-
-			if ( action.target == 'modal' ) {
-				contentItems.push( '               request.fail(  function(jqXHR, textStatus) { alert( "Failed: "+textStatus ); } ); ' );
-			}		
+				//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
+				contentItems.push( '              } ).done(  ' );
+				contentItems.push( '                 function( dta ) {  ' );
+				contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
+				contentItems.push( '                    pongTblCrunchActionData( "'+divId+'", poTbl[ "'+divId+'" ].pongTableDef.actions[ '+x+' ], dta ); ');
+				contentItems.push( '                    return false;' ); 
+				contentItems.push( '                 }  ' );
+				contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
+	
+				if ( action.target == 'modal' ) {
+					contentItems.push( '               request.fail(  function(jqXHR, textStatus) { alert( "Failed: "+textStatus ); } ); ' );
+				}		
+			} else { // actionUrl == null 
+				contentItems.push( '                    pongTblCrunchActionData( "'+divId+'", poTbl[ "'+divId+'" ].pongTableDef.actions[ '+x+' ], null ); ');
+				
+			}  
 
 			contentItems.push( '              return false;' ); 
 			contentItems.push( '          }' );
@@ -506,6 +481,82 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 	}	
 	return contentItems;
 }
+
+function pongTblCrunchActionData ( divId, action, dta ) {
+	log( "PoNG-Table",  '  pongTblCrunchActionData '+action.id);
+//	if ( action.target != null ) {
+//		log( "PoNG-Table", "action: "+ action.id + " target: "+action.target );
+//		if ( dta == null )  dta = pongTblGetPostLst2( divId, action );
+//		if ( action.target == '_parent' ) {
+//			window.location.replace( dta );
+//		} else if ( action.target == '_blank' ) {
+//			window.open( dta );
+//		} else if ( action.target == 'modal' ) {
+//			alert( dta ); 
+//		} else {
+//			$( "#"+action.target+"Content" ).html( dta );  
+//		}
+//	}
+	if ( ( action.update != null ) && ( action.update.length != null ) ) {
+		log( "PoNG-Table",  '  update! '+ action.update.length );
+		for ( var i = 0; i < action.update.length; i++ ) {
+			log( "PoNG-Table", "action: '"+ action.id + "' updateData: "+action.update[i].resId );
+			if ( dta == null )  dta = pongTblGetPostLst2( divId, action.update[i] );
+			udateModuleData( action.update[i].resId+'Content', dta );				
+		}
+	}
+	if ( ( action.setData != null ) && ( action.setData.length != null ) ) {
+		log( "PoNG-Table",  '  set data ');
+		for ( var i = 0; i < action.setData.length; i++ ) {
+			log( "PoNG-Table", "action: '"+ action.id + "' setData "+action.setData[i].resId );
+			if ( dta == null )  dta = pongTblGetPostLst2( divId, action.setData[i] );
+			if ( action.setData[i].dataDocSubPath != null ) {
+				setModuleData( action.setData[i].resId+'Content', dta, action.setData[i].dataDocSubPath );								
+			} else {
+				setModuleData( action.setData[i].resId+'Content', dta, null );									
+			}
+		}			
+	}
+
+}
+
+
+function pongTblGetPostLst2( divId, action ) {
+	log( "PoNG-Table",  'pongTblGetPostLst2 '+divId );
+	log( "PoNG-Table",  'pongTblGetPostLst2 '+JSON.stringify(action) );
+	var tblDef = poTbl[ divId ].pongTableDef;
+	var result = {};
+	// identify action def
+	var postLst = [];
+
+	// search selected list rows
+	if ( poTbl[ divId ].pongTableData ) {
+		for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+			if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+				log( "PoNG-Table",  ' found selected' );
+				// ok selected
+				var params = {}
+				// iterate action data fields
+				if ( action.params ) {
+					for ( var f = 0; f < action.params.length; f++ ) {
+						params[ action.params[f].name ] = parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], action.params[f].value );
+					}
+				}
+				postLst.push( params );
+			}
+		}
+	}
+	if ( action.paramLstName ) {
+		result[ action.paramLstName ] = postLst;					
+	} else {
+		result[ "param" ] = postLst;
+	}
+	alert( JSON.stringify( result ) );
+	return result;
+}
+
+
+
 
 function pongTblGetDataStr( divId, actionId ) {
 	var getLst = [];
@@ -559,7 +610,7 @@ function parseRowPlaceHolders( row, str ) {
 
 
 function pongTblGetPostLst( divId, actionId ) {
-	log( "PoNG-Table",  'pongTblGetPostLst' );
+	log( "PoNG-Table",  'pongTblGetPostLst '+divId+'/'+actionId );
 	var tblDef = poTbl[ divId ].pongTableDef;
 	var result = {};
 	// identify action def

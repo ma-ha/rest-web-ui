@@ -156,28 +156,36 @@
                                         {
                                             "id":"findRoute",
                                             "actionName":"Get Route",
-                                            "setData": [
+                                            "method":"POST",
+                                            "actionURL":"/mh/ws/portal-ng-php-backend/web/optimizeRoute.php",
+                                            "paramLstName":"destinations",
+                                            "params": [
+                                                {
+                                                    "name":"street",
+                                                    "value":"${primary_address_street}"
+                                                },
+                                                {
+                                                    "name":"city",
+                                                    "value":"${primary_address_city}"
+                                                },
+                                                {
+                                                    "name":"country",
+                                                    "value":"${primary_address_country}"
+                                                },
+                                                {
+                                                    "name":"label",
+                                                    "value":"${name}, ${account_name}"
+                                                }
+                                            ],
+                                            "update": [
                                                 {
                                                     "resId": "62",
-		                                            "paramLstName":"roundTrip",
-		                                            "params": [
-		                                                {
-		                                                    "name":"street",
-		                                                    "value":"${primary_address_street}"
-		                                                },
-		                                                {
-		                                                    "name":"city",
-		                                                    "value":"${primary_address_city}"
-		                                                },
-		                                                {
-		                                                    "name":"country",
-		                                                    "value":"${primary_address_country}"
-		                                                },
-		                                                {
-		                                                    "name":"label",
-		                                                    "value":"${name}, ${account_name}"
-		                                                }
-		                                            ]
+                                                    "params": [
+                                                        {
+                                                            "name": "routes",
+                                                            "value": "${routes}"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
