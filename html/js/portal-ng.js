@@ -1209,7 +1209,7 @@ function log( func, msg ){
 	if (  func=='PoNG-Table' || 
 		func=='setModuleData' || 
 		//func=='Pong-Form' || 
-		func=='getHookMethod' || 
+		func=='pong_map' || 
 		//func=='loadModules'
 		func=='init' ) { 
 		console.log( "["+func+"] "+msg );

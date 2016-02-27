@@ -156,17 +156,18 @@ function pong_map_Update( divId, pmd ) {
 		log( "pong_map", "pong_map_Update routeTo == null " );		
 
 	if ( pmd.routes != null && pmd.routes.length > 1) {
-		log( "pong_map", "pong_map_Update routes: "+ pmd.routes.length );		        
-		pong_map_route = [];
-		pong_map_route_data = [];
-        //pong_map_route.push( pmd.routes[0] );	
-		for ( var i = 1; i < pmd.routes.length; i++  ) {
-			pong_map_addRoute( pmd.routes[i-1], pmd.routes[i], "abc", null );
-	        pong_map_route.push( pmd.routes[i] );
-//	        if ( pmd.routes[i].label ) {
-//	    		pong_map_addSearchPin ( pmd.routes[i],  pmd.routes[i].label, false );
-//	        }
-		}
+		log( "pong_map", "pong_map_Update routes: "+ pmd.routes.length );
+		pong_map_addViaRoute( pmd.routes , null );
+//		pong_map_route = [];
+//		pong_map_route_data = [];
+//        //pong_map_route.push( pmd.routes[0] );	
+//		for ( var i = 1; i < pmd.routes.length; i++  ) {
+//			pong_map_addRoute( pmd.routes[i-1], pmd.routes[i], "abc", null );
+//	        pong_map_route.push( pmd.routes[i] );
+////	        if ( pmd.routes[i].label ) {
+////	    		pong_map_addSearchPin ( pmd.routes[i],  pmd.routes[i].label, false );
+////	        }
+//		}
 	}
 
 	
@@ -179,6 +180,19 @@ function pong_map_Update( divId, pmd ) {
 	// other modes required? e.g. reverse geocoding or route
 	
 	log( "pong_map", "pong_map_Update end.");
+}
+
+function pong_map_addViaRoute ( routes, setData ) {
+	log( "pong_map", "pong_map_addViaRoute "+JSON.stringify(routes) );
+	dir = MQ.routing.directions();
+	dir.route( { 
+    	locations: routes, 
+   		options: { unit: 'k' }
+    } );
+	log( "pong_map", "pong_map_dta.addLayer" );    
+    pong_map_dta.addLayer(
+    	MQ.routing.routeLayer( { directions: dir, fitBounds: true } )
+    );
 }
 
 function pong_map_addRoute ( a, b, label, setData ) {
