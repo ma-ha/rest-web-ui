@@ -212,12 +212,7 @@
                         "resourceURL": "change_me",
                         "title": "Contact On Map",
                         "moduleConfig": {
-                            "mapKey": "5c7GcAGnCtz0E83RHRnJnsk6wCj5Q63C",
-                            "setRouteData": [
-                                {
-                                    "resId": "65"
-                                }
-                            ]
+                            "mapKey": "5c7GcAGnCtz0E83RHRnJnsk6wCj5Q63C"
                         },
                         "type": "pong-map",
                         "decor": "decor",

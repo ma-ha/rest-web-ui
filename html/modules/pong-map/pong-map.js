@@ -206,19 +206,19 @@ function pong_map_Update( divId, pmd ) {
 
 	if ( pmd.routes != null && pmd.routes.length > 1) {
 		log( "pong_map", "pong_map_Update routes: "+ pmd.routes.length );
-		pong_map_addViaRoute( pmd.routes , null, true );
+		pong_map_addViaRoute( pmd.routes , moduleConfig[ divId ].setRouteData, true );
 	}
 
 	if ( pmd.optimizedRoundTrip != null && pmd.optimizedRoundTrip.length > 1) {
 		log( "pong_map", "pong_map_Update optimizedRoundTrip: "+ pmd.optimizedRoundTrip.length );
 		pmd.optimizedRoundTrip.push( pmd.optimizedRoundTrip[0] );
-		pong_map_addViaRoute( pmd.optimizedRoundTrip , null, true );		
+		pong_map_addViaRoute( pmd.optimizedRoundTrip , moduleConfig[ divId ].setRouteData, true );		
 	}
 
 	if ( pmd.roundTrip != null && pmd.roundTrip.length > 1) {
 		log( "pong_map", "pong_map_Update roundTrip: "+ pmd.roundTrip.length );
 		pmd.roundTrip.push( pmd.roundTrip[0] );
-		pong_map_addViaRoute( pmd.roundTrip , null, true );		
+		pong_map_addViaRoute( pmd.roundTrip , moduleConfig[ divId ].setRouteData, true );		
 	}
 
 	if ( pmd.clearRoute != null ) {
@@ -239,6 +239,40 @@ var routeLayers = [];
 function pong_map_addViaRoute ( routes, setData, optimized ) {
 	log( "pong_map", "pong_map_addViaRoute "+JSON.stringify(routes) );
 	dir = MQ.routing.directions();
+//	.on( 'success', 
+//	    	function ( data ) {
+//				if ( data ) {
+//					log( "pong_map", "success ..." );
+//					for ( var i =0 ; i < data.route.legs.length; i++ ) {
+//						log( "pong_map", "leg "+i );
+//						var leg = data.route.legs[i];
+//						if ( leg.formattedTime && leg.distance ) {
+//							var theRoute = {
+//									route_label: "",
+//									route_from:  "",
+//									route_to:    leg.destNarrative,
+//									route_dist:  leg.distance+' km',
+//									route_time:  leg.formattedTime,
+//									route:       null
+//								};
+//							pong_map_route_data.push( theRoute );
+//						}
+//					}
+//					log( "pong_map", "x2 "+JSON.stringify( pong_map_route_data ) );
+//					if ( setData && setData.length ) {
+//						log( "pong_map", "x3" );
+//						for ( var sd = 0; sd < setData.length; sd++ ) {
+//							log( "pong_map", " setData resId:"+setData[sd].resId+" ("+pong_map_route_data.length+" routes)" );
+//							log( "pong_map", "x5" );
+//							setModuleData( setData[sd].resId+'Content', pong_map_route_data, null );										
+//						}			
+//					}					
+//
+//					log( "pong_map", JSON.stringify(data)	 );				
+//				}
+//			}
+//		);
+		
 	if ( optimized ) {
 		dir.optimizedRoute( { locations: routes, options: { unit: 'k' } } );				
 	} else {
