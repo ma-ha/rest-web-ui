@@ -60,8 +60,31 @@ Example table module:
 	  "maxRows":"10"
 	}
 	
-	
+Here "search" is not very precise, but you can also call it this way:	
+
+	...
+ 	"params": [
+	    {
+	        "name":"street",
+	        "value":"${primary_address_street}"
+	    },
+	    {
+	        "name":"city",
+	        "value":"${primary_address_city}"
+	    },
+	    {
+	        "name":"country",
+	        "value":"${primary_address_country}"
+	    },
+	    {
+	        "name":"label",
+	        "value":"${name}, ${account_name}"
+	    }
+	], ...
+		
 Update can be
 * "search":"<location search string>"
 * "routeTo":"<location>" (needs one search in a prior call or in the update)
+* "routes":[<locations>] (array of locations or searches)
+* "roundTrip" is like routes, but from the last location a route to the first will also be calculated.
 * "clearRoute":"true"
