@@ -344,9 +344,9 @@ function pong_map_addSearchPin ( search, label, setView ) {
 				 
 				log( "pong_map", "pong_map_Update best set marker " );
 				if ( label != null ) {
-					L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta ).bindPopup( label ).openPopup();							
+					L.marker( [ latlng.lat, latlng.lng ], {"zIndexOffset":500} ).addTo( pong_map_dta ).bindPopup( label ).openPopup();							
 				} else {
-				    L.marker( [ latlng.lat, latlng.lng ] ).addTo( pong_map_dta );			
+				    L.marker( [ latlng.lat, latlng.lng ], {"zIndexOffset":500} ).addTo( pong_map_dta );			
 				}
 				log( "pong_map", "pong_map_Update best result done. " );		
 			}
