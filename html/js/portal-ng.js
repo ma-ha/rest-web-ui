@@ -644,17 +644,7 @@ function headerHTML( header ) {
 				}
 			}
 		}
-		/*
-		if ( mode == "php" ) {
-			content.push( '<div class="header-admin"><button id="po-mng-bt">Manage</button><button id="po-sv-bt">Save</button></div>' );	
-			content.push( '<script>'
-					+ '$( "#po-mng-bt" ).click( function( event ) {  $.post( "svc/layout.php", { page : pageInfo[ "layout" ], "layout" : layout } ); } ); '
-					+ '$( "#po-sv-bt" ).click( function( event ) {  $.post( "svc/layout.php", { page : pageInfo[ "layout" ], "layout" : layout } ); } ); '
-					+ '</script>' );
-		}
-		*/
 		// load links 
-		//TODO support target
 		if ( header.linkList != null ) {
 			content.push( '<div class="header-links">' );
 			for ( var i = 0; i < header.linkList.length; i++ ) {
