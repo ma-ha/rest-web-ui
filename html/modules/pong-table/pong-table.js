@@ -449,8 +449,8 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 				if ( ( action.dataEncoding != null ) || ( action.dataEncoding == "GETstyle")  ) { // funny request, but some standard
 					contentItems.push( '                 data: pongTblGetDataStr( "'+divId+'", "'+action.id+'" ) ' );
 				} else { // default: JSON data encoding
-					// TODO: contentItems.push( '                 data: pongTblGetPostLst2( "'+divId+'", '+JSON.stringify(action)+' ) ' );			
-					contentItems.push( '                 data: pongTblGetPostLst( "'+divId+'", "'+action.id+'" ) ' );			
+					contentItems.push( '                 data: pongTblGetPostLst2( "'+divId+'", '+JSON.stringify(action)+' ) ' );			
+					//contentItems.push( '                 data: pongTblGetPostLst( "'+divId+'", "'+action.id+'" ) ' );			
 				}
 				//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 				contentItems.push( '              } ).done(  ' );
@@ -484,19 +484,7 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 
 function pongTblCrunchActionData ( divId, action, dta ) {
 	log( "PoNG-Table",  '  pongTblCrunchActionData '+action.id);
-//	if ( action.target != null ) {
-//		log( "PoNG-Table", "action: "+ action.id + " target: "+action.target );
-//		if ( dta == null )  dta = pongTblGetPostLst2( divId, action );
-//		if ( action.target == '_parent' ) {
-//			window.location.replace( dta );
-//		} else if ( action.target == '_blank' ) {
-//			window.open( dta );
-//		} else if ( action.target == 'modal' ) {
-//			alert( dta ); 
-//		} else {
-//			$( "#"+action.target+"Content" ).html( dta );  
-//		}
-//	}
+	// rem: "target" is not supported here! Missing?
 	if ( ( action.update != null ) && ( action.update.length != null ) ) {
 		log( "PoNG-Table",  '  update! '+ action.update.length );
 		for ( var i = 0; i < action.update.length; i++ ) {
@@ -609,60 +597,60 @@ function parseRowPlaceHolders( row, str ) {
 }
 
 
-function pongTblGetPostLst( divId, actionId ) {
-	log( "PoNG-Table",  'pongTblGetPostLst '+divId+'/'+actionId );
-	var tblDef = poTbl[ divId ].pongTableDef;
-	var result = {};
-	// identify action def
-	if ( tblDef.actions && tblDef.actions.length ) {
-		log( "PoNG-Table",  ' search actions' );
-		var postLst = [];
-		for ( var x = 0; x < tblDef.actions.length; x++ ) {
-			if ( tblDef.actions[x].id == actionId ) {
-				log( "PoNG-Table",  'found action' );
-				// action found:
-				var actn =  tblDef.actions[x];
-
-				// search selected list rows
-				if ( poTbl[ divId ].pongTableData ) {
-					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
-						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
-							log( "PoNG-Table",  ' found selected' );
-							// ok selected
-							var params = {}
-							// iterate action data fields
-							if ( actn.params ) {
-								for ( var f = 0; f < actn.params.length; f++ ) {
-									params[ actn.params[f].name ] = parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f].value );
-								}
-							}
-							postLst.push( params );
-						}
-					}
-					//getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
-				}
-				if ( actn.paramLstName ) {
-					result[ actn.paramLstName ] = postLst;					
-				} else {
-					result[ "param" ] = postLst;
-				}
-			}
-		}
-	}
-
-//	if ( poTbl[ divId ].pongTableData ) {
-//		for ( r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
-//			if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
-//				alert( JSON.stringify( poTbl[ divId ].pongTableData[ r ] ) );
+//function pongTblGetPostLst( divId, actionId ) {
+//	log( "PoNG-Table",  'pongTblGetPostLst '+divId+'/'+actionId );
+//	var tblDef = poTbl[ divId ].pongTableDef;
+//	var result = {};
+//	// identify action def
+//	if ( tblDef.actions && tblDef.actions.length ) {
+//		log( "PoNG-Table",  ' search actions' );
+//		var postLst = [];
+//		for ( var x = 0; x < tblDef.actions.length; x++ ) {
+//			if ( tblDef.actions[x].id == actionId ) {
+//				log( "PoNG-Table",  'found action' );
+//				// action found:
+//				var actn =  tblDef.actions[x];
+//
+//				// search selected list rows
+//				if ( poTbl[ divId ].pongTableData ) {
+//					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+//						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+//							log( "PoNG-Table",  ' found selected' );
+//							// ok selected
+//							var params = {}
+//							// iterate action data fields
+//							if ( actn.params ) {
+//								for ( var f = 0; f < actn.params.length; f++ ) {
+//									params[ actn.params[f].name ] = parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f].value );
+//								}
+//							}
+//							postLst.push( params );
+//						}
+//					}
+//					//getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
+//				}
+//				if ( actn.paramLstName ) {
+//					result[ actn.paramLstName ] = postLst;					
+//				} else {
+//					result[ "param" ] = postLst;
+//				}
 //			}
 //		}
-//		getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
 //	}
-	// TODO :
-	//postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" )
-	alert( JSON.stringify( result ) );
-	return result;
-}
+//
+////	if ( poTbl[ divId ].pongTableData ) {
+////		for ( r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
+////			if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
+////				alert( JSON.stringify( poTbl[ divId ].pongTableData[ r ] ) );
+////			}
+////		}
+////		getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
+////	}
+//	// TODO :
+//	//postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" )
+//	alert( JSON.stringify( result ) );
+//	return result;
+//}
 
 
 
@@ -758,6 +746,7 @@ function tblCells( divId ) {
 				var editable = '';	
 				log( "Pong-Table", cellId+ "  "+ cellVal);
 				if ( cellType == 'text' ) {
+					
 					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
 						editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
 						$( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
@@ -768,9 +757,13 @@ function tblCells( divId ) {
 							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );							
 						}
 					}
+					
 				} else if ( cellType == 'email' ) {
-					$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );					
+					
+					$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );
+					
 				} else if ( cellType == 'checkbox' ) {
+					
 					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
 						editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'"';
 					} else { editable = 'disabled' };
@@ -961,14 +954,18 @@ function tblCells( divId ) {
 					$( cellId ).html( contentItems.join( "\n" ) );
 					
 				} else if ( cellType == 'tooltip'  ) {
+					
 					$( '#'+divId+'R'+i+cellDef.label ).attr( 'title' , cellVal );
+					
 				} else if ( cellType == 'rating'  ) {
+					
 					ratingType = "5star";
 					if ( cellVal == null ) { cellVal = 0; }
 					if ( cellDef.ratingType != null ) {
 						ratingType = cellDef.ratingType;
 					}
-					$( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );												
+					$( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
+					
 				} else {
 					// ???
 				}	
