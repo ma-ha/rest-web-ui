@@ -100,6 +100,13 @@ will generate a column:
 	 </td>
 	 </nowiki>
 
+### linkFor
+Adds a link to the "label" text field. 
+
+By default the link opens a new browser tab/window. Other options are 
+* "target":"modal"
+* "target":"_parent"
+
 ### Button 
 The button will do an asynchronous call to <code><nowiki>svc/[resourceURL]/<id of button>?rowId=[rowId]</nowiki></code> 
 In the example above this will be posted (productId of the row may be 1234): <code>svc/Products/addToOrder?rowId=1234</code>

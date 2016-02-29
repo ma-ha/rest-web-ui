@@ -98,6 +98,8 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			var colWidth = ''; if ( tbl.cols[i].width != null ) { colWidth = ' width="'+tbl.cols[i].width+'" '; }
 			if ( tbl.cols[i].cellType == 'button' ) { // Button column get no headline
 				contentItems.push( '<th'+colWidth+'>&nbsp;</th>'  );
+			} else	if ( tbl.cols[i].cellType == 'linkFor' ) {
+				// do noting				
 			} else	if ( tbl.cols[i].cellType == 'tooltip' ) {
 				// do noting				
 			} else if ( tbl.cols[i].cellType == 'largeimg' ) {
@@ -117,7 +119,9 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	for ( var r = 0; r < tbl.maxRows; r ++ ) {
 		contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
 		for ( var c = 0; c < tbl.cols.length; c ++ ) {
-				if ( ( tbl.cols[c].cellType != 'tooltip' ) && ( tbl.cols[c].cellType != 'largeimg' ) ) {
+				if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
+					 ( tbl.cols[c].cellType != 'largeimg' ) && 
+					 ( tbl.cols[c].cellType != 'linkFor' ) ) {
 					contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
 				}
 		}
@@ -320,6 +324,13 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	contentItems.push( '         }' );
 	contentItems.push( '  );' );
 
+	// linkfFor
+	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "click", ".tbl-link-icon", function() { ' );
+	contentItems.push( '         if (  $( this ).data( "target" )  &&  $( this ).data( "target" ) != "_parent" ) { ' );
+	contentItems.push( '             loadResourcesHTajax(  $( this ).data( "target" ), $( this ).data( "link" ) );' );
+	contentItems.push( '         } else { window.open( $( this ).data( "link" ) );  } ' );
+	contentItems.push( '  } );' );
+	
 	// AJAX commit changes for editable text cells
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "mouseover", ".editableTblCell", ' );
 	contentItems.push( '         function() { $(this).parent().toggleClass( "optedithighlight", true ); return $(this); }' );
@@ -754,7 +765,7 @@ function tblCells( divId ) {
 						if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
 							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
 						} else {
-							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );							
+							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span><span class="ui-icon ui-icon-plusthick " style="display:inline-block" />' );							
 						}
 					}
 					
@@ -956,6 +967,12 @@ function tblCells( divId ) {
 				} else if ( cellType == 'tooltip'  ) {
 					
 					$( '#'+divId+'R'+i+cellDef.label ).attr( 'title' , cellVal );
+					
+				} else if ( cellType == 'linkFor'  ) {
+					
+					var target = "_parent";
+					if ( cellDef.target ) { target = cellDef.target; }
+					$( '#'+divId+'R'+i+'C'+cellDef.col ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
 					
 				} else if ( cellType == 'rating'  ) {
 					

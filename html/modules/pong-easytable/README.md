@@ -90,6 +90,7 @@ Available options:
 * img (or picture or image)
 * link 
 * rating
+* linkFor_<colNo>
 
 The img type and link type will expect a URL as content.
 

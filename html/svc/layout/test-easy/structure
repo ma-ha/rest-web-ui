@@ -70,10 +70,11 @@
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
 				"moduleConfig":{
-					"pollDataSec":"15",	
+					"pollDataSec":"150",	"debugAlert":"true",
 					"easyCols":[
 						"*ID|5%",
 						"Name=Name.0",
+						"ProductPage_linkForCol_1",
 						"Picture",
 						"ZoomImg_zooms_Picture",
 						"Status_checkbox",

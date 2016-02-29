@@ -137,8 +137,14 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 					}
 					col.label = cStr.substr( 0, cStr.length - 7 );					
 				}	
+			} else if ( cStr.indexOf( "_linkForCol_" ) > 0 ) {
+				log( "Pong-EzTable", " _linkForCol_" );
+				col.cellType = "linkFor";				
+				col.id = cStr.substr( 0, cStr.indexOf( "_linkForCol_" ) );
+				col.col = cStr.substr( cStr.indexOf( "_linkForCol_" )+12 );
+				
 			} else if ( cStr.indexOf( "_link" ) > 0 ) {
-				col.cellType = "linkLink";				
+				col.cellType = "linkLink";
 				col.label = cStr.substr( 0, cStr.length - 5 );
 				if ( ! hasIdDef ) {
 					col.id = cStr.substr( 0, cStr.length - 5 );					
