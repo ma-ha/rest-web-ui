@@ -31,7 +31,7 @@ By defining a <code>setRouteData</code> array the module will pass route result 
 	} 
 
 ## Map Interaction
-You can trigger a map search, by updating and sending a "search".
+You can trigger a map search (e.g using a form or a table view), by updating and sending e.g. a "search" object.
 
 Example table module:
 
@@ -63,7 +63,7 @@ Example table module:
 Here "search" is not very precise, but you can also call it this way:	
 
 	...
- 	"params": [
+	"params":[
 	    {
 	        "name":"street",
 	        "value":"${primary_address_street}"

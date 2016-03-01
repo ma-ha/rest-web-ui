@@ -90,7 +90,7 @@ Available options:
 * img (or picture or image)
 * link 
 * rating
-* linkFor_<colNo>
+* linkFor_<colNo> (caution: colNo start at 0 and "linkFor" counts also, if you want to refer a follow up column)
 
 The img type and link type will expect a URL as content.
 
