@@ -43,6 +43,12 @@ function pongEasyFormDivHTML( divId, resourceURL, params ) {
 
 function pongEasyFormRenderHTML( divId, resourceURL, params, pmdEZ ) {
 	var pmd = pongEasyFormNormalize( pmdEZ );
+	if ( pmdEZ.debugAlert ){ 
+		alert( JSON.stringify( pmd, null, '\t' ) ); 
+	} else {
+		log( "Pong-EaysForm", JSON.stringify( pmd, null, '\t' ) ); 
+	}
+
 	pongFormRenderHTML( divId, resourceURL, params, pmd );
 }
 
@@ -72,6 +78,8 @@ function pongEzFrmParseId( field, colName ) {
 	
 	if ( field.id.toLowerCase() == "email" ) {
 		field.type = "email";
+	} else if ( ( field.id.toLowerCase() == "birthday" ) || ( field.id.indexOf('date') >= 0 ) ) {
+		field.type = "date";
 	} else if ( field.id.toLowerCase() == "password" ) {
 		field.type = "password";
 	} else if ( field.id.toLowerCase() == "separator" ) {

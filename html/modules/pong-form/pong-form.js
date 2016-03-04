@@ -700,6 +700,18 @@ function pongFormRenderField( divId, field, col ) {
 		} else if ( field.type == "password" ) {
 			
 			contentItems.push( '<input type="password" '+nameAndClass + title +'/>' );
+							
+		} else  if ( field.type == "date" ) {
+
+			var modifier = '';
+			if ( field.readonly != null && field.readonly == 'true') { modifier += ' disabled="disabled"'; }
+			
+			contentItems.push( '<input type="text" '+nameAndClass + title + defaultVal + modifier+'/>' );
+			contentItems.push( '<script>' );
+			contentItems.push( ' $(function(){ ' );
+			contentItems.push( '   $( "#'+divId+field.id+'" ).datepicker( { dateFormat: "'+$.i18n("yy-mm-dd")+'" } ); ' );
+			contentItems.push( ' }); ' );
+			contentItems.push( '</script>' );
 			
 		} else if ( field.type == "checkbox" ) {
 			

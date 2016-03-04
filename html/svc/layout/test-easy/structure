@@ -19,6 +19,7 @@
 							"easyFormFields":[
 								"id",
 								"c1|Name",
+								"c1|Date|date",
 								"c1|separator",
 								"c1|Remark|4rows",
 								"c2|Mailings|label",
@@ -70,7 +71,7 @@
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
 				"moduleConfig":{
-					"pollDataSec":"150",	"debugAlert":"true",
+					"pollDataSec":"150",	
 					"easyCols":[
 						"*ID|5%",
 						"Name=Name.0",
