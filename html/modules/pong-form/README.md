@@ -115,6 +115,14 @@ Optional attribute:
 * <code>"basicAuth":"password"</code> used to create a HTTP basic-auth header field, ref. also text field
 * <code>"basicAuth":"password+field"</code> used to create a HTTP basic-auth header field and send also as POST field, ref. also text field
 
+### Date
+<code>"type:"date"</code>
+
+You can switch the date format for the (e.g. German) language by adding e.g. the following line to *i18n/DE.json*:
+
+	"yy-mm-dd":"dd.mm.yy"
+
+
 ### Select 
 <code>"type:"select"</code>
 

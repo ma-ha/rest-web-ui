@@ -47,6 +47,7 @@ Example
 	    "easyFormFields": [ 
 	    	"id",
 	    	"c1|Name",
+	    	"c1|Birthday",
 	    	"c1|Remark|4rows",
 	    	"c2|Email",
 	    	"c2|Pass~word",
