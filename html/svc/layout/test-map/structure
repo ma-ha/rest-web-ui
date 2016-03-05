@@ -11,7 +11,7 @@
                 "cols": [
                     {
                         "cloumnId": "44",
-                        "width": "40%",
+                        "width": "50%",
                         "rows": [
                             {
                                 "rowId": "66",
@@ -130,7 +130,7 @@
                                         {
                                             "id": "RouteTo",
                                             "label": "Route",
-                                            "icon": "ui-icon-search",
+                                            "icon": "ui-icon-circle-arrow-e",
                                             "cellType": "button",
                                             "method": "UPDATE",
                                             "update": [
@@ -200,7 +200,7 @@
                     },
                     {
                         "columnId": "62",
-                        "width": "60%",
+                        "width": "50%",
                         "resourceURL": "change_me",
                         "title": "Contact On Map",
                         "moduleConfig": {

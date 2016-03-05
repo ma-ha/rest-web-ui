@@ -1,7 +1,15 @@
+#PullDownMenu {
+	position : absolute;
+	top: 70px;
+	right: 5px;
+	width: 200px;
+	height: 200px;
+}
+
 .PullDownBtn {
 	position : absolute;
-	bottom: 5px;
-	right: 5px;
+	top: 5px;
+	right: 0px;
 	font-size: 10pt;
 	text-align:center;
 	color: gray;
@@ -11,14 +19,13 @@
 
 .PullDownMenu {
 	position : absolute;
-	bittom: -5px;
-	right: 5px;
+	bottom: 0px;
 	font-size: 10pt;
 	color: #F0F0F0;
 	width:200px;
 	font-size: 10pt;
 	background-color: #909090;
-	z-index: 100; 
+	z-index: 10000; 
 }
 
 .PullDownMenuItem {

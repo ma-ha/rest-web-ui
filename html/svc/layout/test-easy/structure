@@ -5,7 +5,7 @@
 		"rows":[
 			{
 				"rowId":"instform",
-				"height":"170px",
+				"height":"175px",
 				"cols":[
 					{
 						"columnId":"ezFrm",
@@ -21,7 +21,7 @@
 								"c1|Name",
 								"c1|Date|date",
 								"c1|separator",
-								"c1|Remark|4rows",
+								"c1|Remark|3rows",
 								"c2|Mailings|label",
 								"c2|Send~Ads~~|checkbox_infomails_ads",
 								"c2|Newsletter|checkbox_infomails_newsletter",
