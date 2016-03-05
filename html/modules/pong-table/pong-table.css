@@ -29,6 +29,9 @@ div.editable {
 .pong-table-paginator-text {
 	font-size: 8pt;	
 }
+.pong-table-btn {
+	font-size:10pt; font-style: normal; font-weight: normal;  
+}
 
 .tbl-link-icon {
 	background-color: gray;

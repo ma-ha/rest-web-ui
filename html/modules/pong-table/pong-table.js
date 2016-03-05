@@ -874,7 +874,7 @@ function tblCells( divId ) {
 					if ( ( cellDef.url != null ) && ( cellDef.url.length != null ) ) {
 						url = cellDef.url;
 					}
-					contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'">'+cellDef.label+'</button>' );
+					contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
 					contentItems.push( '<script>' );
 					contentItems.push( '  $( function() { ' );
 					if ( icon.lenght != 0 ) {

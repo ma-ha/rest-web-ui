@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 /*
  REST-Web-GUI Framework
- A framework to create web portals w/o coding and w/o application servers
+ A framework to create web applications and portals w/o coding and w/o application servers
  https://github.com/ma-ha/rest-web-ui
   
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG

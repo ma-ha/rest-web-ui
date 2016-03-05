@@ -10,7 +10,7 @@
                 "height": "600px",
                 "cols": [
                     {
-                        "cloumnId": "44",
+                        "columnId": "44",
                         "width": "50%",
                         "rows": [
                             {
