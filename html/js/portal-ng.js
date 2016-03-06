@@ -230,6 +230,8 @@ function loadStructure() {
     	structureURL = "svc/layout.php?page="+pPage+pEdit;
     } else if ( mode == 'direct' ) {
     	structureURL =  "svc/layout/"+directPage+"/structure";
+    } else if ( mode == 'REST' ) {
+    	structureURL =  "svc/layout/"+pPage;
     }
 	console.log("loadStructure: "+structureURL);
 	$.getJSON( structureURL, 
@@ -243,7 +245,7 @@ function loadStructure() {
 				var inclHeaderURL = "svc/layout/"+d.layout.includeHeader+"/structure";
 			    if( mode == "php" ) {
 			    	inclHeaderURL = "svc/layout.php?page="+d.layout.includeHeader;
-			    }
+			    } 
 				$.getJSON( inclHeaderURL, 
 					function( di ) {
 						layout.header = di.layout.header;		

@@ -5,7 +5,8 @@ Framework to create descriptive web applications for REST/JSON type web services
 
 Basic functionality of a Web Portal is provided out of the box:
 * arrange data and content views on GUI
-* lot of view types available: form, table, lists, map/route, content, I/O, modal dialogs/forms
+* lot of interactive view types available: 
+	* form, table, lists, map/route, content, I/O, modal dialogs/forms
 * configuration and help functions per view
 * header and footer offering lots of functionality
 * i18n: switch languages without changing anything -- just provide a translation map (or web service for that)
