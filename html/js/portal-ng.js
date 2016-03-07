@@ -230,9 +230,7 @@ function loadStructure() {
     	structureURL = "svc/layout.php?page="+pPage+pEdit;
     } else if ( mode == 'direct' ) {
     	structureURL =  "svc/layout/"+directPage+"/structure";
-    } else if ( mode == 'REST' ) {
-    	structureURL =  "svc/layout/"+pPage;
-    }
+    } 
 	console.log("loadStructure: "+structureURL);
 	$.getJSON( structureURL, 
 		function( d ) {
