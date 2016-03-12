@@ -385,7 +385,8 @@ function pongIOcheckButtonSense( divId, x, y, id, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, type:"Button" }, // backend is responsible for state and value
+			  contentType: "application/json",
+			  data: JSON.stringify( { id:id, type:"Button" } ), // backend is responsible for state and value
 			  beforeSend: function( request ) {
 					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
 						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
@@ -485,7 +486,8 @@ function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, value:val, type:"Switch" },
+			  contentType: "application/json",
+			  data: JSON.stringify( { id:id, value:val, type:"Switch" } ),
 			  beforeSend: function( request ) {
 					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
 						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
@@ -551,7 +553,8 @@ function pongIOcheckPotiSense( divId, x, y, id, s ) {
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
 			  dataType: "json",
-			  data: { id:id, value:val, type:"Poti" },
+			  contentType: "application/json",
+			  data: JSON.stringify( { id:id, value:val, type:"Poti" } ),
 			  beforeSend: function( request ) {
 					if ( sessionInfo["OAuth"] != null && sessionInfo["OAuth"]["access_token"] != null && sessionInfo["OAuth"]["access_token"] != "" ) {
 						request.setRequestHeader( "Authorization", "Bearer "+sessionInfo["OAuth"]["access_token"] ); 
