@@ -74,13 +74,12 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 	if ( pmd.imgURL != null ) {
 		background.src = pmd.imgURL;
 		background.onload = function() {
-			ctx.drawImage( background, 0, 0 ); 
-	    };
-//		ctx.drawImage( background, 0, 0 );   
+  			ctx.drawImage( background, 0, 0 ); 
+  		  // draw panel
+  		  pongIoUpdateData( divId, { makeJS: true } );
+  	};
 	}
 	
-	// draw panel
-	pongIoUpdateData( divId, { makeJS: true } );
 	
 	// create polling "loop"
 	log( "pong-io", ">>>>> Try to create poolDataTimerId "+pmd.poll  );
