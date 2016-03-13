@@ -26,7 +26,11 @@ log( "PoNG-Help", "Loading Module");
 function pongHelpAddActionBtn( id, modalName, resourceURL, params ) {
 	log( "PoNG-Help", "modalFormAddActionBtn "+id);
 	if ( ! modalName ) { modalName = "Help"; }
-
+  var buttonLbl = modalName;
+	if ( params && params.showConfig ) {
+	  buttonLbl = 'Show the configruation of this view...';
+  }
+  
 	sessionInfo[ id+"Help" ] = {
 		"show":"ReST-help"
 	}
@@ -43,7 +47,7 @@ function pongHelpAddActionBtn( id, modalName, resourceURL, params ) {
 		"\"#"+id+modalName+"Dialog\" ).dialog( { autoOpen: false, height: "+height+", width: "+width+" , modal: true, "+ // TODO: Refresh resource
 		" buttons: { \"OK\": function() {  $( this ).dialog( \"close\" );  } } }); "+
 		"});</script>";			
-	html += '<button id="'+id+modalName+'Bt">'+$.i18n(modalName)+'</button>';
+	html += '<button id="'+id+modalName+'Bt">'+$.i18n(buttonLbl)+'</button>';
 	html += '<script>  $(function() { $( "#'+id+modalName+'Bt" ).button( { icons:{primary: "'+icon+'"}, text: false } ).click( '+
 		"function() { "+jscall+" }); }); </script>";		
 	
