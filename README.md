@@ -115,3 +115,6 @@ The framework is modular. Some elementary modules are already in the modules sub
 You'll find a module template there, to start a new module.
 
 You'll find a how-to in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming).
+
+## Node.js module
+You can use [this wrapper for node.js](https://www.npmjs.com/package/easy-web-app).

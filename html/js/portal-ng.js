@@ -176,6 +176,7 @@ function loadLang() {
 	var langMap = 'i18n/'+locale+'.json';
     if( mode == "php"  &&  pageInfo["layout"] != '' ) {
     	langMap = "svc/backend/i18n?locale="+locale+'&layout='+pageInfo["layout"];
+    	if ( pageInfo['languageRessource'] ) { langMap = pageInfo['languageRessource'] +'/'+ locale; }
     	$.getJSON( langMap, 
     			function( langMapDta ) {
 			    	$.i18n().load( 

@@ -23,7 +23,7 @@ THE SOFTWARE.
  */
 log( "PoNG-I18N", "Loading Module");
 
-function addI18NHeaderHtml( divId, type , params ) {
+function addI18NHeaderHtml( divId, type , param s ) {
 	log( "PoNG-I18N", "start addNavBarHeaderHtml "+divId);
 	var layout = '';
 	if ( getParam( 'layout' ) != '' ) {
@@ -36,7 +36,13 @@ function addI18NHeaderHtml( divId, type , params ) {
 
 	if ( params != null && params.langList != null ) {
 		log( "PoNG-I18N", "add languages");
-		var divHtml = [];		
+		var divHtml = [];
+		
+		if ( params.languageRessource ) { 
+      pageInfo['languageRessource'] = params.languageRessource;
+      log( "PoNG-I18N",  pageInfo['languageRessource'] );
+    }
+		
 		for ( var i=0; i < params.langList.length; i++ ) {
 			var lang = params.langList[i]; 
 			log( "PoNG-I18N", "add "+lang );
