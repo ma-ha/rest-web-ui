@@ -37,12 +37,6 @@ function addI18NHeaderHtml( divId, type , param s ) {
 	if ( params != null && params.langList != null ) {
 		log( "PoNG-I18N", "add languages");
 		var divHtml = [];
-		
-		if ( params.languageRessource ) { 
-      pageInfo['languageRessource'] = params.languageRessource;
-      log( "PoNG-I18N",  pageInfo['languageRessource'] );
-    }
-		
 		for ( var i=0; i < params.langList.length; i++ ) {
 			var lang = params.langList[i]; 
 			log( "PoNG-I18N", "add "+lang );
