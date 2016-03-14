@@ -23,7 +23,7 @@ THE SOFTWARE.
  */
 log( "PoNG-I18N", "Loading Module");
 
-function addI18NHeaderHtml( divId, type , param s ) {
+function addI18NHeaderHtml( divId, type , params ) {
 	log( "PoNG-I18N", "start addNavBarHeaderHtml "+divId);
 	var layout = '';
 	if ( getParam( 'layout' ) != '' ) {
