@@ -33,6 +33,9 @@ Here are some demos of view type and demo of real world web seb service integrar
 
 These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 
+### More Tests
+Most recent GIT checkout can be tested [here](http://mh-svr.de/pong_dev) 
+
 ## How does it work
 1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
 2. An empty HTML file just defines the JSON page you want to view and calls the framework to start.
