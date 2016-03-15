@@ -31,7 +31,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
 
 	var param = {};
 	
-	if ( fparam != null && fparam.page != null  && fparam.wikiRef != null  && fparam.wikiImg != null ) {
+	if ( fparam != null && fparam.page != null  && fparam.wikiRef != null  ) {
 		param = fparam;
 	} else 	if  ( moduleConfig[ divId ] != null ) {
 		if ( moduleConfig[ divId ].page != null ) {
@@ -111,12 +111,14 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
 				html.push( '</script>' );
 				$( '#'+divId ).html( html.join( "\n" ) );
 				$( '#'+divId ).scrollTop( 0 );
-				$( '#'+divId+' img' ).each( 
-					function() {
-						var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
-						$(this).attr( 'src', imgURL );
-					}
-				);
+        if ( param.wikiImg ) {        
+  				$( '#'+divId+' img' ).each( 
+  					function() {
+  						var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
+  						$(this).attr( 'src', imgURL );
+  					}
+  				);
+        }
 			}
 		);
 	}
