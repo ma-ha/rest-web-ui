@@ -18,7 +18,15 @@
                     "wikiImg": "images/"
                 },
                 "type": "pong-mediawiki",
-                "decor": "decor"
+                "decor": "decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"WikiDemo"
+						}
+					}
+				]
             }
         ],
 		"includeFooter":"main"
