@@ -31,7 +31,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
 
 	var param = {};
 	
-	if ( fparam != null && fparam.page != null  && fparam.wikiRef != null && param.wikiImg != null   ) {
+	if ( fparam != null && fparam.page != null  && fparam.wikiRef != null  && fparam.wikiImg != null ) {
 		param = fparam;
 	} else 	if  ( moduleConfig[ divId ] != null ) {
 		if ( moduleConfig[ divId ].page != null ) {
@@ -118,6 +118,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
   						$(this).attr( 'src', imgURL );
   					}
   				);
+        }
 			}
 		);
 	}

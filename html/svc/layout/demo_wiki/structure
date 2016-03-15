@@ -14,8 +14,7 @@
                         "DE": "Wikipedia:Hauptseite",
                         "IT": "Pagina_principale"
                     },
-                    "wikiRef": "/wiki/",
-                    "wikiImg": "images/"
+                    "wikiRef": "/wiki/"
                 },
                 "type": "pong-mediawiki",
                 "decor": "decor",
