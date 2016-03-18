@@ -2,8 +2,8 @@
 session_start();
 
 $portal_id  = -1;
-if ( ! isset( $_SESSION["portal_id"] ) ) {
-	// define a start config for this session
+if ( ! isset( $_SESSION["portal_id"] ) ) {					// define a start config for this session
+	
 	$_SESSION['tbl-demo-config'] = '{			
 		"filter": {
 			"title":"Product Filter",
@@ -25,19 +25,23 @@ if ( ! isset( $_SESSION["portal_id"] ) ) {
 		"maxRows":"4"
 	}';
 }
+
 header('Content-type: application/json');
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {					// load the config
 	
 	echo $_SESSION['tbl-demo-config'];
 	
-} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+} else if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {			// replace the config with POST body
 	
-	// Warning: This simplified example is highly insecure!
-	// Don't do that lazy coding in production environment! 
-	// Always parse the POST body!
+	// WARNING: Don't do that lazy coding in production environment! You must always parse the POST body!
 	$entityBody = file_get_contents('php://input');
 	$_SESSION['tbl-demo-config'] = $entityBody; 
 	echo $_SESSION['tbl-demo-config'];
+	
+} else if ( $_SERVER['REQUEST_METHOD'] === 'DELETE' ) { 		// reset the config (with next GET request)
+
+	unset( $_SERVER['REQUEST_METHOD'] );
+	
 }
 ?>
 	
