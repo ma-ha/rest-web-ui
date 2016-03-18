@@ -19,6 +19,7 @@
 			       { "pageLink":"test-list", "label":"List Test" },
 			       { "pageLink":"test-sourcecode", "label":"Source Code View Test" },
 			       { "pageLink":"test-map", "label":"Map Test" },
+			       { "pageLink":"test-onthefly", "label":"On-The-Fly Config Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

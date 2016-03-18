@@ -210,3 +210,14 @@ moduleMap[ "pong-io" ] = {
 	        { hook: "updateData", method:"pongIoUpdateData" }
 	    ]
 	};
+
+
+moduleMap[ "pong-on-the-fly" ] = {
+    "name": "pong-on-the-fly",
+    "requires": [ "jquery-syntax" ],
+      "hooks": [
+          { hook: "addActionBtn", method:"pongOnTheFlyAddActionBtn" },
+          { hook: "creModal", method:"pongOnTheFlyCreModalFromMeta" }
+      ]
+  };
+

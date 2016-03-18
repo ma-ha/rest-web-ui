@@ -1,0 +1,24 @@
+{
+	"layout":{
+		"title":"Portal: List Test",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"400px",
+				"type":"pong-list",
+				"resourceURL":"svc/tbl-data",
+				"title":"List2 Reuses Table Module",
+				"type_id":"5",
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-on-the-fly"
+					}
+			
+				]
+			}
+		],
+		"includeFooter":"main"
+	}
+}

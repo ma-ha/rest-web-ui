@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.0';
-var PONGVER = '0.7.0';
+labeldefs['PONGVER'] = '0.7.1';
+var PONGVER = '0.7.1';
 
 var moduleMap = {};
 var reqModules = {};
@@ -822,7 +822,6 @@ function getCorrectedHeight( height, decor ) {
 		heightCorr = heightOrig - decorConfig[ decor ].heigthCorrect;	
 		heightCorr += heightUnit;
 		log(  'getCorrectedHeight', '   H='+heightOrig+' cor='+ decorConfig[ decor ].heigthCorrect+'   Hc='+heightCorr );
-		console.log(  'getCorrectedHeight   H='+heightOrig+' cor='+ decorConfig[ decor ].heigthCorrect+'   Hc='+heightCorr );
 	} 
 	return heightCorr;
 	
@@ -1196,12 +1195,11 @@ var loggerModule = false;
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if (  func=='PoNG-Table' || 
-		func=='setModuleData' || 
-		//func=='Pong-Form' || 
-		func=='pong_map' || 
-		//func=='loadModules'
-		func=='init' ) { 
+	if (  func=='PoNG-OnTheFly'
+	  //|| func=='setModuleData'  
+		// || func=='loadModules'
+		// || func=='init' 
+	) { 
 		console.log( "["+func+"] "+msg );
 		loggerBuffer.push
 	}
