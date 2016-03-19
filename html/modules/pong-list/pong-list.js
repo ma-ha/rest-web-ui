@@ -67,7 +67,9 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	for ( var r = 0; r < tbl.maxRows; r ++ ) {
 		contentItems.push( '<div class="pongListRow">' );
 		for ( var c = 0; c < tbl.divs.length; c ++ ) {
-				if ( tbl.divs[c].cellType != 'tooltip'  ) {
+      if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
+          ( tbl.cols[c].cellType != 'largeimg' ) && 
+          ( tbl.cols[c].cellType != 'linkFor' ) ) {
 					contentItems.push( '<div class="pongListCell pongListCell'+tbl.divs[c].id+'" id="'+divId+'R'+r+'C'+c+'">...</div>'  );
 				}
 		}
