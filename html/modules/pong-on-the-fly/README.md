@@ -14,8 +14,7 @@ Example:
 					"height":"400px",
 					"type":"pong-table",
 					"resourceURL":"svc/tbl-data",
-					"title":"List2 Reuses Table Module",
-					"type_id":"5",
+					"title":"My Demo Table",
 					"decor":"decor",
 					"actions":[
 						{
