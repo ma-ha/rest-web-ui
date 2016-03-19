@@ -87,7 +87,7 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
 	} else if ( sessionInfo[ id+"Help" ].show == "JSON-config" && sessionInfo[ id+"Help" ].resID ) {
 		
 		log( "PoNG-Help", "Get help: Get JSON for "+sessionInfo[ id+"Help" ].resID );
-		var jsonCfg = findSubJSON( layoutOrig, "", sessionInfo[ id+"Help" ].resID );
+		var jsonCfg = getViewConfig( sessionInfo[ id+"Help" ].resID );
 		if ( jsonCfg.moduleConfig && jsonCfg.moduleConfig.mapKey ) {
 			jsonCfg.moduleConfig.mapKey = ".....";
 		}
@@ -100,27 +100,4 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
 		log( "PoNG-Help", "WARNING: Configuration issue!" );
 	}
 	log( "PoNG-Help", "Done." );
-}
-
-function findSubJSON( l, rcId, seed ) {
-	log( 'PoNG-Help', " Check: "+rcId+" == "+ seed ); 
-	if ( rcId == seed ) {
-		log( 'PoNG-Help', " Found: "+rcId+" == "+ seed ); 
-		return JSON.parse( JSON.stringify( l ) );
-	}
-	if ( l.rows != null ) {
-		for ( var i = 0; i < l.rows.length; i++ ) {
-			log( 'PoNG-Help', "row: "+ l.rows[i].rowId );
-			var cfg = findSubJSON( l.rows[i], l.rows[i].rowId, seed );
-			if ( cfg ) { return cfg; }
-		}
-	}	
-	if ( l.cols != null ) {
-		for ( var i = 0; i < l.cols.length; i++ ) {
-			log( 'PoNG-Help', "col: "+ l.cols[i].columnId );
-			var cfg = findSubJSON( l.cols[i], l.cols[i].columnId, seed );
-			if ( cfg ) {  return cfg; }
-		}
-	}	
-	return null;
 }

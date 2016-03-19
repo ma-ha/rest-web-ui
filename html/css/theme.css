@@ -101,3 +101,8 @@ div.edithighlight {
 	position:relative;
 	float:right;
 }
+
+
+.ui-dialog {
+	font-size: 0.9em;
+}

@@ -1163,6 +1163,35 @@ Array.prototype.inArray = function( value ){
 
 //=====================================================================================================
 
+function getViewConfig( resId ) {
+  return findSubJSON( layoutOrig, "", resId );
+}
+
+function findSubJSON( l, rcId, seed ) {
+  log( 'PoNG-Help', " Check: "+rcId+" == "+ seed ); 
+  if ( rcId == seed ) {
+    log( 'PoNG-Help', " Found: "+rcId+" == "+ seed ); 
+    return JSON.parse( JSON.stringify( l ) );
+  }
+  if ( l.rows != null ) {
+    for ( var i = 0; i < l.rows.length; i++ ) {
+      log( 'PoNG-Help', "row: "+ l.rows[i].rowId );
+      var cfg = findSubJSON( l.rows[i], l.rows[i].rowId, seed );
+      if ( cfg ) { return cfg; }
+    }
+  } 
+  if ( l.cols != null ) {
+    for ( var i = 0; i < l.cols.length; i++ ) {
+      log( 'PoNG-Help', "col: "+ l.cols[i].columnId );
+      var cfg = findSubJSON( l.cols[i], l.cols[i].columnId, seed );
+      if ( cfg ) {  return cfg; }
+    }
+  } 
+  return null;
+}
+
+//=====================================================================================================
+
 function getSubData( data, subPath ) {
 	log( "getSubData",  'start ' );
 	log( "getSubData",  JSON.stringify(data) );

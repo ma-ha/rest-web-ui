@@ -6,14 +6,15 @@
 			{
 				"rowId":"r1",
 				"height":"400px",
-				"type":"pong-list",
+				"type":"pong-table",
 				"resourceURL":"svc/tbl-data",
 				"title":"List2 Reuses Table Module",
 				"type_id":"5",
 				"decor":"decor",
 				"actions":[
 					{
-						"type":"pong-on-the-fly"
+						"type":"pong-on-the-fly",
+						"param":{ "assistUrl":"svc/tbl-data/assist" }
 					}
 			
 				]
