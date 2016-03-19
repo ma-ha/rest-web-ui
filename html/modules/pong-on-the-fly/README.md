@@ -4,7 +4,7 @@ This plug-in adds an action button to configure the views JSON definition.
 ## Usage
 Example page with a table and re-configuration button (top left):
 
-```javascript
+```JSON
 	{
 		"layout":{
 			"title":"Portal: List Test",
