@@ -3,6 +3,7 @@ This plug-in adds an action button to configure the views JSON definition.
 
 ## Usage
 Example:
+
 	{
 		"layout":{
 			"title":"Portal: List Test",
