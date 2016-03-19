@@ -2,7 +2,7 @@
 This plug-in adds an action button to configure the views JSON definition.
 
 ## Usage
-Example:
+Example page with a table and re-configuration button (top left):
 
 	{
 		"layout":{
@@ -28,6 +28,11 @@ Example:
 			"includeFooter":"main"
 		}
 	}
+	
+How-to:
+* _"moduleConfig"_ must be loaded, not in-line
+* add an action of _"type":"pong-on-the-fly"_
+* _"param"_ is not required
 	
 ## Requirements
 A dynamic re-configuration needs a REST web service to load (GET) 
