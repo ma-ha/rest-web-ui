@@ -21,108 +21,114 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. 
  */
-log( "PoNG-OnTheFly", "Loading Module");
+log( "PoNG-OnTheFly", "Loading Module" );
 
-function pongOnTheFlyAddActionBtn( id, modalName, resourceURL, params ) {
-	log( "PoNG-OnTheFly", "modalFormAddActionBtn "+id);
-	if ( ! modalName ) { modalName = "OnTheFly"; }
+
+/** Init HTML and JS */
+function pongOnTheFlyAddActionBtn(id, modalName, resourceURL, params) {
+  log( "PoNG-OnTheFly", "modalFormAddActionBtn " + id );
+  if ( !modalName ) {
+    modalName = "OnTheFly";
+  }
   var buttonLbl = modalName;
-	if ( params && params.showConfig ) {
-	  buttonLbl = 'Show the configruation of this view...';
+  if ( params && params.showConfig ) {
+    buttonLbl = 'Show the configruation of this view...';
   }
-  
-	// addd a config for this help
-	sessionInfo[ id+"OnTheFly" ] = {};
-	//var action = res.actions[x];
-	var html = "";
-	log( "PoNG-OnTheFly", "Std Config Dlg:  " + modalName );
-	var icon = "ui-icon-pencil";
-	var paramsStr = 'null';
-	if ( params ) { paramsStr = JSON.stringify( params ) } 
-	var jscall = 'pongOnTheFlyOpenDlg( "'+id+'", "'+modalName+'", "'+resourceURL+'",'+paramsStr+' );' 
-	var width  = "600"; if ( params && params.width  ) { width  = params.width; }
-	var height = "600"; if ( params && params.height ) { height = params.height; }
-	html += '<div id="'+id+modalName+'Dialog">'+ resourceURL +" "+ modalName+"</div>";
-	log( "PoNG-OnTheFly", " cfg:  height: "+height+", width: "+width );
-	html += '<script> $(function() { '
-		+ ' $( "#'+id+modalName+'Dialog" ).dialog( { '
-		+ ' autoOpen: false, height: '+height+', width: '+width+' , modal: true, ' 
-		+ ' buttons: { "'+$.i18n('Save Configuration')+'": function() { '
-		+ ' pongOnTheFlySave( "'+id+'", "'+modalName+'", "'+resourceURL+'" );' 
-    + ' $( this ).dialog( "close" );  '
-	  + '} } '
-		+' } ); '
-		+ '});</script>';			
-	html += '<button id="'+id+modalName+'Bt">'+$.i18n(buttonLbl)+'</button>';
-	html += '<script>  $(function() { '
-	  + '$( "#'+id+modalName+'Bt" ).button( { icons:{primary: "'+icon+'"}, text: false } ).click( '
-	  + ' function() { '+jscall+' }); }); </script>';		
-	
-	if ( params && params.showConfig ) {
-		log( "PoNG-OnTheFly", " mode:  JSON-config / "+params.showConfig );		
-		sessionInfo[ id+"OnTheFly" ].resID = params.showConfig; // TODO: get the ID
-	} else {
-		log( "PoNG-OnTheFly", " mode: standard " ); 
-	}
-	
-	return html;
+
+  var html = "";
+  log( "PoNG-OnTheFly", "Std Config Dlg:  " + modalName );
+  var icon = "ui-icon-pencil";
+  var paramsStr = 'null';
+  if ( params ) {
+    paramsStr = JSON.stringify( params )
+  }
+  var jscall = 'pongOnTheFlyOpenDlg( "' + id + '", "' + modalName + '", "'
+      + resourceURL + '",' + paramsStr + ' );'
+  var width = "600";
+  if ( params && params.width ) {
+    width = params.width;
+  }
+  var height = "600";
+  if ( params && params.height ) {
+    height = params.height;
+  }
+  html += '<div id="' + id + modalName + 'Dialog">' + resourceURL + " "
+      + modalName + "</div>";
+  log( "PoNG-OnTheFly", " cfg:  height: " + height + ", width: " + width );
+  html += '<script> $(function() { ' + ' $( "#' + id + modalName
+      + 'Dialog" ).dialog( { ' + ' autoOpen: false, height: ' + height
+      + ', width: ' + width + ' , modal: true, ' + ' buttons: { "'
+      + $.i18n( 'Save Configuration' ) + '": function() { '
+      + ' pongOnTheFlySave( "' + id + '", "' + modalName + '", "' + resourceURL
+      + '" );' + ' $( this ).dialog( "close" );  ' + '} } ' + ' } ); '
+      + '});</script>';
+  html += '<button id="' + id + modalName + 'Bt">' + $.i18n( buttonLbl )
+      + '</button>';
+  html += '<script>  $(function() { ' + 
+      '$( "#' + id + modalName + 'Bt" ).button( '
+      +'{ icons:{primary: "' + icon + '"}, text: false } ).click( ' 
+      + ' function() { ' + jscall + ' } ); } ); </script>';
+
+  return html;
 }
 
-
-function pongOnTheFlyOpenDlg( id, modalName, resourceURL, params ) {
-  log( "PoNG-OnTheFly", "Open "+id+" "+modalName+" "+resourceURL );
+/** On open: load config */
+function pongOnTheFlyOpenDlg(id, modalName, resourceURL, params) {
+  log( "PoNG-OnTheFly", "Open " + id + " " + modalName + " " + resourceURL );
   var viewCfg = getViewConfig( id );
-  log( "PoNG-OnTheFly", "GET "+resourceURL+'/'+viewCfg.type );
-  $.getJSON( 
-      resourceURL+'/'+viewCfg.type, 
-      function( pluginConfig ) {
-        log( "PoNG-OnTheFly", "Config loaded from "+resourceURL+'/'+viewCfg.type );
-        $( '#'+id+modalName+'Dialog' ).dialog( 'open' );
-        $( '#'+id+modalName+'DialogConfig').val( JSON.stringify( pluginConfig, null, "  " ) );
-      }
-    );          
+  log( "PoNG-OnTheFly", "GET " + resourceURL + '/' + viewCfg.type );
+  $.getJSON( resourceURL + '/' + viewCfg.type, function(pluginConfig) {
+    log( "PoNG-OnTheFly", "Config loaded from " + resourceURL + '/'
+        + viewCfg.type );
+    $( '#' + id + modalName + 'Dialog' ).dialog( 'open' );
+    $( '#' + id + modalName + 'DialogConfig' ).val(
+        JSON.stringify( pluginConfig, null, "  " ) );
+  } );
   if ( params && params.assistUrl ) {
-    $.get( 
-        params.assistUrl,
-        function ( assistTxt ) {
-          log( "PoNG-OnTheFly", "Assistance loaded from "+params.assistUrl );
-          $( '#'+id+modalName+'DialogAssist').val( assistTxt );          
-        }
-    );
+    $.get( params.assistUrl, function(assistTxt) {
+      log( "PoNG-OnTheFly", "Assistance loaded from " + params.assistUrl );
+      $( '#' + id + modalName + 'DialogAssist' ).val( assistTxt );
+    } );
   }
 }
 
 
-function pongOnTheFlySave( id, modalName, resourceURL ) {
-  log( "PoNG-OnTheFly", "Save "+id+" "+modalName+" "+resourceURL );
+/** On close: save config and reload page */
+function pongOnTheFlySave(id, modalName, resourceURL) {
+  log( "PoNG-OnTheFly", "Save " + id + " " + modalName + " " + resourceURL );
   var viewCfg = getViewConfig( id );
-  log( "PoNG-OnTheFly", "POST to "+resourceURL+'/'+viewCfg.type );
-  $.post(
-      resourceURL+'/'+viewCfg.type+'/', 
-      $( '#'+id+modalName+'DialogConfig').val(),
-      function( data ) { 
-        location.reload(); 
-      },
-      'text'
-  );
+  log( "PoNG-OnTheFly", "POST to " + resourceURL + '/' + viewCfg.type );
+  $.post( resourceURL + '/' + viewCfg.type + '/', $(
+      '#' + id + modalName + 'DialogConfig' ).val(), function(data) {
+    location.reload();
+  }, 'text' );
 }
 
-function pongOnTheFlyCreModalFromMeta( id, modalName, resourceURL ) {
-	log( "PoNG-OnTheFly", "Create modal view content "+ resourceURL );
-	if ( ! modalName ) { modalName = "OnTheFly"; }
-		
-	if ( resourceURL ) {
-		
-		log( "PoNG-OnTheFly", "Get JSON for "+sessionInfo[ id+"OnTheFly" ].resID );
-		//var jsonCfg = pongOnTheFlyFindSubJSON( layoutOrig, "", sessionInfo[ id+"OnTheFly" ].resID );
-	 	log( "PoNG-OnTheFly", "Add JSON to #"+id+modalName+"Dialog" );
-	 	$( '#'+id+modalName+'Dialog').html( 
-	 	      '<form><textarea id="'+id+modalName+'DialogConfig" class="OnTheFly-ConfField"/></form>' 
-	 	    + '<form><textarea id="'+id+modalName+'DialogAssist" class="OnTheFly-AssistField"/></form>' ); 
-	 	$( '#'+id+modalName+'DialogConfig').val( $.i18n( 'Could not load configuration from' )+' "'+resourceURL+'"' );
-    $( '#'+id+modalName+'DialogAssist').val( $.i18n( 'No help available.' ) );
-	} else {
-		log( "PoNG-OnTheFly", "WARNING: Configuration issue!" );
-	}
-	log( "PoNG-OnTheFly", "Done." );
+
+/** creae modal dialog from*/
+function pongOnTheFlyCreModalFromMeta(id, modalName, resourceURL) {
+  log( "PoNG-OnTheFly", "Create modal view content " + resourceURL );
+  if ( !modalName ) {
+    modalName = "OnTheFly";
+  }
+
+  if ( resourceURL ) {
+    log( "PoNG-OnTheFly", "Get JSON for " + id );
+    // var jsonCfg = pongOnTheFlyFindSubJSON( layoutOrig, "", sessionInfo[
+    // id+"OnTheFly" ].resID );
+    log( "PoNG-OnTheFly", "Add JSON to #" + id + modalName + "Dialog" );
+    $( '#' + id + modalName + 'Dialog' ).html(
+        '<form><textarea id="' + id + modalName
+            + 'DialogConfig" class="OnTheFly-ConfField"/></form>'
+            + '<form><textarea id="' + id + modalName
+            + 'DialogAssist" class="OnTheFly-AssistField"/></form>' );
+    $( '#' + id + modalName + 'DialogConfig' ).val(
+        $.i18n( 'Could not load configuration from' )
+          + ' "' + resourceURL + '"' );
+    $( '#' + id + modalName + 'DialogAssist' ).val(
+        $.i18n( 'No help available.' ) );
+  } else {
+    log( "PoNG-OnTheFly", "WARNING: Configuration issue!" );
+  }
+  log( "PoNG-OnTheFly", "Done." );
 }

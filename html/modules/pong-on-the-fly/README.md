@@ -29,7 +29,8 @@ Example page with a table and re-configuration button (top left):
 			"includeFooter":"main"
 		}
 	}
-```	
+```
+	
 How-to:
 * _"moduleConfig"_ must be loaded, not in-line
 * add an action of _"type":"pong-on-the-fly"_
