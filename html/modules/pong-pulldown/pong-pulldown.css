@@ -1,9 +1,9 @@
-#PullDownMenu {
+.pong-pulldown {
 	position : absolute;
 	top: 70px;
 	right: 5px;
 	width: 200px;
-	height: 200px;
+	height: 30px;
 }
 
 .PullDownBtn {
@@ -19,7 +19,7 @@
 
 .PullDownMenu {
 	position : absolute;
-	bottom: 0px;
+	top: 30px;
 	font-size: 10pt;
 	color: #F0F0F0;
 	width:200px;
