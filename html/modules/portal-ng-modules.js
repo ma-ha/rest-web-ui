@@ -214,10 +214,16 @@ moduleMap[ "pong-io" ] = {
 
 moduleMap[ "pong-on-the-fly" ] = {
     "name": "pong-on-the-fly",
-    "requires": [ "jquery-syntax" ],
-      "hooks": [
-          { hook: "addActionBtn", method:"pongOnTheFlyAddActionBtn" },
-          { hook: "creModal", method:"pongOnTheFlyCreModalFromMeta" }
-      ]
+    "hooks": [
+        { hook: "addActionBtn", method:"pongOnTheFlyAddActionBtn" },
+        { hook: "creModal", method:"pongOnTheFlyCreModalFromMeta" }
+    ]
+  };
+
+moduleMap[ "pong-feedback" ] = {
+    "name": "pong-feedback",
+    "hooks": [
+        { hook:"addFooterHtml", method:"pongFeedbackHTML" }
+    ]
   };
 

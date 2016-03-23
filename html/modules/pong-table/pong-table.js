@@ -319,7 +319,13 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	contentItems.push( '            var colVal =  tbl.is(":checked"); ' ); // TODO: need if(checkbox) ???
 	contentItems.push( '            postParam[ colId ] =  colVal; ' );
 	//contentItems.push( '            alert( "Post '+dataUrl+' "+ JSON.stringify(postParam) ); ' );
-	contentItems.push( '            $.post( "'+dataUrl+'", postParam, function( response ) { }, "json");');
+	contentItems.push( '            $.post( ' );
+  contentItems.push( '               "'+dataUrl+'", postParam, function( response ) { }, "json"' );
+  contentItems.push( '               ).done( ' );
+  contentItems.push( '                  function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' );
+  contentItems.push( '               ).fail( ' );
+  contentItems.push( '                  function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } ' );
+  contentItems.push( '               );');
 	contentItems.push( '            event.preventDefault(); return false; ' );
 	contentItems.push( '         }' );
 	contentItems.push( '  );' );
@@ -364,7 +370,13 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	contentItems.push( '        var colId =  poTbl["'+divId+'"].pongTableDef.cols[ tbl.data("c") ].id; ' );		
 	contentItems.push( '        var colVal =  tbl.html(); ' );
 	contentItems.push( '        postParam[ colId ] =  colVal; ' );
-	contentItems.push( '        $.post( "'+dataUrl+'", postParam , function(response) {  }, "json");');
+	contentItems.push( '        $.post( ' );
+  contentItems.push( '           "'+dataUrl+'", postParam , function(response) {  }, "json"' );
+  contentItems.push( '        ).done( ' );
+  contentItems.push( '           function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' );
+  contentItems.push( '        ).fail( ' );
+  contentItems.push( '           function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } ' );
+  contentItems.push( '        );');
 	//contentItems.push( '        alert( "Post Data Error: { '+tbl.rowId+': "+rowIdVal+", "+colId+": "+colVal+" }   (r="+tbl.data("r") + "/c="+tbl.data("c")+") not stored!!"  ); ' );
 	contentItems.push( '     }' );
 	contentItems.push( '     return tbl;' );
@@ -677,7 +689,10 @@ function pongTableUpdateData( divId, paramsObj ) {
 			function( data ) { 	
 				var subdata = getSubData( data, tblDef.dataDocSubPath );
 				pongTableSetData( divId, subdata ); 
+				publishEvent( 'feedback', {'text':'Table data loaded sucessfully'} )
 			} 
+		).fail( 
+		    function() { publishEvent( 'feedback', {'text':'Table service offline? Config OK?'} ) } 
 		);
 		
 	}

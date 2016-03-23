@@ -1204,7 +1204,7 @@ function getSubData( data, subPath ) {
 		log( "getSubData",  'pathToken[0] ' + pathToken[0] );
 		var subdata = data[ pathToken[0] ];
 		log( "getSubData", ">>"+JSON.stringify(subdata) );
-		for ( i = 1; i < pathToken.length; i++ ) {
+		for ( var i = 1; i < pathToken.length; i++ ) {
 			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
 			if ( subdata != null ) {
 				subdata = subdata[ pathToken[i] ];
@@ -1221,10 +1221,11 @@ function getSubData( data, subPath ) {
 //=====================================================================================================
 
 var loggerModule = false; 
+var feedbackModule = false; 
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if (  func=='PoNG-OnTheFly'
+	if (  func=='pong-feedback'
 	  //|| func=='setModuleData'  
 		// || func=='loadModules'
 		// || func=='init' 
@@ -1236,6 +1237,11 @@ function log( func, msg ){
 	if ( loggerModule ) {
 		ponglog_debug_out( func, msg );
 	}
+	if ( feedbackModule ) {
+    feedback_out( func, msg );
+  }
+  
+	
 }
 
 function logErr( func, msg ){
@@ -1244,3 +1250,96 @@ function logErr( func, msg ){
 	//}
 }
 
+// =====================================================================================================
+// pub-sub.js --  A tiny library that implements pub/sub in JavaScript.
+// orininal code by https://github.com/philbooth/pub-sub.js
+
+  eventBrokers = {}
+  
+  /** short cut function */
+  function publishEvent( channelName, eventObj ) {
+    var broker = getEventBroker( 'main' )
+    eventObj.channel = channelName
+    broker.publish( eventObj ); 
+  }
+  
+  /** short cut function */
+  function subscribeEvent( channelName, callbackFunction ) {
+    var broker = getEventBroker( 'main' )
+    broker.subscribe( 
+        { 
+          'channel':channelName, 
+          'callback':callbackFunction 
+        } 
+    );  
+  }
+  
+  /** pub/sub event broker impl */
+  function getEventBroker (id) {
+      var subscriptions = {
+          '*': []
+      };
+
+//      check.verifyUnemptyString(id, 'Invalid id');
+      if (typeof eventBrokers[id] === 'undefined') {
+          eventBrokers[id] = {
+              subscribe: subscribe,
+              unsubscribe: unsubscribe,
+              publish: publish
+          };
+      }
+
+      return eventBrokers[id];
+
+      function subscribe (args) {
+          if ( args && args.channel && typeof args.callback === 'function' ) {
+            addSubscription( args.channel, args.callback )            
+          }
+      }
+
+      function verifyArgs (args) {
+//          check.verifyObject(args, 'Invalid arguments');
+//          check.verifyUnemptyString(args.name, 'Invalid name');
+//          check.verifyFunction(args.callback, 'Invalid callback');
+      }
+
+      function addSubscription (eventName, callback) {
+          if (typeof subscriptions[eventName] === 'undefined') {
+              subscriptions[eventName] = [];
+          }
+
+          subscriptions[eventName].push(callback);
+      }
+
+      function unsubscribe (args) {
+          verifyArgs(args);
+          removeSubscription(args.name, args.callback);
+      }
+
+      function removeSubscription (eventName, callback) {
+          var i, eventSubscriptions = subscriptions[eventName];
+
+//          if (check.isArray(eventSubscriptions) === false) {
+//              return;
+//          }
+          for (i = 0; i < eventSubscriptions.length; i += 1) {
+              if (eventSubscriptions[i] === callback) {
+                  eventSubscriptions.splice(i, 1);
+                  break;
+              }
+          }
+      }
+
+      function publish (event) {
+//          check.verifyQuack(event, archetypalEvent, 'Invalid event');
+          notifySubscriptions( event, '*');
+          notifySubscriptions( event, event.channel );
+      }
+
+      function notifySubscriptions (event, eventName) {
+          var eventSubscriptions = subscriptions[eventName], i;
+          for (i = 0; i < eventSubscriptions.length; i += 1) {
+             eventSubscriptions[i](event);
+          }
+      }
+  }

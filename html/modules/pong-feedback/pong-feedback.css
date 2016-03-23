@@ -1,0 +1,10 @@
+.pong-feedback {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 250px;
+	height: 30px;
+	background-color: #F0F0F0;
+	padding: 3px;
+	font-size: 10pt;
+}

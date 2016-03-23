@@ -1,0 +1,51 @@
+{
+	"layout":{
+		"title":"Portal: Test 'Easy' Features",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"280px",
+				"type":"pong-easytable",
+				"resourceURL":"svc/tbl-data",
+				"title":"Easy Table",
+				"moduleConfig":{
+					"pollDataSec":"150",	
+					"easyCols":[
+						"*ID|5%",
+						"Name=Name.0",
+						"ProductPage_linkForCol_1",
+						"Picture",
+						"ZoomImg_zooms_Picture",
+						"Status_checkbox",
+						"Rating",
+						"Description_editable",
+						"Product~Page_link"
+					],
+					"maxRows":"3"
+				},
+				"type_id":"5",
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"r1"
+						}
+					}
+				]
+			}
+		],
+	    "footer": {
+	      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' v0.7</a>, &copy; 2016, MH.",
+	      "linkList": [
+	      	{ "text":"About", "url": "index.html?layout=about"},
+	      	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
+	      	{ "text":"Wiki", "url": "http://mh-svr.de/mw/index.php/Portal_as_a_Service"}
+	      ],	
+	      "modules" : [ 
+      		{ "id": "feedbackView", "type": "pong-feedback", "param": { } }
+      	  ]
+	    }
+	}
+}
