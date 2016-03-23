@@ -21,7 +21,7 @@ If no feedback module is configured, the events are stored, but ignored.
 ## Usage
 Example (extract of _demo-feedback_
 
-´´´javascript
+```javascript
 {
 	"layout":{
 		...
@@ -43,4 +43,4 @@ Example (extract of _demo-feedback_
 	    }
 	}
 }
-´´´
+```
