@@ -31,6 +31,9 @@ If you don't specify a <code>type</code>, a HTML page will be loaded from the re
 * [Oull Down Menu](pong-pulldown/)
 * [Session](pong-session)
 
+## Footer Modules  
+* [Feedback for user view](pong-feedback/)
+
 ## Including podules 
 Modules are loaded, only if required -- if they are referenced in the layout. 
 This dynamic include strategy avoids performance issues on client side due to unnecessarily loading and initializing code.
