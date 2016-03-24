@@ -2,6 +2,8 @@
 header('Content-type: application/json');
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	
+	$_POST = json_decode(file_get_contents('php://input'), true);
 	if ( $_POST['value'] == 'Power OFF' ) {
 		unset( $_SESSION["p1"] );
 	}
