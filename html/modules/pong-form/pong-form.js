@@ -37,6 +37,10 @@ function pongFormDivHTML( divId, resourceURL, params ) {
 				moduleConfig[ divId ].resourceURL = resourceURL;
 				pongFormRenderHTML( divId, resourceURL, params, pmd );
 			}
+		).fatal(
+		    function() {
+	        publishEvent( 'feedback', {'text':'Form: Service offline?'} )
+		    }
 		);					
 	}	
 }
@@ -435,7 +439,8 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		}
 		//contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
 		contentItems.push( '              } ).done(  ' );
-		contentItems.push( '                 function( dta ) {  ' );
+		contentItems.push( '                 function( dta ) {' );
+    contentItems.push( '                    publishEvent( "feedback", { text:"Form data stored"} );' );
 		contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
 		if ( action.target != null ) {
 			if ( action.target == '_parent' ) {
@@ -529,6 +534,7 @@ function pongFormUpdateData( divId, paramsObj ) {
 				paramsObj,
 				function( data ) { 	
 					//salert( data );
+			    publishEvent( "feedback", { text:"Form data updated"} );
 					pongFormSetData( divId, data );
 //					if ( def.dataDocSubPath == null ) {
 //						// table is the root of the doc
