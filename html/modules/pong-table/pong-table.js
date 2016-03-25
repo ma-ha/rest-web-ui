@@ -214,10 +214,20 @@ function pongTableTogglePolling( divId ) {
 		//alert( "Toggle table data polling off" );
 		$( '#'+divId+'TableBt' ).button( "option", { icons: { primary: "ui-icon-locked" }, text: false } );
 		poTbl[ divId ].polling = false;
+    publishEvent( 'feedback', {'text':'Table data auto-update is off.'} )
+
 	} else {	
 		//alert( "Toggle table data polling reload on" ); 
 		$( '#'+divId+'TableBt' ).button( "option", { icons: { primary: "ui-icon-refresh" }, text: false } );
 		poTbl[ divId ].polling = true;
+		var tSec = '';
+	  if ( poTbl[ divId ].pongTableDef.pollDataSec ) {
+	    var t = parseInt( poTbl[ divId ].pongTableDef.pollDataSec );
+	    if  ( ! isNaN( t ) ) {  
+	      tSec = 'every '+t+' sec ';
+	    }
+	  }
+    publishEvent( 'feedback', {'text':'Table auto-update '+tSec+'is active.'} )
 	}
 }
 

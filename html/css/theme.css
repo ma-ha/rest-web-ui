@@ -34,7 +34,7 @@ body {
 .res-footer { padding-left: 9px; padding-top: 5px; font-size: 9pt; }
 
 #footer { 
-    height: 40px;  	
+    height: 55px;  	
 	background-color: white; 
 }
 
@@ -45,15 +45,15 @@ body {
 
 #footer .footer-links {
 	position : absolute;
-	bottom: 5px;
-	left: 500px;
+	bottom: 10px;
+	left: 400px;
 	width: 600px;
 	font-size: 10pt;
 	color: gray;
 }
 #footer .copyright-div {
 	position : absolute;
-	bottom: 5px;
+	bottom: 10px;
 	left: 50px;
 	width: 300px;
 	font-size: 10pt;
