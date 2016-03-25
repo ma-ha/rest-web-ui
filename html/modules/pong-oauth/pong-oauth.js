@@ -51,6 +51,7 @@ function initOAuthHeaderHtml( divId, type , params ) {
 			sessionInfo["OAuth"]['tokenURL'] = params.tokenURL; 
 		}
 	}
+  publishEvent( 'feedback', { text:'OAuth prepared'} );
 }
 
 
@@ -131,6 +132,7 @@ function mkLoginDialog ( params ) {
 									sessionInfo["OAuth"]["refresh_token"] = dta.refresh_token;
 									sessionInfo["OAuth"]["token_type"]    = dta.token_type;	
 									alert( "Login successful" );
+								  publishEvent( 'feedback', { text:'OAuth session started'} );
 									$("#OAuthLoginDialog" ).dialog('close'); 
 									return false;
 								} else {
