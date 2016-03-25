@@ -7,10 +7,11 @@ Basic functionality of a Web Portal is provided out of the box:
 * arrange data and content views on GUI
 * lot of interactive view types available: 
 	* form, table, lists, map/route, content, I/O, modal dialogs/forms
+	* user feedback
 * configuration and help functions per view
 * header and footer offering lots of functionality
 * i18n: switch languages without changing anything -- just provide a translation map (or web service for that)
-* user sessions (transfer data between views and pages)
+* user sessions (transfer data between views and pages) and a build in pub-sub event broker
 * OAauth2 security for web services
 
 ### Everything runs in browser:
