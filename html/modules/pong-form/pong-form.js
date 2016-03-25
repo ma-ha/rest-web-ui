@@ -597,7 +597,7 @@ function pongFormSetData( divId, data ) {
 		var pathToken = def.dataDocSubPath.split('.');
 		log( "Pong-Form",  'pathToken[0] ' + pathToken[0] );
 		var subdata = data[ pathToken[0] ];
-		for ( i = 1; i < pathToken.length; i++ ) {
+		for ( var i = 1; i < pathToken.length; i++ ) {
 			log( "Pong-Form", 'pathToken['+i+'] ' + pathToken[i] );	
 			subdata = subdata[ pathToken[i] ];
 		}
