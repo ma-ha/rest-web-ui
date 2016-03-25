@@ -1226,7 +1226,7 @@ var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
 	if (  func=='pong-feedback'
-	  //|| func=='setModuleData'  
+	  || func=='pong-io'  
 		// || func=='loadModules'
 		// || func=='init' 
 	) { 

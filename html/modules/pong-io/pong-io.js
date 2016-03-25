@@ -117,12 +117,13 @@ function pongIOmakeJS( divId  ) {
 
 					log( "pong-io", io.type+' '+io.id );			
 					for ( var val = 0; val < io.values.length; val++ ) {
+            log( "pong-io", io.values[val]  );
 						if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] && ioSense[ divId ][ io.id ][ io.values[val] ] ) {
-							//log( "pong-io", "sense ("+io.values[val] +")..." );
+							log( "pong-io", "sense ("+io.values[val] +")..." );
 							var s = ioSense[ divId ][ io.id ][ io.values[val] ];
-							//log( "pong-io", "sense "+ JSON.stringify(s) );
+							log( "pong-io", "sense "+ JSON.stringify(s) );
 							if ( s.x1 && s.x2 && s.y1 && s.y2 ) {
-								//log( "pong-io", "sense: " + JSON.stringify( s ) );
+								log( "pong-io", "sense: " + JSON.stringify( s ) );
 								contentItems.push( '      pongIOcheckSwitchSense( "'+divId+'", x, y, "'+io.id+'", "'+io.values[val]+'",'+JSON.stringify( s )+' ); ' );
 							}
 						}
@@ -180,23 +181,13 @@ function pongIoUpdateData( divId, paramsObj ) {
 		}
 	
 		log( "pong-io", "pongIoUpdateData data end.");	
+	} ).fail( function( ) {
+	    pongIOrenderData( divId, null );
+      if ( paramsObj && paramsObj.makeJS ) {
+        pongIOmakeJS( divId );        
+      }
 	} );
 
-//	$.getJSON( 
-//		moduleConfig[ divId ].dataURL, 
-//		function( dta ) {
-//			log( "pong-io", "pongIoUpdateData data start");
-//					
-//			pongIOrenderData( divId, dta );
-//			
-//			if ( paramsObj && paramsObj.makeJS ) {
-//				pongIOmakeJS( divId );				
-//			}
-//	
-//			log( "pong-io", "pongIoUpdateData data end.");	
-//		}
-//	);
-	
 	log( "pong-io", "pongIoUpdateData end.");
 }
 
@@ -235,23 +226,6 @@ function pongIOrenderData( divId,  dta ) {
 					}
 					log( "pong-io", "inner data loader data end.");	
 				} );
-
-//				$.getJSON( 
-//					io.dataURL, 
-//					function( dta ) {
-//						log( "pong-ioX", "inner data loader");
-//						if ( io.data ) {	
-//							var ioDta = null;
-//							if ( dta  ) {
-//								ioDta = new Object();
-//								ioDta.value = getSubData( dta, io.data );
-//							}
-//							pongIOrender( divId, ctx, io, ioDta );
-//						} else {
-//							pongIOrender( divId, ctx, io, dta );							
-//						}
-//					}
-//				);
 			
 			} else if ( io.data ) {		// point to data to evaluate
 				
@@ -425,33 +399,53 @@ function pongIOrenderSwitch( divId, ctx, def, dta ) {
 			var yy = y - 8;
 			textOut( divId, def, ctx, def.values[0], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[0], xx, yy );
-			if ( dta && dta.value && def.values[0] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y-10, def );
-			}
+			if ( dta && dta.value ) {
+			  if ( def.values[0] == dta.value ) {
+	        pongIOrenderSwitchLine( ctx, x+10, y-10, def );
+			  }
+			} else if ( def.defaultValue && def.defaultValue == def.values[0] ){ // first value is default
+	       pongIOrenderSwitchLine( ctx, x+10, y-10, def );
+			} 
 			yy = y + 8;
 			textOut( divId, def, ctx, def.values[1], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[1], xx, yy );
-			if ( dta && dta.value && def.values[1] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y+10, def );
-			}
+			if ( dta && dta.value ) {
+			  if (def.values[1] == dta.value ) {
+	        pongIOrenderSwitchLine( ctx, x+10, y+10, def );
+			  }
+			} else if ( def.defaultValue && def.defaultValue == def.values[1] ){ // second value is default
+         pongIOrenderSwitchLine( ctx, x+10, y+10, def );
+      } 
 		} else if ( def.values.length == 3 ) {
 			var yy = y - 12;
 			textOut( divId, def, ctx, def.values[0], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[0], xx, yy );
-			if ( dta && dta.value && def.values[0] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y-10, def );
-			}
+			if ( dta && dta.value ) {
+        if ( def.values[0] == dta.value ) {
+          pongIOrenderSwitchLine( ctx, x+10, y-10, def );
+        }
+      } else if ( def.defaultValue && def.defaultValue == def.values[0] ){ // first value is default
+        pongIOrenderSwitchLine( ctx, x+10, y-10, def );        
+      }
 			yy = y;
 			textOut( divId, def, ctx, def.values[1], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[1], xx, yy );
-			if ( dta && dta.value && def.values[1] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+15, y, def );
+			if ( dta && dta.value ) {
+        if ( def.values[1] == dta.value ) {
+          pongIOrenderSwitchLine( ctx, x+15, y, def );
+        } 
+			} else if ( def.defaultValue && def.defaultValue == def.values[1] ){ // second value is default
+        pongIOrenderSwitchLine( ctx, x+15, y, def );			  
 			}
 			yy = y + 12;
 			textOut( divId, def, ctx, def.values[2], xx, yy );
 			pongIOaddSwitchSense( divId, def.id, def.values[2], xx, yy );
-			if ( dta && dta.value && def.values[2] == dta.value ) {
-				pongIOrenderSwitchLine( ctx, x+10, y+10, def );
+			if ( dta && dta.value ) {
+        if ( def.values[2] == dta.value ) {
+          pongIOrenderSwitchLine( ctx, x+10, y+10, def );
+        }
+			} else if ( def.defaultValue && def.defaultValue == def.values[1] ){ // second value is default
+        pongIOrenderSwitchLine( ctx, x+10, y+10, def );
 			}
 		}
 	}
@@ -478,8 +472,21 @@ function pongIOaddSwitchSense( divId, id, val, xx, yy ) {
 	ioSense[ divId ][ id ][ val ].y2 = yy + 7;	
 }
 
+function pongIOchangeSwitchUserClick( divId, id, val ) {
+  var ctx = document.getElementById( divId+'Canvas' ).getContext("2d");
+  var pmd = moduleConfig[ divId ];
+  for ( var c = 0; c < pmd.io.length; c++ ) {
+    var io = pmd.io[c];
+    if ( io.id == id ) {
+      pongIOrenderSwitch( divId, ctx, io, { 'value':val} );      
+    }
+  }
+}
+
 function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
+  log( "pong-io", "pongIOcheckSwitchSense: "+id );
 	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
+	  pongIOchangeSwitchUserClick( divId, id, val );
 		log( "pong-io", "Switch: "+id+" >> "+val );
 		$.ajax( 
 			{ url: moduleConfig[ divId ].dataURL, 
