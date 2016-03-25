@@ -1,0 +1,41 @@
+{
+	"layout":{
+		"title":"Test",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"io0",
+				"title":"\"Arduino\" demo -- please try it also with -> <a href=\"http://johnny-five.io/\" target=\"_blank\">johnny-five.io</a>",
+				"decor":"decor",
+				"height":"400px",
+				"resourceURL":"none",
+				"type":"pong-io",
+				"moduleConfig":{
+					"imgURL":"svc/layout/demo_io2/demo.png",
+					"dataURL":"svc/mock/arduino/",
+					"poll":10000,
+					"io":[
+						{
+							"id":"myFirstLED",
+							"type":"LED",
+							"pos":{ "x":300, "y":210 }
+						},
+						{
+							"id":"mySwitch",
+							"type":"Switch",
+							"pos":{ "x":60, "y":85},
+							"values":[ "on", "off" ]
+						}
+					]
+				},
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{ "showConfig":"io0" }
+					}
+				]
+			}
+		],
+		"includeFooter":"main"
+	}
+}
