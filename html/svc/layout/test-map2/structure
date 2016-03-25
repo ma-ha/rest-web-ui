@@ -252,7 +252,7 @@
                             "id": "route_to",
                             "label": "To",
                             "cellType": "text",
-                            "width": "30%"
+                            "width": "25%"
                         },
                         {
                             "id": "route_dist",
@@ -264,7 +264,7 @@
                             "id": "route_time",
                             "label": "Duration",
                             "cellType": "text",
-                            "width": "10%"
+                            "width": "15%"
                         }
                     ],
                     "maxRows": "4"

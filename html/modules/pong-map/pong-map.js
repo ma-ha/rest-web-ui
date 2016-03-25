@@ -89,19 +89,32 @@ function pong_map_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 									pong_map_createMap( divId, pmd );
 								}
 							).fail( 
-								function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+trafficJsUrl+': '+exception ); } 
+								function( jqxhr, settings, exception ) { 
+								  log( 'pong_map', ' load '+trafficJsUrl+': '+exception )  
+								  publishEvent( 'feedback', {'text':"Can't load traffic plug-in"} )
+								}
 							); 		
 						}
 					).fail( 
-						function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+routingJsUrl+': '+exception ); } 
+						function( jqxhr, settings, exception ) { 
+						  log( 'pong_map', ' load '+routingJsUrl+': '+exception );
+						  publishEvent( 'feedback', {'text':"Can't load routing plug-in"} )
+						} 
 					); 
 				} 
 			).fail( 
-				function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+geocoderJsUrl+': '+exception ); } 
+				function( jqxhr, settings, exception ) { 
+				  log( 'pong_map', ' load '+geocoderJsUrl+': '+exception );
+          publishEvent( 'feedback', {'text':"Can't load geo-coder plug-in"} )
+				} 
 			); 
 		} 
 	).fail(
-		function( jqxhr, settings, exception ) { log( 'pong_map', ' load '+mapJsUrl+': '+exception ); } 
+		function( jqxhr, settings, exception ) { 
+		  log( 'pong_map', ' load '+mapJsUrl+': '+exception );
+		  alert( 'Ca not load Map-Plugin from MapQuest: '+exception )
+      publishEvent( 'feedback', {'text':"Can't load plug-in from mapquest"} )
+		} 
 	);
 	
 	log( "pong_map", "pong_map_RenderHTML end." );
@@ -161,6 +174,7 @@ function pong_map_createMap( divId, pmd ) {
 }
 		
 function pong_map_setData( divId, pmd ) {
+  publishEvent( 'feedback', {'text':"Update map data ..."} )
 	log( "pong_map", "pong_map_setDate" );
 	log( "pong_map", "pong_map_Update clearRoute" );		
 	pong_map_route = [];
@@ -237,6 +251,7 @@ function pong_map_Update( divId, pmd ) {
 }
 var routeLayers = []; 
 function pong_map_addViaRoute ( routes, setData, optimized ) {
+  publishEvent( 'feedback', {'text':"Add via route ..."} )
 	log( "pong_map", "pong_map_addViaRoute "+JSON.stringify(routes) );
 	dir = MQ.routing.directions();
 //	.on( 'success', 
@@ -285,6 +300,7 @@ function pong_map_addViaRoute ( routes, setData, optimized ) {
 }
 
 function pong_map_addRoute ( a, b, label, setData ) {
+  publishEvent( 'feedback', {'text':"Add route ..."} )
 	if ( label == null ) { label = b; }
 	log( "pong_map", "pong_map_addRoute('"+JSON.stringify(a)+"','"+JSON.stringify(b)+"','"+label+"') ------------------------------------------------" );
     dir = MQ.routing.directions().on( 'success', 
