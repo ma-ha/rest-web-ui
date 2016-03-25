@@ -31,9 +31,11 @@ function initSecurityHeaderHtml( divId, type , params ) {
 			$.post( params.loginURL, 
 				function ( data ) {
 					if ( data != "Unauthorized" ) {
+            publishEvent( 'feedback', { text:'Login OK :-)' } )
 						userID = data;	
 						$.post( params.rolesURL, 
 							function ( roles ) {
+						    publishEvent( 'feedback', { text:'Autorization roles loaded!' } )
 								pageInfo["userRoles"] = [];
 								for ( var i = 0; i < roles.length; i++ ) {
 									//console.log( roles[i] );
@@ -46,6 +48,7 @@ function initSecurityHeaderHtml( divId, type , params ) {
 							userRole = getParam('role'); 
 						}
 					} else {
+				    publishEvent( 'feedback', { text:'Login failed!!' } )
 						userRole = null;
 						ajaxOngoing--;
 					} 
