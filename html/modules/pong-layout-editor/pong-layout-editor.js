@@ -74,6 +74,7 @@ function pongLayoutEditorDivHTML( divId, resourceURL, paramObj ) {
 		pongLayoutEditorRenderHTML( divId, resourceURL, paramObj, cnf );				
 	} else {
 		$( "#"+divId ).html( '<div id="'+divId+'layout-editor_Div" class="layout-editor">ERROR [1]</div>' );
+    publishEvent( 'feedback', {'text':'Error: Layout config required!'} )
 	}
 }
 
@@ -294,9 +295,10 @@ function pongLayoutBackendCall( method, divId, paramsObj, doUpdate ) {
 		}
 	).done(  
         function( dta ) {
+          publishEvent( 'feedback', { text:'Layout backend call sucessful' } )
         	//alert( divId+' '+dta.layout.title );  
         	if ( dta.layout != null ) {
-    			pongLayoutEditorRenderHTML( divId,  moduleConfig[ divId ].resourceURL, paramsObj, dta.layout );	        		
+        	  pongLayoutEditorRenderHTML( divId,  moduleConfig[ divId ].resourceURL, paramsObj, dta.layout );	        		
         	}
         	return false;
         }
@@ -308,6 +310,8 @@ function pongLayoutBackendCall( method, divId, paramsObj, doUpdate ) {
         	}
         	return false;
         }
+    ).fail(
+        function () { publishEvent( 'feedback', { text: 'ERROR: Layout backend problem' } ) }
     );
 }
 

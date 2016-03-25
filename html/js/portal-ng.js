@@ -199,7 +199,7 @@ function loadLang() {
     $.extend( $.i18n.parser.emitter, {
     	// Handle PONGVER keywords
     	pongver: function () {
-    	  alert( "version" )
+    	  //alert( "version" )
     		return PONGVER;
     	}
     } );
