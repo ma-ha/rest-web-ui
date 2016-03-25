@@ -33,6 +33,7 @@ The response should be an "array" of the values:
 	
 Changes are POSTed to the 'dataURL' and the response will be set as update.
 
+
 ### Lights / LEDs
 The Lights or LEDs needs only a unique ID and coordinates where to place it.
 
@@ -96,7 +97,12 @@ Switches can have 2 or 3 values, defined in a array.
 				"pos":{ "x":"123", "y":"345" }
 			}, ...			
 
-Optional settings:
+_Notice: It is intuitive and also convention to have "ON" up and "OFF" down. 
+This will be done correctly by the order in the example above._
+
+The first element in "values" array is the default switch setting at startup. Alternatively you can define a "defaultValue".
+
+Optional settings (with example values):
 
  				"font":"14px Courier",
  				"textAlign":"center",
@@ -104,7 +110,8 @@ Optional settings:
  				"textFillColor":"#00F",
  				"textStrokeColor":"#FFF",
 				"lineCol":"#00A",
-				"fillCol":"#DDD"
+				"fillCol":"#DDD",
+				"defaultValue":"OFF"
 
 A switch by mouse click will do a POST with the id and value to to 'dataURL'.
 
