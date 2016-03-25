@@ -180,12 +180,16 @@ function pongIoUpdateData( divId, paramsObj ) {
 			pongIOmakeJS( divId );				
 		}
 	
+    publishEvent( 'feedback', {'text':'Processed response from I/O service '} )
 		log( "pong-io", "pongIoUpdateData data end.");	
 	} ).fail( function( ) {
+      log( "pong-io", "pongIoUpdateData data start (fail mode)");
 	    pongIOrenderData( divId, null );
       if ( paramsObj && paramsObj.makeJS ) {
         pongIOmakeJS( divId );        
       }
+      publishEvent( 'feedback', {'text':'ERROR: I/O service not responding!'} )
+      log( "pong-io", "pongIoUpdateData data end (fail mode)");
 	} );
 
 	log( "pong-io", "pongIoUpdateData end.");
@@ -224,6 +228,7 @@ function pongIOrenderData( divId,  dta ) {
 					} else {
 						pongIOrender( divId, ctx, io, dta );							
 					}
+			    publishEvent( 'feedback', {'text':'Processed response from I/O service '} )
 					log( "pong-io", "inner data loader data end.");	
 				} );
 			
@@ -235,6 +240,7 @@ function pongIOrenderData( divId,  dta ) {
 					ioDta.value = getSubData( dta, io.data );
 				}
 				pongIOrender( divId, ctx, io, ioDta );
+		    publishEvent( 'feedback', {'text':'Updated I/O view'} )
 
 			} else { // default simple data "value" field expected
 
@@ -369,8 +375,11 @@ function pongIOcheckButtonSense( divId, x, y, id, s ) {
 		).done(
 			function( dta) {
 				pongIOrenderData( divId, dta );
+        publishEvent( 'feedback', {'text':'Processed response from I/O service '} )
 			}
-		);		  
+    ).fail(
+        function() { publishEvent( 'feedback', {'text':'ERROR: I/O service not responding!'} ) }
+    );      
 	}
 }
 
@@ -503,7 +512,10 @@ function pongIOcheckSwitchSense( divId, x, y, id, val, s ) {
 		).done(
 			function( dta) {
 				pongIOrenderData( divId, dta );
+		    publishEvent( 'feedback', {'text':'Processed response from I/O service '} )
 			}
+		).fail(
+		    function() { publishEvent( 'feedback', {'text':'ERROR: I/O service not responding!'} ) }
 		);		  
 	}
 }
@@ -570,8 +582,11 @@ function pongIOcheckPotiSense( divId, x, y, id, s ) {
 		).done(
 			function( dta) {
 				pongIOrenderData( divId, dta );
+        publishEvent( 'feedback', {'text':'Processed response from I/O service '} )
 			}
-		);
+    ).fail(
+        function() { publishEvent( 'feedback', {'text':'ERROR: I/O service not responding!'} ) }
+    );      
 	}
 }
 //---------------------------------------------------------------------------------------
