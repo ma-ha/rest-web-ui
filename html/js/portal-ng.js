@@ -690,7 +690,7 @@ function footerHTML( footer ) {
 			content.push( "</div>" );
 		}
 		if ( footer.copyrightText != null ) {
-			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText, PONGVER ) +'</div>' );
+			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
 		} else {
 			content.push( '<div class="copyright-div">&copy; MH 2015</div>' );
 		}
