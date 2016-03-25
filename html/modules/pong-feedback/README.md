@@ -55,8 +55,10 @@ Don't show
 * feedback, if the user sees it anyway 
 * tooooo looong text, user can't gather to much info at the same time
 
-How to code a feedback event:
+How to code a feedback event? Simply call the _publishEvent_ function:
 
 ```javascript
-    publishEvent( 'feedback', { text:'Processed response from service'} )
+    publishEvent( 'feedback', { text: 'Processed response from service' } )
 ```
+
+That's it ;-)
