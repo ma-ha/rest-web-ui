@@ -44,3 +44,19 @@ Example (extract of _demo-feedback_
 	}
 }
 ```
+
+# Notes for plug-in module programmers
+Give feedback to user
+* if something was done successfully behind the scenes
+* if you are preparing things
+
+Don't show
+* only the error, please give the user an idea, how to continue
+* feedback, if the user sees it anyway 
+* tooooo looong text, user can't gather to much info at the same time
+
+How to code a feedback event:
+
+```javascript
+    publishEvent( 'feedback', { text:'Processed response from service'} )
+```
