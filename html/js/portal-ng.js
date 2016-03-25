@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.1';
-var PONGVER = '0.7.1';
+labeldefs['PONGVER'] = '0.7.2';
+var PONGVER = '0.7.2';
 
 var moduleMap = {};
 var reqModules = {};
@@ -199,6 +199,7 @@ function loadLang() {
     $.extend( $.i18n.parser.emitter, {
     	// Handle PONGVER keywords
     	pongver: function () {
+    	  alert( "version" )
     		return PONGVER;
     	}
     } );
@@ -689,7 +690,7 @@ function footerHTML( footer ) {
 			content.push( "</div>" );
 		}
 		if ( footer.copyrightText != null ) {
-			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
+			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText, PONGVER ) +'</div>' );
 		} else {
 			content.push( '<div class="copyright-div">&copy; MH 2015</div>' );
 		}
@@ -1225,34 +1226,34 @@ var feedbackModule = false;
 var loggerBuffer = [];
 function log( func, msg ){
 	// define the "func" you want to log to the console
-	if (  func=='pong-feedback'
-	  || func=='pong-io'  
-		// || func=='loadModules'
-		// || func=='init' 
-	) { 
-		console.log( "["+func+"] "+msg );
-		loggerBuffer.push
-	}
+  var logline = '['+func+'] '+msg;
+//	if (  //func=='pong-feedback'
+//	  //|| func=='pong-io'  
+//		  func=='loadModules'
+//		// || func=='init' 
+//	) { 
+//		console.log( logline );
+//		loggerBuffer.push
+//	}
 	
-	if ( loggerModule ) {
-		ponglog_debug_out( func, msg );
-	}
-	if ( feedbackModule ) {
-    feedback_out( func, msg );
-  }
-  
+	// send log to event broker
+	var logBroker = getEventBroker('log');
+	logBroker.cleanupQueue( 1000 );
+	logBroker.queueEvent( { text: logline, channel:'log' } );
 	
 }
 
 function logErr( func, msg ){
-	//if ( func == '' ) { 
-		console.log( "["+func+"] ERROR: "+msg );
-	//}
+	console.log( "["+func+"] ERROR: "+msg );
+	
+	var logBroker = getEventBroker('log');
+  logBroker.cleanupQueue( 1000 );
+  logBroker.queueEvent( { text: '['+func+'] '+msg, channel:'log', severity:'ERROR' } );
 }
 
 // =====================================================================================================
-// pub-sub.js --  A tiny library that implements pub/sub in JavaScript.
-// orininal code by https://github.com/philbooth/pub-sub.js
+// Integrated pub-sub event broker
+// based on  https://github.com/philbooth/pub-sub.js
 
   eventBrokers = {}
   
@@ -1277,24 +1278,35 @@ function logErr( func, msg ){
   /** pub/sub event broker impl */
   function getEventBroker (id) {
       var subscriptions = {
-          '*': []
-      };
+          'main': []
+      }
 
 //      check.verifyUnemptyString(id, 'Invalid id');
       if (typeof eventBrokers[id] === 'undefined') {
           eventBrokers[id] = {
+              id:id,
               subscribe: subscribe,
               unsubscribe: unsubscribe,
-              publish: publish
+              publish: publish,
+              evtQueue : [],
+              queueEvent: queueEvent,
+              cleanupQueue: cleanupQueue
           };
       }
 
       return eventBrokers[id];
 
       function subscribe (args) {
-          if ( args && args.channel && typeof args.callback === 'function' ) {
-            addSubscription( args.channel, args.callback )            
+        if ( args && args.channel && typeof args.callback === 'function' ) {
+          addSubscription( args.channel, args.callback )            
+          // ... and now send notifications for queued events
+          for( var i = 0; i < this.evtQueue.length; i++ ) {
+            var qEvt = this.evtQueue[i].event 
+              if ( qEvt && qEvt.channel == args.channel ) {
+                notifySubscriptions( qEvt, qEvt.channel );        
+              }
           }
+        }
       }
 
       function verifyArgs (args) {
@@ -1303,12 +1315,13 @@ function logErr( func, msg ){
 //          check.verifyFunction(args.callback, 'Invalid callback');
       }
 
-      function addSubscription (eventName, callback) {
-          if (typeof subscriptions[eventName] === 'undefined') {
-              subscriptions[eventName] = [];
+      function addSubscription ( channel, callback) {
+        console.log( 'subscribe '+channel )
+          if (typeof subscriptions[channel] === 'undefined') {
+              subscriptions[channel] = [];
           }
-
-          subscriptions[eventName].push(callback);
+          subscriptions[channel].push(callback);
+          console.log( 'subscribed: '+channel )
       }
 
       function unsubscribe (args) {
@@ -1318,10 +1331,6 @@ function logErr( func, msg ){
 
       function removeSubscription (eventName, callback) {
           var i, eventSubscriptions = subscriptions[eventName];
-
-//          if (check.isArray(eventSubscriptions) === false) {
-//              return;
-//          }
           for (i = 0; i < eventSubscriptions.length; i += 1) {
               if (eventSubscriptions[i] === callback) {
                   eventSubscriptions.splice(i, 1);
@@ -1329,17 +1338,50 @@ function logErr( func, msg ){
               }
           }
       }
-
+      
+      function queueEvent( event ) {
+        var queuedEvent = {
+            event: event,
+            created: new Date(),
+            unqueue: false
+        }
+        this.evtQueue.push( queuedEvent )
+        publish( event )
+      }
+      
+      var cleanupInProgress = false;
+      
+      function cleanupQueue( maxCnt ) {
+        if ( ! cleanupInProgress ) { // don't run two cleanups in parallel
+          cleanupInProgress = true;
+          
+          // remove old events from queue  
+          if ( maxCnt && evtQueue.length > maxCnt ) {
+            evtQueue.splice( 0, evtQueue.length - maxCnt )           
+          }
+          
+          // remove unqueued events from queue  
+          for( var i = evtQueue.length; i >= 0;  i-- ) {
+            if ( evtQueue[i].unqueue ) {
+              array.splice(i,0)
+            }
+          }
+          cleanupInProgress = false;   
+        }
+      }
+      
       function publish (event) {
-//          check.verifyQuack(event, archetypalEvent, 'Invalid event');
-          notifySubscriptions( event, '*');
+          //notifySubscriptions( event, '*' );
           notifySubscriptions( event, event.channel );
       }
 
-      function notifySubscriptions (event, eventName) {
-          var eventSubscriptions = subscriptions[eventName], i;
+      function notifySubscriptions (event, channel ) {
+        if ( subscriptions[channel] ) {
+          var eventSubscriptions = subscriptions[channel], i;
           for (i = 0; i < eventSubscriptions.length; i += 1) {
              eventSubscriptions[i](event);
-          }
+          } 
+        }
       }
   }
+ 

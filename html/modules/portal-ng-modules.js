@@ -186,8 +186,9 @@ moduleMap[ "pong-layout-editor" ] = {
 moduleMap[ "pong-log" ] = {
 		"name": "pong-log",
 	    "hooks": [
-  	        { hook:"loadResourcesHtml", method:"ponglog_DivHTML" },
-	        { hook:"log", method:"ponglog_debug_out" }
+  	      { hook:"loadResourcesHtml", method:"ponglog_DivHTML" },
+          { hook:"addActionBtn", method:"pong_log_AddClearOutputBtn" },
+	        { hook:"log", method:"ponglog_out" }
 	    ]
 	};
 
@@ -196,7 +197,7 @@ moduleMap[ "pong-map" ] = {
 		"loadCSS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" ],
 		"loadJS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js" ],
 	    "hooks": [
-  	        { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
+  	      { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
 	        { hook:"addActionBtn", method:"pong_map_AddActionBtn" },
 	        { hook:"update", method:"pong_map_Update" },
 	        { hook:"setData", method:"pong_map_setData" }

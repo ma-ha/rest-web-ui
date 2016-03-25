@@ -76,15 +76,16 @@ function feedbackEvtCallback( evt ) {
 }
 
 function updateFeedback() {
-  log( "pong-feedback", " updateFeedback " ) 
   var feedbackLog = ''
   var justNow = new Date()
   var col = '#000'
+  var fadeOutCnt = 0;
   for ( var i = pongLastFeedbacks-1; i >= 0; i-- ) {
     var deltaMS = justNow.getTime() - pongLastFeedbackTim[i].getTime()
     //log( "pong-feedback", deltaMS+' ms' )
     if ( deltaMS > 50000 ) {
       col = '#F0F0F0'
+      fadeOutCnt ++
     } else if ( deltaMS > 40000 ) {
       col = '#BBB'
     } else if ( deltaMS > 30000 ) {
@@ -100,8 +101,8 @@ function updateFeedback() {
       feedbackLog += '<span style="color:'+col+'">' + pongLastFeedbackTxt[i] + ' ['+ pongLastFeedbackCnt[i] +']</span><br>'
     }
   }
-  $( '.pong-feedback' ).html( feedbackLog ) 
-  log( "pong-feedback", "updateFeedback done" )
+  $( '.pong-feedback' ).html( feedbackLog )
+  if ( fadeOutCnt != 3 ) log( "pong-feedback", "updateFeedback done" )
 }
 
 function moveToLastFeetback( evtNo ) {

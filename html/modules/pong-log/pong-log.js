@@ -28,35 +28,68 @@ log( "ponglog", "load module"); // print this on console, when module is loaded
 // ======= Code for "loadResourcesHtml" hook ================================================
 function ponglog_DivHTML( divId, resourceURL, paramObj ) {
 	log( "ponglog",  "divId="+divId  );
-	var contentItems = [];
-    var height = $( '#'+divId ).parent().height() -90;
-    var width = $( '#'+divId ).parent().width() -30;
-	/*
-	contentItems.push( '<div id="PongLog" class="ponglog" style="height:'+height+'px; overflow: auto; width:100%; -webkit-overflow-scrolling: touch;">' );
-	*/
-	contentItems.push( '<textarea id="PongLog" type="text" style="width:'+width+'px; height:'+height+'px; overflow: auto; -webkit-overflow-scrolling: touch;"/>' );
-	contentItems.push( '<button id="logClr">Clr</button>' );
-	contentItems.push( '<script>' );
-	contentItems.push( ' $( "#logClr" ).click( function() { $( "#PongLog" ).val( "" ); } ); ' );
-	contentItems.push( '</script>' );
-	
+  var height = $( '#'+divId ).parent().height() -90;
+  var width  = $( '#'+divId ).parent().width()  -30;
+	$( "#"+divId ).html( '<div id="PongLog" class="ponglog" style="height:'+height+'px;">' );
+  
 	window.onerror = function ( msg, url, num ) {
-		ponglog_debug_out( "JS: " + msg + " / "+url+" / "+num );
+	  var logBroker = getEventBroker('log');
+	  logBroker.cleanupQueue( 1000 );
+	  logBroker.queueEvent( { text: '['+func+'] JS: ' + msg + ' / '+url+ ' / '+num , channel:'log', severity:'ERROR' } );
+
+		//ponglog_debug_out( "JS: " + msg + " / "+url+" / "+num );
 	}
 	
-	// output
-	$( "#"+divId ).html( contentItems.join( "\n" ) );
-	loggerModule = true;
+//	loggerModule = true;
+  var logBroker = getEventBroker( 'log' )
+  console.log( 'got logBroker' )
+  console.log( 'got logBroker '+logBroker.evtQueue.length )
+  logBroker.subscribe( 
+      { 
+        channel:  'log', 
+        callback: ponglog_out
+      } 
+  );  
+  console.log( 'logBroker.subscribe(log...) done' )
 	log( "ponglog", "divId="+divId+" end.");
+}
+
+/** update data call back hook */
+function ponglog_out( event ) {
+  if ( event && event.text ) {
+    if ( event.severity && event.severity == "ERROR" ) {
+      $( '#PongLog' ).append( '<span style="color:red;">'+event.text + '</span><br/>' );       
+    } else {
+      $( '#PongLog' ).append( event.text + '<br/>' );       
+    }
+  }
+}
+
+
+function pong_log_AddClearOutputBtn( id, modalName, resourceURL, params ) {
+  log( "ponglog", "pong_log_AddClearOutputBtn "+id);
+  var html = '<div id="'+id+'ContentClearLogAction" >'; // just a placeholder
+  html += '<button id="'+id+'ClearOutputBt">'+$.i18n( 'Clear log output' )+'</button>';
+  html += '<script>';
+  html += '  $(function() { $( "#'+id+'ClearOutputBt" )';
+  html += '    .button( ';
+  html += '      { icons:{primary: "ui-icon-trash"}, text: false } ';
+  html += '    ).click( ';
+  html += '      function() {  $( "#PongLog" ).html(""); } ';
+  html += '    ); ';
+  html += '  } ); ';
+  html += '</script>';
+  html += '</div>';
+  return html;
 }
 
 
 /** update data call back hook */
 function ponglog_debug_out( module, logline ) {
 	//$( '#PongLog' ).append( module+": "+logline+"<br/>" );
-    $( "#PongLog" ).val( 
-    		function( index, val ) {
-    			return val +"\n["+ module+"] "+logline;
-    		}
-    );
+//    $( "#PongLog" ).val( 
+//    		function( index, val ) {
+//    			return val +"\n["+ module+"] "+logline;
+//    		}
+//    );
 }

@@ -37,7 +37,7 @@
       }
     ],
     "footer": {
-      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' v0.7</a>, &copy; 2016, MH.",
+      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' $1</a>, &copy; 2016, MH.",
       "linkList": [
       	{ "text":"About", "url": "index.html?layout=about"},
       	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
