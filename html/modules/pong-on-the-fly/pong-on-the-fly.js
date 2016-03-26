@@ -125,12 +125,17 @@ function pongOnTheFlyCreModalFromMeta(id, modalName, resourceURL) {
     log( "PoNG-OnTheFly", "Get JSON for " + id );
     // var jsonCfg = pongOnTheFlyFindSubJSON( layoutOrig, "", sessionInfo[
     // id+"OnTheFly" ].resID );
+    var editName = id + modalName + 'DialogConfig';
+    var tmplName = id + modalName + 'DialogAssist';
+    
     log( "PoNG-OnTheFly", "Add JSON to #" + id + modalName + "Dialog" );
     $( '#' + id + modalName + 'Dialog' ).html(
-        '<form><textarea id="' + id + modalName
-            + 'DialogConfig" class="OnTheFly-ConfField"/></form>'
-            + '<form><textarea id="' + id + modalName
-            + 'DialogAssist" class="OnTheFly-AssistField"/></form>' );
+      '<form>'
+      +'<label for="' +editName+ '">View Configuration Editor:</label>'
+      +'<textarea id="' +editName+ '" class="OnTheFly-ConfField"/>'
+      +'<label for="' +tmplName + '">Config Copy-Paste Template</label>'
+      +'<textarea id="' +tmplName+ '" class="OnTheFly-AssistField"/>'
+      +'</form>' );
     $( '#' + id + modalName + 'DialogConfig' ).val(
         $.i18n( 'Could not load configuration from' )
           + ' "' + resourceURL + '"' );
