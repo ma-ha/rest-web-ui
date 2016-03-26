@@ -110,7 +110,7 @@ function pongOnTheFlySave(id, modalName, resourceURL) {
         location.reload();
       }, 
       'text' 
-    ).fail( alert(  $.i18n( "Can't save config back") ) );
+    ).fail(  function(data) { alert(  $.i18n( "Can't save config back") );  } );
 }
 
 
