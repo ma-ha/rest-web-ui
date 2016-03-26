@@ -27,11 +27,7 @@ log( "pong-feedback", "load module"); // print this on console, when module is l
 //======= Code for "loadResourcesHtml" hook ================================================
 function pongFeedbackHTML( divId, resourceURL, paramObj ) {
   log( "pong-feedback", "divId="+divId  );
-  var html = [];
-  html.push( '<div id="'+divId+'" class="pong-feedback">.X.<br>..X' );
-  html.push( '</div>' );
-  // output
-  $( "#"+divId ).html( html.join( "\n" ) );
+  $( "#"+divId ).html( '<div id="'+divId+'" class="pong-feedback"></div>' );
   
   log( "pong-feedback", "broker.subscribe(...) ");
   subscribeEvent( 'feedback', feedbackEvtCallback ) 
@@ -39,10 +35,12 @@ function pongFeedbackHTML( divId, resourceURL, paramObj ) {
 
   log( "pong-feedback", "divId="+divId+" end.");
 }
+
 var pongLastFeedbacks = 3;
 var pongLastFeedbackTxt = [' ','  ','   ']
 var pongLastFeedbackCnt = [1,1,1]
 var pongLastFeedbackTim = [ new Date() , new Date() , new Date() ]
+
 
 /** The callback is subscribed for feedback events */
 function feedbackEvtCallback( evt ) {
