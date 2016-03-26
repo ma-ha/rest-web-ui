@@ -85,10 +85,15 @@ function pongOnTheFlyOpenDlg(id, modalName, resourceURL, params) {
         JSON.stringify( pluginConfig, null, "  " ) );
   } );
   if ( params && params.assistUrl ) {
-    $.get( params.assistUrl, function(assistTxt) {
-      log( "PoNG-OnTheFly", "Assistance loaded from " + params.assistUrl );
-      $( '#' + id + modalName + 'DialogAssist' ).val( assistTxt );
-    } );
+    $.get( 
+        params.assistUrl, 
+        function(assistTxt) {
+          log( "PoNG-OnTheFly", "Assistance loaded from " + params.assistUrl );
+          $( '#' + id + modalName + 'DialogAssist' ).val( assistTxt );
+        } 
+      ).fail(
+          function() { publishEvent( 'feedback', {'text': 'Can not load assistance ' } ) }
+      );
   }
 }
 
@@ -98,10 +103,14 @@ function pongOnTheFlySave(id, modalName, resourceURL) {
   log( "PoNG-OnTheFly", "Save " + id + " " + modalName + " " + resourceURL );
   var viewCfg = getViewConfig( id );
   log( "PoNG-OnTheFly", "POST to " + resourceURL + '/' + viewCfg.type );
-  $.post( resourceURL + '/' + viewCfg.type + '/', $(
-      '#' + id + modalName + 'DialogConfig' ).val(), function(data) {
-    location.reload();
-  }, 'text' );
+  $.post( 
+      resourceURL + '/' + viewCfg.type + '/', 
+      $( '#' + id + modalName + 'DialogConfig' ).val(), 
+      function(data) {
+        location.reload();
+      }, 
+      'text' 
+    ).fail( alert(  $.i18n( "Can't save config back") ) );
 }
 
 
