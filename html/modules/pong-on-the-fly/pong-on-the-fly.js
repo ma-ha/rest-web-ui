@@ -103,14 +103,14 @@ function pongOnTheFlySave(id, modalName, resourceURL) {
   log( "PoNG-OnTheFly", "Save " + id + " " + modalName + " " + resourceURL );
   var viewCfg = getViewConfig( id );
   log( "PoNG-OnTheFly", "POST to " + resourceURL + '/' + viewCfg.type );
-  $.post( 
-      resourceURL + '/' + viewCfg.type + '/', 
-      JSON.parse( $( '#' + id + modalName + 'DialogConfig' ).val() ), 
-      function(data) {
-        location.reload();
-      }, 
-      'application/json' 
-    ).fail(  function(data) { alert(  $.i18n( "Can't save config back") );  } );
+  $.ajax({
+    type: "POST",
+    url: resourceURL + '/' + viewCfg.type + '/',
+    data: $( '#'+id+modalName+'DialogConfig' ).val(),
+    dataType: 'json',
+    contentType: 'application/json',
+    success: function( data ){ location.reload() } 
+  }).fail( function(data) { alert(  $.i18n( "Can't save config back") );  } );
 }
 
 
