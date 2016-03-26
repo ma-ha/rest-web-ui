@@ -105,11 +105,11 @@ function pongOnTheFlySave(id, modalName, resourceURL) {
   log( "PoNG-OnTheFly", "POST to " + resourceURL + '/' + viewCfg.type );
   $.post( 
       resourceURL + '/' + viewCfg.type + '/', 
-      $( '#' + id + modalName + 'DialogConfig' ).val(), 
+      JSON.parse( $( '#' + id + modalName + 'DialogConfig' ).val() ), 
       function(data) {
         location.reload();
       }, 
-      'text' 
+      'application/json' 
     ).fail(  function(data) { alert(  $.i18n( "Can't save config back") );  } );
 }
 
