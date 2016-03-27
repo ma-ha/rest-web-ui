@@ -293,9 +293,16 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	var contentItems = [];
 	var dataUrl = resourceURL;
 	if ( tbl.dataURL != null ) {
-		dataUrl = dataUrl+"/"+tbl.dataURL;
+	  var slash = '/';
+	  if ( tbl.dataURL.charAt( 0 ) == '/' ||  dataUrl.dataURL.charAt( dataUrl.length - 1 ) == '/') { slash = '' }
+	  dataUrl = dataUrl + slash + tbl.dataURL;
 	}
-	contentItems.push( "<script>" );
+//  if ( dataUrl.charAt( dataUrl.length - 1 ) != '/' ) { 
+//    dataUrl = dataUrl + '/';
+//  }
+	var redirectErr = $.i18n( "Data not stored! POST redirected, please check configuration" );
+  
+  contentItems.push( "<script>" );
 	contentItems.push( "$(function() { ");
 	
 	// code to add/set selected attribute by selector-checkbox event

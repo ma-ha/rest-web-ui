@@ -55,20 +55,25 @@ function pongOnTheFlyAddActionBtn(id, modalName, resourceURL, params) {
   html += '<div id="' + id + modalName + 'Dialog">' + resourceURL + " "
       + modalName + "</div>";
   log( "PoNG-OnTheFly", " cfg:  height: " + height + ", width: " + width );
-  html += '<script> $(function() { ' + ' $( "#' + id + modalName
-      + 'Dialog" ).dialog( { ' + ' autoOpen: false, height: ' + height
-      + ', width: ' + width + ' , modal: true, ' + ' buttons: { "'
-      + $.i18n( 'Save Configuration' ) + '": function() { '
-      + ' pongOnTheFlySave( "' + id + '", "' + modalName + '", "' + resourceURL
-      + '" );' + ' $( this ).dialog( "close" );  ' + '} } ' + ' } ); '
-      + '});</script>';
+  html += '<script>'
+    + '$(function() { ' 
+    + '  $( "#' + id + modalName + 'Dialog" ).dialog( '
+    + '    { autoOpen: false, modal: true, height: '+height+', width: '+width+',' 
+    + '      buttons: { "' + $.i18n( 'Save Configuration' ) + '": '
+    + '        function() { '
+    + '          pongOnTheFlySave( "'+id+'", "'+modalName+'", "'+resourceURL+'" );' 
+    + '          $( this ).dialog( "close" );  ' 
+    + '         } } ' 
+    + '    } ); '
+    + '} );</script>';
   html += '<button id="' + id + modalName + 'Bt">' + $.i18n( buttonLbl )
       + '</button>';
-  html += '<script>  $(function() { ' + 
-      '$( "#' + id + modalName + 'Bt" ).button( '
-      +'{ icons:{primary: "' + icon + '"}, text: false } ).click( ' 
-      + ' function() { ' + jscall + ' } ); } ); </script>';
-
+  html += '<script> '
+    + ' $(function() { '  
+    + '   $( "#' + id + modalName + 'Bt" ).button( '
+    +'      { icons:{primary: "' + icon + '"}, text: false } '
+    +'    ).click( function() { ' + jscall + ' } ); } ); '
+    +'</script>';
   return html;
 }
 

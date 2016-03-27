@@ -7,7 +7,7 @@ If you start your first table, perhaps it is easier to start with the [easy tabl
 
 # Usage in "structure"
 
-Simply <code>"type": "pong-table"</code> to the <code>rows</code> or <code>cols</code> resource. Example [[PoNG Structure Specification|structure file]] extract:
+Simply <code>"type": "pong-table"</code> to the <code>rows</code> or <code>cols</code> resource. Example [https://github.com/ma-ha/rest-web-ui/wiki/Structure-Specification](structure file) extract:
 
 	 {
 	   "layout": {
@@ -30,7 +30,7 @@ The resource will load the table definition from the URL <code>../svc/XYZ/pong-t
 Example JSON definiton from <code><nowiki>../svc/[resourceUrl]/pong-table</nowiki></code>
  
 	 {
-	     "dataURL": "webdata",
+	     "dataURL": "webdata/",
 	     "filter" : {
 	         "dataReqParams": [ {"id":"productSearchString", "label":"Product"}, {"id":"productType", "label":"Type"} ],
 	         "dataReqParamsSrc": "Form"
@@ -47,21 +47,25 @@ Example JSON definiton from <code><nowiki>../svc/[resourceUrl]/pong-table</nowik
 
 The <code>"filter"</code> is optional. 
 
-In the example the table is the top level object in the content. It may happen, that the table is somewhere in the object tree of the JSON result. You can use the dataDocSubPath attribute, to tell  the module the sub-path of the table data, e.g.
+In the example the table is the top level object in the content. It may happen, that the table is somewhere in the object tree of the JSON result. 
+You can use the _dataDocSubPath_ attribute, to tell the module the sub-path of the table data, e.g.
 
 	{
-		"dataURL": "webdata",
+		"dataURL": "webdata/",
 		"dataDocSubPath": "searchResult.dataTbl",
 		...
     }
 
-The identifier of each row is defined by <code>"rowId"</code>. Thi can be a string as above or a list of strings (e.g. when the table data is a join of two tables). Example:
+The identifier of each row is defined by <code>"rowId"</code>. 
+This can be a string as above or a list of strings (e.g. when the table data is a join of two tables). Example:
 
 	"rowId": ["struct_id","template_id"]
 	
 The rowId key and values are used as GET or POST prameters in updates of editable cells or for button actions.
 
 Remark: The rowId must not be in the cols array, it must only be in the result of the service call.
+
+**IMPORTANT WARNING:** For editable cells, please test the configuration carefully! If you detect POST requests with "redirect" (HHTP status 301), nothing will be saved!! You need to configure the URL correctly!
 
 ## Columns 
 ### Cell Types 
@@ -108,7 +112,7 @@ By default the link opens a new browser tab/window. Other options are
 * "target":"_parent"
 
 ### Button 
-The button will do an asynchronous call to <code><nowiki>svc/[resourceURL]/<id of button>?rowId=[rowId]</nowiki></code> 
+The button will do an asynchronous call to <code><nowiki>svc/<resourceURL>/<id of button>?rowId=<rowId></nowiki></code> 
 In the example above this will be posted (productId of the row may be 1234): <code>svc/Products/addToOrder?rowId=1234</code>
 
 You can set the <code>URL</code> parameter to any other AJAX target.
@@ -118,7 +122,8 @@ Button <code>method</code> is optional, default is <code>"method":"POST"</code>
 After pressing the button, the data in the table is updated.
 
 Optional parameters (for actions after a successful POST call):
-* <code>"update"</code> is an (optional) array of resource (column/row) ids, where further data updates should be triggered. Example: <code>"update": [ { "resId":"xyz" } ] </code>
+* <code>"update"</code> is an (optional) array of resource (column/row) ids, where further data updates should be triggered. 
+Example: <code>"update": [ { "resId":"xyz" } ] </code>
 * <code>"target"</code> 
 ** target can be a resource Id: <code>"target": "customerActionOut"</code>
 ** target can be "_parent", the result of the AJAX call must be an URL
@@ -249,7 +254,7 @@ If you specify <code>"editable":"true"</code> for a column, you can click into t
 
 Currently this feature is only available for text and checkbox columns.
 
-'''Important''': The URL ending is a diva. If you implement a service endpoint (e.g. using <code>svc/myservice/index.php</code>) the URL may have to end with a slash. If you specify <code>"resourceUrl":"svc/myservice"</code> you can use <code>"dataURL":"/"</code> to get the POST request working correctly. The "developer tools" are your friend to identify, what request is going out -- and if it works.
+**Important**: The URL ending is a diva. If you implement a service endpoint (e.g. using <code>svc/myservice/index.php</code>) the URL may have to end with a slash. If you specify <code>"resourceUrl":"svc/myservice"</code> you can use <code>"dataURL":"/"</code> to get the POST request working correctly. The "developer tools" are your friend to identify, what request is going out -- and if it works.
 
 Limitation: The editable cells only work for plain table data, not for structured data. 
 
