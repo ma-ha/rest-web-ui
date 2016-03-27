@@ -65,7 +65,7 @@ The rowId key and values are used as GET or POST prameters in updates of editabl
 
 Remark: The rowId must not be in the cols array, it must only be in the result of the service call.
 
-**IMPORTANT WARNING:** For editable cells, please test the configuration carefully! If you detect POST requests with "redirect" (HHTP status 301), nothing will be saved!! You need to configure the URL correctly!
+**IMPORTANT WARNING:** For editable cells, please test the configuration carefully! I.e. if you detect POST requests with "redirect" (HTTP status 301), nothing will be saved!! You need to configure the URL correctly!
 
 ## Columns 
 ### Cell Types 
