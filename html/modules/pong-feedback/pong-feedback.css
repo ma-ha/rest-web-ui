@@ -4,8 +4,21 @@
 	right: 0px;
 	width: 300px;
 	height: 48px;
-	background-color: #F0F0F0;
+	background-color: #F5F5F5;
 	padding: 1px;
 	margin:3px;
 	font-size: 10pt;
+	display: none;
 }
+
+.feedback100 { color: #000 }
+.feedback090 { color: #171717 }
+.feedback080 { color: #333 }
+.feedback070 { color: #474747 }
+.feedback060 { color: #666 }
+.feedback050 { color: #777777 }
+.feedback040 { color: #999 }
+.feedback030 { color: #A7A7A7 }
+.feedback020 { color: #CCC }
+.feedback010 { color: #D7D7D7 }
+.feedback000 { color: #F5F5F5 }

@@ -24,23 +24,28 @@ THE SOFTWARE.
 log( "pong-feedback", "load module"); // print this on console, when module is loaded
 
 
+var pongLastFeedbacks = 3;
+var pongLastFeedbackTxt = []
+var pongLastFeedbackCnt = []
+var pongLastFeedbackTim = []
+var pongFeedbackFadeout = 5000
+
+
 //======= Code for "loadResourcesHtml" hook ================================================
 function pongFeedbackHTML( divId, resourceURL, paramObj ) {
   log( "pong-feedback", "divId="+divId  );
   $( "#"+divId ).html( '<div id="'+divId+'" class="pong-feedback"></div>' );
-  
+  for ( var i=0; i < pongLastFeedbacks; i++ ) {
+    pongLastFeedbackTxt.push( ' ' );
+    pongLastFeedbackCnt.push( 1 );
+    pongLastFeedbackTim.push( new Date() )
+  }
   log( "pong-feedback", "broker.subscribe(...) ");
   subscribeEvent( 'feedback', feedbackEvtCallback ) 
-  pongFeedbackFimerID = setInterval( "updateFeedback()", 5000 );
+  pongFeedbackFimerID = setInterval( "updateFeedback()", pongFeedbackFadeout );
 
   log( "pong-feedback", "divId="+divId+" end.");
 }
-
-var pongLastFeedbacks = 3;
-var pongLastFeedbackTxt = [' ','  ','   ']
-var pongLastFeedbackCnt = [1,1,1]
-var pongLastFeedbackTim = [ new Date() , new Date() , new Date() ]
-
 
 /** The callback is subscribed for feedback events */
 function feedbackEvtCallback( evt ) {
@@ -76,31 +81,46 @@ function feedbackEvtCallback( evt ) {
 function updateFeedback() {
   var feedbackLog = ''
   var justNow = new Date()
-  var col = '#000'
+  var col = 'feedback100'
   var fadeOutCnt = 0;
   for ( var i = pongLastFeedbacks-1; i >= 0; i-- ) {
     var deltaMS = justNow.getTime() - pongLastFeedbackTim[i].getTime()
     //log( "pong-feedback", deltaMS+' ms' )
-    if ( deltaMS > 50000 ) {
-      col = '#F0F0F0'
-      fadeOutCnt ++
-    } else if ( deltaMS > 40000 ) {
-      col = '#BBB'
-    } else if ( deltaMS > 30000 ) {
-      col = '#999'
-    } else if ( deltaMS > 20000 ) {
-      col = '#666'
-    } else if ( deltaMS > 10000 ) {
-      col = '#333'
+    if ( deltaMS > pongFeedbackFadeout * 10  ) {
+      col = 'feedback000' 
+      fadeOutCnt++
+    } else if ( deltaMS > pongFeedbackFadeout * 9 ) {
+      col = 'feedback010'
+    } else if ( deltaMS > pongFeedbackFadeout * 8 ) {
+      col = 'feedback020'
+    } else if ( deltaMS > pongFeedbackFadeout * 7 ) {
+      col = 'feedback030'
+    } else if ( deltaMS > pongFeedbackFadeout * 6 ) {
+      col = 'feedback040'
+    } else if ( deltaMS > pongFeedbackFadeout * 5 ) {
+      col = 'feedback050'
+    } else if ( deltaMS > pongFeedbackFadeout * 4 ) {
+      col = 'feedback060'
+    } else if ( deltaMS > pongFeedbackFadeout * 3 ) {
+      col = 'feedback070'
+    } else if ( deltaMS > pongFeedbackFadeout * 2 ) {
+      col = 'feedback080'
+    } else if ( deltaMS > pongFeedbackFadeout * 1 ) {
+      col = 'feedback090'
     }  
     if ( pongLastFeedbackCnt[i] == 1 ) {
-      feedbackLog += '<span style="color:'+col+'">' + pongLastFeedbackTxt[i] + '</span><br>'
+      feedbackLog += '<span class="'+col+'">' + pongLastFeedbackTxt[i] + '</span><br>'
     } else {
-      feedbackLog += '<span style="color:'+col+'">' + pongLastFeedbackTxt[i] + ' ['+ pongLastFeedbackCnt[i] +']</span><br>'
+      feedbackLog += '<span class="'+col+'">' + pongLastFeedbackTxt[i] + ' ['+ pongLastFeedbackCnt[i] +']</span><br>'
     }
   }
   $( '.pong-feedback' ).html( feedbackLog )
-  if ( fadeOutCnt != 3 ) log( "pong-feedback", "updateFeedback done" )
+  if ( fadeOutCnt == pongLastFeedbacks ) {
+    log( "pong-feedback", "updateFeedback done" )
+    $( ".pong-feedback" ).fadeOut( 500 )
+  } else {
+    $( ".pong-feedback" ).fadeIn( 100 )
+  }
 }
 
 function moveToLastFeetback( evtNo ) {
