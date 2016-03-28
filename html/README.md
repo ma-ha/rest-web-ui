@@ -1,6 +1,6 @@
 # Release Notes
 ## Version 0.8
-* [Navigation tabs](modules/mong-navbar) with pull down sub menus
+* [Navigation tabs](modules/pong-navbar) with pull down sub menus
 * [I/O switches action](modules/pong-io) rendered directly
 * ["On-the-fly" configuration](modules/pong-on-the-fly) for views
 * [Log Event Queue](modules/pong-log) (catches also logs from early page life cycle)  
