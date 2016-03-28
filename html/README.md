@@ -3,18 +3,18 @@
 * WIP
 
 ## Version 0.7
-* Header: Pull down menu (new)
-* Plug-Ins: Include machanism for 3rd party JS libraries 
-* List view rewritten: reuse table functions
-* Tables/list view: 
+* Header: [Pull down menu](modules/pong-pulldown/) (new)
+* [List view](modules/pong-list/) rewritten: reuse table functions
+* [Table](modules/pong-table/)/[list](modules/pong-list/) view: 
 	* with select fields and actions
 	* with clickable Image 
 	* support more field types
 	* paginator with page info
 	* poling reload 
-* Form view support more field types
-* Help View: Option to show JSON config
-* Source Code View
+* [Form view](modules/pong-form/) support more field types
+* [Help View](modules/pong-help/): Option to show JSON config
+* [Source Code View]](modules/pong-sourcecode/)
+* Programming Plug-Ins: [Include machanism for 3rd party JS libraries](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming) 
 
 ## Version 0.6
 Modules Improvement:
