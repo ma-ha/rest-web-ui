@@ -9,8 +9,8 @@
 				"resourceURL":"io",
 				"title":"IO",
 				"moduleConfig":{
-					"imgURL":"svc/io/img.png",
-					"dataURL":"svc/io/",
+					"imgURL":"svc/mock/vacuumlab/img.png",
+					"dataURL":"svc/mock/vacuumlab/",
 					"poll":"5000",
 					"io":[
 						{
@@ -162,7 +162,7 @@
 						{
 							"id":"cam",
 							"type":"Img",
-							"imgURL":"svc/io/cam.jpg",
+							"imgURL":"svc/mock/vacuumlab/cam.jpg",
 							"width":"70", "height":"50",
 							"pos":{ "x":"590", "y":"40" }
 						}

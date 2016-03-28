@@ -56,7 +56,7 @@
                                             "id": "getContacts",
                                             "actionName": "Load Contacts (Sugar Mock)",
                                             "method": "GET",
-                                            "actionURL": "svc/sugar-mock/customer",
+                                            "actionURL": "svc/mock/sugar/customer",
                                             "setData": [
                                                 {
                                                     "dataDocSubPath": "records",
@@ -83,7 +83,6 @@
                                 "resourceURL": "change_me",
                                 "title": "SugarCRM Contacts",
                                 "moduleConfig": {
-                                    "dataURL": "tbldata",
                                     "rowId": "id",
                                     "cols": [
                                         {
@@ -230,7 +229,6 @@
                 "resourceURL": "change_me",
                 "title": "Routes",
                 "moduleConfig": {
-                    "dataURL": "tbldata",
                     "rowId": "from",
                     "cols": [
                         {

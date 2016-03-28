@@ -1232,7 +1232,7 @@ function log( func, msg ){
 //		  func=='loadModules'
 //		// || func=='init' 
 //	) { 
-//		console.log( logline );
+		console.log( logline );
 //		loggerBuffer.push
 //	}
 	

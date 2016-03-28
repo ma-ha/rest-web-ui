@@ -30,7 +30,7 @@ Here are some demos of view type and demo of real world web seb service integrar
 * <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
-* <a href="http://mh-svr.de/pong_dev/index.html?layout=demo_io2" target="_blank">"Arduino" demo</a> or <a href="http://mh-svr.de/pong_dev/index.html?layout=demo_io" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttone, displays, graphs ...
+* <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttone, displays, graphs ...
 
 These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 

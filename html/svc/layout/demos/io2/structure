@@ -11,7 +11,7 @@
 				"resourceURL":"none",
 				"type":"pong-io",
 				"moduleConfig":{
-					"imgURL":"svc/layout/demo_io2/demo.png",
+					"imgURL":"svc/layout/demos/io2/demo.png",
 					"dataURL":"svc/mock/arduino/",
 					"poll":10000,
 					"io":[

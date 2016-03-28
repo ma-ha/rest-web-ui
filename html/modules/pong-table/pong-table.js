@@ -89,7 +89,8 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	
 	// create form if required
 	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
-			
+  log( "Pong-Table", "cre table 1" );
+	
 	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
 	// create table head
 	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
@@ -109,6 +110,8 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			}
 		}		
 	}
+  log( "Pong-Table", "cre table 2" );
+
 	contentItems.push( '<script> ' );
 	contentItems.push( "$(function() { ");
 	contentItems.push( ' $( ".'+divId+'TblSort").on( "click", function( e ) { ' );
@@ -128,12 +131,15 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 		contentItems.push( "</tr>" );
 	}
 	contentItems.push( "</table>" );
+  log( "Pong-Table", "cre table 3" );
 
 	// paginator buttons:
 	var paginatorJS = pongTableGenPaginator(divId, tbl);
+  log( "Pong-Table", "cre table 4" );
 
 	// AJAX functions:
 	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
+  log( "Pong-Table", "cre table 5" );
 
 	// AJAX functions:
 	var actionsJS = pongTableActions( divId, resourceURL, params, tbl );
@@ -144,6 +150,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	$( "#"+divId ).append( actionsJS.join("\n") );
 	
+  log( "Pong-Table", "cre table 6" );
 
 	var first = true;
 	// add filter params to data URL

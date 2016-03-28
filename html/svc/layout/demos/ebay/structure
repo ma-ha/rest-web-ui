@@ -204,7 +204,6 @@
 				"resourceURL":"-",
 				"title":"EBay Items",
 				"moduleConfig":{
-					"dataURL":"tbldata",
 					"rowId":"productId",
 					"dataDocSubPath":"findItemsByKeywordsResponse.searchResult.item",
 					"cols":[

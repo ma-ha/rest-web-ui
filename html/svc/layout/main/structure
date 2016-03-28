@@ -14,13 +14,12 @@
       			"title": "Test Cases",
       			"menuItems" : [
 			       { "html":"<b>Regression Tests:</b>" },
-			       { "pageLink":"test-easy", "label":"Easy-Form/Easy-Table" },
-			       { "pageLink":"test", "label":"Action Test" },
-			       { "pageLink":"test-list", "label":"List Test" },
-			       { "pageLink":"test-sourcecode", "label":"Source Code View Test" },
-			       { "pageLink":"test-map", "label":"Map Test" },
-			       { "pageLink":"test-onthefly", "label":"On-The-Fly Config Test" },
-			       { "pageLink":"demo-feedback", "label":"Feedback View Test" },
+			       { "pageLink":"tests/easy", "label":"Easy-Form/Easy-Table" },
+			       { "pageLink":"tests/action", "label":"Action Test" },
+			       { "pageLink":"tests/list", "label":"List Test" },
+			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
+			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
+			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

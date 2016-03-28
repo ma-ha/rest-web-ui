@@ -35,5 +35,7 @@ div.editable {
 
 .tbl-link-icon {
 	background-color: gray;
-	display:inline-block
+	display:inline-block;
+	margin-left: 4px;
+	
 }

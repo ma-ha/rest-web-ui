@@ -1,10 +1,9 @@
 {
    "navigations" : [
       { "layout":"main", "label":"Main"  },
-      { "layout":"demo_docker", "label":"Docker"  },
-      { "layout":"demo_ebay", "label":"eBay"  },
-      { "layout":"demo_wiki", "label":"Wiki"  },
-      { "layout":"demo_io2", "label":"Adruino"  },
-      { "layout":"demo_io", "label":"IO Lab"  }
+      { "layout":"demos/crm-map", "label":"CRM"  },
+      { "layout":"demos/wiki", "label":"Wiki"  },
+      { "layout":"demos/io2", "label":"Adruino"  },
+      { "layout":"demos/vacuumlab", "label":"Vacuum&nbsp;Lab"  }
    ]
 }
