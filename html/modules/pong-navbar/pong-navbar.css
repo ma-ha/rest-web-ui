@@ -1,13 +1,32 @@
 .pong-navbar {
 	position : absolute;
-	bottom: 5px;
+	top: 70px;
 	left: 50px;
-	font-size: 10pt;
-	color: gray;
 	width:80%;	
 	font-size: 12pt;
 }
-.pongNavBarItem { width:100px; float:left; }
+
+.pongNavBarItem { 
+	float:left; 
+	width: 110px; 
+	height: 32px; 
+	text-align: center;
+}
+
+.pongNavBarPullDown {
+	width: 110px; 
+	height: 32px;
+}
+
+.pongNavBarPullDownMenu { 
+	position:absolute;
+	top:32px;
+	padding:5px;
+	min-width:110px;
+	background-color: #909090;
+	z-index: 100000;
+	display: none;
+}
 
 .pongNavBarItemActive {
 	font-size: 14pt;

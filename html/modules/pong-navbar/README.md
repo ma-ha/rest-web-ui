@@ -51,14 +51,14 @@ Example:
 	               "moduleConfig": {
 	                     "navigations": [
 	                            {
-	                                "layout": "123",
+	                                "layout": "abc",
 	                                "page_name": "ORLpAl",
-	                                "label": "Tab1"
+	                                "label": "Tab 1"
 	                            },
 	                            {
-	                                "layout": "124",
+	                                "layout": "xyz",
 	                                "page_name": "1fRK2h",
-	                                "label": "tab2"
+	                                "label": "Tab 2"
 	                            }
 	                     ]
 	                }
@@ -70,7 +70,7 @@ Example:
 	   ...
 	}
 
-## Example result 
+### Example result 
 Generated HTML is:
 
 	 <html>
@@ -92,3 +92,21 @@ Generated HTML is:
 	        </div>
 	     </div>
 	     ...
+
+## Sub-Menu Configuration
+
+Example:
+    {
+       "navigations" : [
+          { "layout":"main", "label":"Main"  },
+          { "label":"I/O Demos"
+            "menuItems" : [
+			       { "layout":"tests/a", "label":"Demo 1" },
+			       { "layout":"tests/b", "label":"Demo 2" },
+			       { "html":"<b>Regression Tests:</b>" },
+			       { "layout":"tests/xx", "label":"Demo 3" }
+            ]  
+          }
+       ]
+    }
+

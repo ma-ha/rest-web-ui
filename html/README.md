@@ -1,6 +1,14 @@
 # Release Notes
 ## Version 0.8
-* WIP
+* [Navigation tabs](modules/mong-navbar) with pull down sub menus
+* [I/O switches action](modules/pong-io) rendered directly
+* ["On-the-fly" configuration](modules/pong-on-the-fly) for views
+* [Log Event Queue](modules/pong-log) (catches also logs from early page life cycle)  
+* Base framework now with "pub-sub event broker"
+* [Feedback view](modules/feedback) with feedback for GUI user now from forms, tables, maps, ...
+
+and
+* [Node.JS support](https://www.npmjs.com/package/easy-web-app)
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)
