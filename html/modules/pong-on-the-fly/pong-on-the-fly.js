@@ -104,13 +104,17 @@ function pongOnTheFlyOpenDlg(id, modalName, resourceURL, params) {
 
 
 /** On close: save config and reload page */
-function pongOnTheFlySave(id, modalName, resourceURL) {
+function pongOnTheFlySave( id, modalName, resourceURL ) {
   log( "PoNG-OnTheFly", "Save " + id + " " + modalName + " " + resourceURL );
   var viewCfg = getViewConfig( id );
+  var postURL = resourceURL + '/' + viewCfg.type + '/';
+  //TODO: check for pageID and structID etc
+  //var cfg = moduleConfig[id];
+  //
   log( "PoNG-OnTheFly", "POST to " + resourceURL + '/' + viewCfg.type );
   $.ajax({
     type: "POST",
-    url: resourceURL + '/' + viewCfg.type + '/',
+    url: postURL,
     data: $( '#'+id+modalName+'DialogConfig' ).val(),
     dataType: 'json',
     contentType: 'application/json',
