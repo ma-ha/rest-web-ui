@@ -66,7 +66,7 @@
 			},
 			{
 				"rowId":"r1",
-				"height":"280px",
+				"height":"230px",
 				"type":"pong-easytable",
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
