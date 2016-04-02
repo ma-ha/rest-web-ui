@@ -67,6 +67,10 @@ var userRole = "";
 var mode = '';
 var directPage = 'main'; 
 
+
+loggerEvents = true;
+
+
 /** Because ajax loads are asynchronous, 
     we have to wait for all calls to be sinished to load HTML into DIV
     and then we have to wait to do all the callbacks */
@@ -1224,164 +1228,168 @@ function getSubData( data, subPath ) {
 var loggerModule = false; 
 var feedbackModule = false; 
 var loggerBuffer = [];
+
 function log( func, msg ){
-	// define the "func" you want to log to the console
   var logline = '['+func+'] '+msg;
-//	if (  //func=='pong-feedback'
-//	  //|| func=='pong-io'  
-//		  func=='loadModules'
+
+  // define the "func" you want to log to the console
+//	if ( func=='PoNG-NavBar'
 //		// || func=='init' 
 //	) { 
-		console.log( logline );
+//		console.log( logline );
 //		loggerBuffer.push
 //	}
 	
 	// send log to event broker
-	var logBroker = getEventBroker('log');
-	logBroker.cleanupQueue( 1000 );
-	logBroker.queueEvent( { text: logline, channel:'log' } );
+  if ( loggerEvents ) { 
+    var logBroker = getEventBroker('log');
+    logBroker.cleanupQueue( 1000 );
+  	logBroker.queueEvent( { text: logline, channel:'log' } );
+  }
 	
 }
 
 function logErr( func, msg ){
 	console.log( "["+func+"] ERROR: "+msg );
 	
-	var logBroker = getEventBroker('log');
-  logBroker.cleanupQueue( 1000 );
-  logBroker.queueEvent( { text: '['+func+'] '+msg, channel:'log', severity:'ERROR' } );
+  if ( loggerEvents ) { 
+  	var logBroker = getEventBroker('log');
+    logBroker.cleanupQueue( 1000 );
+    logBroker.queueEvent( { text: '['+func+'] '+msg, channel:'log', severity:'ERROR' } );
+  }
 }
 
 // =====================================================================================================
 // Integrated pub-sub event broker
 // based on  https://github.com/philbooth/pub-sub.js
 
-  eventBrokers = {}
-  
-  /** short cut function */
-  function publishEvent( channelName, eventObj ) {
-    var broker = getEventBroker( 'main' )
-    eventObj.channel = channelName
-    broker.publish( eventObj ); 
-  }
-  
-  /** short cut function */
-  function subscribeEvent( channelName, callbackFunction ) {
-    var broker = getEventBroker( 'main' )
-    broker.subscribe( 
-        { 
-          'channel':channelName, 
-          'callback':callbackFunction 
-        } 
-    );  
-  }
-  
-  /** pub/sub event broker impl */
-  function getEventBroker (id) {
-      var subscriptions = {
+eventBrokers = {}
+
+/** short cut function */
+function publishEvent( channelName, eventObj ) {
+  var broker = getEventBroker( 'main' )
+  eventObj.channel = channelName
+  broker.publish( eventObj ); 
+}
+
+/** short cut function */
+function subscribeEvent( channelName, callbackFunction ) {
+  var broker = getEventBroker( 'main' )
+  broker.subscribe( 
+      { 
+        'channel':channelName, 
+        'callback':callbackFunction 
+      } 
+  );  
+}
+
+/** pub/sub event broker impl */
+function getEventBroker (id) {
+    var subscriptions = {
           'main': []
       }
 
 //      check.verifyUnemptyString(id, 'Invalid id');
-      if (typeof eventBrokers[id] === 'undefined') {
-          eventBrokers[id] = {
-              id:id,
-              subscribe: subscribe,
-              unsubscribe: unsubscribe,
-              publish: publish,
-              evtQueue : [],
-              queueEvent: queueEvent,
-              cleanupQueue: cleanupQueue
-          };
-      }
+    if (typeof eventBrokers[id] === 'undefined') {
+        eventBrokers[id] = {
+            id:id,
+            subscribe: subscribe,
+            unsubscribe: unsubscribe,
+            publish: publish,
+            evtQueue : [],
+            queueEvent: queueEvent,
+            cleanupQueue: cleanupQueue
+        };
+    }
+    return eventBrokers[id];
 
-      return eventBrokers[id];
-
-      function subscribe (args) {
-        if ( args && args.channel && typeof args.callback === 'function' ) {
-          addSubscription( args.channel, args.callback )            
-          // ... and now send notifications for queued events
-          for( var i = 0; i < this.evtQueue.length; i++ ) {
-            var qEvt = this.evtQueue[i].event 
-              if ( qEvt && qEvt.channel == args.channel ) {
-                notifySubscriptions( qEvt, qEvt.channel );        
-              }
-          }
+    function subscribe (args) {
+      //console.log( "subscribe "+ args.channel )
+      if ( args && args.channel && typeof args.callback === 'function' ) {
+        addSubscription( args.channel, args.callback )            
+        // ... and now send notifications for queued events
+        for( var i = 0; i < this.evtQueue.length; i++ ) {
+          var qEvt = this.evtQueue[i].event 
+            if ( qEvt && qEvt.channel == args.channel ) {
+              notifySubscriptions( qEvt, qEvt.channel );        
+            }
         }
       }
+    }
 
-      function verifyArgs (args) {
+    function verifyArgs (args) {
 //          check.verifyObject(args, 'Invalid arguments');
 //          check.verifyUnemptyString(args.name, 'Invalid name');
 //          check.verifyFunction(args.callback, 'Invalid callback');
-      }
+    }
 
-      function addSubscription ( channel, callback) {
-        console.log( 'subscribe '+channel )
-          if (typeof subscriptions[channel] === 'undefined') {
-              subscriptions[channel] = [];
+    function addSubscription ( channel, callback) {
+      //sconsole.log( 'subscribe '+channel )
+      if (typeof subscriptions[channel] === 'undefined') {
+          subscriptions[channel] = [];
+      }
+      subscriptions[channel].push(callback);
+      console.log( 'subscribed: '+channel )
+    }
+
+    function unsubscribe (args) {
+      verifyArgs(args);
+      removeSubscription(args.name, args.callback);
+    }
+
+    function removeSubscription (eventName, callback) {
+      var i, eventSubscriptions = subscriptions[eventName];
+      for (i = 0; i < eventSubscriptions.length; i += 1) {
+          if (eventSubscriptions[i] === callback) {
+              eventSubscriptions.splice(i, 1);
+              break;
           }
-          subscriptions[channel].push(callback);
-          console.log( 'subscribed: '+channel )
       }
-
-      function unsubscribe (args) {
-          verifyArgs(args);
-          removeSubscription(args.name, args.callback);
+    }
+    
+    function queueEvent( event ) {
+      var queuedEvent = {
+          event: event,
+          created: new Date(),
+          unqueue: false
       }
-
-      function removeSubscription (eventName, callback) {
-          var i, eventSubscriptions = subscriptions[eventName];
-          for (i = 0; i < eventSubscriptions.length; i += 1) {
-              if (eventSubscriptions[i] === callback) {
-                  eventSubscriptions.splice(i, 1);
-                  break;
-              }
-          }
-      }
-      
-      function queueEvent( event ) {
-        var queuedEvent = {
-            event: event,
-            created: new Date(),
-            unqueue: false
+      this.evtQueue.push( queuedEvent )
+      publish( event )
+    }
+    
+    var cleanupInProgress = false;
+    
+    function cleanupQueue( maxCnt ) {
+      if ( ! cleanupInProgress ) { // don't run two cleanups in parallel
+        cleanupInProgress = true;
+        
+        // remove old events from queue  
+        if ( maxCnt && evtQueue.length > maxCnt ) {
+          evtQueue.splice( 0, evtQueue.length - maxCnt )           
         }
-        this.evtQueue.push( queuedEvent )
-        publish( event )
-      }
-      
-      var cleanupInProgress = false;
-      
-      function cleanupQueue( maxCnt ) {
-        if ( ! cleanupInProgress ) { // don't run two cleanups in parallel
-          cleanupInProgress = true;
-          
-          // remove old events from queue  
-          if ( maxCnt && evtQueue.length > maxCnt ) {
-            evtQueue.splice( 0, evtQueue.length - maxCnt )           
+        
+        // remove unqueued events from queue  
+        for( var i = evtQueue.length; i >= 0;  i-- ) {
+          if ( evtQueue[i].unqueue ) {
+            array.splice(i,0)
           }
-          
-          // remove unqueued events from queue  
-          for( var i = evtQueue.length; i >= 0;  i-- ) {
-            if ( evtQueue[i].unqueue ) {
-              array.splice(i,0)
-            }
-          }
-          cleanupInProgress = false;   
         }
+        cleanupInProgress = false;   
       }
-      
-      function publish (event) {
-          //notifySubscriptions( event, '*' );
-          notifySubscriptions( event, event.channel );
-      }
+    }
+    
+    function publish (event) {
+      //notifySubscriptions( event, '*' );
+      notifySubscriptions( event, event.channel );
+    }
 
-      function notifySubscriptions (event, channel ) {
-        if ( subscriptions[channel] ) {
-          var eventSubscriptions = subscriptions[channel], i;
-          for (i = 0; i < eventSubscriptions.length; i += 1) {
-             eventSubscriptions[i](event);
-          } 
-        }
+    function notifySubscriptions (event, channel ) {
+      if ( subscriptions[channel] ) {
+        var eventSubscriptions = subscriptions[channel], i;
+        for (i = 0; i < eventSubscriptions.length; i += 1) {
+           eventSubscriptions[i](event);
+        } 
       }
-  }
+    }
+}
  
