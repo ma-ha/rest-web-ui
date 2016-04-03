@@ -19,10 +19,11 @@ body {
 
 #header .header-links {
 	position : absolute;
-	bottom: 5px;
+	top: 5px;
 	right: 10px;
 	font-size: 10pt;
 	color: gray;
+	height: 20px;
 }
 
 #maindiv { 

@@ -2,42 +2,13 @@
 
 body {
 		font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
-}
-.pongListRow {
-	position:relative; float:right;
-}
-		
-.pongListCellmsg {
-	width:600px;
-}
-.pongListCelldate {
-	width:50px;
-}
-.pongListCellauthor {
-	width:160px;
-	font-weight: bold;
-}
-.pongListCelllink {
-	padding-left:10px; width:150px;
-}
-#header .header-links {
-	position : absolute;
-	top: 5px;
-	right: 10px;
-	font-size: 10pt;
-	color: gray;
-	height: 20px;
+		background-color: #EEE;
 }
 
-#wikiContent {
- width: 970px;
- height: 530px;	
- font-size: 0.8em;
+#maindiv {
+	margin: 0 auto;
 }
-#wikiContent a:link{color:#333;}
-#wikiContent a:visited{color:#333;}
-#wikiContent a:hover{color:#333;}
-#wikiContent a:active{color:#333;} 
+
 
 .pongMasterDetailsFrmField label {
 	display: block;  
