@@ -1,0 +1,10 @@
+/* You can add all your custom styles here */
+
+body {
+		font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+		background-color: #EEE;
+}
+
+#maindiv {
+	margin: 0 auto;
+}

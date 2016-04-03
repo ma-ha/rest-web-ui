@@ -28,10 +28,6 @@ body {
 	padding-left:  30px; 
 }
 
-.pongFormInputCol {
-	position: relative; float: left; 
-}
-
 .pongFormInputccpContentGrp0Col0 {
 	width: 500px; height: 200px;
 }
@@ -82,14 +78,8 @@ body {
 .pongFormInputpaasContentGrp1Col1  fieldset{
 	height: 140px; width:447px;
 }
-.pongFormInputGrp0 label {
-	display: block;
-    float: left;
-	width: 100px;
-}
-.pongFormInputCol {
-	padding-right:20px;
-}
+
+
 .pongFormInputpaasContentGrp1Col0 label {
 	display: block;  
 	float: right;

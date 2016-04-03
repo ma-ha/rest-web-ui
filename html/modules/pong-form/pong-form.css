@@ -1,0 +1,10 @@
+.pongFormInputCol {
+	padding-right:20px;
+	position: relative; float: left; 	
+}
+
+.pongFormInputGrp0 label {
+	display: block;
+    float: left;
+	width: 100px;
+}
