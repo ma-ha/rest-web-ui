@@ -1,0 +1,25 @@
+{
+	"name":"rest-web-gui",
+	"version":"0.7.6a",
+	"description":"A framework to create web portals w/o coding and w/o application servers.",
+	"author":"ma-ha",
+	"license":"MIT",
+	"main":"index.html",
+	"scripts":{
+		"test":"echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords":[
+		"GUI","web", "app", "browser", "AJAX", "easy",
+		"portal", "REST", "RESTful", "web", "service",
+		"form", "table", "I/O", "content"
+	],
+	"repository":{
+		"type":"git",
+		"url":"https://github.com/ma-ha/rest-web-ui.git"
+	},
+	"dependencies":{
+	},
+	"directories": { 
+		"lib":"html"
+	}
+}
