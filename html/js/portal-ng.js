@@ -107,6 +107,7 @@ function inits() {
 			ajaxOngoing++;
 			log( 'init', 'Start to load JS modules ...');
 			loadModules();
+      jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');            
 			step = "initmodules";
 		} else	if ( step == "initmodules" ) {
 			ajaxOngoing++;
@@ -414,9 +415,9 @@ function loadModules() {
 		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
 		    	log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
 		    	//log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length	 );
-				for ( var i = 0; i < moduleMap[ module ].loadCSS.length; i++ ) {
-		    		log( 'loadModules', "load CSS file: "+ moduleMap[ module ].loadCSS[i] );
-					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+moduleMap[ module ].loadCSS[i]+'" type="text/css" />');		    		
+  				for ( var i = 0; i < moduleMap[ module ].loadCSS.length; i++ ) {
+  		    		log( 'loadModules', "load CSS file: "+ moduleMap[ module ].loadCSS[i] );
+  					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+moduleMap[ module ].loadCSS[i]+'" type="text/css" />');		    		
 		    	}
 		    }
 		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) ) {
