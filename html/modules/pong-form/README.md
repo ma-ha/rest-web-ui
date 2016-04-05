@@ -156,7 +156,8 @@ Example
 You can load checkbox inputs from a resource per HTTP GET:
 
 	"formFields":[     
-	     { "id":"c0", "type":"checkboxList", "name":"extras", "resourceURL":"myresource", "valueField":"id", "labelField":"name" , "defaultValField":"default" }
+	     { "id":"c0", "type":"checkboxList", "name":"extras", 
+	       "resourceURL":"myresource", "valueField":"id", "labelField":"name" , "defaultValField":"default" }
 	]
 </strike>
 
@@ -174,8 +175,8 @@ With this you construct can pass complex structures as parameter, if you want fo
 	"filter":[
 	   {
 	     "name":[
-	        { "name":"Nelson Inc" },
-	        { "name":"Nelson LLC" }
+	        { "name1":"Nelson Inc" },
+	        { "name2":"Nelson LLC" }
 	      ]
 	   }
 	]
@@ -193,6 +194,7 @@ You can specify a form like this:
 	                 	"hidden":"true" },
 	                 { "id":"name1",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
 	                 { "id":"name2",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
+	                 ...
 	             ] 
 	          } 
 	       ]  
@@ -203,7 +205,30 @@ You can specify a form like this:
 	   ] 
 	}
 
+Interesting option is to replace the URL by an form field. 
 
+	{ 
+	  "id": "cloudFormId", 
+	  "fieldGroups":[ 
+	     {  "columns":[  
+	           {  "formFields":[   
+	                 { "id":"urlInput", "type":"text", "label":"URL", "defaultVal":"http://localhost:8888/" }
+	             ] 
+	          } 
+	       ]  
+	     } 
+	  ], 
+	  "actions" : [  
+	  	   { "id":"loadSrcBtn", 
+	  	     "actionName": "Load Source File", 
+	  	     "actionURL": "${urlInput}", 
+	  	     "setData": [ { "resId":"srcView" } ] 
+	  	   }
+	   ] 
+	}
+
+This will initiate CORS request, so your browser will start with an OPTIONS call.
+But be aware of possible security issues.
 
 ## Form Actions 
 ### Simple Action 

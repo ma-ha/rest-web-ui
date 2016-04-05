@@ -1,0 +1,120 @@
+{
+    "layout": {
+        "page_id": "30",
+        "title": "CURL demo ",
+        "descr": "CURL demo ",
+        "page_width": "990px",
+        "header": {
+            "logoText": "CURL"
+        },
+        "rows": [
+            {
+                "rowId": "48",
+                "height": "300px",
+                "cols": [
+                    {
+                        "columnId": "68",
+                        "width": "400px",
+                        "resourceURL": "-",
+                        "title": "CURL Form",
+                        "moduleConfig": {
+                            "description": "Create or edit a customer data record",
+                            "fieldGroups": [
+                                {
+                                    "columns": [
+                                        {
+                                            "formFields": [
+                                                {
+                                                    "id": "URL",
+                                                    "label": "URL",
+                                                    "type": "text",
+                                                    "request":"variable",
+                                                    "defaultVal":"nav"
+                                                },
+                                                {
+                                                    "id": "accept",
+                                                    "label": "accept",
+                                                    "type": "text",
+                                                    "request": "header",
+                                                    "defaultVal":"*/*"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "actions": [
+                                {
+                                    "id": "postBtn",
+                                    "actionName": "POST",
+                                    "method": "POST",
+                                    "actionURL": "${URL}",
+                                    "setData": [
+                                        {
+                                            "resId": "70"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "getBtn",
+                                    "actionName": "GET",
+                                    "method": "GET",
+                                    "actionURL": "${URL}",
+                                    "setData": [
+                                        {
+                                            "resId": "70"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "type": "pong-form",
+                        "type_id": "7",
+                        "decor": "decor",
+						"actions":[
+							{
+								"type":"pong-help",
+								"param":{
+									"showConfig":"68"
+								}
+							}
+						]
+                    },
+                    {
+                        "columnId": "70",
+                        "width": "590px",
+                        "resourceURL": "svc/mock/hello",
+                        "title": "CURL Result",
+                        "moduleConfig": {},
+                        "type": "pong-sourcecode",
+                        "type_id": "10",
+                        "decor": "decor",
+						"actions":[
+							{
+								"type":"pong-help",
+								"param":{
+									"showConfig":"70"
+								}
+							}
+						]
+                    }
+                ]
+            },
+            {
+                "rowId": "69",
+                "height": "100px",
+                "resourceURL": "change_me",
+                "title": "Read Me",
+                "moduleConfig": {},
+                "type": "",
+                "type_id": "0",
+                "decor": "decor"
+            }
+        ],
+        "footer": {
+            "id": "28",
+            "modules": [],
+            "linkList": []
+        }
+    }
+}
