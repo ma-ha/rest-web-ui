@@ -81,13 +81,13 @@ The idea is to have a two column form.
 
 For all fields is supported:
 * hide fields with hidden attribute
-** <code>"hidden":"true"</code> 
-** <code>"hidden":"false"</code> ''(default)'' 
+ * <code>"hidden":"true"</code> 
+ * <code>"hidden":"false"</code> ''(default)'' 
 * put field int HTTP request header or only in the request params or both
-** <code>"request":"header"</code>
-** <code>"request":"header+param"</code>
-** <code>"request":"param"</code> ''(default)''
-** <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
+ * <code>"request":"header"</code>
+ * <code>"request":"header+param"</code>
+ * <code>"request":"param"</code> ''(default)''
+ * <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
 or in combination.
  
 ### Text 
@@ -223,13 +223,13 @@ Example:
 	}
 
 * Action <code>dataEncoding</code> is optional 
-** default is <code>"dataEncoding":"JSON"</code>
-** also available is <code>"dataEncoding":"GETstyle"</code>, so payload is e.g. <code>a=b&c=d</code>
+ * default is <code>"dataEncoding":"JSON"</code>
+ * also available is <code>"dataEncoding":"GETstyle"</code>, so payload is e.g. <code>a=b&c=d</code>
 * Action <code>target</code> has three options:
-** give the resource id of the module, where the output has to go to 
-** or <code>"_parent"</code>, if the whole page should be replaced. The result should be an URL.
-** special value "modal", to display an alert box with the result
-** <code>target</code> is optional, you can also ignore the response.
+ * give the resource id of the module, where the output has to go to 
+ * or <code>"_parent"</code>, if the whole page should be replaced. The result should be an URL.
+ * special value "modal", to display an alert box with the result
+ * <code>target</code> is optional, you can also ignore the response.
 
 ''Warning: If you set <code>"method":"GET"</code>, you may get problems with the length of the URL.''
 
