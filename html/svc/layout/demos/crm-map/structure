@@ -7,7 +7,7 @@
         "rows": [
             {
                 "rowId": "42",
-                "height": "600px",
+                "height": "550px",
                 "cols": [
                     {
                         "columnId": "44",
@@ -79,7 +79,7 @@
                             },
                             {
                                 "rowId": "60",
-                                "height": "530px",
+                                "height": "480px",
                                 "resourceURL": "change_me",
                                 "title": "SugarCRM Contacts",
                                 "moduleConfig": {
@@ -225,7 +225,7 @@
             },
             {
                 "rowId": "65",
-                "height": "220px",
+                "height": "150px",
                 "resourceURL": "change_me",
                 "title": "Routes",
                 "moduleConfig": {
@@ -262,7 +262,7 @@
                             "width": "15%"
                         }
                     ],
-                    "maxRows": "4"
+                    "maxRows": "3"
                 },
                 "type": "pong-table",
                 "decor": "decor",
