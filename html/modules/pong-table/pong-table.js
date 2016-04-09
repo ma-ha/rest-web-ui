@@ -301,7 +301,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	var dataUrl = resourceURL;
 	if ( tbl.dataURL != null ) {
 	  var slash = '/';
-	  if ( tbl.dataURL.charAt( 0 ) == '/' ||  dataUrl.dataURL.charAt( dataUrl.length - 1 ) == '/') { slash = '' }
+    if ( tbl.dataURL.charAt( 0 ) == '/' ||  dataUrl.charAt( dataUrl.length - 1 ) == '/') { slash = '' }
 	  dataUrl = dataUrl + slash + tbl.dataURL;
 	}
 //  if ( dataUrl.charAt( dataUrl.length - 1 ) != '/' ) { 
