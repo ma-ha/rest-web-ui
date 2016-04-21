@@ -6,10 +6,12 @@ Modules are loaded by the framework if defined in the
 [structure definiton of a portal page](https://github.com/ma-ha/rest-web-ui/wiki/Structure-Specification) 
 and methods are triggered in the lifecycle of the portal page.
 ## Example Views
-|-------|------|------|
-| Form | Table| Menu |
-| Map | i18n | Dialogs |
-| Source | Layout | Content |
+
+| .     | .     | .       |
+|-------|-------|---------|
+| Form  | Table | Menu.   |
+| Map   | i18n  | Dialogs |
+| Source| Layout| Content |
 
 ## Modules/Views 
 * [Easy Form View](pong-easyform/) 
