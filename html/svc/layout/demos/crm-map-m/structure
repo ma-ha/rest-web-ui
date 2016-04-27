@@ -1,0 +1,269 @@
+{
+    "layout": {
+        "title": "SugarCRM + Map Demo",
+        "descr": "Contacts",
+        "page_width": "100%",
+		"includeHeader":"main",
+        "rows": [
+            {
+                "rowId": "66",
+                "height": "70px",
+                "resourceURL": "change_me",
+                "title": "Load Contacts",
+                "moduleConfig": {
+                    "description": "Define filter",
+                    "id": "cloudFormId",
+                    "fieldGroups": [
+                        {
+                            "columns": [
+                                {
+                                    "formFields": [
+                                        {
+                                            "id": "max_num",
+                                            "type": "text",
+                                            "defaultVal": "100",
+                                            "hidden": "true"
+                                        },
+                                        {
+                                            "id": "filter",
+                                            "request": "substitute",
+                                            "defaultVal": "[{\"name\":{\"$contains\":${name1}}}]",
+                                            "hidden": "true"
+                                        },
+                                        {
+                                            "id": "name1",
+                                            "request": "variable",
+                                            "type": "text",
+                                            "label": "Filter",
+                                            "defaultVal": "",
+                                            "hidden": "true"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "id": "getContacts",
+                            "actionName": "Load Contacts (Sugar Mock)",
+                            "method": "GET",
+                            "actionURL": "svc/mock/sugar/customer",
+                            "setData": [
+                                {
+                                    "dataDocSubPath": "records",
+                                    "resId": "60"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "type": "pong-form",
+                "decor": "decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"66"
+						}
+					}
+				]
+            },
+            {
+                "rowId": "60",
+                "height": "190px",
+                "resourceURL": "change_me",
+                "title": "SugarCRM Contacts",
+                "moduleConfig": {
+                    "rowId": "id",
+                    "cols": [
+                        {
+                            "id": "selector",
+                            "label": "",
+                            "cellType": "selector",
+                            "width": "5%"
+                        },	
+                        {
+                            "id": "name",
+                            "label": "Name",
+                            "cellType": "text",
+                            "width": "20%"
+                        },
+                        {
+                            "id": "primary_address_city",
+                            "label": "City",
+                            "cellType": "text",
+                            "width": "10%"
+                        },
+                        {
+                            "id": "ShwoOnMap",
+                            "label": "Map",
+                            "icon": "ui-icon-search",
+                            "cellType": "button",
+                            "method": "UPDATE",
+                            "update": [
+                                {
+                                    "resId": "62",
+                                    "params": [
+                                        {
+                                            "name": "search",
+                                            "value": "${primary_address_street}, ${primary_address_city}, ${primary_address_country}"
+                                        },
+                                        {
+                                            "name": "label",
+                                            "value": "${name}, ${account_name}"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "width": "5%"
+                        },
+                        {
+                            "id": "RouteTo",
+                            "label": "Route",
+                            "icon": "ui-icon-circle-arrow-e",
+                            "cellType": "button",
+                            "method": "UPDATE",
+                            "update": [
+                                {
+                                    "resId": "62",
+                                    "params": [
+                                        {
+                                            "name": "routeTo",
+                                            "value": "${primary_address_street}, ${primary_address_city}, ${primary_address_country}"
+                                        },
+                                        {
+                                            "name": "label",
+                                            "value": "${name}, ${account_name}"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "width": "5%"
+                        }
+                    ],
+                    "maxRows":"4",
+                    "actions": [
+                        {
+                            "id":"findRoute",
+                            "actionName":"Get Route",
+                            "setData": [
+                                {
+                                    "resId": "62",
+                                    "paramLstName":"roundTrip",
+                                    "params": [
+                                        {
+                                            "name":"street",
+                                            "value":"${primary_address_street}"
+                                        },
+                                        {
+                                            "name":"city",
+                                            "value":"${primary_address_city}"
+                                        },
+                                        {
+                                            "name":"country",
+                                            "value":"${primary_address_country}"
+                                        },
+                                        {
+                                            "name":"label",
+                                            "value":"${name}, ${account_name}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                    
+                },
+                "type": "pong-table",
+                "type_id": "5",
+                "decor": "decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"60"
+						}
+					}
+				]
+            },
+            {
+                "rowId": "62",
+                "height": "400px",
+                "resourceURL": "change_me",
+                "title": "Contact On Map",
+                "moduleConfig": {
+                    "mapKey": "5c7GcAGnCtz0E83RHRnJnsk6wCj5Q63C",
+                    "setRouteData": [
+                        {
+                            "resId": "65"
+                        }
+                    ]
+                },
+                "type": "pong-map",
+                "decor": "decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"62"
+						}
+					}
+				]
+            },
+            {
+                "rowId": "65",
+                "height": "150px",
+                "resourceURL": "change_me",
+                "title": "Routes",
+                "moduleConfig": {
+                    "rowId": "from",
+                    "cols": [
+                        {
+                            "id": "route_label",
+                            "label": "Destination",
+                            "cellType": "text",
+                            "width": "30%"
+                        },
+                        {
+                            "id": "route_from",
+                            "label": "From",
+                            "cellType": "text",
+                            "width": "30%"
+                        },
+                        {
+                            "id": "route_to",
+                            "label": "To",
+                            "cellType": "text",
+                            "width": "25%"
+                        },
+                        {
+                            "id": "route_dist",
+                            "label": "km",
+                            "cellType": "text",
+                            "width": "10%"
+                        },
+                        {
+                            "id": "route_time",
+                            "label": "Duration",
+                            "cellType": "text",
+                            "width": "15%"
+                        }
+                    ],
+                    "maxRows": "3"
+                },
+                "type": "pong-table",
+                "decor": "decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"65"
+						}
+					}
+				]
+            }
+        ],
+		"includeFooter":"main"
+    }
+}
