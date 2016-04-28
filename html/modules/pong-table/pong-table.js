@@ -90,7 +90,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	// create form if required
 	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
   log( "Pong-Table", "cre table 1" );
-	
+
 	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
 	// create table head
 	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
@@ -119,22 +119,27 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( ' } ); } ); ' );
 	contentItems.push( '</script> ' );
 	contentItems.push( "</tr>" );
-	for ( var r = 0; r < tbl.maxRows; r ++ ) {
-		contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
-		for ( var c = 0; c < tbl.cols.length; c ++ ) {
-				if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
-					 ( tbl.cols[c].cellType != 'largeimg' ) && 
-					 ( tbl.cols[c].cellType != 'linkFor' ) ) {
-					contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
-				}
-		}
-		contentItems.push( "</tr>" );
+	if ( tbl.maxRows ) {
+	  for ( var r = 0; r < tbl.maxRows; r ++ ) {
+	    contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
+	    for ( var c = 0; c < tbl.cols.length; c ++ ) {
+	        if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
+	           ( tbl.cols[c].cellType != 'largeimg' ) && 
+	           ( tbl.cols[c].cellType != 'linkFor' ) ) {
+	          contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
+	        }
+	    }
+	    contentItems.push( "</tr>" );
+	  }	  
 	}
 	contentItems.push( "</table>" );
   log( "Pong-Table", "cre table 3" );
 
 	// paginator buttons:
-	var paginatorJS = pongTableGenPaginator(divId, tbl);
+  var paginatorJS = [];
+  if ( tbl.maxRows ) {
+    paginatorJS = pongTableGenPaginator(divId, tbl);
+  }
   log( "Pong-Table", "cre table 4" );
 
 	// AJAX functions:
@@ -150,6 +155,11 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	$( "#"+divId ).append( actionsJS.join("\n") );
 	
+	// if there is no paginator:
+  if ( ! tbl.maxRows ) {
+    $( "#"+divId ).css( 'overflow', 'auto' );
+  }
+  
   log( "Pong-Table", "cre table 6" );
 
 	var first = true;
@@ -763,21 +773,49 @@ function pongTableCmpFields( a, b ) {
 	
 /** render table cells */
 function tblCells( divId ) {
-	var rowSt = parseInt( poTbl[ divId ].pongTableStartRow );
-	var rowEn = parseInt( poTbl[ divId ].pongTableEndRow );
-	log( "Pong-Table", "tblCells: divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
-	var i = 0;
-	var dtaArr = poTbl[ divId ].pongTableData;
-	if ( poTbl[ divId ].sortCol != '' ) {
-		pongTable_sc = poTbl[ divId ].sortCol;
-		//alert( "Sort "+poTbl[ divId ].sortCol );
-		dtaArr.sort( pongTableCmpFields );
+  var dtaArr = poTbl[ divId ].pongTableData;
+  var rowSt  = 0;
+  var rowEn  = dtaArr.length;
+  var i = 0;
+  
+  if ( poTbl[ divId ].sortCol != '' ) {
+    pongTable_sc = poTbl[ divId ].sortCol;
+    //alert( "Sort "+poTbl[ divId ].sortCol );
+    dtaArr.sort( pongTableCmpFields );
+  }
+
+  // if pagination is required, by a maxRow defintion:
+	if ( poTbl[ divId ].pongTableDef.maxRows ) {
+	  rowSt = parseInt( poTbl[ divId ].pongTableStartRow );
+	  rowEn = parseInt( poTbl[ divId ].pongTableEndRow );	  
+	  log( "Pong-Table", "update paginator label" );  
+	  var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
+	  var maxP = Math.ceil( dtaArr.length / rPP );
+	  var curP = Math.round( rowEn / rPP );
+	  $( "#"+divId+'PaginLbl' ).html( $.i18n( "page" )+" "+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
+	} else {
+	  // need to create empty table rows and cells 
+	  //TODO
+	  var contentItems = [];
+	  for ( var r = 0; r < rowEn; r ++ ) {
+	    var tbl = poTbl[ divId ].pongTableDef;
+	    // table:  id="'+divId+'PongTable"
+	    contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
+	    for ( var c = 0; c < tbl.cols.length; c ++ ) {
+	      if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
+	          ( tbl.cols[c].cellType != 'largeimg' ) && 
+	          ( tbl.cols[c].cellType != 'linkFor' ) ) {
+	        contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
+	      }
+	    }
+	    contentItems.push( "</tr>" );
+	  }
+	  $( '#'+divId+'PongTable' ).append( contentItems.join( '\n' ) );
 	}
-	log( "Pong-Table", "update paginator label" );	
-	var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
-	var maxP = Math.ceil( dtaArr.length / rPP );
-	var curP = Math.round( rowEn / rPP );
-	$( "#"+divId+'PaginLbl' ).html( $.i18n( "page" )+" "+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
+	
+	log( "Pong-Table", "tblCells: divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
+	
+	
 	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
 		log( "Pong-Table", "row loop" );	

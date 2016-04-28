@@ -7,7 +7,7 @@
         "rows": [
             {
                 "rowId": "66",
-                "height": "70px",
+                "height": "90px",
                 "resourceURL": "change_me",
                 "title": "Load Contacts",
                 "moduleConfig": {
@@ -141,39 +141,7 @@
                             ],
                             "width": "5%"
                         }
-                    ],
-                    "maxRows":"4",
-                    "actions": [
-                        {
-                            "id":"findRoute",
-                            "actionName":"Get Route",
-                            "setData": [
-                                {
-                                    "resId": "62",
-                                    "paramLstName":"roundTrip",
-                                    "params": [
-                                        {
-                                            "name":"street",
-                                            "value":"${primary_address_street}"
-                                        },
-                                        {
-                                            "name":"city",
-                                            "value":"${primary_address_city}"
-                                        },
-                                        {
-                                            "name":"country",
-                                            "value":"${primary_address_country}"
-                                        },
-                                        {
-                                            "name":"label",
-                                            "value":"${name}, ${account_name}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                    
+                    ]                    
                 },
                 "type": "pong-table",
                 "type_id": "5",
