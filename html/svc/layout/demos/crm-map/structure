@@ -15,7 +15,7 @@
                         "rows": [
                             {
                                 "rowId": "66",
-                                "height": "70px",
+                                "height": "90px",
                                 "resourceURL": "change_me",
                                 "title": "Load Contacts",
                                 "moduleConfig": {
@@ -54,7 +54,7 @@
                                     "actions": [
                                         {
                                             "id": "getContacts",
-                                            "actionName": "Load Contacts (Sugar Mock)",
+                                            "actionName": "Load Contacts from Sugar Mock",
                                             "method": "GET",
                                             "actionURL": "svc/mock/sugar/customer",
                                             "setData": [

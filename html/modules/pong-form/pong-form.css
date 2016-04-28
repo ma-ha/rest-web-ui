@@ -8,3 +8,9 @@
     float: left;
 	width: 100px;
 }
+
+.pongFormActions {
+	display: block;
+    float: left;
+	margin-top: 16px;	
+}
