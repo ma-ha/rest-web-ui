@@ -800,6 +800,7 @@ function tblCells( divId ) {
 	  for ( var r = 0; r < rowEn; r ++ ) {
 	    var tbl = poTbl[ divId ].pongTableDef;
 	    // table:  id="'+divId+'PongTable"
+	    $( '#'+divId+' .'+divId+'Row' ).remove();
 	    contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
 	    for ( var c = 0; c < tbl.cols.length; c ++ ) {
 	      if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
