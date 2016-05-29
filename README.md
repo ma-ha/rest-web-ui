@@ -20,21 +20,21 @@ All you need is a modern web browser -- and a web service somewhere.
 
 No web application server (JEE, Tomcat, NodeJS, PHP, ...) is required to run the GUI!
 
-But to make life easier there are backaged REST backends available: 
+But to make life easier there are packaged REST backends available: 
 * <a href="https://www.npmjs.com/package/easy-web-app" target="_blank">NodeJS package</a>: `npm install easy-web-app`
 * <a href="https://pypi.python.org/pypi/easy-web-app" target="_blank">Python package</a>: `pip install easy-web-app`
 
 ## Click and try examples
-Here are some demos of view type and demo of real world web seb service integrarion:
+Here are some demos of view type and demo of real world web seb service integration:
 * Content integration via MediaWIKI API:
-<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Serive API to load some content</a>.
+<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Service API to load some content</a>.
 * Form and table demo: 
 <a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search via EBay API</a>.
-* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geocoding API)</a>.
+* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geo-coding API)</a>.
 * <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
 * <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
 * <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
-* <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttone, displays, graphs ...
+* <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttons, displays, graphs ...
 
 These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 
@@ -90,12 +90,12 @@ You can host your portals and views this *Portal-as-a-Service* web site.
 You'll find [all the details in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 
 ## Available view types
-You'll find forms, tables, content, I/O, i18n plug-in docu in the 
+You'll find forms, tables, content, I/O, i18n, etc plug-ins documented in the folder 
 [module plug-ins folder](html/modules/). 
 
 ## Supported Browser
 Should run in all modern browsers on PC, tablet and phones:
-* Chrome
+* Chrome (also Android)
 * Firefox
 * Opera
 * Safari (also iPad)
@@ -122,6 +122,3 @@ The framework is modular. Some elementary modules are already in the modules sub
 You'll find a module template there, to start a new module.
 
 You'll find a how-to in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming).
-
-## Node.js module
-You can use [this wrapper for node.js](https://www.npmjs.com/package/easy-web-app).
