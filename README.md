@@ -18,7 +18,11 @@ Basic functionality of a Web Portal is provided out of the box:
 
 All you need is a modern web browser -- and a web service somewhere. 
 
-No application server (like Tomcat, NodeJS, ...) is required to run the GUI!
+No web application server (JEE, Tomcat, NodeJS, PHP, ...) is required to run the GUI!
+
+But to make life easier there are backaged REST backends available: 
+* <a href="https://www.npmjs.com/package/easy-web-app" target="_blank">NodeJS package</a>: `npm install easy-web-app`
+* <a href="https://pypi.python.org/pypi/easy-web-app" target="_blank">Python package</a>: `pip install easy-web-app`
 
 ## Click and try examples
 Here are some demos of view type and demo of real world web seb service integrarion:
