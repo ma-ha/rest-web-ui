@@ -150,7 +150,6 @@
                                             "width": "5%"
                                         }
                                     ],
-                                    "maxRows":"10",
                                     "actions": [
                                         {
                                             "id":"findRoute",
@@ -261,8 +260,7 @@
                             "cellType": "text",
                             "width": "15%"
                         }
-                    ],
-                    "maxRows": "3"
+                    ]
                 },
                 "type": "pong-table",
                 "decor": "decor",

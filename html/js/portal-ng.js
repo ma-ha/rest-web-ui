@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.7';
-var PONGVER = '0.7.7';
+labeldefs['PONGVER'] = '0.7.9';
+var PONGVER = '0.7.9';
 
 var moduleMap = {};
 var reqModules = {};
@@ -221,10 +221,29 @@ function loadLang() {
 /** build up the HTML structure of nested DIVs*/
 function loadStructure() {
 	var pPage = getParam( 'layout' );
-	if ( pPage == '' ) {
-		pPage = "main";
+  
+  if ( pPage == '' ) {
+    pPage = "main";
+  }
+  pageInfo[ 'layout' ] = pPage;
+
+  var structureURLfallback = "svc/layout/"+pPage+"/structure";
+  if( mode == "php" ) {
+    structureURLfallback = "svc/layout.php?page="+pPage+pEdit;
+  } else if ( mode == 'direct' ) {
+    structureURLfallback =  "svc/layout/"+directPage+"/structure";
+  }
+  
+	// mobile detect -- to disable: just remove the script include from the index.html
+	if ( typeof MobileDetect == 'function') { 
+	  var md = new MobileDetect(  navigator.userAgent );
+	  //console.log( navigator.userAgent );
+	  if ( md.tablet() ) {
+	    pPage = pPage +'-t';
+	  } else if ( md.mobile() ) {
+      pPage = pPage +'-m';
+	  }
 	}
-	pageInfo[ 'layout' ] = pPage;
 
 	var pEdit = '';
 	if ( getParam( 'edit' ) == 'true' ) {
@@ -232,70 +251,87 @@ function loadStructure() {
 	}
 	
 	var structureURL = "svc/layout/"+pPage+"/structure";
-    if( mode == "php" ) {
-    	structureURL = "svc/layout.php?page="+pPage+pEdit;
-    } else if ( mode == 'direct' ) {
-    	structureURL =  "svc/layout/"+directPage+"/structure";
-    } 
-	console.log("loadStructure: "+structureURL);
-	$.getJSON( structureURL, 
-		function( d ) {
-			layout = d.layout;
-			layoutOrig = JSON.parse( JSON.stringify( layout ) ); // backup w/o modification intentions
-			// load includes ...
-			if ( d.layout.includeHeader != null && d.layout.includeFooter != null &&  d.layout.includeHeader == d.layout.includeFooter ) {
-				// optimize to one additional load
-				ajaxOngoing++;
-				var inclHeaderURL = "svc/layout/"+d.layout.includeHeader+"/structure";
-			    if( mode == "php" ) {
-			    	inclHeaderURL = "svc/layout.php?page="+d.layout.includeHeader;
-			    } 
-				$.getJSON( inclHeaderURL, 
-					function( di ) {
-						layout.header = di.layout.header;		
-						layout.footer = di.layout.footer;		
-						ajaxOngoing--;
-					}
-				);	
-			} else 	{
-				if ( d.layout.includeHeader != null ) {
-					ajaxOngoing++;
-					var inclHeaderURL = "svc/layout/"+d.layout.includeHeader+"/structure";
-				    if( mode == "php" ) {
-				    	inclHeaderURL = "svc/layout.php?page="+d.layout.includeHeader;
-				    }
-					$.getJSON( inclHeaderURL, 
-						function( di ) {
-							layout.header = di.layout.header;		
-							ajaxOngoing--;
-						}
-					);
-				}
-				if ( d.layout.includeFooter != null ) {
-					ajaxOngoing++;
-					var inclFooterURL = "svc/layout/"+d.layout.includeFooter+"/structure";
-				    if( mode == "php" ) {
-				    	inclFooterURL = "svc/layout.php?page="+d.layout.includeFooter;
-				    }
-					$.getJSON( inclFooterURL, 
-						function( di ) {
-							layout.footer = di.layout.footer;		
-							ajaxOngoing--;
-						}
-					);
-				}
-			}
-		}
+  if( mode == "php" ) {
+  	structureURL = "svc/layout.php?page="+pPage+pEdit;
+  } else if ( mode == 'direct' ) {
+  	structureURL =  "svc/layout/"+directPage+"/structure";
+  } 
+
+  console.log("loadStructure: "+structureURL);
+	$.getJSON( 
+	    structureURL, 
+	    processLayoutResponseJSON
 	).fail(
 		function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "Request Failed: " + err );
+		  // no layout found -- check the fallback
+      ajaxOngoing++;
+		  $.getJSON( 
+		      structureURLfallback, 
+		      processLayoutResponseJSON
+		  ).fail(
+		      function( jqxhr, textStatus, error ) {
+      			var err = textStatus + ", " + error;
+      			console.log( "Request Failed: " + err );
+		      }
+		  ).always(
+		      function() {
+  	        ajaxOngoing--;
+  	      }
+		  );
 		}
 	).always(
 		function() {
 			ajaxOngoing--;
 		}
 	);
+}
+
+function processLayoutResponseJSON( d ) {
+  layout = d.layout;
+  layoutOrig = JSON.parse( JSON.stringify( layout ) ); // backup w/o modification intentions
+  // load includes ...
+  if ( d.layout.includeHeader != null && d.layout.includeFooter != null &&  d.layout.includeHeader == d.layout.includeFooter ) {
+    // optimize to one additional load
+    ajaxOngoing++;
+    var inclHeaderURL = "svc/layout/"+d.layout.includeHeader+"/structure";
+      if( mode == "php" ) {
+        inclHeaderURL = "svc/layout.php?page="+d.layout.includeHeader;
+      } 
+    $.getJSON( inclHeaderURL, 
+      function( di ) {
+        layout.header = di.layout.header;   
+        layout.footer = di.layout.footer;   
+        ajaxOngoing--;
+      }
+    );  
+  } else  {
+    if ( d.layout.includeHeader != null ) {
+      ajaxOngoing++;
+      var inclHeaderURL = "svc/layout/"+d.layout.includeHeader+"/structure";
+        if( mode == "php" ) {
+          inclHeaderURL = "svc/layout.php?page="+d.layout.includeHeader;
+        }
+      $.getJSON( inclHeaderURL, 
+        function( di ) {
+          layout.header = di.layout.header;   
+          ajaxOngoing--;
+        }
+      );
+    }
+    if ( d.layout.includeFooter != null ) {
+      ajaxOngoing++;
+      var inclFooterURL = "svc/layout/"+d.layout.includeFooter+"/structure";
+        if( mode == "php" ) {
+          inclFooterURL = "svc/layout.php?page="+d.layout.includeFooter;
+        }
+      $.getJSON( inclFooterURL, 
+        function( di ) {
+          layout.footer = di.layout.footer;   
+          ajaxOngoing--;
+        }
+      );
+    }
+  }  
 }
 
 /** build up the HTML structure of nested DIVs*/
@@ -1234,12 +1270,12 @@ function log( func, msg ){
   var logline = '['+func+'] '+msg;
 
   // define the "func" you want to log to the console
-//	if ( func=='PoNG-NavBar'
-//		// || func=='init' 
-//	) { 
-//		console.log( logline );
-//		loggerBuffer.push
-//	}
+	if ( func=='Pong-Table'
+		// || func=='init' 
+	) { 
+		console.log( logline );
+		loggerBuffer.push
+	}
 	
 	// send log to event broker
   if ( loggerEvents ) { 
