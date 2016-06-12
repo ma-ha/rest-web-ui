@@ -6,7 +6,7 @@
 * [Log Event Queue](modules/pong-log) (catches also logs from early page life cycle)  
 * Base framework now with "pub-sub event broker"
 * [Feedback view](modules/feedback) with feedback for GUI user now from forms, tables, maps, ...
-* [Mobile/Tablet detection](js/ext) load &le;layout&ge;, &le;layout&ge;-m or &le;layout&ge;-t files
+* [Mobile/Tablet detection](js/ext) load &lt;layout&gt;, &lt;layout&gt;-m or &lt;layout&gt;-t files
 and
 * [Node.JS support](https://www.npmjs.com/package/easy-web-app)
 
