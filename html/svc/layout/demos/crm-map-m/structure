@@ -9,7 +9,7 @@
                 "rowId": "66",
                 "height": "90px",
                 "resourceURL": "change_me",
-                "title": "Load Contacts",
+                "title": "Load Contacts (mobile phone layout)",
                 "moduleConfig": {
                     "description": "Define filter",
                     "id": "cloudFormId",
