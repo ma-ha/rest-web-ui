@@ -71,7 +71,7 @@
             },
             {
                 "rowId": "60",
-                "height": "190px",
+                "height": "250px",
                 "resourceURL": "change_me",
                 "title": "SugarCRM Contacts",
                 "moduleConfig": {
@@ -157,7 +157,7 @@
             },
             {
                 "rowId": "62",
-                "height": "400px",
+                "height": "500px",
                 "resourceURL": "change_me",
                 "title": "Contact On Map",
                 "moduleConfig": {
@@ -181,7 +181,7 @@
             },
             {
                 "rowId": "65",
-                "height": "150px",
+                "height": "250px",
                 "resourceURL": "change_me",
                 "title": "Routes",
                 "moduleConfig": {

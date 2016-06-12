@@ -61,6 +61,7 @@ sessionInfo = {};
 // Security Variables
 pageInfo["userRoles"] = [];
 pageInfo["layout"] = -1;
+pageInfo["layoutMode"] = 'desktop';
 var userID = null;
 var userRole = "";
 
@@ -107,7 +108,12 @@ function inits() {
 			ajaxOngoing++;
 			log( 'init', 'Start to load JS modules ...');
 			loadModules();
-      jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');            
+      jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
+      if ( pageInfo["layoutMode"] == 'tablet' ) {
+        jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
+      } else if ( pageInfo["layoutMode"] == 'mobile' ) {
+        jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
+      } 
 			step = "initmodules";
 		} else	if ( step == "initmodules" ) {
 			ajaxOngoing++;
@@ -239,8 +245,10 @@ function loadStructure() {
 	  var md = new MobileDetect(  navigator.userAgent );
 	  //console.log( navigator.userAgent );
 	  if ( md.tablet() ) {
+      pageInfo["layoutMode"] = 'tablet';
 	    pPage = pPage +'-t';
 	  } else if ( md.mobile() ) {
+	    pageInfo["layoutMode"] = 'mobile';
       pPage = pPage +'-m';
 	  }
 	}
