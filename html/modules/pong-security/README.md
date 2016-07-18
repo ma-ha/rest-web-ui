@@ -1,4 +1,5 @@
-The security module requests an Oauth token from a backend and holds it in the browser, attaches it to WS requests and hands it over to other navigation pages.
+The module adds _Login_/_Logout_/_Register_ links to the header. 
+Clicking _Login_ starts a modal form to request user and password.
 
 ## Usage:
 
@@ -23,12 +24,4 @@ The security module requests an Oauth token from a backend and holds it in the b
 		}
 	}
 
-A user/password is requested on loading and a Oauth token is requested, if not done already on another page. 
-
-## OAuth params:
-
-	"param" : {
-    	"oauthScope":"myscope",
-    	"oauthToken":"<nowiki>https://server/oauth</nowiki>",
-    	"exitPage":"<nowiki>http://myserver/exitpage/</nowiki>"
-    }
+The param <code>registgerURL<code> is optional to show the _Register_ link.
