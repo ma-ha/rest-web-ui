@@ -31,7 +31,7 @@ function initSecurityHeaderHtml( divId, type , params ) {
 			$.post( params.loginURL, 
 				function ( data ) {
 					if ( data != "Unauthorized" ) {
-            publishEvent( 'feedback', { text:'Login OK :-)' } )
+						publishEvent( 'feedback', { text:'Login OK :-)' } )
 						userID = data;	
 						$.post( params.rolesURL, 
 							function ( roles ) {
@@ -48,12 +48,13 @@ function initSecurityHeaderHtml( divId, type , params ) {
 							userRole = getParam('role'); 
 						}
 					} else {
-				    publishEvent( 'feedback', { text:'Login failed!!' } )
-						userRole = null;
+						log( "PoNG-Security", "Unauthorized...");
 						ajaxOngoing--;
+						publishEvent( 'feedback', { text:'Login failed!!' } );
+						userRole = null;
 					} 
 				} 
-			);
+			).fail( function() { ajaxOngoing--; } );
 		}
 	}
 }

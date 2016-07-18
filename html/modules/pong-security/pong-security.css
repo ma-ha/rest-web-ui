@@ -1,0 +1,10 @@
+.pong-security {
+	position : absolute;
+	top: 5px;
+	right: 10px;
+	font-size: 10pt;
+}
+#header .header-links {
+    position: absolute;
+    top: 24px;
+}

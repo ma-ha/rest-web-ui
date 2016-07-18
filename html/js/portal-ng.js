@@ -1277,8 +1277,9 @@ var loggerBuffer = [];
 function log( func, msg ){
   var logline = '['+func+'] '+msg;
 
+  console.log( logline );
   // define the "func" you want to log to the console
-	if ( func=='Pong-Table'
+  if ( func=='PoNG-SecurityX'
 		// || func=='init' 
 	) { 
 		console.log( logline );

@@ -1,0 +1,81 @@
+{
+	"layout":{
+		"title":"Portal: Test 'Easy' Features",
+	    "header": {
+	      "logoURL": "img/logo.png",
+	      "linkList": [
+	      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
+	      ],
+	      "modules" : [ 
+	      	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
+	      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
+	      	{ "id": "Sec", "type": "pong-security", 
+	          "param": { 
+	            "loginURL":"svc/mock/sec/login.php", 
+	            "registgerURL":"index.php?layout=demos/sec/register", 
+	            "logoutURL":"svc/mock/sec/logout.php", 
+	            "rolesURL":"svc/mock/sec/usersroles.php" 
+	          } 
+	      	}
+	      ] 
+	    },
+		"rows":[
+			{
+				"rowId":"instform",
+				"height":"175px",
+				"cols":[
+					{
+						"columnId":"ezFrm",
+						"title":"Eazy Form",
+						"width":"80%",
+						"resourceURL":"svc/test",
+						"type":"pong-easyform",
+						"decor":"decor",
+						"moduleConfig":{
+							"id":"tstFormId",
+							"easyFormFields":[
+								"id",
+								"c1|Name",
+								"c1|Date|date"
+							],
+							"actions":[
+								{
+									"id":"Chk",
+									"actionName":"Check",
+									"actionURL":"svc/test/check",
+									"target":"out2"
+								}
+								
+							]
+							
+						},
+						"actions":[
+							{
+								"type":"pong-help",
+								"param":{
+									"showConfig":"ezFrm"
+								}
+							}
+						]
+					},
+					{
+						"columnId":"out2",
+						"title":"Output 2",
+						"width":"20%",
+						"decor":"decor",
+						"resourceURL":"svc/cloud/setuplog",
+						"actions":[
+							{
+								"type":"pong-help",
+								"param":{
+									"showConfig":"out2"
+								}
+							}
+						]
+					}
+				]
+			}
+		],
+		"includeFooter":"main"
+	}
+}
