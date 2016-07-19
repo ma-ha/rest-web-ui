@@ -77,10 +77,11 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );		
 				makeLoginForm = true;
 			}
-			var lang = ""
-			if ( getParam('lang') != null  && getParam('lang') != '' ) {
-				lang = "?lang="+getParam('lang');
+			var lang = "";
+			if ( getParam('lang') && getParam('lang') != '' ) {
+				lang = "lang="+getParam('lang');
 			}
+			//alert( lang );
 			
 			if ( makeLoginForm ) {
 				var cssClass = 'class="text ui-widget-content ui-corner-all"';
@@ -100,8 +101,10 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '         function( data ) { ' );
 				divHtml.push( '             $( "#loginResult" ).html( $.i18n( data ) ); ' );
 				if ( params.loginPage ) { 
-					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+'"; } ' );
+					if ( lang != '' ) { lang = '&'+lang; }
+					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+lang+'"; } ' );
 				} else {
+					if ( lang != '' ) { lang = '?'+lang; }
 					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html'+lang+'"; } ' );					
 				}
 				divHtml.push( '         } ); ' );
@@ -122,8 +125,8 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		if ( getParam('layout') != null && getParam('layout') != '' ) {
 			divHtml.push( '<input type="hidden" name="layout" value="'+getParam('layout')+'"/>' );			
 		}
-		var lang = ""
-		if ( getParam('lang') != null  && getParam('lang') != '' ) {
+		var lang = "";
+		if ( getParam('lang')  && getParam('lang') != '' ) {
 			divHtml.push( '<input type="hidden" name="lang" value="'+getParam('lang')+'"/>' );
 			lang = "?lang="+getParam('lang');
 		}
@@ -149,8 +152,10 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '      $.post( "'+params.logoutURL+'" ) ' ); 
 		divHtml.push( '      .always( function() { ' );
 		if ( params.logoutPage ) { 
-			divHtml.push( '           window.location.href = "index.html?layout='+params.logoutPage+'"; ' );
+			if ( lang != '' ) { lang = '&'+lang; }
+			divHtml.push( '           window.location.href = "index.html?layout='+params.logoutPage+lang+'"; ' );
 		} else {
+			if ( lang != '' ) { lang = '?'+lang; }
 			divHtml.push( '           window.location.href = "index.html'+lang+'"; ' );
 		}
 		divHtml.push( '      } ); ' ); 
