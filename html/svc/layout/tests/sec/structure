@@ -12,9 +12,9 @@
 	      	{ "id": "Sec", "type": "pong-security", 
 	          "param": { 
 	            "loginURL":"svc/mock/sec/login.php", 
-	            "loginPage":"demos/sec", 
-	            "logoutPage":"demos/sec", 
-	            "registgerURL":"index.php?layout=demos/sec/register", 
+	            "loginPage":"tests/sec", 
+	            "logoutPage":"tests/sec", 
+	            "registgerURL":"index.php?layout=tests/sec/register", 
 	            "logoutURL":"svc/mock/sec/logout.php", 
 	            "rolesURL":"svc/mock/sec/usersroles.php" 
 	          } 
