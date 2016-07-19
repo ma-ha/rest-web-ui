@@ -4,6 +4,9 @@
 	right: 10px;
 	font-size: 10pt;
 }
+.user-id {
+	color: #FFF;
+}
 #header .header-links {
     position: absolute;
     top: 24px;

@@ -33,20 +33,21 @@ function initSecurityHeaderHtml( divId, type , params ) {
 					if ( data != "Unauthorized" ) {
 						publishEvent( 'feedback', { text:'Login OK :-)' } )
 						userID = data;	
-						$.post( params.rolesURL, 
-							function ( roles ) {
-						    publishEvent( 'feedback', { text:'Autorization roles loaded!' } )
-								pageInfo["userRoles"] = [];
-								for ( var i = 0; i < roles.length; i++ ) {
-									//console.log( roles[i] );
-									pageInfo["userRoles"].push( roles[i] );
-								}
-								ajaxOngoing--;
-							}
-						);
-						if ( getParam('role') != null  && getParam('role') != '' ) {
-							userRole = getParam('role'); 
-						}
+						ajaxOngoing--;
+//						$.post( params.rolesURL, 
+//							function ( roles ) {
+//						    publishEvent( 'feedback', { text:'Autorization roles loaded!' } )
+//								pageInfo["userRoles"] = [];
+//								for ( var i = 0; i < roles.length; i++ ) {
+//									//console.log( roles[i] );
+//									pageInfo["userRoles"].push( roles[i] );
+//								}
+//								ajaxOngoing--;
+//							}
+//						);
+//						if ( getParam('role') != null  && getParam('role') != '' ) {
+//							userRole = getParam('role'); 
+//						}
 					} else {
 						log( "PoNG-Security", "Unauthorized...");
 						ajaxOngoing--;
@@ -98,7 +99,11 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '         { userid: $( "#useridInput" ).val(), password: $( "#passwordInput" ).val() }, ' );
 				divHtml.push( '         function( data ) { ' );
 				divHtml.push( '             $( "#loginResult" ).html( $.i18n( data ) ); ' );
-				divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html'+lang+'"; } ' );
+				if ( params.loginPage ) { 
+					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+'"; } ' );
+				} else {
+					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html'+lang+'"; } ' );					
+				}
 				divHtml.push( '         } ); ' );
 				divHtml.push( '      return false;' );
 				divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
@@ -112,7 +117,8 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		}
 	} else {
 		divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
-		divHtml.push( $.i18n('User')+':&nbsp;'+userID + '&nbsp;'+ $.i18n('Role')+'&nbsp;:' );
+		divHtml.push( $.i18n('User')+':&nbsp;<span class="user-id">'+userID + '</span>&nbsp;&nbsp;' );
+//		divHtml.push(  $.i18n('Role')+'&nbsp;:' );
 		if ( getParam('layout') != null && getParam('layout') != '' ) {
 			divHtml.push( '<input type="hidden" name="layout" value="'+getParam('layout')+'"/>' );			
 		}
@@ -122,16 +128,16 @@ function addSecurityHeaderHtml( divId, type , params ) {
 			lang = "?lang="+getParam('lang');
 		}
 
-		divHtml.push( '<select id="SecurityHeaderRoleSelect" name="role" size="1">' );
-		var roles = pageInfo["userRoles"];
-		for ( var i = 0; i < roles.length; i++ ) {
-			if ( userRole == roles[i].role ) {
-				divHtml.push( '<option selected>'+ roles[i].role +'</option>' );			
-			} else {
-				divHtml.push( '<option>'+ roles[i].role +'</option>' );							
-			}
-		}
-		divHtml.push( '</select>&nbsp;');
+//		divHtml.push( '<select id="SecurityHeaderRoleSelect" name="role" size="1">' );
+//		var roles = pageInfo["userRoles"];
+//		for ( var i = 0; i < roles.length; i++ ) {
+//			if ( userRole == roles[i].role ) {
+//				divHtml.push( '<option selected>'+ roles[i].role +'</option>' );			
+//			} else {
+//				divHtml.push( '<option>'+ roles[i].role +'</option>' );							
+//			}
+//		}
+//		divHtml.push( '</select>&nbsp;');
 		divHtml.push( '<a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a>' );
 		divHtml.push( '</form>' );
 		divHtml.push( '<script>' );
@@ -142,7 +148,11 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '  function( ) { ' ); 
 		divHtml.push( '      $.post( "'+params.logoutURL+'" ) ' ); 
 		divHtml.push( '      .always( function() { ' );
-		divHtml.push( '           window.location.href = "index.html'+lang+'"; ' ); 
+		if ( params.logoutPage ) { 
+			divHtml.push( '           window.location.href = "index.html?layout='+params.logoutPage+'"; ' );
+		} else {
+			divHtml.push( '           window.location.href = "index.html'+lang+'"; ' );
+		}
 		divHtml.push( '      } ); ' ); 
 		divHtml.push( '      return false; ' );
 		divHtml.push( '  } );' );

@@ -12,6 +12,8 @@
 	      	{ "id": "Sec", "type": "pong-security", 
 	          "param": { 
 	            "loginURL":"svc/mock/sec/login.php", 
+	            "loginPage":"demos/sec", 
+	            "logoutPage":"demos/sec", 
 	            "registgerURL":"index.php?layout=demos/sec/register", 
 	            "logoutURL":"svc/mock/sec/logout.php", 
 	            "rolesURL":"svc/mock/sec/usersroles.php" 
@@ -26,8 +28,8 @@
 				"cols":[
 					{
 						"columnId":"ezFrm",
-						"title":"Eazy Form",
-						"width":"80%",
+						"title":"HINT:",
+						"width":"100%",
 						"resourceURL":"svc/test",
 						"type":"pong-easyform",
 						"decor":"decor",
@@ -35,43 +37,10 @@
 							"id":"tstFormId",
 							"easyFormFields":[
 								"id",
-								"c1|Name",
-								"c1|Date|date"
-							],
-							"actions":[
-								{
-									"id":"Chk",
-									"actionName":"Check",
-									"actionURL":"svc/test/check",
-									"target":"out2"
-								}
-								
+								"c1|Login~with~userid~test~and~no~password|label"
 							]
 							
-						},
-						"actions":[
-							{
-								"type":"pong-help",
-								"param":{
-									"showConfig":"ezFrm"
-								}
-							}
-						]
-					},
-					{
-						"columnId":"out2",
-						"title":"Output 2",
-						"width":"20%",
-						"decor":"decor",
-						"resourceURL":"svc/cloud/setuplog",
-						"actions":[
-							{
-								"type":"pong-help",
-								"param":{
-									"showConfig":"out2"
-								}
-							}
-						]
+						}
 					}
 				]
 			}
