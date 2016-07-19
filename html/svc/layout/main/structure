@@ -20,7 +20,7 @@
 			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
 			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
 			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
-			       { "pageLink":"tests/security", "label":"Login/Logut Test" },
+			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
