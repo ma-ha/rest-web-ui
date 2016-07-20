@@ -26,7 +26,8 @@ log( "PoNG-Security", "Loading Module");
 
 function initSecurityHeaderHtml( divId, type , params ) {
 	if ( userID == null ) {
-		if ( params != null  && params.loginURL != null && params.rolesURL != null ) {
+		if ( params != null  && params.loginURL != null ) {
+//      if ( params != null  && params.loginURL != null && params.rolesURL != null ) {
 			ajaxOngoing++;
 			$.post( params.loginURL, 
 				function ( data ) {
