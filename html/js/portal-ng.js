@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.9';
-var PONGVER = '0.7.9';
+labeldefs['PONGVER'] = '0.7.10';
+var PONGVER = '0.7.10';
 
 var moduleMap = {};
 var reqModules = {};
@@ -401,7 +401,7 @@ function loadModuleList() {
 // load includes for modules
 function loadIncludes() {
 	for ( var module in reqModules ) {
-		if ( module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+		if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
 
 			// extra CSS files
 			if ( moduleMap[ module ] ) {
@@ -435,7 +435,7 @@ function loadIncludes() {
 // load modules
 function loadModules() {
 	for ( var module in reqModules ) {
-		if ( module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+		if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
 			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
 			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
 			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
