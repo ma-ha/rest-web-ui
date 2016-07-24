@@ -1288,14 +1288,14 @@ var loggerBuffer = [];
 function log( func, msg ){
   var logline = '['+func+'] '+msg;
 
-  console.log( logline );
+//  console.log( logline );
   // define the "func" you want to log to the console
-  if ( func=='PoNG-SecurityX'
-		// || func=='init' 
-	) { 
-		console.log( logline );
-		loggerBuffer.push
-	}
+//  if ( func=='PoNG-SecurityX'
+//		// || func=='init' 
+//	) { 
+//		console.log( logline );
+//		loggerBuffer.push
+//	}
 	
 	// send log to event broker
   if ( loggerEvents ) { 
