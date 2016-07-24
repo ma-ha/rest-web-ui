@@ -680,6 +680,7 @@ function headerHTML( header ) {
 		// header hooks
 		if ( header.modules != null ) {
 			for ( var i = 0; i < header.modules.length; i++ ) {
+			  if ( header.modules[i] ) {
 				var hMod =  header.modules[i];
 				log( 'headerHTML', "addHeaderHtml "+hMod.type );
 				var hook = getHookMethod( "addHeaderHtml", hMod.type );
@@ -696,19 +697,21 @@ function headerHTML( header ) {
 
 					hookCalls.push( hook+'( "'+hMod.id+'", "'+hMod.type+'", '+JSON.stringify(hMod.param)+' )'  );
 				}
+			  }
 			}
 		}
 		// load links 
 		if ( header.linkList != null ) {
 			content.push( '<div class="header-links">' );
 			for ( var i = 0; i < header.linkList.length; i++ ) {
+			  if ( header.linkList[i] ) {
 				var lnk = header.linkList[i]; 
 				if ( lnk.target != null ) {
 					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );
 				} else {
 					content.push( '<a href="'+ $.i18n( lnk.url )+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );					
 				}
-
+			  }
 			}
 			content.push( "</div>" );
 		}
@@ -733,12 +736,14 @@ function footerHTML( footer ) {
 		if ( footer.linkList != null ) {
 			content.push( '<div class="footer-links">' );
 			for ( var i = 0; i < footer.linkList.length; i++ ) {
+			  if ( footer.linkList[i] ) {
 				var lnk = footer.linkList[i];
 				if ( lnk.target != null ) {
 					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a> 	' );
 				} else {
 					content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );					
 				}
+			  }
 			}
 			content.push( "</div>" );
 		}
@@ -751,6 +756,7 @@ function footerHTML( footer ) {
 		// header hooks
 		if ( footer.modules != null ) {
 			for ( var i = 0; i < footer.modules.length; i++ ) {
+			  if ( footer.modules[i] ) {
 				var fMod =  footer.modules[i];
 				log( 'footerHTML', "addFooterHtml "+ fMod.type );
 				var hook = getHookMethod( "addFooterHtml", fMod.type );
@@ -769,6 +775,7 @@ function footerHTML( footer ) {
 					
 					hookCalls.push( hook+'( "'+fMod.id+'", "'+fMod.type+'", '+JSON.stringify(fMod.param)+' )'  );
 				}
+			  }
 			}
 		}
 	}
