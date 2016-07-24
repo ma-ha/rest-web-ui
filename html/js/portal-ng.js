@@ -108,12 +108,12 @@ function inits() {
 			ajaxOngoing++;
 			log( 'init', 'Start to load JS modules ...');
 			loadModules();
-      jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
-      if ( pageInfo["layoutMode"] == 'tablet' ) {
-        jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
-      } else if ( pageInfo["layoutMode"] == 'mobile' ) {
-        jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
-      } 
+            jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
+            if ( pageInfo["layoutMode"] == 'tablet' ) {
+              jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
+            } else if ( pageInfo["layoutMode"] == 'mobile' ) {
+              jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
+            } 
 			step = "initmodules";
 		} else	if ( step == "initmodules" ) {
 			ajaxOngoing++;
@@ -571,12 +571,14 @@ function initModules( lo ) {
 }
 
 function initAModule( module ) {
+  if ( module ) {
 	log( 'initModules', "initModules "+module.type );
 	var hook = getHookMethod( "init", module.type );
 	if ( hook != "" ) {
 		log( 'initModules CALL', hook+"( ... )");
 		eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
 	}	
+  }
 }
 
 //=====================================================================================================
