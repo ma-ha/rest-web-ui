@@ -79,7 +79,7 @@
                             },
                             {
                                 "rowId": "60",
-                                "height": "480px",
+                                "height": "460px",
                                 "resourceURL": "change_me",
                                 "title": "SugarCRM Contacts",
                                 "moduleConfig": {
