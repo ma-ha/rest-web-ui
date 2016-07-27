@@ -8,4 +8,4 @@
 .decor-bl { position: absolute; width: 11px; height:  9px; background: url(../img/decor_bl.png); bottom: 0px; left: 0px; }
 .decor-br { position: absolute; width: 11px; height:  9px; background: url(../img/decor_br.png); bottom: 0px; right: 0px; }
 .decor-menu  { position: absolute;  height: 28px; top: 3px; right: 10px; font-size: 8pt; color: #999999; }
-.decor-inner { padding: 28px 9px 11px 9px; }
+.decor-inner { margin: 28px 9px 11px 9px; }

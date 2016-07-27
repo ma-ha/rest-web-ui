@@ -76,7 +76,7 @@ function pongTree_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 
 function pongTree_clickUpdates( divId, objId ) {
   log( "pongTree", "clickUpdates: divId="+divId+" objId="+objId );
-  if ( objId && poTree[ divId ] && poTree[ divId ].config && poTree[ divId ].config.idField ) {
+  if ( objId && poTree[ divId ] && poTree[ divId ].config && poTree[ divId ].config.idField  && poTree[ divId ].config.update ) {
     var pmd = poTree[ divId ].config;
     var param = {};
     param[ pmd.idField ] = objId;
