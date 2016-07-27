@@ -3,11 +3,6 @@
 		"title":"Portal: List Test",
 		"includeHeader":"main",
 		"rows":[
-			{
-				"rowId":"r1",
-				"height":"400px",
-				"decor":"decor"
-			},
 	    	{
 		        "rowId": "r1",
 		        "height": "230px",
@@ -25,6 +20,7 @@
 						"treeArray":"types",
 						"idField":"productId",
 						"labelField":"productName",
+						"update":["out2"],
 						"maxDeepth":"4"
 					},
 		            "decor" : "decor"
@@ -34,7 +30,31 @@
 		            "title": "Search Result",
 		            "width": "80%",
 		            "decor" : "decor",
-		            "resourceURL": "svc/cloud/setuplog"   
+					"type":"pong-table",
+					"moduleConfig": {
+	                    "rowId": "id",
+	                    "cols": [
+	                        {
+	                            "id": "item",
+	                            "label": "Item",
+	                            "cellType": "text",
+	                            "width": "40%"
+	                        },	
+	                        {
+	                            "id": "type",
+	                            "label": "Product Type",
+	                            "cellType": "text",
+	                            "width": "40%"
+	                        },
+	                        {
+	                            "id": "price",
+	                            "label": "Price",
+	                            "cellType": "text",
+	                            "width": "20%"
+	                        }
+	                    ]
+					},
+		            "resourceURL": "svc/mock/product"   
 				    }
 		        ]
 		      }
