@@ -61,4 +61,4 @@ Tree will load, e.g
 	}
 	
 	
-If `idField` is available a link is redered. Clicking this link will do a GET &lt;dataURL&gt/&l;ID&gt and an update of all resource IDs in `update` list.
+If `idField` is available a link is redered. Clicking this link will do a GET &lt;dataURL&gt;&lt;ID&gt; and an update of all resource IDs in `update` list.
