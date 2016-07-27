@@ -1,0 +1,25 @@
+.pongTree {
+	font-size:10pt;
+}
+
+.treeInfo { 
+	font-style: italic;
+}
+.treeDepth0 {
+	padding-left: 5px;
+	font-weight: bold;
+}
+.treeDepth1 {
+	padding-left: 15px;
+}
+.treeDepth2 {
+	padding-left: 25px;
+}
+.treeDepth3 {
+	padding-left: 35px;
+}
+
+.treeItem a:link{color:#666;}
+.treeItem a:visited{color:#666;}
+.treeItem a:hover{color:#000;}
+.treeItem a:active{color:#666;} 

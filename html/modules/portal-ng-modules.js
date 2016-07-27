@@ -229,3 +229,10 @@ moduleMap[ "pong-feedback" ] = {
     ]
   };
 
+moduleMap[ "pong-tree" ] = {
+    "name": "pong-tree",
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongTree_DivHTML" },
+        { hook: "updateData", method:"pongTree_UpdateData" }
+    ]
+};

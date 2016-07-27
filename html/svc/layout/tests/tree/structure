@@ -1,0 +1,44 @@
+{
+	"layout":{
+		"title":"Portal: List Test",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"400px",
+				"decor":"decor"
+			},
+	    	{
+		        "rowId": "r1",
+		        "height": "230px",
+		        "cols": [
+		          {
+		            "columnId": "out1",
+		            "title": "Output 1",
+		            "width": "20%",
+					"type":"pong-tree",
+					"resourceURL":"svc/mock/tree",
+					"title":"Tree Test",
+					"moduleConfig":{
+						"dataURL":"svc/mock/tree",
+						"titleField":"info",
+						"treeArray":"types",
+						"idField":"productId",
+						"labelField":"productName",
+						"maxDeepth":"4"
+					},
+		            "decor" : "decor"
+		          },
+		          {
+		            "columnId": "out2",
+		            "title": "Search Result",
+		            "width": "80%",
+		            "decor" : "decor",
+		            "resourceURL": "svc/cloud/setuplog"   
+				    }
+		        ]
+		      }
+		],
+		"includeFooter":"main"
+	}
+}

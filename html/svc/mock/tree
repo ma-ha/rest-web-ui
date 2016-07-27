@@ -1,0 +1,41 @@
+{
+	"info":"Available: 2000+ Shoes",
+	"types":[
+		{
+			"productId":"1",
+			"productName":"Shoes",
+			"types":[
+				{
+					"productId":"23",
+					"productName":"MyLabel"
+				},
+				{
+					"productId":"23",
+					"productName":"Lara Paris",
+					"types":[
+						{
+							"productId":"231",
+							"productName":"Sneaker"
+						},
+						{
+							"productId":"23",
+							"productName":"High"
+						},
+						{
+							"productId":"23",
+							"productName":"Red"
+						}
+					]
+				},
+				{
+					"productId":"23",
+					"productName":"Mike"
+				}
+			]
+		},
+		{
+			"productId":"2",
+			"productName":"Accessoires"
+		}
+	]
+}
