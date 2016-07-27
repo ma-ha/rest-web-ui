@@ -40,15 +40,15 @@ Tree will load, e.g
 				"productName":"Shoes",
 				"types":[
 					{
-						"productId":"23",
+						"productId":"11",
 						"productName":"MyLabel"
 					},
 					{
-						"productId":"23",
+						"productId":"12",
 						"productName":"Lara Paris"
 					},
 					{
-						"productId":"23",
+						"productId":"13",
 						"productName":"Mike"
 					}
 				]
