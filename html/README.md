@@ -1,5 +1,5 @@
 # Release Notes
-## Version 0.8
+## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
 * [I/O switches action](modules/pong-io) rendered directly
 * ["On-the-fly" configuration](modules/pong-on-the-fly) for views
@@ -9,6 +9,8 @@
 * [Mobile/Tablet detection](js/ext) load &lt;layout&gt;, &lt;layout&gt;-m or &lt;layout&gt;-t files
 and
 * [Node.JS support](https://www.npmjs.com/package/easy-web-app)
+* [Python pypi package](https://pypi.python.org/pypi?:action=display&name=easy-web-app)
+* [Tree view](modules/pong-tree)
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)

@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.11';
-var PONGVER = '0.7.11';
+labeldefs['PONGVER'] = '0.7.12';
+var PONGVER = '0.7.12';
 
 var moduleMap = {};
 var reqModules = {};
@@ -1290,12 +1290,12 @@ function log( func, msg ){
 
 //  console.log( logline );
   // define the "func" you want to log to the console
-//  if ( func=='PoNG-SecurityX'
-//		// || func=='init' 
-//	) { 
-//		console.log( logline );
+  if ( func=='pongTree'
+		// || func=='init' 
+	) { 
+		console.log( logline );
 //		loggerBuffer.push
-//	}
+	}
 	
 	// send log to event broker
   if ( loggerEvents ) { 
