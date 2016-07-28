@@ -23,3 +23,5 @@
 .treeItem a:visited{color:#666;}
 .treeItem a:hover{color:#000;}
 .treeItem a:active{color:#666;} 
+
+.pong-tree { overflow: auto; }

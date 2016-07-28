@@ -10,3 +10,4 @@
 .decor-menu  { position: absolute;  height: 28px; top: 3px; right: 10px; font-size: 8pt; color: #999999; }
 .decor-inner { padding: 28px 9px 11px 9px; }
 .decor-inner.pong-table { margin-right: 10px; padding-bottom: 0px; }
+.decor-inner.pong-tree { margin-right: 10px; padding-bottom: 0px; }
