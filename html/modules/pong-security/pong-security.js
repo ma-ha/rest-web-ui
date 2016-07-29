@@ -108,7 +108,10 @@ function addSecurityHeaderHtml( divId, type , params ) {
 					if ( lang != '' ) { lang = '?'+lang; }
 					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html'+lang+'"; } ' );					
 				}
-				divHtml.push( '         } ); ' );
+				divHtml.push( '         } ' );
+                divHtml.push( '      ).fail(  ' );
+                divHtml.push( '         function(){  $( "#loginResult" ).html( $.i18n( "Login failed" ) ); }' );
+                divHtml.push( '      ); ' );
 				divHtml.push( '      return false;' );
 				divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
 				divHtml.push( '});' );			
