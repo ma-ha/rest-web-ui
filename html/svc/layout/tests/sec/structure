@@ -2,7 +2,8 @@
 	"layout":{
 		"title":"Portal: Test 'Easy' Features",
 	    "header": {
-	      "logoURL": "img/logo.png",
+	      "logoURL": "img/p02w.png",
+	      "logoText": "Demo",
 	      "linkList": [
 	      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
 	      ],

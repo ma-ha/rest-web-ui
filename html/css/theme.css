@@ -27,6 +27,9 @@ body {
 	height: 20px;
 }
 
+.header-logo-url { float: left; }
+.header-logo-text { font-size: 32pt; }
+
 #maindiv { 
 	background-color: white; 
 }

@@ -30,8 +30,8 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-labeldefs['PONGVER'] = '0.7.12';
-var PONGVER = '0.7.12';
+var PONGVER = '0.7.13';
+labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
 var reqModules = {};
@@ -671,10 +671,15 @@ function headerHTML( header ) {
 	var content = [];
 	content.push( '<div id="header-cnt" class="header-cnt"></div>' );
 	if ( header != null ) {
-		if ( header.logoURL != null ) {
-			content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
-		} else if ( header.logoText != null ) {
-			content.push( '<div class="header-logo"><h1>' +$.i18n( header.logoText ) +'</h1></div>' );
+	    if ( header.logoURL && header.logoText ) {
+          content.push( '<div class="header-logo">' );
+          content.push( '<div class="header-logo-url"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
+          content.push( '<div class="header-logo-text">' +$.i18n( header.logoText ) +'</div>' );
+          content.push( '</div>' );
+	    } else if ( header.logoURL ) {
+	      content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
+		} else if ( header.logoText ) {
+		  content.push( '<div class="header-logo"><h1>' +$.i18n( header.logoText ) +'</h1></div>' );
 		}
 		
 		// header hooks
