@@ -11,6 +11,7 @@ and
 * [Node.JS support](https://www.npmjs.com/package/easy-web-app)
 * [Python pypi package](https://pypi.python.org/pypi?:action=display&name=easy-web-app)
 * [Tree view](modules/pong-tree)
+* Support logo text and img combination
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)
