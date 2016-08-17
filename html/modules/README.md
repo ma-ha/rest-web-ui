@@ -11,6 +11,7 @@ and methods are triggered in the lifecycle of the portal page.
 * [Easy Table View](pong-easytable/) 
 * [Form View](pong-form/)
 * [Help Dialog](pong-help/)
+* [Histogram View](pong-histogram/)
 * [I/O View](pong-io/)
 * [List View](pong-list/)
 * [Master Details View](pong-master-details/)
