@@ -5,7 +5,7 @@
 		"rows":[
 			{
 				"rowId":"r1",
-				"height":"200px",
+				"height":"150px",
 				"type":"pong-histogram",
 				"title":"Histogram Test",
 				"resourceURL":"svc/mock/histogram",
@@ -25,7 +25,15 @@
 					],
 					"maxDeepth":"4"
 				},
-				"decor":"decor"
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"r1"
+						}
+					}
+				]
 			},
 			{
 				"rowId":"outTbl",
