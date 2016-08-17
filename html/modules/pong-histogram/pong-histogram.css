@@ -1,0 +1,20 @@
+.pongHistogramBlock {
+	position: relative;
+}
+.HistogramBlockContainer {
+	height: 85%;
+	padding: 4px;
+	position: relative;
+	background-color: white;
+}
+.HistogramBlockBar {
+	height: 1px;
+	bottom: 0px;
+	position: absolute;
+	width: 100%;
+	background-color: gray;
+}
+.HistogramBlockText {
+	width:100%;
+	text-align: right;
+}

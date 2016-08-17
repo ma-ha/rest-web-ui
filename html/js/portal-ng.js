@@ -1295,7 +1295,7 @@ function log( func, msg ){
 
 //  console.log( logline );
   // define the "func" you want to log to the console
-  if ( func=='pongTree'
+  if ( func=='pongHistogram'
 		// || func=='init' 
 	) { 
 		console.log( logline );

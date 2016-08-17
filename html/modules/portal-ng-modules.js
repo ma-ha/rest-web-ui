@@ -236,3 +236,13 @@ moduleMap[ "pong-tree" ] = {
         { hook: "updateData", method:"pongTree_UpdateData" }
     ]
 };
+
+moduleMap[ "pong-histogram" ] = {
+    "name": "pong-histogram",
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongHistogram_DivHTML" },
+        { hook: "updateData", method:"pongHistogram_UpdateData" }
+//        { hook: "addActionBtn", method:"pongHistogram_pAddActionBtn" },
+//        { hook: "creModal", method:"pongHistogram_CreModalFromMeta" },
+    ]
+};

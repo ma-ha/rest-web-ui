@@ -22,6 +22,7 @@
 			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
+			       { "pageLink":"tests/histogram", "label":"Histogram Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

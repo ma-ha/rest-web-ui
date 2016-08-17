@@ -1,0 +1,66 @@
+{
+	"layout":{
+		"title":"Portal: Histogram Test",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"200px",
+				"type":"pong-histogram",
+				"title":"Histogram Test",
+				"resourceURL":"svc/mock/histogram",
+				"moduleConfig":{
+					"dataURL":"svc/mock/histogram",
+					"dataX":"price",
+					"dataY":"count",
+					"xAxisType":"integer",
+					"xAxisMin":"0",
+					"xAxisMax":"70",
+					"blockCount":"20",
+					"yAxis":"linear",
+					"yAxisMin":"0",
+					"yAxisMax":"auto",
+					"zoomUpdate":[
+						"outTbl"
+					],
+					"maxDeepth":"4"
+				},
+				"decor":"decor"
+			},
+			{
+				"rowId":"outTbl",
+				"title":"Search Result",
+				"height":"500px",
+				"decor":"decor",
+				"type":"pong-table",
+				"moduleConfig":{
+					"rowId":"id",
+					"cols":[
+						{
+							"id":"item",
+							"label":"Item",
+							"cellType":"text",
+							"width":"40%"
+						},
+						{
+							"id":"type",
+							"label":"Product Type",
+							"cellType":"text",
+							"width":"40%"
+						},
+						{
+							"id":"price",
+							"label":"Price",
+							"cellType":"text",
+							"width":"20%"
+						}
+					]
+					
+				},
+				"resourceURL":"svc/mock/product"
+			}
+			
+		],
+		"includeFooter":"main"
+	}
+}
