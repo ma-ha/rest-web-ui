@@ -15,10 +15,9 @@
 					"dataY":"count",
 					"xAxisType":"integer",
 					"xAxisMin":"0",
-					"xAxisMax":"70",
+					"xAxisMax":"200",
 					"blockCount":"20",
 					"yAxis":"linear",
-					"yAxisMin":"0",
 					"yAxisMax":"auto",
 					"zoomUpdate":[
 						"outTbl"
@@ -38,7 +37,7 @@
 			{
 				"rowId":"outTbl",
 				"title":"Search Result",
-				"height":"500px",
+				"height":"300px",
 				"decor":"decor",
 				"type":"pong-table",
 				"moduleConfig":{

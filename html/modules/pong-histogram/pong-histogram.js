@@ -45,7 +45,7 @@ var pongHistogram = new Array();
 
 
 function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
-	log( "pongHistogram", "start '"+pmd.description+"'");
+	log( "pongHistogram", "RenderHTML "+divId );
 	pongHistogram[ divId ] = new Array();
 	var contentItems = [];
 	var min = parseFloat( pmd.xAxisMin );
@@ -65,38 +65,55 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
         contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="HistogramBlockText">'+val2+'</div>' );
         contentItems.push( '</div>' );	  
 	}
-	// TODO implement
 	
 	contentItems.push( '</div>' );
 	// output
-	$( "#"+divId ).html( contentItems.join( "\n" ) );
-	log( "pongHistogram", "end.");
+	$( "#"+divId ).html( contentItems.join( "\n" ) );	
 
 	if ( pmd.dataURL ) {
+	  log( "pongHistogram", "Load "+pmd.dataURL );
 	  $.getJSON( 
 	      pmd.dataURL, 
+	      { xMin:min, xMax:max },
           function( dta ) {
-              pongHistogram_UpdateBars( divId, dta );
+	        publishEvent( "feedback", {"text":"Histogram data loaded"} )
+            pongHistogram_UpdateBars( divId, dta, min, max );
           }
       );  
     }
+    log( "pongHistogram", "end.");
 
 }
 
 /** Change labels an height of histogram bars */
-function pongHistogram_UpdateBars( divId, dta ) {
+function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {
   log( "pongHistogram", "UpdateBars "+divId);
   
   var pmd = moduleConfig[ divId ];
   var cnt = ( pmd.blockCount ? pmd.blockCount : 10 );
+  // get y-axis scaling
+  var yMax = pmd.yAxisMax;
+  if ( !yMax || yMax == 'auto' ) { 
+    yMax = 0;
+    for ( var i = 0; i < cnt; i++ ) {
+      if ( parseFloat( dta[i][ pmd.dataY ] ) > yMax ) { 
+        yMax = parseFloat( dta[i][ pmd.dataY ] );
+      }
+    }
+  }
+  var yH = $( '.HistogramBlockContainer' ).height();
+  log( "pongHistogram", 'yH='+yH);
+
+  // scale bars in % height
   for ( var i = 0; i < cnt; i++ ) {
     //var bar = pongHistogram[ divId ][i];
-    var h = parseFloat( dta[i][ pmd.dataY ] ) / parseFloat( pmd.xAxisMax ) * 100;
+    var h = parseFloat( dta[i][ pmd.dataY ] ) / parseFloat( yMax ) * yH;
     h = ( h > 100 ? 100 : h );
     log( "pongHistogram", ' bar '+i+' '+ JSON.stringify( dta[i]) + ' '+ pmd.dataY+' '+ pmd.xAxisMax + ' h='+h );
-    $( '#'+divId+'bar'+i ).height( h );
+    $( '#'+divId+'bar'+i ).height( h+'px' );
     $( '#'+divId+'xLabel'+i ).html( dta[i][ pmd.dataX ] );
   }  
+  log( "pongHistogram", 'end' );
 }
 
 
