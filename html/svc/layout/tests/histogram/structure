@@ -19,8 +19,8 @@
 					"blockCount":"20",
 					"yAxis":"linear",
 					"yAxisMax":"auto",
-					"zoomUpdate":[
-						"outTbl"
+					"update":[
+						{ "resId":"outTbl", "x1":"minPrice", "x2":"maxPrice" }
 					],
 					"maxDeepth":"4"
 				},

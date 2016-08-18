@@ -58,18 +58,22 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	    var val1 = min + ( max - min ) / cnt * i ;
         var val2 = min + ( max - min ) / cnt * (i+1) ;
         pongHistogram[ divId ][i] = { x1:val1, x2:val2 };
-	    contentItems.push( '<div '+css+'>' );
-        contentItems.push( '<div class="HistogramBlockContainer">' );
-        contentItems.push( '<div id="'+divId+'bar'+i+'" class="HistogramBlockBar"></div>' );
+	    contentItems.push( '<div '+css+' data-i="'+i+'">' );
+        contentItems.push( '<div class="HistogramBlockContainer"  data-i="'+i+'">' );
+        contentItems.push( '<div id="'+divId+'bar'+i+'" class="HistogramBlockBar" data-i="'+i+'"></div>' );
         contentItems.push( '</div>' );
-        contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="HistogramBlockText">'+val2+'</div>' );
+        contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="HistogramBlockText" data-i="'+i+'">'+val2+'</div>' );
         contentItems.push( '</div>' );	  
 	}
 	
 	contentItems.push( '</div>' );
+    contentItems.push( '<script>' );
+    contentItems.push( '  $( ".pongHistogramBlock" ).on( "click", function() { ');
+    contentItems.push( '    pongHistogram_ClickBar( "'+divId+'", $( this ).data( "i" ) ); } );' );
+    contentItems.push( '</script>' );
 	// output
 	$( "#"+divId ).html( contentItems.join( "\n" ) );	
-
+	$( ".HistogramBlockContainer" ).height( ($( ".pongHistogramBlock" ).height()-30) + "px" );
 	if ( pmd.dataURL ) {
 	  log( "pongHistogram", "Load "+pmd.dataURL );
 	  $.getJSON( 
@@ -81,9 +85,24 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
           }
       );  
     }
-    log( "pongHistogram", "end.");
+    log( "pongHistogram", "RenderHTML end.");
 
 }
+
+function pongHistogram_ClickBar( divId, barNo ) {
+  log( "pongHistogram", "ClickBar "+divId );
+  var pmd = moduleConfig[ divId ];
+  var params = pongHistogram[ divId ][ barNo ];
+  for ( var i=0; i < pmd.update.length; i++ ) {
+    var parmStr = '{"'+pmd.update[i].x1+'":"'+params.x1+'","'+ pmd.update[i].x2+'":"'+params.x2+'"}';
+    log( "pongHistogram", parmStr );
+    var updParams = JSON.parse( parmStr );
+    log( "pongHistogram", 'udateModuleData( "'+pmd.update[i].resId+'", '+JSON.stringify(updParams)+' )' );    
+    udateModuleData( pmd.update[i].resId+'Content', updParams );
+  }
+  log( "pongHistogram", "ClickBar end.");
+}
+
 
 /** Change labels an height of histogram bars */
 function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {

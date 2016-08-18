@@ -23,6 +23,19 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 			}
 		}
 		echo json_encode( $r , JSON_PRETTY_PRINT );
+	} else if ( isset( $_GET['minPrice'] ) && isset( $_GET['maxPrice'] ) ) {
+		$min = floatval( $_GET['minPrice'] );
+		$max = floatval( $_GET['maxPrice'] );
+		$r = array();
+		foreach ( $p as $rec ) {
+			if ( $min <= floatval( $rec['price'] )   && floatval( $rec['price'] ) <= $max ) {
+				$r[] = $rec;
+			}
+		}
+		if ( count( $r ) == 0 )
+			echo "[]";
+		else
+			echo json_encode( $r , JSON_PRETTY_PRINT );
 	} else {
 		echo json_encode( $p , JSON_PRETTY_PRINT );
 	}
