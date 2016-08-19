@@ -28,7 +28,7 @@ log( "pongHistogram", "load module"); // print this on console, when module is l
 
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pongHistogram_DivHTML( divId, resourceURL, paramObj ) {
-	log( "pongHistogram",  "divId="+divId+" resourceURL="+resourceURL );
+	log( "pongHistogram",  "Start divId="+divId+" resourceURL="+resourceURL );
 	if ( moduleConfig[ divId ] != null ) {
 		pongHistogram_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  );
 	} else {
@@ -40,6 +40,7 @@ function pongHistogram_DivHTML( divId, resourceURL, paramObj ) {
 			}
 		);					
 	}	
+    log( "pongHistogram",  "End divId="+divId );
 }
 var pongHistogram = new Array();
 
@@ -62,6 +63,7 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
         contentItems.push( '<div class="HistogramBlockContainer"  data-i="'+i+'">' );
         contentItems.push( '<div id="'+divId+'bar'+i+'" class="HistogramBlockBar" data-i="'+i+'"></div>' );
         contentItems.push( '</div>' );
+        if ( pmd.xAxisUnit ) { val2 = val2 +  $.i18n( pmd.xAxisUnit ); }
         contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="HistogramBlockText" data-i="'+i+'">'+val2+'</div>' );
         contentItems.push( '</div>' );	  
 	}
@@ -129,21 +131,54 @@ function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {
     var h = parseFloat( dta[i][ pmd.dataY ] ) / parseFloat( yMax ) * yH;
     h = ( h > 100 ? 100 : h );
     log( "pongHistogram", ' bar '+i+' '+ JSON.stringify( dta[i]) + ' '+ pmd.dataY+' '+ pmd.xAxisMax + ' h='+h );
-    $( '#'+divId+'bar'+i ).height( h+'px' );
-    $( '#'+divId+'xLabel'+i ).html( dta[i][ pmd.dataX ] );
+    $( '#'+divId+'bar'+i ).height( h+'px' ); // set height of bar
+    $( '#'+divId+'bar'+i ).attr( 'title', dta[i][ pmd.dataY ]+'#' );
+    if (  dta[i][ pmd.dataX ] ) { // update label
+      $( '#'+divId+'xLabel'+i ).html( dta[i][ pmd.dataX ] );      
+    } 
   }  
-  log( "pongHistogram", 'end' );
+  log( "pongHistogram", 'UpdateBars end' );
 }
 
 
+//======= Code for hook ================================================
 /** update data call back hook */
 function pongHistogram_UpdateData( divId, paramsObj ) {
-	log( "pongHistogram", "start '"+pmd.description+"'");
-	
-	
-	log( "pongHistogram", "end.");
+	log( "pongHistogram", "UpdateData start "+divId );
+	//TODO implement	
+	log( "pongHistogram", "UpdateData end.");
 }
 
+
+//======= Code for hook ================================================
+/** set data call back hook */
+function pongHistogram_SetData( divId, data, dataDocSubPath ) {
+    log( "pongHistogram", "SetData start "+divId);
+    log( "pongHistogram", JSON.stringify(data) );
+    var pmd = moduleConfig[ divId ];
+    var hist = [];
+    for ( var i = 0; i < pmd.blockCount; i++ ) {
+      hist[i] = {};
+      hist[i][ pmd.dataY ] = 0;
+    }
+    log( "pongHistogram", JSON.stringify(hist) );
+    log( "pongHistogram", JSON.stringify( pongHistogram[ divId ]) );
+    for ( var i = 0; i < data.length; i++ ) {
+      var val = parseFloat( data[i][ pmd.dataX ] );
+      log( "pongHistogram", 'val='+val );          
+      for ( var j = 0; j < pongHistogram[ divId ].length; j++ ) {
+        var x1 = parseFloat( pongHistogram[ divId ][j].x1 );
+        var x2 = parseFloat( pongHistogram[ divId ][j].x2 );
+        if ( x1 < val && val <= x2 ) {
+          log( "pongHistogram", x1 +" < "+val+" < "+x2+"    -> "+j);      
+          hist[j][ pmd.dataY ] = hist[j][ pmd.dataY ] + 1;
+        }
+      }
+    }
+    log( "pongHistogram", JSON.stringify(hist) );
+    pongHistogram_UpdateBars( divId, hist );
+    log( "pongHistogram", "SetData end.");
+}
 
 //======= Code for "addActionBtn" hook ================================================
 function pongHistogram_AddActionBtn( id, modalName, resourceURL, paramObj ) {

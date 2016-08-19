@@ -1295,12 +1295,12 @@ function log( func, msg ){
 
 //  console.log( logline );
   // define the "func" you want to log to the console
-  if ( func=='pongHistogram'
-       || func=='getUpdateDataHook' 
-	) { 
-		console.log( logline );
-//		loggerBuffer.push
-	}
+//  if ( func=='pongHistogram'
+//       || func=='Pong-Table' 
+//	) { 
+//		console.log( logline );
+////		loggerBuffer.push
+//	}
 	
 	// send log to event broker
   if ( loggerEvents ) { 

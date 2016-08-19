@@ -28,7 +28,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 		$max = floatval( $_GET['maxPrice'] );
 		$r = array();
 		foreach ( $p as $rec ) {
-			if ( $min <= floatval( $rec['price'] )   && floatval( $rec['price'] ) <= $max ) {
+			if ( $min < floatval( $rec['price'] )   && floatval( $rec['price'] ) <= $max ) {
 				$r[] = $rec;
 			}
 		}

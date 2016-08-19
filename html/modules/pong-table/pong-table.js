@@ -217,7 +217,10 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 		} //else alert( "no parseInt tbl.pollDataSec" );
 	} //else alert( "no tbl.pollDataSec" );
 	
-	pongTableUpdateData( divId, params.get );
+	if ( tbl.dataURL ) { 
+	  // load table data on page load only if dataURL is set
+	  pongTableUpdateData( divId, params.get );	  
+	}
 }
 
 function pongTableAddActionBtn( id, modalName, resourceURL, params ) {
@@ -721,6 +724,7 @@ function pongTableUpdateData( divId, paramsObj ) {
 		
 		$.getJSON( tblDef.dataUrlFull, paramsObj ,
 			function( data ) { 	
+		        log( "Pong-Table",  JSON.stringify( data ) );
 				var subdata = getSubData( data, tblDef.dataDocSubPath );
 				pongTableSetData( divId, subdata ); 
 				publishEvent( 'feedback', {'text':'Table data loaded sucessfully'} )
@@ -795,7 +799,9 @@ function tblCells( divId ) {
 	  $( "#"+divId+'PaginLbl' ).html( $.i18n( "page" )+" "+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
 	} else {
 	  // need to create empty table rows and cells 
-	  //TODO
+	  // del all rows, except 1st
+	  $( '#'+divId+'PongTable' ).find( "tr:gt(0)" ).remove();
+	  
 	  var contentItems = [];
 	  for ( var r = 0; r < rowEn; r ++ ) {
 	    var tbl = poTbl[ divId ].pongTableDef;

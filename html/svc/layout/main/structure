@@ -22,7 +22,8 @@
 			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
-			       { "pageLink":"tests/histogram", "label":"Histogram Test" },
+			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
+			       { "pageLink":"tests/histogram2", "label":"Histogram Passive" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

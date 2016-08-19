@@ -241,7 +241,8 @@ moduleMap[ "pong-histogram" ] = {
     "name": "pong-histogram",
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongHistogram_DivHTML" },
-        { hook: "updateData", method:"pongHistogram_UpdateData" }
+        { hook: "updateData", method:"pongHistogram_UpdateData" },
+        { hook:"setData", method:"pongHistogram_SetData" }
 //        { hook: "addActionBtn", method:"pongHistogram_pAddActionBtn" },
 //        { hook: "creModal", method:"pongHistogram_CreModalFromMeta" },
     ]
