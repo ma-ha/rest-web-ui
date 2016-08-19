@@ -88,14 +88,18 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
 		
 		log( "PoNG-Help", "Get help: Get JSON for "+sessionInfo[ id+"Help" ].resID );
 		var jsonCfg = getViewConfig( sessionInfo[ id+"Help" ].resID );
-		if ( jsonCfg.moduleConfig && jsonCfg.moduleConfig.mapKey ) {
-			jsonCfg.moduleConfig.mapKey = ".....";
+		if ( jsonCfg ) {
+    		if ( jsonCfg.moduleConfig && jsonCfg.moduleConfig.mapKey ) {
+    			jsonCfg.moduleConfig.mapKey = ".....";
+    		}
+    		delete jsonCfg['actions']; //hide this dialog in config
+    	 	log( "PoNG-Help", "Add JSON to modal dialog." );
+    	 	jQuerySyntaxInsertCode( id+modalName+"Dialog", JSON.stringify( jsonCfg, null, "  " ), 'yaml', { theme: 'modern', blockLayout: 'fixed' } );
+    		log( "PoNG-Help", "Calling jQuery.syntax done" );
+		} else {
+		  logErr( "PoNG-Help", "Can't find ressource with ID "+sessionInfo[ id+"Help" ].resID  );
+          jQuerySyntaxInsertCode( id+modalName+"Dialog", JSON.stringify( {}, null, "  " ), 'yaml', { theme: 'modern', blockLayout: 'fixed' } );		  
 		}
-		delete jsonCfg['actions']; //hide this dialog in config
-	 	log( "PoNG-Help", "Add JSON to modal dialog." );
-	 	jQuerySyntaxInsertCode( id+modalName+"Dialog", JSON.stringify( jsonCfg, null, "  " ), 'yaml', { theme: 'modern', blockLayout: 'fixed' } );
-		log( "PoNG-Help", "Calling jQuery.syntax done" );
-
 	} else {
 		log( "PoNG-Help", "WARNING: Configuration issue!" );
 	}
