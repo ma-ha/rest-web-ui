@@ -56,12 +56,10 @@
 				"moduleConfig":{
 					"dataX":"price",
 					"dataY":"count",
-					"xAxisType":"integer",
 					"xAxisUnit":"€",
 					"xAxisMin":"0",
 					"xAxisMax":"200",
 					"blockCount":"20",
-					"yAxis":"linear",
 					"yAxisMax":"auto",
 					"update":[
 						{
@@ -70,8 +68,7 @@
 							"x2":"maxPrice"
 						}
 						
-					],
-					"maxDeepth":"4"
+					]
 				},
 				"decor":"decor",
 				"actions":[

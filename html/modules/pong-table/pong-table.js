@@ -217,7 +217,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 		} //else alert( "no parseInt tbl.pollDataSec" );
 	} //else alert( "no tbl.pollDataSec" );
 	
-	if ( tbl.dataURL ) { 
+	if ( tbl.dataURL != null ) { 
 	  // load table data on page load only if dataURL is set
 	  pongTableUpdateData( divId, params.get );	  
 	}

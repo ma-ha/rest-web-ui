@@ -7,6 +7,7 @@ if ( ! isset( $_SESSION["tbl-demo-config"] ) ) {					// define a start config fo
 	$_SESSION['tbl-demo-config'] = 
 		'{			
 			"rowId": "ID",
+			"dataURL":"",
 			"cols" : [
 				{ "id":"ID", "label":"", "cellType":"text" }, 
 				{ "id":"Name", "label":"Name", "cellType":"text" }, 

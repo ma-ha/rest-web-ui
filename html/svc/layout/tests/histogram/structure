@@ -13,16 +13,13 @@
 					"dataURL":"svc/mock/histogram",
 					"dataX":"price",
 					"dataY":"count",
-					"xAxisType":"integer",
 					"xAxisMin":"0",
 					"xAxisMax":"200",
 					"blockCount":"20",
-					"yAxis":"linear",
 					"yAxisMax":"auto",
 					"update":[
 						{ "resId":"outTbl", "x1":"minPrice", "x2":"maxPrice" }
-					],
-					"maxDeepth":"4"
+					]
 				},
 				"decor":"decor",
 				"actions":[
@@ -42,6 +39,7 @@
 				"type":"pong-table",
 				"moduleConfig":{
 					"rowId":"id",
+					"dataURL":"",
 					"cols":[
 						{
 							"id":"item",

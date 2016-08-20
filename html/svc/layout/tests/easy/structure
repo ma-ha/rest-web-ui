@@ -72,6 +72,7 @@
 				"title":"Easy Table",
 				"moduleConfig":{
 					"pollDataSec":"150",	
+					"dataURL":"",
 					"easyCols":[
 						"*ID|5%",
 						"Name=Name.0",
