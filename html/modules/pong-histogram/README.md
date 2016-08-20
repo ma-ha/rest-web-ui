@@ -128,7 +128,7 @@ Data from service `svc/mock/product`should look like:
 	    ...
 	]
 	
-The histogram view will could the prices for each block range and render the block height. 
+The histogram view will count the prices for each block price-range and render the block height. 
 
 Clicking the block will still update all views specified.
 
