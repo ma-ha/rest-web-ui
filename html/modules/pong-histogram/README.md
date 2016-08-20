@@ -51,6 +51,7 @@ one bat to the named view.
 	
 ## Configuration Parameters (mode 2)
 Please notice, that no `dataURL` is defined:
+
 	...
 	"type":"pong-histogram",
 	"title":"Hsitogram Test",
