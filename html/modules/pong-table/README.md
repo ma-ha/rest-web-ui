@@ -56,8 +56,8 @@ You can use the _dataDocSubPath_ attribute, to tell the module the sub-path of t
 		...
     }
 
-The definition of `dataURL` also initiales a data load on page load. 
-If `dataURL` is not defined, then data loading bust be triggered by another view via `setData` or `update`. 
+The definition of `dataURL` also initiates a data load on page load. 
+If `dataURL` is not defined, then data loading must be triggered by another view via `setData` or `update`. 
 
 The identifier of each row is defined by <code>"rowId"</code>. 
 This can be a string as above or a list of strings (e.g. when the table data is a join of two tables). Example:
