@@ -13,6 +13,7 @@ and
 * [Tree view](modules/pong-tree)
 * Support logo text and img combination
 * [Histogram view](modules/pong-histogram)
+* [Table: setData action](modules/pong-table)
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)
