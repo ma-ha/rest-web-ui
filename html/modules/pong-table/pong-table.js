@@ -606,7 +606,7 @@ function pongTblGetPostLst2( divId, action ) {
 	} else {
 		result[ "param" ] = postLst;
 	}
-	alert( JSON.stringify( result ) );
+//	alert( JSON.stringify( result ) );
 	return result;
 }
 
@@ -628,13 +628,13 @@ function pongTblGetDataStr( divId, actionId ) {
 					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
 						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
 							// ok selected
-							alert(  JSON.stringify(actn) );
+//							alert(  JSON.stringify(actn) );
 							
 							// iterate action data fields
 							if ( actn.params ) {
 								for ( var f = 0; f < actn.params.length; f++ ) {
 									getLst.push( actn.params[f].name +"="+ parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f] ) );
-									alert( actn.params[f].name +"="+ parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f] ) );
+									//alert( actn.params[f].name +"="+ parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f] ) );
 								}
 							}
 						}
@@ -758,7 +758,7 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 	  if ( poTbl[ divId ].setData.setData ) {
 	    var setDta =  poTbl[ divId ].setData.setData
 	    for ( var i = 0; i < setDta.length; i++ ) {
-	      alert( setDta[i].resId )
+	      //alert( setDta[i].resId )
 	      setModuleData( setDta[i].resId+'Content', poTbl[ divId ].pongTableData, null );
 	    }
 	  }
