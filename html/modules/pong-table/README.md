@@ -340,6 +340,35 @@ The actions are same like form actions (defined separately), example:
 		}
 	}
 
+## SetData for other views or plug-ins
+
+The table loads data triggerd by page load or e.g. be a form action. 
+To reuse this data in other views, you can define to call the `setData` hooks there.
+
+Example:
+
+ 	{
+	    "rowId": "contactTable",
+	    "height": "530px",
+	    "resourceURL": "/contacts",
+	    "title": "SugarCRM Contacts",
+        "type": "pong-table",
+	    "moduleConfig": {
+		    "dataURL": "webdata",
+		    "cols" : [
+	           { "id": "name", "label": "Name", "cellType": "text" }, 
+	           { "id": "link", "label": "Data Sheet", "cellType": "linkLink" }, 
+	        ],
+			"actions": [
+			    {
+					"method":"SETDATA",
+					"setData": [ { "resId":"histogram" } ]
+				} 
+			]
+	    }			
+	}
+
+
 ## Simple example
 	{
 	    "dataURL": "webdata",
@@ -347,15 +376,15 @@ The actions are same like form actions (defined separately), example:
 	    "dataReqParamsSrc": "Form",
 	    "dataDocSubPath": "struc1.tbl",
 	    "rowId": "productId",
-	        "cols" : [
-	           { "id": "name", "label": "Name", "cellType": "text" }, 
-	           { "id": "link", "label": "Data Sheet", "cellType": "linkLink" }, 
-	           { "id": "descr", "label": "name", "cellType": "tooltip" },  
-	           { "id": "img", "label": "Picture", "cellType": "img" },  
-               { "id": "rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
-	           { "id": "order", "label": "Add", "cellType": "button" }  
-	        ],         
-	        "maxRows":"5"
+        "cols" : [
+           { "id": "name", "label": "Name", "cellType": "text" }, 
+           { "id": "link", "label": "Data Sheet", "cellType": "linkLink" }, 
+           { "id": "descr", "label": "name", "cellType": "tooltip" },  
+           { "id": "img", "label": "Picture", "cellType": "img" },  
+           { "id": "rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
+           { "id": "order", "label": "Add", "cellType": "button" }  
+        ],         
+        "maxRows":"5"
 	}
 
 And a HTTP GET to webdata gives

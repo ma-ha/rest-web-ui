@@ -483,6 +483,13 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 			var method = "POST";
 			if ( action.method != null ) { method = action.method; }
 
+	        if ( action.method == 'SETDATA' ) {
+	              poTbl[ divId ].setData = action;
+	              log( "PoNG-Table",  '  action = setData');
+	              continue; 
+	        }
+
+			
 			log( "PoNG-Table",  '  action '+action.id);
 			contentItems.push( '<button id="'+divId+'Bt'+action.id+'" class="pong-table-action">'+$.i18n(action.actionName)+'</button>' );	
 			contentItems.push( '<script>' );
@@ -746,6 +753,16 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 		poTbl[ divId ].pongTableData = data;		
 	}
 	tblCells( divId ); 
+	
+	if ( poTbl[ divId ].setData ) {
+	  if ( poTbl[ divId ].setData.setData ) {
+	    var setDta =  poTbl[ divId ].setData.setData
+	    for ( var i = 0; i < setDta.length; i++ ) {
+	      alert( setDta[i].resId )
+	      setModuleData( setDta[i].resId+'Content', poTbl[ divId ].pongTableData, null );
+	    }
+	  }
+	}
 }
 
 var pongTable_sc = ''; // little dirty, but works well
