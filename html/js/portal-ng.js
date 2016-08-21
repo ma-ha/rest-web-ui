@@ -1426,13 +1426,13 @@ function getEventBroker (id) {
         cleanupInProgress = true;
         
         // remove old events from queue  
-        if ( maxCnt && evtQueue.length > maxCnt ) {
-          evtQueue.splice( 0, evtQueue.length - maxCnt )           
+        if ( maxCnt && this.evtQueue.length > maxCnt ) {
+          this.evtQueue.splice( 0, this.evtQueue.length - maxCnt )           
         }
         
         // remove unqueued events from queue  
-        for( var i = evtQueue.length; i >= 0;  i-- ) {
-          if ( evtQueue[i].unqueue ) {
+        for( var i = this.evtQueue.length; i >= 0;  i-- ) {
+          if ( this.evtQueue[i] && this.evtQueue[i].unqueue ) {
             array.splice(i,0)
           }
         }
