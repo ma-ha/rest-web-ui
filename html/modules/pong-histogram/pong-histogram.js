@@ -63,7 +63,7 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
         contentItems.push( '<div class="HistogramBlockContainer"  data-i="'+i+'">' );
         contentItems.push( '<div id="'+divId+'bar'+i+'" class="HistogramBlockBar" data-i="'+i+'"></div>' );
         contentItems.push( '</div>' );
-        if ( pmd.xAxisUnit ) { val2 = val2 +  $.i18n( pmd.xAxisUnit ); }
+        if ( pmd.xAxisUnit ) { val2 = $.i18n( val2 +  $.i18n( pmd.xAxisUnit ) ); } // trick to replace whole label
         contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="HistogramBlockText" data-i="'+i+'">'+val2+'</div>' );
         contentItems.push( '</div>' );	  
 	}
