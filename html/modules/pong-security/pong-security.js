@@ -90,7 +90,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( ' <form id="pongLoginDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
 				divHtml.push( '  <label for="userid">'+$.i18n('User ID')+'</label><br/>' );
 				divHtml.push( '  <input id="useridInput" name="userid" type="text" class="'+cssClass+'/><br/>' );
-				divHtml.push( '  <label for="password">'+$.i18n('Passwort')+'</label><br/>' );
+				divHtml.push( '  <label for="password">'+$.i18n('Password')+'</label><br/>' );
 				divHtml.push( '  <input id="passwordInput" name="password" type="password" class="'+cssClass+'/><br/>' );
 				divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
 				divHtml.push( '<script>' );
@@ -145,8 +145,46 @@ function addSecurityHeaderHtml( divId, type , params ) {
 //			}
 //		}
 //		divHtml.push( '</select>&nbsp;');
+        divHtml.push( '</form>' );
+
+        if ( params.changePasswordURL != null  ) {
+          divHtml.push( '<a href="changePassword.htm" class="PongChPwd">'+$.i18n('Change Password')+'</a>' );
+          //TODO
+          var cssClass = 'class="text ui-widget-content ui-corner-all"';
+          divHtml.push( '<div id="pongChPwdDialog">' );
+          divHtml.push( ' <form id="pongChPwdDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
+          divHtml.push( '  <label for="oldPassword">'+$.i18n('Password')+'</label><br/>' );
+          divHtml.push( '  <input id="oldPassword" name="oldPassword" type="text" class="'+cssClass+'/><br/>' );
+          divHtml.push( '  <label for="newPassword">'+$.i18n('New Password')+'</label><br/>' );
+          divHtml.push( '  <input id="newPassword" name="newPassword" type="password" class="'+cssClass+'/><br/>' );
+          divHtml.push( '  <label for="newPassword2">'+$.i18n('Repeat New Password')+'</label><br/>' );
+          divHtml.push( '  <input id="newPassword2" name="newPassword2" type="password" class="'+cssClass+'/><br/>' );
+          divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
+          divHtml.push( '<script>' );
+          divHtml.push( '$( function() { $( "#pongChPwdDialog" ).dialog( { ' );
+          divHtml.push( '  autoOpen: false, height: 300, width: 300, modal: true, ' );
+          divHtml.push( '  buttons: { "Change Password": function() { ' );          
+          divHtml.push( '      if ( $( "#newPassword" ).val()  !=  $( "#newPassword2" ).val() ) { ' );          
+          divHtml.push( '         alert( "'+$.i18n('Passwords do not match!')+'" ); ' );          
+          divHtml.push( '         return false; };' );
+          divHtml.push( '      $.post( "'+params.changePasswordURL+'", ' );
+          divHtml.push( '         { oldPassword: $( "#oldPassword" ).val(), newPassword: $( "#newPassword" ).val() }, ' );
+          divHtml.push( '         function( data ) { ' );
+          divHtml.push( '             $( "#loginResult" ).html( $.i18n( data ) ); ' );
+          divHtml.push( '         } ' );
+          divHtml.push( '      ).fail(  ' );
+          divHtml.push( '         function(){  $( "#loginResult" ).html( $.i18n( "Failed" ) ); }' );
+          divHtml.push( '      ); ' );
+          divHtml.push( '      return false;' );
+          divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
+          divHtml.push( '});' );          
+          divHtml.push( '$( ".PongChPwd" ).click( ' );
+          divHtml.push( '  function( ) { ' ); 
+          divHtml.push( '         $( "#pongChPwdDialog" ).dialog( "open" ); return false; ' );
+          divHtml.push( '  } );' );
+          divHtml.push( '</script>' );
+        }
 		divHtml.push( '<a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a>' );
-		divHtml.push( '</form>' );
 		divHtml.push( '<script>' );
 		divHtml.push( '  $( "#SecurityHeaderRoleSelect" ).change(function() { ');
 		divHtml.push( '     $( "#SecurityHeaderFrom" ).submit();');

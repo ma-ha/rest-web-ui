@@ -11,3 +11,7 @@
     position: absolute;
     top: 24px;
 }
+
+#SecurityHeaderFrom {
+	display: inline;
+}
