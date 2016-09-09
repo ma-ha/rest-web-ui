@@ -154,7 +154,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '<div id="pongChPwdDialog">' );
           divHtml.push( ' <form id="pongChPwdDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
           divHtml.push( '  <label for="oldPassword">'+$.i18n('Password')+'</label><br/>' );
-          divHtml.push( '  <input id="oldPassword" name="oldPassword" type="text" class="'+cssClass+'/><br/>' );
+          divHtml.push( '  <input id="oldPassword" name="oldPassword" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '  <label for="newPassword">'+$.i18n('New Password')+'</label><br/>' );
           divHtml.push( '  <input id="newPassword" name="newPassword" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '  <label for="newPassword2">'+$.i18n('Repeat New Password')+'</label><br/>' );
