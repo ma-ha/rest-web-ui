@@ -29,4 +29,23 @@ The param <code>registgerURL<code> is optional to show the _Register_ link.
 ## Handle Password Changes
 Optional _param_ `changePasswordURL` will show a change password link for
 authenticated users. This opens a modal dialog to change the password and sends
-data to the defined web service.  
+data to the defined web service.
+
+## User Pages available after login
+Along with essential functions like _Logout_ or _Change Password_ you can 
+define pages for the user to be available only for authenticated users. 
+These pages linked along with _Logout_ and _Change Password_ with the user 
+name in the GUI. 
+
+Example
+
+    "modules" : [ 
+	     { "id": "Sec", "type": "pong-security", 
+	       "param": { 
+               ...
+               "userPages": {
+	            	"User Profile":"uaser/profile",
+	            	"Preferences":"user/setting",
+	            }	
+	       } 
+      },

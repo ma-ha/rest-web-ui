@@ -124,8 +124,11 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		}
 	} else {
 		divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
-		divHtml.push( $.i18n('User')+':&nbsp;<span class="user-id">'+userID + '</span>&nbsp;&nbsp;' );
-//		divHtml.push(  $.i18n('Role')+'&nbsp;:' );
+		divHtml.push( $.i18n('User')+':&nbsp;<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
+		divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span>' );
+		divHtml.push( '<div id="SecurityHeaderPullDown">' );
+        		
+		
 		if ( getParam('layout') != null && getParam('layout') != '' ) {
 			divHtml.push( '<input type="hidden" name="layout" value="'+getParam('layout')+'"/>' );			
 		}
@@ -148,7 +151,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
         divHtml.push( '</form>' );
 
         if ( params.changePasswordURL != null  ) {
-          divHtml.push( '<a href="changePassword.htm" class="PongChPwd">'+$.i18n('Change Password')+'</a>' );
+          divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="changePassword.htm" class="PongChPwd">'+$.i18n('Change Password')+'</a></span>' );
           //TODO
           var cssClass = 'class="text ui-widget-content ui-corner-all"';
           divHtml.push( '<div id="pongChPwdDialog">' );
@@ -184,7 +187,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  } );' );
           divHtml.push( '</script>' );
         }
-		divHtml.push( '<a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a>' );
+		divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a></span>' );
 		divHtml.push( '<script>' );
 		divHtml.push( '  $( "#SecurityHeaderRoleSelect" ).change(function() { ');
 		divHtml.push( '     $( "#SecurityHeaderFrom" ).submit();');
@@ -203,7 +206,12 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '      } ); ' ); 
 		divHtml.push( '      return false; ' );
 		divHtml.push( '  } );' );
+		divHtml.push( '      $( "#SecurityHeaderTriangle" ).click( function() { $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
+		divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
 		divHtml.push( '</script>' );
+
+		divHtml.push( '</div>' );
+
 	}
 	divHtml.push( '</div>' );
 	

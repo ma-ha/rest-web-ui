@@ -18,7 +18,11 @@
 	            "logoutPage":"tests/sec", 
 	            "registgerURL":"index.php?layout=tests/sec/register", 
 	            "logoutURL":"svc/mock/sec/logout.php", 
-	            "rolesURL":"svc/mock/sec/usersroles.php" 
+	            "rolesURL":"svc/mock/sec/usersroles.php",
+	            "userPages": {
+	            	"User Profile":"sec/profile",
+	            	"Preferences":"sec/setting",
+	            }
 	          } 
 	      	}
 	      ] 

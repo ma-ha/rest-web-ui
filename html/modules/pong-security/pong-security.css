@@ -3,6 +3,7 @@
 	top: 5px;
 	right: 10px;
 	font-size: 10pt;
+	z-index: 10000;
 }
 .user-id {
 	color: #FFF;
@@ -14,4 +15,13 @@
 
 #SecurityHeaderFrom {
 	display: inline;
+}
+
+#SecurityHeaderPullDown {
+	display: block;
+	background-color: #A0A0A0;
+}
+
+.SecurityHeaderPullDownItem {
+	display: block;
 }
