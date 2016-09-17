@@ -207,7 +207,9 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '      } ); ' ); 
 		divHtml.push( '      return false; ' );
 		divHtml.push( '  } );' );
-		divHtml.push( '      $( "#SecurityHeaderTriangle" ).click( function() { $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
+		divHtml.push( '      $( "#SecurityHeaderTriangle" ).click( function() { ' );
+		divHtml.push( '        setTimeout( function(){ $( "#SecurityHeaderPullDown" ).hide( "blind" ); }, 5000 );' );
+		divHtml.push( '        $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
 		divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
 		divHtml.push( '</script>' );
 
