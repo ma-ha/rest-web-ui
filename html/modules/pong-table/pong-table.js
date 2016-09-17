@@ -83,6 +83,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	poTbl[ divId ].resourceURL = resourceURL;
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
 	poTbl[ divId ].sortCol = '';
+    poTbl[ divId ].sortUp = true;
 
 	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
 	var contentItems = [];
@@ -115,7 +116,13 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( '<script> ' );
 	contentItems.push( "$(function() { ");
 	contentItems.push( ' $( ".'+divId+'TblSort").on( "click", function( e ) { ' );
-	contentItems.push( '     poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); tblCells( "'+divId+'" ); ' );
+	contentItems.push( '     if ( poTbl[ "'+divId+'" ].sortCol != $( this ).data("colid") ) { ' );
+    contentItems.push( '        poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); ' );
+    contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = true;' );
+    contentItems.push( '     } else {' ); // reverse sort order
+    contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = ! poTbl[ "'+divId+'" ].sortUp; ' );
+    contentItems.push( '     }' );
+    contentItems.push( '     tblCells( "'+divId+'" ); ' );
 	contentItems.push( ' } ); } ); ' );
 	contentItems.push( '</script> ' );
 	contentItems.push( "</tr>" );
@@ -766,6 +773,7 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 }
 
 var pongTable_sc = ''; // little dirty, but works well
+var pongTable_sort_up = true; // little dirty, but works well
 function pongTableCmpFields( a, b ) {
 	var cellValA = getSubData( a, pongTable_sc );
 	var cellValB = getSubData( b, pongTable_sc );
@@ -784,10 +792,10 @@ function pongTableCmpFields( a, b ) {
 		}
 	}
 	if ( cellValA > cellValB  ) {
-		return 1;
+	  return ( pongTable_sort_up ? 1 : -1)
 	}
 	if ( cellValA < cellValB ) {
-		return -1;
+	  return ( pongTable_sort_up ? -1 : 1)
 	}
 	return 0;
 }
@@ -800,7 +808,8 @@ function tblCells( divId ) {
   var i = 0;
   
   if ( poTbl[ divId ].sortCol != '' ) {
-    pongTable_sc = poTbl[ divId ].sortCol;
+    pongTable_sc      = poTbl[ divId ].sortCol;
+    pongTable_sort_up = poTbl[ divId ].sortUp;
     //alert( "Sort "+poTbl[ divId ].sortCol );
     dtaArr.sort( pongTableCmpFields );
   }
