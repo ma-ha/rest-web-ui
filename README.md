@@ -14,6 +14,8 @@ Basic functionality of a Web Portal is provided out of the box:
 * user sessions (transfer data between views and pages) and a build in pub-sub event broker
 * OAauth2 security for web services
 
+![features screen shot](http://bit.ly/Pong-Features) 
+
 ### Everything runs in browser:
 
 All you need is a modern web browser -- and a web service somewhere. 
