@@ -124,8 +124,9 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		}
 	} else {
 		divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
-		divHtml.push( $.i18n('User')+':&nbsp;<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
-		divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span>' );
+		divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
+	    divHtml.push( '<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
+		divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span></div>' );
 		divHtml.push( '<div id="SecurityHeaderPullDown">' );
         		
 		
@@ -210,6 +211,15 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
 		divHtml.push( '</script>' );
 
+		if ( params.userPages ) {
+		  divHtml.push( '<hr/>' );
+		  for ( label in params.userPages ) {
+	          divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="index.html?layout='+
+	              params.userPages[ label ]
+	              +'" class="PongUserPage">'+$.i18n(label)+'</a></span>' );		    
+		  }
+		}
+		
 		divHtml.push( '</div>' );
 
 	}

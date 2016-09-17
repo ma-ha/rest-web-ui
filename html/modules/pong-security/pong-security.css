@@ -15,11 +15,17 @@
 
 #SecurityHeaderFrom {
 	display: inline;
+	align-content: right;
 }
 
 #SecurityHeaderPullDown {
 	display: block;
 	background-color: #A0A0A0;
+	padding: 6px;
+	position: absolute;
+	top: 20px;
+	width: -moz-max-content;
+	right: 0px;
 }
 
 .SecurityHeaderPullDownItem {

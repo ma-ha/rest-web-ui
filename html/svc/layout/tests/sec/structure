@@ -21,7 +21,7 @@
 	            "rolesURL":"svc/mock/sec/usersroles.php",
 	            "userPages": {
 	            	"User Profile":"sec/profile",
-	            	"Preferences":"sec/setting",
+	            	"Preferences":"sec/setting"
 	            }
 	          } 
 	      	}
