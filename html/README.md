@@ -15,6 +15,7 @@ and
 * [Histogram view](modules/pong-histogram)
 * [Table: setData action](modules/pong-table)
 * Security: Change password
+* Table: second click reverse sort order
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)
