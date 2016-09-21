@@ -161,6 +161,9 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  <input id="oldPassword" name="oldPassword" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '  <label for="newPassword">'+$.i18n('New Password')+'</label><br/>' );
           divHtml.push( '  <input id="newPassword" name="newPassword" type="password" class="'+cssClass+'/><br/>' );
+          if ( params.changePasswordStrength ) {
+            divHtml.push( '  <div id="newPasswordStength"></div>' );            
+          }
           divHtml.push( '  <label for="newPassword2">'+$.i18n('Repeat New Password')+'</label><br/>' );
           divHtml.push( '  <input id="newPassword2" name="newPassword2" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
@@ -168,6 +171,9 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '$( function() { $( "#pongChPwdDialog" ).dialog( { ' );
           divHtml.push( '  autoOpen: false, height: 300, width: 300, modal: true, ' );
           divHtml.push( '  buttons: { "Change Password": function() { ' );          
+          divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(), '+params.changePasswordStrength+' ) ) { ' );          
+          divHtml.push( '         alert( "'+$.i18n('Password to weak!')+'" ); ' );          
+          divHtml.push( '         return false; };' );
           divHtml.push( '      if ( $( "#newPassword" ).val()  !=  $( "#newPassword2" ).val() ) { ' );          
           divHtml.push( '         alert( "'+$.i18n('Passwords do not match!')+'" ); ' );          
           divHtml.push( '         return false; };' );
@@ -182,6 +188,10 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '      return false;' );
           divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
           divHtml.push( '});' );          
+          divHtml.push( '$( "#newPassword" ).keyup( ' );
+          divHtml.push( '  function( ) { ' ); 
+          divHtml.push( '        checkPwdStrength( $("#newPassword").val(), '+params.changePasswordStrength+' ); return false; ' );
+          divHtml.push( '  } );' );
           divHtml.push( '$( ".PongChPwd" ).click( ' );
           divHtml.push( '  function( ) { ' ); 
           divHtml.push( '         $( "#pongChPwdDialog" ).dialog( "open" ); return false; ' );
@@ -228,4 +238,25 @@ function addSecurityHeaderHtml( divId, type , params ) {
 	divHtml.push( '</div>' );
 	
 	$( "#"+divId ).html( divHtml.join( "\n" ) );
+}
+
+function checkPwdStrength( pwd, min ) {
+  var score = 0;
+  //alert( min )
+  if ( pwd.length > 7 ) { score++  }
+  if ( pwd.length > 9 ) { score++  }
+  if ( ( pwd.match(/[a-z]/) ) && ( pwd.match(/[A-Z]/) ) ) { score++ }
+  if ( pwd.match(/\d+/)) { score++ }
+  if ( pwd.match(/.[!,@,#,$,%,^,&,*,?,_,~,+,-,(,)]/) ) { score++ }
+  
+  var bar = '<div id="PwdScore">'+$.i18n('Strength:')+'</div>'
+  var cls = 'goodPwdScore'
+  for ( var i = 0; i < min; i++ ) {
+    if ( score <= i ) { cls = 'badPwdScore' }
+    bar += '<div class="'+cls+'"></div>'
+  }
+  bar += '<br>'
+  console.log( bar )
+  $( '#newPasswordStength' ).html( bar )
+  return ( score >= min )
 }

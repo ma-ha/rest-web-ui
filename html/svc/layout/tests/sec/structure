@@ -15,6 +15,7 @@
 	            "loginURL":"svc/mock/sec/login.php", 
 	            "loginPage":"tests/sec", 
 	            "changePasswordURL":"svc/mock/sec/password", 
+	            "changePasswordStrength":"4",
 	            "logoutPage":"tests/sec", 
 	            "registgerURL":"index.php?layout=tests/sec/register", 
 	            "logoutURL":"svc/mock/sec/logout.php", 

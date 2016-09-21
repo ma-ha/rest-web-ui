@@ -31,3 +31,28 @@
 .SecurityHeaderPullDownItem {
 	display: block;
 }
+
+#newPasswordStength {
+	height: 20px;
+}
+#PwdScore {
+	height: 20px;
+	float: left;
+	padding-right: 5px;
+}
+.goodPwdScore {
+	width: 20px;
+	height: 15px;
+	background-color: green;
+	margin-right: 1px;
+	margin-top: 3px;
+	float: left;
+}
+.badPwdScore {
+	width: 20px;
+	height: 15px;
+	background-color: red;
+	margin-right: 1px;
+	margin-top: 3px;
+	float: left;
+}
