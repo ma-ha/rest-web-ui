@@ -172,7 +172,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '$( function() { $( "#pongChPwdDialog" ).dialog( { ' );
           divHtml.push( '  autoOpen: false, height: 320, width: 300, modal: true, ' );
           divHtml.push( '  buttons: { "Change Password": function() { ' );          
-          divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(), '+params.changePasswordStrength+' ) ) { ' );          
+          divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(),  $("#newPassword2").val(), '+params.changePasswordStrength+' ) ) { ' );          
           divHtml.push( '         alert( "'+$.i18n('Password to weak!')+'" ); ' );          
           divHtml.push( '         return false; };' );
           divHtml.push( '      if ( $( "#newPassword" ).val()  !=  $( "#newPassword2" ).val() ) { ' );          
@@ -188,10 +188,13 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '      ); ' );
           divHtml.push( '      return false;' );
           divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
-          divHtml.push( '});' );          
-          divHtml.push( '$( "#newPassword" ).keyup( ' );
+          divHtml.push( '});' );    
+          if ( params.changePasswordStrength ) {
+            divHtml.push( '$(":button:contains(\'Change Password\')").prop("disabled", true).addClass("ui-state-disabled");' );
+          }
+          divHtml.push( '$( "#newPassword,#newPassword2" ).keyup( ' );
           divHtml.push( '  function( ) { ' ); 
-          divHtml.push( '        checkPwdStrength( $("#newPassword").val(), '+params.changePasswordStrength+' ); return false; ' );
+          divHtml.push( '        checkPwdStrength( $("#newPassword").val(), $("#newPassword2").val(), '+params.changePasswordStrength+' ); return false; ' );
           divHtml.push( '  } );' );
           divHtml.push( '$( ".PongChPwd" ).click( ' );
           divHtml.push( '  function( ) { ' ); 
@@ -241,7 +244,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
 	$( "#"+divId ).html( divHtml.join( "\n" ) );
 }
 
-function checkPwdStrength( pwd, min ) {
+function checkPwdStrength( pwd, pwd2, min ) {
   var score = 0;
   //alert( min )
   if ( pwd.length > 7 ) { score++  }
@@ -259,5 +262,8 @@ function checkPwdStrength( pwd, min ) {
   bar += '<br>'
   console.log( bar )
   $( '#newPasswordStength' ).html( bar )
+  if ( score >= min  &&  pwd == pwd2 ) {
+    $( ':button:contains("Change Password")').prop("disabled", false).removeClass("ui-state-disabled");
+  }
   return ( score >= min )
 }
