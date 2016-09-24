@@ -125,7 +125,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
 	} else {
 		divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
 		divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
-	    divHtml.push( '<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
+		divHtml.push( '<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
 		divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span></div>' );
 		divHtml.push( '<div id="SecurityHeaderPullDown">' );
         		
@@ -162,14 +162,15 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  <label for="newPassword">'+$.i18n('New Password')+'</label><br/>' );
           divHtml.push( '  <input id="newPassword" name="newPassword" type="password" class="'+cssClass+'/><br/>' );
           if ( params.changePasswordStrength ) {
-            divHtml.push( '  <div id="newPasswordStength"></div>' );            
+            var hint = 'Password should \n * have at least 8 characters \n * contain upper and lower characters \n * contain a number \n * contain a special character !,@,#,$,%,^,&,*,?,_,~,+,-,(,)'
+            divHtml.push( '  <div id="newPasswordStength" title="'+hint+'"></div>' );            
           }
           divHtml.push( '  <label for="newPassword2">'+$.i18n('Repeat New Password')+'</label><br/>' );
           divHtml.push( '  <input id="newPassword2" name="newPassword2" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
           divHtml.push( '<script>' );
           divHtml.push( '$( function() { $( "#pongChPwdDialog" ).dialog( { ' );
-          divHtml.push( '  autoOpen: false, height: 300, width: 300, modal: true, ' );
+          divHtml.push( '  autoOpen: false, height: 320, width: 300, modal: true, ' );
           divHtml.push( '  buttons: { "Change Password": function() { ' );          
           divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(), '+params.changePasswordStrength+' ) ) { ' );          
           divHtml.push( '         alert( "'+$.i18n('Password to weak!')+'" ); ' );          
@@ -217,7 +218,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
 		divHtml.push( '      } ); ' ); 
 		divHtml.push( '      return false; ' );
 		divHtml.push( '  } );' );
-		divHtml.push( '      $( "#SecurityHeaderTriangle" ).click( function() { ' );
+		divHtml.push( '      $( "#SecurityHeaderUser" ).click( function() { ' );
 		divHtml.push( '        setTimeout( function(){ $( "#SecurityHeaderPullDown" ).hide( "blind" ); }, 5000 );' );
 		divHtml.push( '        $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
 		divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
