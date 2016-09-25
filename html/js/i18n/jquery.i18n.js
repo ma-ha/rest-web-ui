@@ -177,7 +177,9 @@
 				
 				message = key;
 			}
-			return this.parser.parse( message, parameters );
+			var result =  this.parser.parse( message, parameters );
+			if ( result.substr(0,6) == 'UTF8: ') result = result.substr(6)
+			return result;
 		}
 	};
 
