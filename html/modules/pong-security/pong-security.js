@@ -166,12 +166,6 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  $( "#pongChPwdDialog" ).dialog( { ' );
           divHtml.push( '  autoOpen: autoOpen, height: 320, width: 300, modal: true, ' );
           divHtml.push( '  buttons: { "'+$.i18n( "UTF8: Change Password")+'" : function() { ' );          
-          divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(),  $("#newPassword2").val(), '+params.changePasswordStrength+' ) ) { ' );          
-          divHtml.push( '         alert( "'+$.i18n('Password to weak!')+'" ); ' );          
-          divHtml.push( '         return false; };' );
-          divHtml.push( '      if ( $( "#newPassword" ).val()  !=  $( "#newPassword2" ).val() ) { ' );          
-          divHtml.push( '         alert( "'+$.i18n('Passwords do not match!')+'" ); ' );          
-          divHtml.push( '         return false; };' );
           divHtml.push( '      $.post( "'+params.changePasswordURL+'", ' );
           divHtml.push( '         { oldPassword: $( "#oldPassword" ).val(), newPassword: $( "#newPassword" ).val() }, ' );
           divHtml.push( '         function( data ) { ' );
@@ -252,17 +246,8 @@ function pongSecLogin( loginURL, loginPage, lang ) {
           if ( loginPage ) { getParams.push( { name:'layout', value: loginPage } ) }
           if ( lang      ) { getParams.push( { name:'lang', value: lang.substr(5) } ) } 
           if ( data.changePassword ) { getParams.push( { name:'changePassword', value: 'true' } ) }
-          //alert( $.param( getParams ) )
           window.location.href = 'index.html?' + $.param( getParams );
         }
-        
-//        if ( params.loginPage ) { 
-//          if ( lang != '' ) { lang = '&'+lang; }
-//          if ( result == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+lang+'"; } 
-//        } else {
-//          if ( lang != '' ) { lang = '?'+lang; }
-//          if ( result == "Login OK" ) { window.location.href = "index.html'+lang+'"; }      
-//        }
       }
   ).fail(  
       function(){  $( "#loginResult" ).html( $.i18n( "Login failed" ) ); }
