@@ -97,21 +97,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '$( function() { $( "#pongLoginDialog" ).dialog( { ' );
 				divHtml.push( '  autoOpen: false, height: 300, width: 300, modal: true, ' );
 				divHtml.push( '  buttons: { "Login": function() { ' );
-				divHtml.push( '      $.post( "'+params.loginURL+'", ' );
-				divHtml.push( '         { userid: $( "#useridInput" ).val(), password: $( "#passwordInput" ).val() }, ' );
-				divHtml.push( '         function( data ) { ' );
-				divHtml.push( '             $( "#loginResult" ).html( $.i18n( data ) ); ' );
-				if ( params.loginPage ) { 
-					if ( lang != '' ) { lang = '&'+lang; }
-					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+lang+'"; } ' );
-				} else {
-					if ( lang != '' ) { lang = '?'+lang; }
-					divHtml.push( '             if ( data == "Login OK" ) { window.location.href = "index.html'+lang+'"; } ' );					
-				}
-				divHtml.push( '         } ' );
-                divHtml.push( '      ).fail(  ' );
-                divHtml.push( '         function(){  $( "#loginResult" ).html( $.i18n( "Login failed" ) ); }' );
-                divHtml.push( '      ); ' );
+				divHtml.push( '      pongSecLogin( "'+params.loginURL+'", "'+params.loginPage+'", "'+lang+'" ) ');
 				divHtml.push( '      return false;' );
 				divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
 				divHtml.push( '});' );			
@@ -169,9 +155,17 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  <input id="newPassword2" name="newPassword2" type="password" class="'+cssClass+'/><br/>' );
           divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
           divHtml.push( '<script>' );
-          divHtml.push( '$( function() { $( "#pongChPwdDialog" ).dialog( { ' );
-          divHtml.push( '  autoOpen: false, height: 320, width: 300, modal: true, ' );
-          divHtml.push( '  buttons: { "Change Password": function() { ' );          
+          divHtml.push( '$( function() { ' );
+          if ( getParam('changePassword') ) { 
+            divHtml.push( '  var autoOpen = true ' );            
+            divHtml.push( '   $( "#pongChPwdDialog" ).attr( "title", "'+$.i18n( "UTF8: You Must Change Your Password")+'" )' );            
+          } else {
+            divHtml.push( '  var autoOpen = false ' );
+            divHtml.push( '   $( "#pongChPwdDialog" ).attr( "title", "'+$.i18n( "UTF8: Change Password")+'" )' );            
+          }
+          divHtml.push( '  $( "#pongChPwdDialog" ).dialog( { ' );
+          divHtml.push( '  autoOpen: autoOpen, height: 320, width: 300, modal: true, ' );
+          divHtml.push( '  buttons: { "'+$.i18n( "UTF8: Change Password")+'" : function() { ' );          
           divHtml.push( '      if ( ! checkPwdStrength( $("#newPassword").val(),  $("#newPassword2").val(), '+params.changePasswordStrength+' ) ) { ' );          
           divHtml.push( '         alert( "'+$.i18n('Password to weak!')+'" ); ' );          
           divHtml.push( '         return false; };' );
@@ -242,6 +236,37 @@ function addSecurityHeaderHtml( divId, type , params ) {
 	divHtml.push( '</div>' );
 	
 	$( "#"+divId ).html( divHtml.join( "\n" ) );
+}
+
+function pongSecLogin( loginURL, loginPage, lang ) {
+  $.post( loginURL, 
+      { userid:   $( "#useridInput" ).val(), 
+        password: $( "#passwordInput" ).val() }, 
+      function( data ) { 
+        var result = "";
+        if ( data.loginResult ) { result = data.loginResult } else { result = data }
+        $( "#loginResult" ).html( $.i18n( result ) ); 
+        
+        if ( result == "Login OK" ) {
+          var getParams = [];
+          if ( loginPage ) { getParams.push( { name:'layout', value: loginPage } ) }
+          if ( lang      ) { getParams.push( { name:'lang', value: lang.substr(5) } ) } 
+          if ( data.changePassword ) { getParams.push( { name:'changePassword', value: 'true' } ) }
+          //alert( $.param( getParams ) )
+          window.location.href = 'index.html?' + $.param( getParams );
+        }
+        
+//        if ( params.loginPage ) { 
+//          if ( lang != '' ) { lang = '&'+lang; }
+//          if ( result == "Login OK" ) { window.location.href = "index.html?layout='+params.loginPage+lang+'"; } 
+//        } else {
+//          if ( lang != '' ) { lang = '?'+lang; }
+//          if ( result == "Login OK" ) { window.location.href = "index.html'+lang+'"; }      
+//        }
+      }
+  ).fail(  
+      function(){  $( "#loginResult" ).html( $.i18n( "Login failed" ) ); }
+  ); 
 }
 
 function checkPwdStrength( pwd, pwd2, min ) {

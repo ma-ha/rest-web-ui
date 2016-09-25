@@ -44,7 +44,7 @@
 							"id":"tstFormId",
 							"easyFormFields":[
 								"id",
-								"c1|Login~with~userid~test~and~no~password|label"
+								"c1|Login~with~userid~test1~or~test2~or~test3~and~no~password|label"
 							]
 							
 						}

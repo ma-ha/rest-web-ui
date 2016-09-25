@@ -9,10 +9,24 @@ if ( isset( $_SESSION["userstate"] ) && $_SESSION["userstate"] == 'login done' )
 	
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST') {
-	if ( isset( $_POST['userid'] ) && $_POST['userid'] == 'test' ) {
+	if ( isset( $_POST['userid'] ) && $_POST['userid'] == 'test1' ) {
 		$_SESSION["userstate"] = 'login done';
-		$_SESSION["userid"] = 'test';
+		$_SESSION["userid"] = 'test1';
 		echo "Login OK";
+		return true;
+	} 
+	if ( isset( $_POST['userid'] ) && $_POST['userid'] == 'test2' ) {
+		$_SESSION["userstate"] = 'login done';
+		$_SESSION["userid"] = 'test2';
+		header('Content-type: application/json');		
+		echo '{ "loginResult":"Login OK" }';
+		return true;
+	} 
+	if ( isset( $_POST['userid'] ) && $_POST['userid'] == 'test3' ) {
+		$_SESSION["userstate"] = 'login done';
+		$_SESSION["userid"] = 'test3';
+		header('Content-type: application/json');		
+		echo '{ "loginResult":"Login OK", "changePassword":"true" }';
 		return true;
 	} 
 }
