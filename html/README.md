@@ -18,6 +18,7 @@ and
 * Table: second click reverse sort order
 * Security: Pull down menu with user page links
 * Security: Change password with strength check
+* Security: Force change password dialog after login
 
 ## Version 0.7
 * Header: [Pull down menu](modules/pong-pulldown/) (new)
