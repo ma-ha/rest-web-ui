@@ -146,8 +146,12 @@ function inits() {
 		} else	if ( step == "dialogs" ) {
 			log( 'init', 'Start load dialogs for resources...');
 			resourceDialogs();
-			clearInterval( initTimerId );
-			step = "done";
+			step = "afterInit";
+    } else  if ( step == "afterInit" ) {
+      log( 'init', 'Start load dialogs for resources...');
+      startModulesAfterPageLoad( layout );
+      clearInterval( initTimerId );
+      step = "done";
 		}
 	}	
 }
@@ -578,6 +582,35 @@ function initAModule( module ) {
 		log( 'initModules CALL', hook+"( ... )");
 		eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
 	}	
+  }
+}
+
+//=====================================================================================================
+
+function startModulesAfterPageLoad( lo ) {
+  // header hooks
+  if ( ( lo != null ) && ( lo.header != null ) && ( lo.header.modules != null ) ) {
+    for ( var i = 0; i < lo.header.modules.length; i++ ) {
+      startModuleAfterPageLoad( lo.header.modules[i] );
+    }
+  }
+  // footer hooks
+  if ( ( lo != null ) && ( lo.footer != null ) && ( lo.footer.modules != null ) ) {
+    for ( var i = 0; i < lo.footer.modules.length; i++ ) {
+      startModuleAfterPageLoad( lo.footer.modules[i] );
+    }
+  }
+  ajaxOngoing--;
+}
+
+function startModuleAfterPageLoad( module ) {
+  if ( module ) {
+  log( 'startModuleAfterPageLoad', "Modules "+module.type );
+  var hook = getHookMethod( "afterPageLoad", module.type );
+  if ( hook != "" ) {
+    log( 'startModuleAfterPageLoad', 'Call '+hook+"( ... )");
+    eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
+  } 
   }
 }
 
@@ -1295,12 +1328,7 @@ function log( func, msg ){
 
 //  console.log( logline );
   // define the "func" you want to log to the console
-//  if ( func=='pongHistogram'
-//       || func=='Pong-Table' 
-//	) { 
-//		console.log( logline );
-////		loggerBuffer.push
-//	}
+  if ( func=='PoNG-Search' ) { console.log( logline ) }
 	
 	// send log to event broker
   if ( loggerEvents ) { 
