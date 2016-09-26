@@ -1,6 +1,7 @@
 # Release Notes
 ## Version0.8.x
 * added `afterPageLoad(...)` hook
+* [Search header module](modules/pong-search) 
 
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
