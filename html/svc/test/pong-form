@@ -7,15 +7,16 @@
 	        "columns":[
 		        {
 		 	        "formFields":[     
-				 	{ "id":"f1", "label":"Field 1", "type":"text" }, 
-				 	{ "id":"f2", "label":"Field 2", "type":"text" }, 
-				 	{ "id":"f3", "label":"Field 3", "type":"text" }		      
+					 	{ "id":"user", "label":"User ID",  "type":"text" }, 
+					 	{ "id":"pwd",  "label":"Password", "type":"password" },
+					 	{ "id":"f3",   "label":"email",  "type":"email" }		      
 		        	 ]
 		        },
 		        {
 		 	        "formFields":[     
-				 	{ "id":"user", "label":"User ID", "type":"text" }, 
-				 	{ "id":"pwd", "label":"Password", "type":"password" }
+		 	        	{ "id":"c1", "name":"status", "value":"enabled", "label":"Enabled", "type":"checkbox" }, 
+		 	        	{ "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
+		 	        	{ "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" }
 		        	 ]
 		        }
 		    ]
@@ -23,6 +24,6 @@
     ],
     "actions" : [ 
     	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
-    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "target": "out2" } 
+    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "dataEncoding":"GETstyle", "target": "out2" } 
     ]
 }

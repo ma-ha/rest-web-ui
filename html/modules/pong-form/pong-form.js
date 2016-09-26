@@ -63,6 +63,7 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
 	checkboxNames = [];
 	checkboxVals = [];
 	var basicAuth = null;
+	var radioNames = []
 	log( "Pong-Form", "start fields" );
 	if ( pmd.fieldGroups != null ) {
 		for ( var i = 0; i < pmd.fieldGroups.length; i++ ) {
@@ -98,6 +99,16 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
 						}
 						// TODO handle check boch with same name !!
 //							postLst.push( field.id+": $( '#"+divId+field.id+":checked' ).val()" )						
+					} else if ( field.type == 'radio' ) {
+
+					  if ( radioNames.indexOf( field.name ) == -1 ) {
+					    radioNames.push( field.name );
+              
+              postLst.push( '"'+field.name+'": $( "input[name=\''+field.name+'\']:checked" ).val()' );  
+              getLst.push( field.name + '=" + $( "input[name=\''+field.name+'\']:checked" ).val() +"' ); 
+              console.log(  'data: { '+ postLst +' }' );
+					  }
+
 					} else if ( field.type != 'separator' && field.type != 'label' ) {
 						
 						// check if this is 1:1 for http header
@@ -775,7 +786,17 @@ function pongFormRenderField( divId, field, col ) {
 
 			contentItems.push( '</select>' );
 			
-		} else { 
+    } else if ( field.type == "radio" ) {
+
+      if ( field.name && field.value ) {
+        var ch = ( field.checked ? 'checked' : '' );
+        var lb = ( field.label ? field.label : field.value ); 
+        contentItems.push( '<input type="radio" name="'+field.name+'" value="'+field.value+'" '+ch+'>'+ $.i18n( lb )+'</input>' );  
+      } else { 
+        logErr( "Pong-Form", "radio input must have a name and value");
+      }
+      
+    } else { 
 			contentItems.push( '<input type="text" '+ nameAndClass  + title + defaultVal +'/>' );			
 		}
 		// TODO: support other form input types 

@@ -161,6 +161,13 @@ You can load checkbox inputs from a resource per HTTP GET:
 	]
 </strike>
 
+### Radio
+Example:
+	"formFields":[     
+    	{ "id":"r1", "type":"radio", "name":"usergroup", "value":"User", "checked":"true" }, 
+    	{ "id":"r2", "type":"radio", "name":"usergroup", "value":"Admin" }
+	]
+
 ### Separator 
 <code>"type:"separator"</code> adds a horizontal line instead of a field
 
