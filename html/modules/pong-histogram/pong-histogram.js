@@ -50,16 +50,16 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	pongHistogram[ divId ] = new Array();
 	var contentItems = [];
 	var min = parseFloat( pmd.xAxisMin );
-    var max = parseFloat( pmd.xAxisMax );
+  var max = parseFloat( pmd.xAxisMax );
 	contentItems.push( '<div id="'+divId+'pongHistogram_Div" class="pongHistogramDiv" style="height:100%;">' );
 	var cnt = ( pmd.blockCount ? pmd.blockCount : 10 );
 	var blockWidth = 100 / cnt;
 	var css = 'class="pongHistogramBlock" style="height:100%; width:'+blockWidth+'%;float:left;"';
 	for ( var i = 0; i < cnt; i++ ) {
-	    var val1 = min + ( max - min ) / cnt * i ;
+	      var val1 = min + ( max - min ) / cnt * i ;
         var val2 = min + ( max - min ) / cnt * (i+1) ;
         pongHistogram[ divId ][i] = { x1:val1, x2:val2 };
-	    contentItems.push( '<div '+css+' data-i="'+i+'">' );
+	      contentItems.push( '<div '+css+' data-i="'+i+'">' );
         contentItems.push( '<div class="HistogramBlockContainer"  data-i="'+i+'">' );
         contentItems.push( '<div id="'+divId+'bar'+i+'" class="HistogramBlockBar" data-i="'+i+'"></div>' );
         contentItems.push( '</div>' );
@@ -69,11 +69,11 @@ function pongHistogram_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	}
 	
 	contentItems.push( '</div>' );
-    contentItems.push( '<script>' );
-    contentItems.push( '  $( ".pongHistogramBlock" ).on( "click", function() { ');
-    contentItems.push( '    pongHistogram_ClickBar( "'+divId+'", $( this ).data( "i" ) ); } );' );
-    contentItems.push( '</script>' );
-	// output
+  contentItems.push( '<script>' );
+  contentItems.push( '  $( ".pongHistogramBlock" ).on( "click", function() { ');
+  contentItems.push( '    pongHistogram_ClickBar( "'+divId+'", $( this ).data( "i" ) ); } );' );
+  contentItems.push( '</script>' ); 
+  // output
 	$( "#"+divId ).html( contentItems.join( "\n" ) );	
 	$( ".HistogramBlockContainer" ).height( ($( ".pongHistogramBlock" ).height()-30) + "px" );
 	if ( pmd.dataURL ) {
@@ -109,7 +109,7 @@ function pongHistogram_ClickBar( divId, barNo ) {
 /** Change labels an height of histogram bars */
 function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {
   log( "pongHistogram", "UpdateBars "+divId);
-  
+
   var pmd = moduleConfig[ divId ];
   var cnt = ( pmd.blockCount ? pmd.blockCount : 10 );
   // get y-axis scaling
@@ -137,7 +137,9 @@ function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {
       $( '#'+divId+'xLabel'+i ).html( dta[i][ pmd.dataX ] );      
     } 
   }  
+  
   log( "pongHistogram", 'UpdateBars end' );
+  return true;
 }
 
 
@@ -145,7 +147,26 @@ function pongHistogram_UpdateBars( divId, dta, xMin, xMax ) {
 /** update data call back hook */
 function pongHistogram_UpdateData( divId, paramsObj ) {
 	log( "pongHistogram", "UpdateData start "+divId );
-	//TODO implement	
+	//console.log( 'pongHistogram start update' )
+	var pmd = moduleConfig[ divId ]
+  var param = {}
+  if ( paramsObj ) param = JSON.parse( JSON.stringify( paramsObj ) )
+  param[ 'xMin' ] = parseFloat( pmd.xAxisMin ) 
+  param[ 'xMax' ] = parseFloat( pmd.xAxisMax ) 
+  //console.log( 'pongHistogram prepared' )
+  if ( pmd.dataURL ) {
+    log( "pongHistogram", "Load "+pmd.dataURL );
+    //console.log( 'pongHistogram load ' )
+    $.getJSON( 
+        pmd.dataURL, 
+        param,
+          function( dta ) {
+            pongHistogram_UpdateBars( divId, dta, min, max );
+            log( "pongHistogram", 'load done' );
+            publishEvent( "feedback", {"text":"Histogram data loaded"} )
+        }
+      );  
+  }
 	log( "pongHistogram", "UpdateData end.");
 }
 

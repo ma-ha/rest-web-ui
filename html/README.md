@@ -1,4 +1,7 @@
 # Release Notes
+## Version0.8.x
+* added `afterPageLoad(...)` hook
+
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
 * [I/O switches action](modules/pong-io) rendered directly

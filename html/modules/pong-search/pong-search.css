@@ -1,0 +1,10 @@
+.pong-search {
+	position: absolute;
+	top: 75px;
+	right: 150px;
+	font-size: 10pt;
+}
+.pongSearchInput {
+	padding: 0px;
+	border: 0px;
+}

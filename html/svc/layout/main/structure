@@ -27,7 +27,20 @@
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
-      	}
+      	},
+      	{ 
+          "id":"Search", 
+          "type": "pong-search", 
+      	  "moduleConfig": {
+	          "page": "tests/histogram",
+	          "label": "Quick Search:",
+	          "title": "Quick Search",
+	          "update": [ 
+	          	{ "id":"outTbl", "param":"productName"}, 
+	          	{ "id":"r1", "param":"productName" } 
+	          ]
+	      }
+        }
       ] 
     },
     "rows": [

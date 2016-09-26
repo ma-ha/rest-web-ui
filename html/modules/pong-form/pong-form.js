@@ -106,7 +106,7 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
               
               postLst.push( '"'+field.name+'": $( "input[name=\''+field.name+'\']:checked" ).val()' );  
               getLst.push( field.name + '=" + $( "input[name=\''+field.name+'\']:checked" ).val() +"' ); 
-              console.log(  'data: { '+ postLst +' }' );
+              //console.log(  'data: { '+ postLst +' }' );
 					  }
 
 					} else if ( field.type != 'separator' && field.type != 'label' ) {

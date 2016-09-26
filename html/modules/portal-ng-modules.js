@@ -61,11 +61,19 @@ moduleMap[ "i18n" ] = {
 };
 
 moduleMap[ "pong-navbar" ] = {
-		"name":  "pong-navbar",
-	    "hooks": [
-	        { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" } 
-	    ]
-	};
+    "name":  "pong-navbar",
+      "hooks": [
+          { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" } 
+      ]
+  };
+
+moduleMap[ "pong-search" ] = {
+    "name":  "pong-search",
+    "hooks": [
+        { hook: "addHeaderHtml", method:"addSearchHeaderHtml" },
+        { hook: "afterPageLoad", method:"initializeTheSearch" }
+    ]
+  };
 
 moduleMap[ "pong-pulldown" ] = {
 		"name":  "pong-pulldown",
@@ -233,7 +241,7 @@ moduleMap[ "pong-tree" ] = {
     "name": "pong-tree",
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongTree_DivHTML" },
-        { hook: "updateData", method:"pongTree_UpdateData" }
+        { hook: "update", method:"pongTree_UpdateData" }
     ]
 };
 
@@ -241,7 +249,7 @@ moduleMap[ "pong-histogram" ] = {
     "name": "pong-histogram",
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongHistogram_DivHTML" },
-        { hook: "updateData", method:"pongHistogram_UpdateData" },
+        { hook: "update", method:"pongHistogram_UpdateData" },
         { hook:"setData", method:"pongHistogram_SetData" }
 //        { hook: "addActionBtn", method:"pongHistogram_pAddActionBtn" },
 //        { hook: "creModal", method:"pongHistogram_CreModalFromMeta" },
