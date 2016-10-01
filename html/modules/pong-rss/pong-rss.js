@@ -25,9 +25,15 @@ THE SOFTWARE.
 // print this on console, when module is loaded:
 log( "PongRss", "load module") 
 
+var rssData = {}
+var rssCounter = {}
+var rssTimer = {}
+
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pongRss_DivHTML( divId, resourceURL, paramObj ) {
 	log( "PongRss",  "divId="+divId+" resourceURL="+resourceURL );
+	rssData[divId] = []
+	rssCounter[divId] = 0
 	if ( moduleConfig[ divId ] != null ) {
 		pongRss_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  )
 	} else {
@@ -40,21 +46,53 @@ function pongRss_DivHTML( divId, resourceURL, paramObj ) {
 		);					
 	}	
 }
-
 function pongRss_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	log( "PongRss", "start "+JSON.stringify(pmd) ) 
 	var contentItems = []
 	contentItems.push( '<div id="'+divId+'PongRss_Div" class="PongRss">' )	
 	contentItems.push( '</div>' )
+	if ( pmd.pollDataSec ) {
+    var t = parseInt( pmd.pollDataSec );
+    contentItems.push( '<script>' );
+    contentItems.push( '  function  pongRss_UpdateTimer'+divId+'() { ' );
+    if  ( ! isNaN( t ) ) {  
+      contentItems.push( '    pongRss_UpdateData( "'+divId+'", '+JSON.stringify( paramObj.get )+' ); ' );
+    }
+    contentItems.push( '  }' );
+    contentItems.push( '</script>' );
+	}
 	// output
 	$( "#"+divId ).html( contentItems.join( "\n" ) )
 	
-	 if ( pmd.rssURLs ) {
-    for ( var i = 0; i < pmd.rssURLs.length; i++ ) {
+	// do it:
+  log( "PongRss", "Call update" ) 
+	pongRss_UpdateData( divId, paramObj )
+
+	
+  if ( pmd.pollDataSec ) {
+    log( "PongRss", "Start update timer" ) 
+    rssTimer[divId] = setInterval( "pongRss_UpdateTimer"+divId+"()", t*1000 );
+  }
+	log( "PongRss", "end.")
+}
+
+
+
+/** update data call back hook */
+function pongRss_UpdateData( divId, paramsObj ) {
+  log( "PongRss", "pongRss_UpdateData ");
+  
+  var pmd = moduleConfig[ divId ] 
+  if ( pmd.rssURLs ) {
+    rssData[divId] = []
+
+    for ( var i=0; i < pmd.rssURLs.length; i++  ) {
+      log( "PongRss", pmd.rssURLs[i].url ) 
+      rssCounter[divId]++
 
       $.ajax({
             type: 'GET',
-            url: pmd.rssURLs[i],
+            url: pmd.rssURLs[i].url,
             crossDomain: true,
             crossOrigin: true,
             cache: false,
@@ -66,55 +104,93 @@ function pongRss_RenderHTML( divId, resourceURL, paramObj, pmd ) {
                 else {
                   pongRss_print( divId, rssXML )
                 }  
+                rssCounter[divId]--
+                log( "PongRss", "rssCounter[divId]="+rssCounter[divId])
+                
+                if ( rssCounter[divId] == 0 ) {
+                  pongRss_rssToHTML( divId ) 
+                }
               }
           })
     }    
   }
-
-	log( "PongRss", "end.")
+  
+  log( "PongRss", "pongRss_UpdateData end.");
 }
 
-function pongRss_print( divId, rssXML ) {
-  log( "PongRss", "print ");
-  
+
+function pongRss_rssToHTML( divId ) {
+  log( "PongRss", 'pongRss_rssToHTML start...');
+  rssData[divId].sort( pongRss_CmpFields )
+  log( "PongRss", 'sorted');
   var ci = []
+  ci.push( '<ul>' )
+  for ( var i = 0; i < rssData[divId].length; i++ ) {
+    ci.push( rssData[divId][i].li )
+//    log( "PongRss", rssData[divId][i].li );
+
+  }
+  ci.push( '</ul>' )
+  $( '#'+divId+'PongRss_Div' ).html( ci.join( "\n" ) )
+  log( "PongRss", "pongRss_rssToHTML end.");
+}
+
+
+function pongRss_print( divId, rssXML ) {
+  log( "PongRss", 'print: ')
+  //alert( rssXML )
   var rss = xml2json( rssXML ) 
   log( "PongRss", "print xml2json done");
-  if ( rss.rss && rss.rss.channel ) {
-    log( "PongRss", "print ch");
-    var ch = rss.rss.channel
-    ci.push( '<h2>'+ch.title+'</h2>' )
-    ci.push( '<ul>' )
-    for ( var j = 0; j < ch.item.length; j++ ) {
-      log( "PongRss", "print item "+j);
+  var items = null
+  var rssName = ''
+  log( "PongRss", JSON.stringify(rss) )
+  if ( rss && rss.rss && rss.rss.channel ) {
+    log( "PongRss", "print RSS")
+    rssName = $.i18n( rss.rss.channel.title )
+    items = rss.rss.channel.item 
+  } else if ( rss && rss['rdf:RDF'] && rss['rdf:RDF'].channel ){
+    log( "PongRss", "print RDF ")
+    rssName = $.i18n( rss['rdf:RDF'].channel.title )
+    items = rss['rdf:RDF'].item
+  } else if ( rss && rss.feed ){
+    log( "PongRss", "print RDF ")
+    rssName = $.i18n( rss.feed.title )
+    items = rss.feed.entry
+  } 
+  if ( items ) {
+    log( "PongRss", "ch ");
+    log( "PongRss", "#"+items.length )
+    for ( var j = 0; j < items.length; j++ ) {
+      //log( "PongRss", "print item "+j)
+     
+      var date = 'Invalid Date'
+      if (items[j].pubDate   ) { date = new Date( items[j].pubDate ) }
+      if (items[j].published ) { date = new Date( items[j].published ) }
+      var fDate = ''
+      if ( date != 'Invalid Date' ) { 
+        //log( "PongRss", "print date "+date )
+        var dH = date.getHours() < 10   ? '0'+date.getHours()   : date.getHours()
+        var dM = date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()
+        fDate = $.datepicker.formatDate( $.i18n( 'yy-mm-dd' ), date ) + ' '+ dH+':'+dM +': '          
+      } else { date = new Date() }
+      //log( "PongRss", "print line ");
       
-      var date = new Date( ch.item[j].pubDate )
-      var fDate = $.datepicker.formatDate( $.i18n( 'yy-mm-dd' ), date ) + ' '+date.getHours()+':'+date.getMinutes()
-      log( "PongRss", "print date ");
-      ci.push( '<li>'
-          + fDate
-          + ': <a href="'+ch.item[j].link
-          + '" class="ui-icon ui-icon-extlink" target="_blank"></a> '
-          + ch.item[j].title+'</li>' )        
-    }
-    ci.push( '</ul>' )
+      var rssLine = 
+        '<li><span class="rss-date">' + fDate 
+          + '</span> <a href="'+( items[j].link == '' ? items[j].id : items[j].link )
+          + '" class="ui-icon ui-icon-extlink rss-link" target="_blank"></a> '
+          + items[j].title+' <span class="rss-title">('+rssName +')</span></li>'    
+          
+      //log( "PongRss", "print li ");
+
+      rssData[divId].push( { date:date, li:rssLine } )
+      //log( "PongRss", "print done ");
+    }      
   }
-
-  $( '#'+divId+'PongRss_Div' ).html( ci.join( "\n" ) )
-
   log( "PongRss", "print end.");
 }
 
 	
-
-/** update data call back hook */
-function pongRss_UpdateData( divId, paramsObj ) {
-	log( "PongRss", "start '"+pmd.description+"'");
-	
-	
-	log( "PongRss", "end.");
-}
-
 // wow, thanks: http://stackoverflow.com/questions/1773550/convert-xml-to-json-and-back-using-javascript
 //  xml2json( Jquery(this).find('content').eq(0)[0] )
 function xml2json( xml ) {
@@ -143,5 +219,13 @@ function xml2json( xml ) {
     return obj
   } catch ( e ) {
     log( "PongRss", e.message )
+  }
+}
+
+function pongRss_CmpFields( a, b ) {
+  if ( a.date > b.date  ) {
+    return -1 
+  } else {
+    return 1
   }
 }

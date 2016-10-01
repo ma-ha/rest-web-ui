@@ -2,3 +2,13 @@
 	background-color: gray;
 	display: inline-block; 
 }
+.PongRss {
+	height: 100%;
+	overflow: auto;
+}
+.rss-date {
+	font-size: 0.8em;
+}
+.rss-title {
+	font-size: 0.8em;
+}

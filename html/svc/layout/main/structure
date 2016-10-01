@@ -24,6 +24,7 @@
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
 			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
 			       { "pageLink":"tests/histogram2", "label":"Histogram Passive" },
+			       { "pageLink":"tests/rss", "label":"RSS Demo" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
