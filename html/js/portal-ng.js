@@ -1328,7 +1328,7 @@ function log( func, msg ){
 
   //  console.log( logline );
   // define the "func" you want to log to the console
-  //if ( func=='pongHistogram' ) { console.log( logline ) }
+  if ( func=='PongRss' ) { console.log( logline ) }
 	
 	// send log to event broker
   if ( loggerEvents ) { 

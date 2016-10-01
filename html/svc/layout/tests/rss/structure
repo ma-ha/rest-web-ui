@@ -1,0 +1,45 @@
+{
+	"layout":{
+		"title":"Portal: Test 'RSS' Features",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"400px",
+				"type":"pong-rss",
+				"resourceURL":"svc/tbl-data",
+				"title":"RSS Feed",
+				"moduleConfig":{
+					"pollDataSec":"150",	
+					"rssURLs":["http://localhost/mh/korkenzieher/?feed=rss2"]
+				},
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"r1"
+						}
+					}
+				]
+			},
+			{
+				"rowId":"log",
+				"title":"Debug Log",
+				"height":"250px",
+				"resourceURL":"svc/tbl-data",
+				"type":"pong-log",
+				"decor":"decor",
+				"actions":[
+					{
+						"type":"pong-help",
+						"param":{
+							"showConfig":"log"
+						}
+					}
+				]
+			}
+		],
+		"includeFooter":"main"
+	}
+}

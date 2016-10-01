@@ -255,3 +255,11 @@ moduleMap[ "pong-histogram" ] = {
 //        { hook: "creModal", method:"pongHistogram_CreModalFromMeta" },
     ]
 };
+
+moduleMap[ "pong-rss" ] = {
+    "name": "pong-rss",
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongRss_DivHTML" },
+        { hook: "update", method:"pongRss_UpdateData" }
+    ]
+};
