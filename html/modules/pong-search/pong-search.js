@@ -77,7 +77,7 @@ function addSearchHeaderRenderHtml( divId, type , params, config ) {
   var title = ( config.title ? config.title : '' );
   var name = ( config.name ? config.name : 'search' );
   if ( config.label ) {
-    html.push( '<label class="pongSearchLabel" for="'+divId+'Input">'+config.label+'</label>' )
+    html.push( '<label class="pongSearchLabel" for="'+divId+'Input">'+$.i18n( config.label )+'</label>' )
   }
   html.push( '<input id="'+divId+'Input" class="pongSearchInput" title="'+title+'" name="'+name+'" accessKey="s"></input>' )
   html.push( '</form>' )
