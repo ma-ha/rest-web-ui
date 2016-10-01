@@ -104,14 +104,16 @@ function pongRss_UpdateData( divId, paramsObj ) {
                 else {
                   pongRss_print( divId, rssXML )
                 }  
-                rssCounter[divId]--
-                log( "PongRss", "rssCounter[divId]="+rssCounter[divId])
-                
-                if ( rssCounter[divId] == 0 ) {
-                  pongRss_rssToHTML( divId ) 
-                }
               }
-          })
+      }).always( 
+        function() {
+          rssCounter[divId]--
+          log( "PongRss", "rssCounter[divId]="+rssCounter[divId])
+          if ( rssCounter[divId] == 0 ) {
+            pongRss_rssToHTML( divId ) 
+          }
+        }
+      )
     }    
   }
   
