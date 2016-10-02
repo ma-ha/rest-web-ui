@@ -671,62 +671,6 @@ function parseRowPlaceHolders( row, str ) {
 }
 
 
-//function pongTblGetPostLst( divId, actionId ) {
-//	log( "PoNG-Table",  'pongTblGetPostLst '+divId+'/'+actionId );
-//	var tblDef = poTbl[ divId ].pongTableDef;
-//	var result = {};
-//	// identify action def
-//	if ( tblDef.actions && tblDef.actions.length ) {
-//		log( "PoNG-Table",  ' search actions' );
-//		var postLst = [];
-//		for ( var x = 0; x < tblDef.actions.length; x++ ) {
-//			if ( tblDef.actions[x].id == actionId ) {
-//				log( "PoNG-Table",  'found action' );
-//				// action found:
-//				var actn =  tblDef.actions[x];
-//
-//				// search selected list rows
-//				if ( poTbl[ divId ].pongTableData ) {
-//					for ( var r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
-//						if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
-//							log( "PoNG-Table",  ' found selected' );
-//							// ok selected
-//							var params = {}
-//							// iterate action data fields
-//							if ( actn.params ) {
-//								for ( var f = 0; f < actn.params.length; f++ ) {
-//									params[ actn.params[f].name ] = parseRowPlaceHolders( poTbl[ divId ].pongTableData[ r ], actn.params[f].value );
-//								}
-//							}
-//							postLst.push( params );
-//						}
-//					}
-//					//getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
-//				}
-//				if ( actn.paramLstName ) {
-//					result[ actn.paramLstName ] = postLst;					
-//				} else {
-//					result[ "param" ] = postLst;
-//				}
-//			}
-//		}
-//	}
-//
-////	if ( poTbl[ divId ].pongTableData ) {
-////		for ( r = 0; r < poTbl[ divId ].pongTableData.length; r++ ) {
-////			if ( poTbl[ divId ].pongTableData[ r ]["selected"] ) {
-////				alert( JSON.stringify( poTbl[ divId ].pongTableData[ r ] ) );
-////			}
-////		}
-////		getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );		
-////	}
-//	// TODO :
-//	//postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" )
-//	alert( JSON.stringify( result ) );
-//	return result;
-//}
-
-
 
 
 /** update data call back hook */
@@ -738,7 +682,7 @@ function pongTableUpdateData( divId, paramsObj ) {
 		
 		$.getJSON( tblDef.dataUrlFull, paramsObj ,
 			function( data ) { 	
-		        log( "Pong-Table",  JSON.stringify( data ) );
+		    log( "Pong-Table",  JSON.stringify( data ) );
 				var subdata = getSubData( data, tblDef.dataDocSubPath );
 				pongTableSetData( divId, subdata ); 
 				publishEvent( 'feedback', {'text':'Table data loaded sucessfully'} )
@@ -800,6 +744,7 @@ function pongTableCmpFields( a, b ) {
 	return 0;
 }
 	
+
 /** render table cells */
 function tblCells( divId ) {
   var dtaArr = poTbl[ divId ].pongTableData;
@@ -848,7 +793,6 @@ function tblCells( divId ) {
 	
 	log( "Pong-Table", "tblCells: divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
 	
-	
 	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
 		log( "Pong-Table", "row loop" );	
@@ -858,245 +802,7 @@ function tblCells( divId ) {
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
 				log( "Pong-Table", "col "+c );	
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
-				log( "Pong-Table", "call getSubData: "+JSON.stringify(cellDef)  );	
-				var cellVal = getSubData( cellDta, cellDef.id );
-				if ( cellVal == null ) { cellVal = ''; }
-				log( "Pong-Table", JSON.stringify( cellDef ) );
-				var cellId =  '#'+divId+'R'+i+'C'+c; 
-				var cellType = cellDef.cellType;
-				var editable = '';	
-				log( "Pong-Table", cellId+ "  "+ cellVal);
-				if ( cellType == 'text' ) {
-					
-					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
-						editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
-						$( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
-					} else { 
-						if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
-							$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
-						} else {
-              $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );             
-							//TODO why additional span ?? $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span><span class="ui-icon ui-icon-plusthick " style="display:inline-block" />' );							
-						}
-					}
-					
-				} else if ( cellType == 'email' ) {
-					
-					$( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );
-					
-				} else if ( cellType == 'checkbox' ) {
-					
-					if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
-						editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'"';
-					} else { editable = 'disabled' };
-					if ( cellVal == "true" || cellVal==true ) {
-						$( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'" checked />' );												
-					} else {
-						$( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'"/>' );
-					}
-					
-				} else if ( cellType == 'selector' ) {
-					
-					var selected = "";
-					if ( cellDta[ "selected" ] ) { selected = "checked"; }
-					//editable = 'class="rowSelector"  data-r="'+r+'" data-c="'+c+'"';
-					$( cellId ).html( '<input type="checkbox" class="rowSelector"  data-r="'+r+'" data-c="'+c+'" value="selected" id="'+divId+'R'+i+cellDef.id+'" '+selected+' />' );
-					
-				} else if ( cellType == 'linkLink' ) {
-					
-					var target = '';
-					if ( cellDef.target != null ) {
-						target = 'target="'+cellDef.target+'"';
-					}
-					var url = cellVal;
-					if ( cellDef.URL != null ) {
-						url = cellDef.URL;
-					}
-					if ( poTbl[ divId ].pongTableDef.rowId != null ) {
-						//if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
-							url = addRowIdGetParam ( divId, url, cellDta );
-						//} 
-						//param = getRowIdPostParam ( divId, cellDta );					
-					} else {
-						alert( "rowId == null" );
-					}
-					$( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+'>'+$.i18n( cellDef.label )+'</a>' );
-					
-				} else if ( cellType == 'img' ) {
-					
-					var tblImg  = cellVal; // TODO impl zoom image
-					var zoomImg = cellVal; // TODO impl zoom image
-					
-//					//search for zoom image def 
-					for ( var cZI = 0; cZI < poTbl[ divId ].pongTableDef.cols.length; cZI++ ) {
-						var cellDefZI = poTbl[ divId ].pongTableDef.cols[ cZI ];
-						if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
-							var cellValZI = getSubData( cellDta, cellDefZI.id );
-							if ( cellValZI != null ) { zoomImg = cellValZI }							
-						}
-					}
-					
-					$( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=	"'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
-					$( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
-					
-				}  else if ( cellType == 'button'  ) {
-					
-					var contentItems = [];
-					var ajaxType = 'POST';
-					var param = '';
-					var icon = 'ui-icon-gear';
-					if ( ( cellDef.method != null ) && ( cellDef.method.length != null ) ) {
-						if ( cellDef.method == 'DEL-POST' ) {
-							param = ',"actn":"DEL"';
-							icon = 'ui-icon-trash';
-						} else {
-							ajaxType = cellDef.method;
-							if ( ajaxType == 'DELETE' ) {
-								icon = 'ui-icon-trash';								
-							} else if ( ajaxType == 'POST' ) {
-								icon = 'ui-icon-check';								
-							} else if ( ajaxType == 'GET' ) {
-								icon = 'ui-icon-arrowrefresh-1-w';								
-							} 	 
-						}
-					} 
-					if ( ( cellDef.icon != null ) && ( cellDef.icon.length != null ) ) {
-						icon = cellDef.icon;								
-					}					
-					log( "Pong-Form", cellDef.label+" icon="+icon );
-					var url = poTbl[ divId ].resourceURL;
-					if ( cellDef.URL != null ) {
-						url = cellDef.URL;
-					}
-					
-					// rowId can be a String or an Array	
-					if ( cellDef.params != null ) { 
-						if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
-							url = addGetParam ( cellDef.params, divId, url, cellDta );
-						} 
-						param = getPostParam ( cellDef.params, divId, cellDta );																	
-					} else {
-						if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
-							url = addRowIdGetParam ( divId, url, cellDta );
-						} 
-						param = getRowIdPostParam ( divId, cellDta );											
-					}
-				
-					if ( ( cellDef.url != null ) && ( cellDef.url.length != null ) ) {
-						url = cellDef.url;
-					}
-					contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
-					contentItems.push( '<script>' );
-					contentItems.push( '  $( function() { ' );
-					if ( icon.lenght != 0 ) {
-						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).button( { icons: { primary: "'+icon+'" } } )' );						
-					} 
-					if ( ajaxType == 'JS'  ) {
-						if ( cellDef.js != null ) {
-							contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
-							contentItems.push( '          function() {  ' );
-							contentItems.push( '              var theRowId   = "'+divId+'R'+r+'";');
-							contentItems.push( '              var theRowData = '+JSON.stringify( cellDta )+';');
-							contentItems.push( '              '+cellDef.js);
-							contentItems.push( '              return false;');
-							contentItems.push( '          }');
-							contentItems.push( '       ); ' );
-						}
-					} else if ( ajaxType == 'UPDATE'  ) {
-						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
-						contentItems.push( '          function() {  ' );
-						if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
-							for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
-								var resToUpd = cellDef.update[upCnt].resId + 'Content';
-								var updParam = "";
-								if ( cellDef.update[upCnt].params != null ) {
-									updParam = getPostParam ( cellDef.update[upCnt].params, divId, cellDta );
-								}
-								if ( resToUpd == 'thisContent' ) { resToUpd = divId }
-								contentItems.push( '              udateModuleData( "'+resToUpd+'", { '+updParam+' }  ); ' ); // otherwise deleted ID is requested and result is empty
-								
-							}
-						}
-						contentItems.push( '              return false;');
-						contentItems.push( '          }');
-						contentItems.push( '       ); ' );
-					} else {
-						contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
-						contentItems.push( '          function() {  '); //alert( "'+ajaxType+' data: { rowId : '+ poTbl[ divId ].pongTableDef.rowId+'='+cellDta[ poTbl[ divId ].pongTableDef.rowId ] +' }"); ' );
-						contentItems.push( '              $.ajax( ' );
-						contentItems.push( '                 { url: "'+url+'", ');
-						contentItems.push( '                   type: "'+ajaxType+'", ' );
-						if ( ajaxType == 'POST' ) {
-							contentItems.push( '                   data: { '+param+' } ' );						
-						}
-						contentItems.push( '              } ).done(  ' );
-						contentItems.push( '                 function( dta ) { '); // alert( dta ); ' );
-						if ( cellDef.target != null ) {
-							if ( cellDef.target == '_parent' ) {
-								contentItems.push( '                       window.location.replace( dta );');
-							} else if ( cellDef.target == '_blank' ) {
-								contentItems.push( '                       window.open( dta );');
-							} else if ( cellDef.target == 'modal' ) {
-								contentItems.push( '                       alert( dta );  ' );
-							} else {
-								contentItems.push( '                       $( "#'+cellDef.target+'Content" ).html( dta );  ' );									
-							}
-						}
-						if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
-							for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
-								var resToUpd = cellDef.update[upCnt].resId + 'Content';
-								if ( resToUpd == 'thisContent' ) { resToUpd = divId }
-								if ( cellDef.method == 'DELETE' ) {
-									contentItems.push( '                 udateModuleData( "'+resToUpd+'", { }  ); ' ); // otherwise deleted ID is requested and result is empty
-								} else {
-									contentItems.push( '                 udateModuleData( "'+resToUpd+'", { '+param+' }  ); ' ); 													
-								}
-							}
-						}
-						if ( ( cellDef.setData != null ) && ( cellDef.setData.length != null ) ) {
-							log( "Pong-Table", "button with setData..." );
-							for ( var sd = 0; sd < cellDef.setData.length; sd++ ) {
-								log( "Pong-Table", "button: "+ cellDef.id + " setResponse resId:"+cellDef.setData[sd].resId );
-								if ( cellDef.setData[sd].dataDocSubPath != null ) {
-									contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, "'+cellDef.setData[sd].dataDocSubPath+'" );' );										
-								} else {
-									contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, null );' );									
-								}
-							}			
-						}
-						contentItems.push( '                       return false;' ); 
-						contentItems.push( '                  }  ' );
-						contentItems.push( '              ); ');
-						contentItems.push( '              return false;' ); 
-						contentItems.push( '          }' );
-						contentItems.push( '       ); ' );
-					}
-					contentItems.push( '  } ); ' ); 
-					contentItems.push( '</script>' );
-					$( cellId ).html( contentItems.join( "\n" ) );
-					
-				} else if ( cellType == 'tooltip'  ) {
-					
-					$( '#'+divId+'R'+i+cellDef.label ).attr( 'title' , cellVal );
-					
-				} else if ( cellType == 'linkFor'  ) {
-					
-					var target = "_parent";
-					if ( cellDef.target ) { target = cellDef.target; }
-					$( '#'+divId+'R'+i+'C'+cellDef.col ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
-					
-				} else if ( cellType == 'rating'  ) {
-					
-					ratingType = "5star";
-					if ( cellVal == null ) { cellVal = 0; }
-					if ( cellDef.ratingType != null ) {
-						ratingType = cellDef.ratingType;
-					}
-					$( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
-					
-				} else {
-					// ???
-				}	
+				tblUpdateCell( divId, cellDef, r, c, i, cellDta );
 			}
 		} else { // clear the rest of the cells
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
@@ -1107,6 +813,251 @@ function tblCells( divId ) {
 		i++;
 	}	
 }
+
+
+function tblUpdateCell( divId, cellDef, r, c, i, cellDta ) {
+  log( "Pong-Table", "call getSubData: "+JSON.stringify(cellDef)  );  
+  var cellVal = getSubData( cellDta, cellDef.id );
+  if ( cellVal == null ) { cellVal = ''; }
+  log( "Pong-Table", JSON.stringify( cellDef ) );
+  var cellId =  '#'+divId+'R'+i+'C'+c; 
+  var cellType = cellDef.cellType;
+  var editable = '';  
+  log( "Pong-Table", cellId+ "  "+ cellVal);
+  if ( cellType == 'text' ) {
+    
+    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+      editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
+      $( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
+    } else { 
+      if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
+        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
+      } else {
+        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );             
+        //TODO why additional span ?? $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span><span class="ui-icon ui-icon-plusthick " style="display:inline-block" />' );             
+      }
+    }
+    
+  } else if ( cellType == 'email' ) {
+    
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );
+    
+  } else if ( cellType == 'checkbox' ) {
+    
+    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
+      editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'"';
+    } else { editable = 'disabled' };
+    if ( cellVal == "true" || cellVal==true ) {
+      $( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'" checked />' );                        
+    } else {
+      $( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'"/>' );
+    }
+    
+  } else if ( cellType == 'selector' ) {
+    
+    var selected = "";
+    if ( cellDta[ "selected" ] ) { selected = "checked"; }
+    //editable = 'class="rowSelector"  data-r="'+r+'" data-c="'+c+'"';
+    $( cellId ).html( '<input type="checkbox" class="rowSelector"  data-r="'+r+'" data-c="'+c+'" value="selected" id="'+divId+'R'+i+cellDef.id+'" '+selected+' />' );
+    
+  } else if ( cellType == 'linkLink' ) {
+    
+    var target = '';
+    if ( cellDef.target != null ) {
+      target = 'target="'+cellDef.target+'"';
+    }
+    var url = cellVal;
+    if ( cellDef.URL != null ) {
+      url = cellDef.URL;
+    }
+    if ( poTbl[ divId ].pongTableDef.rowId != null ) {
+      //if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
+        url = addRowIdGetParam ( divId, url, cellDta );
+      //} 
+      //param = getRowIdPostParam ( divId, cellDta );         
+    } else {
+      alert( "rowId == null" );
+    }
+    $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+'>'+$.i18n( cellDef.label )+'</a>' );
+    
+  } else if ( cellType == 'img' ) {
+    
+    var tblImg  = cellVal; // TODO impl zoom image
+    var zoomImg = cellVal; // TODO impl zoom image
+    
+//    //search for zoom image def 
+    for ( var cZI = 0; cZI < poTbl[ divId ].pongTableDef.cols.length; cZI++ ) {
+      var cellDefZI = poTbl[ divId ].pongTableDef.cols[ cZI ];
+      if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
+        var cellValZI = getSubData( cellDta, cellDefZI.id );
+        if ( cellValZI != null ) { zoomImg = cellValZI }              
+      }
+    }
+    
+    $( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=  "'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
+    $( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
+    
+  }  else if ( cellType == 'button'  ) {
+    
+    var contentItems = [];
+    var ajaxType = 'POST';
+    var param = '';
+    var icon = 'ui-icon-gear';
+    if ( ( cellDef.method != null ) && ( cellDef.method.length != null ) ) {
+      if ( cellDef.method == 'DEL-POST' ) {
+        param = ',"actn":"DEL"';
+        icon = 'ui-icon-trash';
+      } else {
+        ajaxType = cellDef.method;
+        if ( ajaxType == 'DELETE' ) {
+          icon = 'ui-icon-trash';               
+        } else if ( ajaxType == 'POST' ) {
+          icon = 'ui-icon-check';               
+        } else if ( ajaxType == 'GET' ) {
+          icon = 'ui-icon-arrowrefresh-1-w';                
+        }    
+      }
+    } 
+    if ( ( cellDef.icon != null ) && ( cellDef.icon.length != null ) ) {
+      icon = cellDef.icon;                
+    }         
+    log( "Pong-Form", cellDef.label+" icon="+icon );
+    var url = poTbl[ divId ].resourceURL;
+    if ( cellDef.URL != null ) {
+      url = cellDef.URL;
+    }
+    
+    // rowId can be a String or an Array  
+    if ( cellDef.params != null ) { 
+      if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
+        url = addGetParam ( cellDef.params, divId, url, cellDta );
+      } 
+      param = getPostParam ( cellDef.params, divId, cellDta );                                  
+    } else {
+      if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
+        url = addRowIdGetParam ( divId, url, cellDta );
+      } 
+      param = getRowIdPostParam ( divId, cellDta );                     
+    }
+  
+    if ( ( cellDef.url != null ) && ( cellDef.url.length != null ) ) {
+      url = cellDef.url;
+    }
+    contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
+    contentItems.push( '<script>' );
+    contentItems.push( '  $( function() { ' );
+    if ( icon.lenght != 0 ) {
+      contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).button( { icons: { primary: "'+icon+'" } } )' );            
+    } 
+    if ( ajaxType == 'JS'  ) {
+      if ( cellDef.js != null ) {
+        contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+        contentItems.push( '          function() {  ' );
+        contentItems.push( '              var theRowId   = "'+divId+'R'+r+'";');
+        contentItems.push( '              var theRowData = '+JSON.stringify( cellDta )+';');
+        contentItems.push( '              '+cellDef.js);
+        contentItems.push( '              return false;');
+        contentItems.push( '          }');
+        contentItems.push( '       ); ' );
+      }
+    } else if ( ajaxType == 'UPDATE'  ) {
+      contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+      contentItems.push( '          function() {  ' );
+      if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
+        for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
+          var resToUpd = cellDef.update[upCnt].resId + 'Content';
+          var updParam = "";
+          if ( cellDef.update[upCnt].params != null ) {
+            updParam = getPostParam ( cellDef.update[upCnt].params, divId, cellDta );
+          }
+          if ( resToUpd == 'thisContent' ) { resToUpd = divId }
+          contentItems.push( '              udateModuleData( "'+resToUpd+'", { '+updParam+' }  ); ' ); // otherwise deleted ID is requested and result is empty
+          
+        }
+      }
+      contentItems.push( '              return false;');
+      contentItems.push( '          }');
+      contentItems.push( '       ); ' );
+    } else {
+      contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
+      contentItems.push( '          function() {  '); //alert( "'+ajaxType+' data: { rowId : '+ poTbl[ divId ].pongTableDef.rowId+'='+cellDta[ poTbl[ divId ].pongTableDef.rowId ] +' }"); ' );
+      contentItems.push( '              $.ajax( ' );
+      contentItems.push( '                 { url: "'+url+'", ');
+      contentItems.push( '                   type: "'+ajaxType+'", ' );
+      if ( ajaxType == 'POST' ) {
+        contentItems.push( '                   data: { '+param+' } ' );           
+      }
+      contentItems.push( '              } ).done(  ' );
+      contentItems.push( '                 function( dta ) { '); // alert( dta ); ' );
+      if ( cellDef.target != null ) {
+        if ( cellDef.target == '_parent' ) {
+          contentItems.push( '                       window.location.replace( dta );');
+        } else if ( cellDef.target == '_blank' ) {
+          contentItems.push( '                       window.open( dta );');
+        } else if ( cellDef.target == 'modal' ) {
+          contentItems.push( '                       alert( dta );  ' );
+        } else {
+          contentItems.push( '                       $( "#'+cellDef.target+'Content" ).html( dta );  ' );                 
+        }
+      }
+      if ( ( cellDef.update != null ) && ( cellDef.update.length != null ) ) {
+        for ( var upCnt = 0; upCnt < cellDef.update.length; upCnt++ ) {
+          var resToUpd = cellDef.update[upCnt].resId + 'Content';
+          if ( resToUpd == 'thisContent' ) { resToUpd = divId }
+          if ( cellDef.method == 'DELETE' ) {
+            contentItems.push( '                 udateModuleData( "'+resToUpd+'", { }  ); ' ); // otherwise deleted ID is requested and result is empty
+          } else {
+            contentItems.push( '                 udateModuleData( "'+resToUpd+'", { '+param+' }  ); ' );                          
+          }
+        }
+      }
+      if ( ( cellDef.setData != null ) && ( cellDef.setData.length != null ) ) {
+        log( "Pong-Table", "button with setData..." );
+        for ( var sd = 0; sd < cellDef.setData.length; sd++ ) {
+          log( "Pong-Table", "button: "+ cellDef.id + " setResponse resId:"+cellDef.setData[sd].resId );
+          if ( cellDef.setData[sd].dataDocSubPath != null ) {
+            contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, "'+cellDef.setData[sd].dataDocSubPath+'" );' );                    
+          } else {
+            contentItems.push( '                       setModuleData( "'+cellDef.setData[sd].resId+'Content", dta, null );' );                  
+          }
+        }     
+      }
+      contentItems.push( '                       return false;' ); 
+      contentItems.push( '                  }  ' );
+      contentItems.push( '              ); ');
+      contentItems.push( '              return false;' ); 
+      contentItems.push( '          }' );
+      contentItems.push( '       ); ' );
+    }
+    contentItems.push( '  } ); ' ); 
+    contentItems.push( '</script>' );
+    $( cellId ).html( contentItems.join( "\n" ) );
+    
+  } else if ( cellType == 'tooltip'  ) {
+    
+    $( '#'+divId+'R'+i+cellDef.label ).attr( 'title' , cellVal );
+    
+  } else if ( cellType == 'linkFor'  ) {
+    
+    var target = "_parent";
+    if ( cellDef.target ) { target = cellDef.target; }
+    $( '#'+divId+'R'+i+'C'+cellDef.col ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
+    
+  } else if ( cellType == 'rating'  ) {
+    
+    ratingType = "5star";
+    if ( cellVal == null ) { cellVal = 0; }
+    if ( cellDef.ratingType != null ) {
+      ratingType = cellDef.ratingType;
+    }
+    $( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
+    
+  } else {
+    // ???
+  } 
+
+}
+
 
 function addGetParam ( params, divId, url, cellDta ) {
 	log( "Pong-Table", "addGetParam "+ JSON.stringify( params ) );
@@ -1158,6 +1109,7 @@ function getPostParam ( params, divId, cellDta ) {
 	return param;
 }
 
+
 function addRowIdGetParam ( divId, url, cellDta ) {
 	var rid = poTbl[ divId ].pongTableDef.rowId;
 	if ( typeof rid === 'string' ) {
@@ -1176,6 +1128,7 @@ function addRowIdGetParam ( divId, url, cellDta ) {
 	}
 	return url;
 }
+
 
 function getRowIdPostParam ( divId, cellDta ) {
 	var rid = poTbl[ divId ].pongTableDef.rowId;
