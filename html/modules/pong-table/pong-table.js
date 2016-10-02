@@ -145,7 +145,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	// paginator buttons:
   var paginatorJS = [];
   if ( tbl.maxRows ) {
-    paginatorJS = pongTableGenPaginator(divId, tbl);
+    paginatorJS = pongTableGenPaginator( divId, tbl, 'tblCells' );
   }
   log( "Pong-Table", "cre table 4" );
 
@@ -430,7 +430,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	return contentItems;
 }
 
-function pongTableGenPaginator( divId, tbl ) {
+function pongTableGenPaginator( divId, tbl, renderCallback ) {
 	var contentItems = [];
 	contentItems.push( '<div id="'+divId+'Pagin" class="pongListPagin">' );
 	contentItems.push( '<button id="'+divId+'BtFirst" class="pong-table-paginator"></button>' );
@@ -445,12 +445,12 @@ function pongTableGenPaginator( divId, tbl ) {
 	contentItems.push( '  .click( function() { ' );
 	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
 	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+';' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	contentItems.push( '     '+renderCallback+'( "'+divId+'" ); } ); ' );
 	contentItems.push( ' $( "#'+divId+'BtLast" ).button( {icons:{primary:"ui-icon-arrowthickstop-1-e"}} )' );
 	contentItems.push( '  .click( function() { ' );
 	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableStartRow =  parseInt(poTbl[ "'+divId+'" ].pongTableData.length)-parseInt('+tbl.maxRows+') ;' );
 	contentItems.push( '     poTbl[ "'+divId+'" ].pongTableEndRow = poTbl[ "'+divId+'" ].pongTableData.length;' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	contentItems.push( '     '+renderCallback+'( "'+divId+'" ); } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtPrev" ).button( {icons:{primary:"ui-icon-arrowthick-1-w"}} )' );
 	contentItems.push( '  .click( function() { ' );
@@ -461,7 +461,7 @@ function pongTableGenPaginator( divId, tbl ) {
 	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow =0; ' );
 	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = '+tbl.maxRows+'; ' );
 	contentItems.push( '     } ' );
-	contentItems.push( '     tblCells( "'+divId+'" ); } ); ' );
+	contentItems.push( '     '+renderCallback+'( "'+divId+'" ); } ); ' );
 	
 	contentItems.push( ' $( "#'+divId+'BtNext" ).button( {icons:{primary:"ui-icon-arrowthick-1-e"}} ).click( ' );
 	contentItems.push( '  function() {' );
@@ -469,7 +469,7 @@ function pongTableGenPaginator( divId, tbl ) {
 	contentItems.push( '     if ( xx < poTbl[ "'+divId+'" ].pongTableData.length ) {' );
 	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableStartRow = parseInt(poTbl[ "'+divId+'" ].pongTableStartRow) + parseInt('+tbl.maxRows+'); ' );
 	contentItems.push( '        poTbl[ "'+divId+'" ].pongTableEndRow = parseInt(poTbl[ "'+divId+'" ].pongTableEndRow) + parseInt('+tbl.maxRows+'); ' );
-	contentItems.push( '        tblCells( "'+divId+'" );' );
+	contentItems.push( '        '+renderCallback+'( "'+divId+'" );' );
 	contentItems.push( '      }  } ); ' );
 	contentItems.push( " }); </script>" );
 	return contentItems;
@@ -747,6 +747,7 @@ function pongTableCmpFields( a, b ) {
 
 /** render table cells */
 function tblCells( divId ) {
+  log( "Pong-Table", 'tblCells( '+divId +' )' );  
   var dtaArr = poTbl[ divId ].pongTableData;
   var rowSt  = 0;
   var rowEn  = dtaArr.length;

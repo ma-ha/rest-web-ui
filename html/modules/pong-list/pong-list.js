@@ -72,7 +72,7 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( "</div>" );
 
 	// paginator buttons:
-	var paginatorJS = pongTableGenPaginator(divId, tbl);
+	var paginatorJS = pongTableGenPaginator( divId, tbl, 'pongListCells' );
 
 	// AJAX functions:
 	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
@@ -237,10 +237,10 @@ function pongListUpdateRow( divId, divs, rowDta, r, cx, i ) {
     if ( divs[c].cellType == 'div' ) {
       log( "PoNG-List", 'upd-div-x '+divs[c].id );
       if ( divs[c].divs ) {
-        pongListUpdateRow( divId, divs[c].divs, rowDta, r, (cx+1) ); 
+        pongListUpdateRow( divId, divs[c].divs, rowDta, r, (cx+1), i ); 
       }      
     } else {
-      var cellId = '#'+divId+'R'+r+'X'+cx+'C'+c;
+      var cellId = '#'+divId+'R'+i+'X'+cx+'C'+c;
       log( "PoNG-List", 'upd-div-n '+cellId );
       tblUpdateCell( divId, divs[c], r, c, i, rowDta, cellId );
    }
