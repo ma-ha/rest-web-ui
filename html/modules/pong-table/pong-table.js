@@ -802,7 +802,8 @@ function tblCells( divId ) {
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
 				log( "Pong-Table", "col "+c );	
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
-				tblUpdateCell( divId, cellDef, r, c, i, cellDta );
+			  var cellId =  '#'+divId+'R'+i+'C'+c; 
+				tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId);
 			}
 		} else { // clear the rest of the cells
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
@@ -815,15 +816,14 @@ function tblCells( divId ) {
 }
 
 
-function tblUpdateCell( divId, cellDef, r, c, i, cellDta ) {
-  log( "Pong-Table", "call getSubData: "+JSON.stringify(cellDef)  );  
+function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
+  log( "Pong-Table", 'cellDef:'+JSON.stringify( cellDef ) );
+  log( "Pong-Table", "call getSubData.. " );  
   var cellVal = getSubData( cellDta, cellDef.id );
   if ( cellVal == null ) { cellVal = ''; }
-  log( "Pong-Table", JSON.stringify( cellDef ) );
-  var cellId =  '#'+divId+'R'+i+'C'+c; 
   var cellType = cellDef.cellType;
   var editable = '';  
-  log( "Pong-Table", cellId+ "  "+ cellVal);
+  log( "Pong-Table", 'ID:'+cellId+ "  val:"+ cellVal );
   if ( cellType == 'text' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 

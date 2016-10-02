@@ -117,7 +117,8 @@ moduleMap[ "pong-list" ] = {
 	"requires": [ "pong-table" ],
     "hooks": [
          { hook: "loadResourcesHtml", method:"pongListDivHTML" },
-         { hook: "update", method:"ponglisteUpdateData" }
+         { hook: "update", method:"pongListUpdateData" },
+         { hook: "setData", method:"pongListSetData" }
      ]
 };
 
