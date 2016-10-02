@@ -3,6 +3,7 @@
 * added `afterPageLoad(...)` hook
 * [Search header module](modules/pong-search) 
 * [RSS Module](modules/pong-rss)
+* [Lists](modules/pong-list) with hierarchically embedded DIVs
 
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
