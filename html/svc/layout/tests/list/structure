@@ -15,19 +15,22 @@
 				        { "id" : "ID", "cellType" : "text" }, 
 				        { "id" : "XCust", "cellType" : "div",
 				          "divs" : [ 
-				          	{ "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers:" }, 
+				          	{ "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers" }, 
 				          	{ "id" : "CustomerCount", "cellType" : "text" } 
 				          ]
 				        }, 
 				        { "id" : "XSize", "cellType" : "div", 
 				          "divs" : [ 
-					          { "id" : "Sizelb", "cellType" : "label", "label" : "Sizing:" }, 
+					          { "id" : "Sizelb", "cellType" : "label", "label" : "Sizing" }, 
 					          { "id" : "Slb", "cellType" : "label", "label" : "S:" }, 
 					          { "id" : "Size.S", "cellType" : "text" }, 
+					          { "id" : "Size.Strend", "cellType": "icon" }, 
 					          { "id" : "Mlb", "cellType" : "label", "label" : "M:" }, 
 					          { "id" : "Size.M", "cellType" : "text" }, 
+					          { "id" : "Size.Mtrend", "cellType": "icon" }, 
 					          { "id" : "Llb", "cellType" : "label", "label" : "L:" }, 
-					          { "id" : "Size.L", "cellType" : "text" } 
+					          { "id" : "Size.L", "cellType" : "text" },
+					          { "id" : "Size.Ltrend", "cellType": "icon" }
 					        ]
 				        }, 
 				        { "id" : "XOrders", "cellType" : "div", 
@@ -35,10 +38,13 @@
 					          { "id" : "Orderslb", "cellType" : "label", "label" : "Orders" }, 
 					          { "id" : "Orders.D", "cellType" : "text" }, 
 					          { "id" : "OrdersDlb", "cellType" : "label", "label" : "last day" }, 
+					          { "id" : "Orders.Dtrend", "cellType" : "icon" }, 
 					          { "id" : "Orders.W", "cellType" : "text" }, 
 					          { "id" : "OrdersWlb", "cellType" : "label", "label" : "last week" }, 
+					          { "id" : "Orders.Wtrend", "cellType" : "icon" }, 
 					          { "id" : "Orders.M", "cellType" : "text" }, 
-					          { "id" : "OrdersMlb", "cellType" : "label", "label" : "last month" } 
+					          { "id" : "OrdersMlb", "cellType" : "label", "label" : "last month" }, 
+					          { "id" : "Orders.Mtrend", "cellType" : "icon" }
 					       ]
 				        }, 
 				        { "id" : "XRating", "cellType" : "div",

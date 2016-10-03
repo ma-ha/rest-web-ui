@@ -54,11 +54,11 @@ body {
 }
 
 .pongListCellXSize {
-	width: 80px;
+	width: 120px;
 	text-align: center;
 }
 .pongListCellSizelb {
-	width: 80px;
+	width: 120px;
 	text-align: center;
 	color: #888;
 }
@@ -92,6 +92,15 @@ body {
 	padding-left: 5px;
 	text-align: left;
 }
+.pongListCellSizeStrend {
+	width:20px;
+}
+.pongListCellSizeMtrend {
+	width:20px;
+}
+.pongListCellSizeLtrend {
+	width:20px;
+}
 
 .pongListCellXAvail {
 	width: 100px;
@@ -109,22 +118,22 @@ body {
 
 .pongListCellXOrders { 
 	text-align: center;
-	width: 120px;
+	width: 200px;
 }
 .pongListCellOrderslb { 
-	width: 120px;
+	width: 200px;
 	color: #888;
 }
 .pongListCellOrdersDlb { 
-	width: 70px;
+	width: 100px;
 	text-align: left; 
 }
 .pongListCellOrdersWlb { 
-	width: 70px;
+	width: 100px;
 	text-align: left; 
 }
 .pongListCellOrdersMlb { 
-	width: 70px;
+	width: 100px;
 	text-align: left; 
 }
 .pongListCellOrdersD {
@@ -144,4 +153,13 @@ body {
 	text-align: right; 
 	padding-right: 10px;
 	font-weight: bold;
+}
+.pongListCellOrdersDtrend {
+	width: 20px;
+}
+.pongListCellOrdersWtrend {
+	width: 20px;
+}
+.pongListCellOrdersMtrend {
+	width: 20px;
 }

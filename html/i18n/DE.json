@@ -59,5 +59,14 @@
 	"Test Cases": "Testfälle",
 	"Product Page": "Produktseite",
 	"Source View": "Quellcode Ansicht",
-	"Logout": "Abmelden"
+	"Logout": "Abmelden",
+	"Quick Search:":"Schnellsuche:",
+	"Customers":"Kunden",
+	"Sizing":"Gr&ouml;&szlig;en",
+	"Orders":"Bestellungen",
+	"last day":"letzten Tag",
+	"last week":"letzte Woche",
+	"last month":"letzten Monat",
+	"Customer Rating":"Kundenbewertung",
+	"Availability":"Verfügbarkeit"
 }
