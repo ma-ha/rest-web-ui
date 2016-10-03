@@ -66,7 +66,7 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	for ( var r = 0; r < tbl.maxRows; r ++ ) {
 	  log( "PoNG-List", 'row '+r );
 		contentItems.push( '<div class="pongListRow">' );
-		renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, 0 );
+		renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, '' );
 		contentItems.push( "</div>" );
 	}
 	contentItems.push( "</div>" );
@@ -104,7 +104,7 @@ function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
       log( "PoNG-List", 'div-x '+divs[c].id );
       contentItems.push( '<div class="pongListCell pongListCell'+divs[c].id+'" id="'+divId+'R'+r+'X'+cx+'C'+c+'">' );
       if ( divs[c].divs ) {
-        renderPongListDivHTMLsub( contentItems, divId, divs[c].divs, r, (cx+1) ); 
+        renderPongListDivHTMLsub( contentItems, divId, divs[c].divs, r, cx+c ); 
       }      
       contentItems.push( '</div>'  );
     } else if ( ( divs[c].cellType != 'tooltip' ) && 
@@ -220,7 +220,7 @@ function pongListCells( divId ) {
     if ( r < dtaArr.length ) {
       log( "PoNG-List", "row "+r );  
       var rowDta = dtaArr[r];
-      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, 0, i ); 
+      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i ); 
       
     } else { // clear the rest of the cells
         $( ".pongListValCell" ).html( '&nbsp;' );
@@ -237,7 +237,7 @@ function pongListUpdateRow( divId, divs, rowDta, r, cx, i ) {
     if ( divs[c].cellType == 'div' ) {
       log( "PoNG-List", 'upd-div-x '+divs[c].id );
       if ( divs[c].divs ) {
-        pongListUpdateRow( divId, divs[c].divs, rowDta, r, (cx+1), i ); 
+        pongListUpdateRow( divId, divs[c].divs, rowDta, r, cx+c, i ); 
       }      
     } else {
       var cellId = '#'+divId+'R'+i+'X'+cx+'C'+c;
