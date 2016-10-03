@@ -97,7 +97,7 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * tooltip
 * rating
 * label
-* icon
+* icon ([ref icons names](http://api.jqueryui.com/theming/icons/))
 
 The img type and link type will expect a URL as content.
 
