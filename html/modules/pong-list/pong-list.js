@@ -102,7 +102,7 @@ function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
     log( "PoNG-List", 'div '+cx+'/'+c );
     if ( divs[c].cellType == 'div' ) {
       log( "PoNG-List", 'div-x '+divs[c].id );
-      contentItems.push( '<div class="pongListCell pongListCell'+divs[c].id+'" id="'+divId+'R'+r+'X'+cx+'C'+c+'">' );
+      contentItems.push( '<div class="pongListCell pongListCell'+divs[c].id.replace(/\./g,'')+'" id="'+divId+'R'+r+'X'+cx+'C'+c+'">' );
       if ( divs[c].divs ) {
         renderPongListDivHTMLsub( contentItems, divId, divs[c].divs, r, cx+c ); 
       }      
@@ -111,7 +111,7 @@ function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
          ( divs[c].cellType != 'largeimg' ) && 
          ( divs[c].cellType != 'linkFor' ) ) {
       log( "PoNG-List", 'div-n '+divs[c].id );
-      contentItems.push( '<div class="pongListCell pongListValCell pongListCell'+divs[c].id
+      contentItems.push( '<div class="pongListCell pongListValCell pongListCell'+divs[c].id.replace(/\./g,'')
           +'" id="'+divId+'R'+r+'X'+cx+'C'+c+'"></div>'  );
       log( "PoNG-List", 'div end' );
     }
