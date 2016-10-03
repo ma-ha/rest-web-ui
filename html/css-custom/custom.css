@@ -163,3 +163,14 @@ body {
 .pongListCellOrdersMtrend {
 	width: 20px;
 }
+
+.pongListCellXSizeG {
+	width: 100px;
+}
+.pongListCellSizeGlb {
+	width: 100px;
+}
+.pongListCellSizeStat {
+	width:100px;
+	height: 50px;
+}

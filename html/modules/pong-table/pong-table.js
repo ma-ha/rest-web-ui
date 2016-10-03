@@ -847,6 +847,56 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
   
     $( cellId ).html( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-'+cellVal+' tbl-link-icon cell'+cellDef.id.replace(/\./g,'')+'"/>' );
 
+  } else if ( cellType == 'pie' ) {
+
+    $( cellId ).html( '<canvas id="'+cellId+'Canvas" width="auto" height="auto"></canvas>' )
+    var canvas = document.getElementById( cellId+'Canvas' );
+    canvas.width  = $( cellId ).innerWidth()
+    canvas.height = $( cellId ).innerHeight()
+    var cw = canvas.width;
+    var ch = canvas.height;
+    var ctx = canvas.getContext("2d");
+
+    if ( ! cellDef.min ) { cellDef.min =   0 }
+    if ( ! cellDef.max ) { cellDef.max = 100 }
+    //console.log( cellId+' '+ cw+ ' '+ ch);
+    ctx.beginPath();
+    ctx.strokeStyle = "#DDD";
+    ctx.lineWidth = cw/4;
+    ctx.arc( cw/2, cw/2, cw/3, 0, Math.PI, true );
+    ctx.stroke();
+    
+    var start = Math.PI;
+    for ( var v = 0; v < cellVal.length; v++ ){
+      var range = Math.PI   * cellVal[v].val / ( cellDef.max - cellDef.min)
+      console.log( cellId+' '+v+ ' '+cellVal[v].label+' '+start+' - '+(start+range)+' '+cellVal[v].color )
+      ctx.beginPath();
+      ctx.strokeStyle = cellVal[v].color;
+      ctx.lineWidth = cw/4;
+      ctx.arc( cw/2, cw/2, cw/3, start, (start+range), false );
+      ctx.stroke();
+      ctx.strokeStyle = ( cellDef.labelColor ? cellDef.labelColor : '#000' )
+      ctx.lineWidth = 1
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle' 
+      if ( cellVal[v].label ) {
+        var tx = cw/2 + Math.cos( start + range/2 ) * cw/3;
+        var ty = cw/2 +  Math.sin( start + range/2 ) * cw/3;
+        console.log( cellId+' x='+tx+' y='+ty )
+        ctx.beginPath();
+        ctx.strokeText( cellVal[v].label, tx, ty );        
+      }
+      start += range;
+    }
+    
+    // paint white 
+//    ctx.beginPath();
+//    ctx.fillStyle = "#FFF";
+//    ctx.arc( cw/2, cw/2, cw/3, 0, Math.PI, true );
+//    ctx.fill();
+//    
+    //  alert( cw +' '+ ch )
+    
   } else if ( cellType == 'email' ) {
     
     $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'"><a href="mailto:'+ cellVal +'">'+ $.i18n( cellVal ) +'</a></span>' );

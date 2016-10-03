@@ -19,6 +19,15 @@
 				          	{ "id" : "CustomerCount", "cellType" : "text" } 
 				          ]
 				        }, 
+				        { "id" : "XSizeG", "cellType" : "div", 
+				          "divs" : [ 
+					          { "id" : "SizeGlb", "cellType" : "label", "label" : "Sizing" }, 
+					          { "id" : "SizeStat", "cellType": "pie",
+					            "min":"0", "max":"100",
+					            "labelColor":"#FFF"
+					          }
+					      ]
+					    },
 				        { "id" : "XSize", "cellType" : "div", 
 				          "divs" : [ 
 					          { "id" : "Sizelb", "cellType" : "label", "label" : "Sizing" }, 
