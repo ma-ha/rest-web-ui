@@ -8,3 +8,140 @@ body {
 #maindiv {
 	margin: 0 auto;
 }
+
+#r1ContentPongList .pongListRow {
+	border-top-width: 1px; 
+	border-top-style: solid;
+	height: 100px;
+}
+
+.pongListCellXCust {
+	width: 100px;
+}
+
+.pongListCellID {
+	width: 80px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.pongListCellCustomerCountLb {
+	width: 100px;
+	text-align: center;
+	color: #888;
+}
+.pongListCellCustomerCount {
+	width: 100px;
+	font-size: 16pt;
+	text-align: center;
+}
+
+.cellRating {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+.pongListCellXRating {
+	width: 100px;
+}
+.pongListCellRatingLb {
+	width: 100px;
+	text-align: center;
+	color: #888;
+}
+.pongListCellRating {
+	width: 100px;
+}
+
+.pongListCellXSize {
+	width: 80px;
+	text-align: center;
+}
+.pongListCellSizelb {
+	width: 80px;
+	text-align: center;
+	color: #888;
+}
+.pongListCellSlb {
+	width: 35px;
+	padding-right: 5px;
+	text-align: right;
+}
+.pongListCellMlb {
+	width: 35px;
+	padding-right: 5px;
+	text-align: right;
+}
+.pongListCellLlb {
+	width: 35px;
+	padding-right: 5px;
+	text-align: right;
+}
+.pongListCellSizeS {
+	width:35px;
+	padding-left: 5px;
+	text-align: left;
+}
+.pongListCellSizeM {
+	width:35px;
+	padding-left: 5px;
+	text-align: left;
+}
+.pongListCellSizeL {
+	width:35px;
+	padding-left: 5px;
+	text-align: left;
+}
+
+.pongListCellXAvail {
+	width: 100px;
+	text-align: center;
+}
+.pongListCellAvailabilityLb {
+	width: 100px;
+	color: #888;
+}
+.pongListCellAvailability  {
+	width: 100px;
+	font-size: 16pt;
+}
+
+
+.pongListCellXOrders { 
+	text-align: center;
+	width: 120px;
+}
+.pongListCellOrderslb { 
+	width: 120px;
+	color: #888;
+}
+.pongListCellOrdersDlb { 
+	width: 70px;
+	text-align: left; 
+}
+.pongListCellOrdersWlb { 
+	width: 70px;
+	text-align: left; 
+}
+.pongListCellOrdersMlb { 
+	width: 70px;
+	text-align: left; 
+}
+.pongListCellOrdersD {
+	width: 40px;
+	text-align: right; 
+	padding-right: 10px;
+	font-weight: bold;
+}
+.pongListCellOrdersW {
+	width: 40px;
+	text-align: right; 
+	padding-right: 10px;
+	font-weight: bold;
+}
+.pongListCellOrdersM {
+	width: 40px;
+	text-align: right; 
+	padding-right: 10px;
+	font-weight: bold;
+}

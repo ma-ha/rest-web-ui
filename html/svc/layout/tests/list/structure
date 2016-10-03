@@ -5,40 +5,55 @@
 		"rows":[
 			{
 				"rowId":"r1",
-				"height":"400px",
+				"height":"500px",
 				"type":"pong-list",
-				"resourceURL":"svc/tbl-data",
+				"resourceURL":"svc/lst-data",
 				"title":"List2 Reuses Table Module",
 				"moduleConfig":{
-				    "filter": {
-				        "title":"Product Filter",
-				        "dataReqParams": [ {"id":"collor", "label":"Product Color"} ],
-				        "dataReqParamsSrc":"Form", 	
-				        "dataReqParamsBt":"Filter"
-				    },	
 					"rowId": "ID",
-					"divs" : [
-						{ "id":"ID", "label":"", "cellType":"text" }, 
-						{ "id":"xName", "cellType":"div",
-						  "divs": [
-						    { "id":"Name", "label":"Name", "cellType":"text" },
-						    { "id":"Picture", "label":"Picture", "cellType":"img" },
-						    { "id":"ZoomImg", "cellType":"largeimg", "forImg":"Picture" }
-						  ]
-						}, 
-						{ "id":"xRest", "cellType":"div",
-						  "divs": [
-							{ "id":"Status", "label":"Status", "cellType":"checkbox" },
-							{ "id":"Rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
-							{ "id":"xSub2", "cellType":"div",
-							  "divs": [
-								{ "id":"Description", "label":"Description", "cellType":"text","editable":"true" },
-								{ "id":"ProductPage", "label":"Product Page", "cellType":"linkLink" }
-							  ]
-							}
-						  ]
-						}
-					],
+       				"divs" : [ 
+				        { "id" : "ID", "cellType" : "text" }, 
+				        { "id" : "XCust", "cellType" : "div",
+				          "divs" : [ 
+				          	{ "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers:" }, 
+				          	{ "id" : "CustomerCount", "cellType" : "text" } 
+				          ]
+				        }, 
+				        { "id" : "XSize", "cellType" : "div", 
+				          "divs" : [ 
+					          { "id" : "Sizelb", "cellType" : "label", "label" : "Sizing:" }, 
+					          { "id" : "Slb", "cellType" : "label", "label" : "S:" }, 
+					          { "id" : "Size.S", "cellType" : "text" }, 
+					          { "id" : "Mlb", "cellType" : "label", "label" : "M:" }, 
+					          { "id" : "Size.M", "cellType" : "text" }, 
+					          { "id" : "Llb", "cellType" : "label", "label" : "L:" }, 
+					          { "id" : "Size.L", "cellType" : "text" } 
+					        ]
+				        }, 
+				        { "id" : "XOrders", "cellType" : "div", 
+				          "divs" : [ 
+					          { "id" : "Orderslb", "cellType" : "label", "label" : "Orders" }, 
+					          { "id" : "Orders.D", "cellType" : "text" }, 
+					          { "id" : "OrdersDlb", "cellType" : "label", "label" : "last day" }, 
+					          { "id" : "Orders.W", "cellType" : "text" }, 
+					          { "id" : "OrdersWlb", "cellType" : "label", "label" : "last week" }, 
+					          { "id" : "Orders.M", "cellType" : "text" }, 
+					          { "id" : "OrdersMlb", "cellType" : "label", "label" : "last month" } 
+					       ]
+				        }, 
+				        { "id" : "XRating", "cellType" : "div",
+				          "divs" : [ 
+					          { "id" : "RatingLb", "cellType" : "label", "label" : "Customer Rating" }, 
+					          { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" } 
+					      ]
+				        }, 
+				        { "id" : "XAvail", "cellType" : "div", 
+				          "divs" : [ 
+					          { "id" : "AvailabilityLb", "cellType" : "label", "label" : "Availability" }, 
+					          { "id" : "Availability", "cellType" : "text" } 
+					       ]
+				        } 
+				    ],
 					"maxRows":"4"
 				},
 				"type_id":"5",
