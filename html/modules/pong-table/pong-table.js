@@ -841,11 +841,15 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     
   } else if ( cellType == 'label' ) {
     
-    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ cellDef.label +'</span>' );
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ $.i18n( cellDef.label ) +'</span>' );
     
+  } else if ( cellType == 'icon' ) {
+  
+    $( cellId ).html( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-'+cellVal+' tbl-link-icon cell'+cellDef.id.replace(/\./g,'')+'"/>' );
+
   } else if ( cellType == 'email' ) {
     
-    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'"><a href="mailto:'+ cellVal +'">'+ cellVal +'</a></span>' );
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'"><a href="mailto:'+ cellVal +'">'+ $.i18n( cellVal ) +'</a></span>' );
     
   } else if ( cellType == 'checkbox' ) {
     
