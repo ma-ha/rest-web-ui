@@ -98,6 +98,7 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * rating
 * label
 * icon ([ref icons names](http://api.jqueryui.com/theming/icons/))
+* pie
 
 The img type and link type will expect a URL as content.
 
