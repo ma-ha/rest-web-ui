@@ -96,6 +96,7 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * button
 * tooltip
 * rating
+* label
 
 The img type and link type will expect a URL as content.
 
@@ -418,3 +419,4 @@ You can use the following CCS elements to define thy style of the table:
 * Table class: pongTable
 * optional Form DIV ID: #<resId>ContentPongTableFrm
 * optional From DIV class: pongTableFrm
+* cells have class _cell<ID>_

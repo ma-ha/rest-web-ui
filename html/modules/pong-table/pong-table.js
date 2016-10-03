@@ -829,15 +829,19 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
       editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
-      $( cellId ).html( '<div style="position:relative" class="editable"><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
+      $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
       if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
-        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
+        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
       } else {
-        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span>' );             
+        $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id+'">'+ cellVal +'</span>' );             
         //TODO why additional span ?? $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span><span class="ui-icon ui-icon-plusthick " style="display:inline-block" />' );             
       }
     }
+    
+  } else if ( cellType == 'label' ) {
+    
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id+'">'+ cellDef.label +'</span>' );
     
   } else if ( cellType == 'email' ) {
     
@@ -879,7 +883,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     } else {
       alert( "rowId == null" );
     }
-    $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+'>'+$.i18n( cellDef.label )+'</a>' );
+    $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id+'">'+$.i18n( cellDef.label )+'</a>' );
     
   } else if ( cellType == 'img' ) {
     
@@ -1051,7 +1055,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     if ( cellDef.ratingType != null ) {
       ratingType = cellDef.ratingType;
     }
-    $( cellId ).html( '<img class="RatingImg" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
+    $( cellId ).html( '<img class="RatingImg cell'+cellDef.id+'"" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
     
   } else {
     // ???
