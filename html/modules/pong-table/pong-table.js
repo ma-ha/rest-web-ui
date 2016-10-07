@@ -875,16 +875,18 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
       ctx.lineWidth = cw/4;
       ctx.arc( cw/2, cw/2, cw/3, start, (start+range), false );
       ctx.stroke();
-      ctx.strokeStyle = ( cellDef.labelColor ? cellDef.labelColor : '#000' )
-      ctx.lineWidth = 1
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle' 
-      if ( cellVal[v].label ) {
-        var tx = cw/2 + Math.cos( start + range/2 ) * cw/3;
-        var ty = cw/2 +  Math.sin( start + range/2 ) * cw/3;
-        console.log( cellId+' x='+tx+' y='+ty )
-        ctx.beginPath();
-        ctx.strokeText( cellVal[v].label, tx, ty );        
+      if (  cellVal[v].val > 0 ) {
+        ctx.strokeStyle = ( cellDef.labelColor ? cellDef.labelColor : '#000' )
+        ctx.lineWidth = 1
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle' 
+        if ( cellVal[v].label ) {
+          var tx = cw/2 + Math.cos( start + range/2 ) * cw/3;
+          var ty = cw/2 +  Math.sin( start + range/2 ) * cw/3;
+          console.log( cellId+' x='+tx+' y='+ty )
+          ctx.beginPath();
+          ctx.strokeText( cellVal[v].label, tx, ty );        
+        }
       }
       start += range;
     }
