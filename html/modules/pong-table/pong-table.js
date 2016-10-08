@@ -818,13 +818,16 @@ function tblCells( divId ) {
 
 
 function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
-  log( "Pong-Table", 'cellDef:'+JSON.stringify( cellDef ) );
-  log( "Pong-Table", "call getSubData.. " );  
-  var cellVal = getSubData( cellDta, cellDef.id );
-  if ( cellVal == null ) { cellVal = ''; }
+  log( "Pong-Table", 'tblUpdateCell '+cellId+' cellDef:'+JSON.stringify( cellDef ) );
   var cellType = cellDef.cellType;
+  var cellVal = null;
+  if ( cellType != 'label' ) {
+    log( "Pong-Table", "call getSubData.. " );  
+    cellVal = getSubData( cellDta, cellDef.id );    
+  }
+  if ( cellVal == null ) { cellVal = ''; }
   var editable = '';  
-  log( "Pong-Table", 'ID:'+cellId+ "  val:"+ cellVal );
+  log( "Pong-Table", 'ID:"'+cellId+ '"  val:'+ cellVal );
   if ( cellType == 'text' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
@@ -840,31 +843,46 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     }
     
   } else if ( cellType == 'label' ) {
-    
+    log( "Pong-Table", '>>>>>>>>>> label: "'+cellId+'"')
     $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ $.i18n( cellDef.label ) +'</span>' );
     
   } else if ( cellType == 'icon' ) {
   
     $( cellId ).html( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-'+cellVal+' tbl-link-icon cell'+cellDef.id.replace(/\./g,'')+'"/>' );
 
+  } else if ( cellType == 'graph' ) {
+
+    $( cellId ).html( '<canvas id="'+cellId+'Canvas" width="auto" height="auto"></canvas>' )
+    var canvas = document.getElementById( cellId+'Canvas' );
+    canvas.width  = $( cellId ).innerWidth()
+    canvas.height = $( cellId ).innerHeight()
+    var def    = JSON.parse( JSON.stringify( cellDef ) )
+    def.pos    = { x:0, y:0 }
+    def.width  = canvas.width
+    def.height = canvas.height
+    var ctx = canvas.getContext("2d")
+    
+    pongTblRenderGraph( divId, ctx, def, cellVal ) 
+    
+    
   } else if ( cellType == 'pie' ) {
 
     $( cellId ).html( '<canvas id="'+cellId+'Canvas" width="auto" height="auto"></canvas>' )
     var canvas = document.getElementById( cellId+'Canvas' );
     canvas.width  = $( cellId ).innerWidth()
     canvas.height = $( cellId ).innerHeight()
-    var cw = canvas.width;
-    var ch = canvas.height;
-    var ctx = canvas.getContext("2d");
+    var cw = canvas.width
+    var ch = canvas.height
+    var ctx = canvas.getContext("2d")
 
     if ( ! cellDef.min ) { cellDef.min =   0 }
     if ( ! cellDef.max ) { cellDef.max = 100 }
     //console.log( cellId+' '+ cw+ ' '+ ch);
-    ctx.beginPath();
-    ctx.strokeStyle = "#DDD";
-    ctx.lineWidth = cw/4;
-    ctx.arc( cw/2, cw/2, cw/3, 0, Math.PI, true );
-    ctx.stroke();
+    ctx.beginPath()
+    ctx.strokeStyle = "#DDD"
+    ctx.lineWidth = cw/4
+    ctx.arc( cw/2, cw/2, cw/3, 0, Math.PI, true )
+    ctx.stroke()
     
     var start = Math.PI;
     for ( var v = 0; v < cellVal.length; v++ ){
@@ -890,14 +908,6 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
       }
       start += range;
     }
-    
-    // paint white 
-//    ctx.beginPath();
-//    ctx.fillStyle = "#FFF";
-//    ctx.arc( cw/2, cw/2, cw/3, 0, Math.PI, true );
-//    ctx.fill();
-//    
-    //  alert( cw +' '+ ch )
     
   } else if ( cellType == 'email' ) {
     
@@ -1205,4 +1215,146 @@ function getRowIdPostParam ( divId, cellDta ) {
 		}
 	}
 	return param;
+}
+
+//---------------------------------------------------------------------------------
+function pongTblRenderGraph( divId, ctx, def, dta ) {
+  log( "Pong-Table", "pongIOrenderGraph '"+def.id+"': "+JSON.stringify(def) );
+  if ( def.pos  &&  def.pos.x != null  &&  def.pos.y != null  &&  def.width  &&  def.height &&
+     def.layout && def.layout.yAxis  &&  def.layout.yAxis.min != null  &&  def.layout.yAxis.max != null ) {} else { 
+    log( "Pong-Table", "pongIOrenderGraph: Config not OK! End.");
+    return;
+  }
+  var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
+    yMin = parseFloat( def.layout.yAxis.min ) , yMax = parseFloat( def.layout.yAxis.max );
+  ctx.beginPath();
+  ctx.strokeStyle = "#00A";
+  ctx.fillStyle   = "#DDD";
+  ctx.lineWidth    = "1";
+  if ( def.lineCol ) { ctx.strokeStyle = def.lineCol; }
+  if ( def.fillCol ) { ctx.fillStyle   = def.fillCol; }
+  ctx.rect( x, y, w, h );
+  ctx.stroke();
+  ctx.fill();     
+  
+  if ( def.layout.name ) {
+    var xx = x + w/2, yy = y-6;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    pongTblCnvTxt(  divId, def, ctx, def.layout.name, xx, y, {"font":"10pt Arial"} );   
+  }
+    
+  // draw y axis
+  var lYmin = yMin , lYmax = yMax , yLogType = false ;
+  if ( def.layout.yAxis.axisType && def.layout.yAxis.axisType == "logarithmic" ) {  
+    yLogType = true;
+    lYmin = Math.log( yMin );
+    lYmax = Math.log( yMax );   
+  }
+  log( "Pong-Table", "Graph y-min="+lYmin ); 
+  log( "Pong-Table", "Graph y-max="+lYmax ); 
+  ctx.textAlign = "end";
+  ctx.textBaseline = "middle";
+  if ( def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
+    var xx = x + 4, xt= x - 3;
+    for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
+      var l = parseFloat( def.layout.yAxis.labels[c] );
+      if ( ! isNaN( l ) ) {
+        var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+        if ( yLogType ) {
+          ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+          log( "Pong-Table", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+        }
+        var lyy = Math.round( y  + h - ly ); 
+        log( "Pong-Table", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
+        ctx.moveTo( x,  lyy );
+        ctx.strokeStyle = "#00A";
+        ctx.fillStyle   = "#DDD";
+        ctx.lineTo( xx, lyy );
+        ctx.stroke();
+        pongTblCnvTxt(  divId, def, ctx, l, xt, lyy, {"font":"8pt Arial"} );
+      }
+    }
+  }
+  
+  // draw graphs
+  if ( dta  && dta.length ) {
+    for ( var c = 0; c < dta.length; c++ ) {
+      var g = dta[c];
+      log( "Pong-Table", ">>>>>>>>>>> #d="+ g.data.length  );
+      if ( g.data && g.data.length ) {
+        var xMin = g.data[0][0]; xMax = g.data[0][0];
+        for ( var i = 0; i < g.data.length; i++ ) {
+          if ( xMax < g.data[i][0] ) { xMax = g.data[i][0] }
+          if ( xMin > g.data[i][0] ) { xMin = g.data[i][0] }
+        }
+        if ( xMin == xMax ) { xMax += 1; }
+        log( "Pong-Table", " xMin="+xMin+" xMax="+xMax );
+        var drawL = false;
+        ctx.beginPath();
+        ctx.strokeStyle = "#99F";
+        if ( def.layout.colors && def.layout.colors[ g.name ] ) {
+          ctx.strokeStyle = def.layout.colors[ g.name ];
+        }
+        for ( var i = 0; i < g.data.length; i++ ) {
+          var xx = x + Math.round(  w * ( g.data[i][0] - xMin ) / ( xMax - xMin) );
+          //log( "Pong-Table", " xx = "+xx +"    > "+g.data[i][0]+" "+w+" "+x );
+          var yy = y;
+          if ( yLogType ) {
+            yy = y + h - Math.round( h * ( Math.log( g.data[i][1] ) - lYmin ) / ( lYmax - lYmin ) );
+            //log( "Pong-Table", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
+          } else {
+            yy = y + h - Math.round( h * ( g.data[i][1] - lYmin ) / ( lYmax - lYmin ) );
+          }
+          //log( "Pong-Table", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
+          if ( drawL ) {
+            //log( "Pong-Table", " lineto( "+xx+" / "+yy+" )" );
+            ctx.lineTo( xx, yy );                       
+            ctx.stroke();
+          } else {
+            //log( "Pong-Table", " moveto( "+xx+" / "+yy+" )" );
+            ctx.moveTo( xx, yy );           
+          }
+          if ( yMin < g.data[i][1] && g.data[i][1] < yMax ) { drawL = true; } else { drawL = false; }
+        }
+      }
+      //if ( g.length ) {
+      //}
+      
+    }
+  }
+  
+  // TODO IO: implement graph
+  log( "Pong-Table", "pongIOrenderGraph end.");
+}
+
+
+//---------------------------------------------------------------------------------------
+
+/** helper */
+function pongTblCnvTxt( divId, def, ctx, txt, x, y, opt ) {
+  log( "Pong-Table", "pongTblCnvTxt: "+divId+ " "+x+"/"+y);
+  var pmd = moduleConfig[ divId ];
+  if ( def.textAlign ) {  ctx.textAlign = def.textAlign; } 
+  if ( def.textBaseline ) { ctx.textAlign = def.textBaseline; } 
+
+  if ( def.font ) { ctx.font = def.font; } 
+    else if ( pmd.font ) { ctx.font   = pmd.font; } 
+      else if ( opt && opt.font ) { ctx.font   = opt.font; } 
+        else { ctx.font   = "14px Courier"; }
+
+  if ( def.textFillColor ) {  ctx.fillStyle = def.textFillColor; } 
+    else if ( pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
+      else if ( opt && opt.fillStyle ) { ctx.fillStyle   = opt.fillStyle; } 
+        else { ctx.fillStyle   = "#00F"; }
+  
+  if ( def.textStrokeColor ) {  ctx.strokeStyle = def.textStrokeColor; } 
+    else if ( pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
+      else if ( opt && opt.strokeStyle ) { ctx.strokeStyle   = opt.strokeStyle; } 
+        else { ctx.strokeStyle   = "#FFF"; }
+  
+  ctx.strokeText( txt, x, y );
+  ctx.fillText(   txt, x, y );
+  
+  //log( "Pong-Table", "pongTblCnvTxt end.");
 }

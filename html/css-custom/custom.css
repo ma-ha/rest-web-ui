@@ -174,3 +174,14 @@ body {
 	width:100px;
 	height: 50px;
 }
+
+.pongListCellXUsage{
+	width: 100px;
+}
+.pongListCellUsageLb {
+	width: 100px;
+}
+.pongListCellUsage {
+	width: 100px;
+	height: 80px;
+}

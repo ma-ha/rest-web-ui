@@ -16,7 +16,10 @@
 				        { "id" : "XCust", "cellType" : "div",
 				          "divs" : [ 
 				          	{ "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers" }, 
-				          	{ "id" : "CustomerCount", "cellType" : "text" } 
+				          	{ "id" : "CustomerCount", "cellType" : "text" },
+				            { "id" : "RatingLb", "cellType" : "label", "label" : "Rating" }, 
+					        { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" } 
+				          	
 				          ]
 				        }, 
 				        { "id" : "XSizeG", "cellType" : "div", 
@@ -56,18 +59,30 @@
 					          { "id" : "Orders.Mtrend", "cellType" : "icon" }
 					       ]
 				        }, 
-				        { "id" : "XRating", "cellType" : "div",
-				          "divs" : [ 
-					          { "id" : "RatingLb", "cellType" : "label", "label" : "Customer Rating" }, 
-					          { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" } 
-					      ]
-				        }, 
 				        { "id" : "XAvail", "cellType" : "div", 
 				          "divs" : [ 
 					          { "id" : "AvailabilityLb", "cellType" : "label", "label" : "Availability" }, 
 					          { "id" : "Availability", "cellType" : "text" } 
 					       ]
-				        } 
+				        },
+				        { "id" : "XUsage", "cellType" : "div", 
+				          "divs" : [ 
+					          { "id" : "UsageLb", "cellType" : "label", "label" : "Traffic (1d)" }, 
+					          { "id" : "Usage", "cellType" : "graph",
+					            "layout":{
+									"name":"P[kPa]",
+									"graphType":"timeLog",
+									"colors":{"traffic":"#5A5"},
+									"yAxis":{
+										"axisType":"linear",
+										"min":"0",
+										"max":"100",
+										"labels":["0","25","50","75","100"]
+									}
+								 } 
+					          } 
+					       ]
+				        }         
 				    ],
 					"maxRows":"4"
 				},

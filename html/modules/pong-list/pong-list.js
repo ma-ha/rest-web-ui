@@ -215,16 +215,14 @@ function pongListCells( divId ) {
   
   log( "PoNG-List", "row loop" );  
   var i = 0;
+  $( ".pongListValCell" ).html( '&nbsp;' );
   for ( var r = rowSt; r < rowEn; r++ ) {
     log( "PoNG-List", "row loop" );  
     if ( r < dtaArr.length ) {
       log( "PoNG-List", "row "+r );  
       var rowDta = dtaArr[r];
       pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i ); 
-      
-    } else { // clear the rest of the cells
-        $( ".pongListValCell" ).html( '&nbsp;' );
-    }
+    } 
     i++;
   } 
 }
