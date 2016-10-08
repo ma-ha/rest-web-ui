@@ -11,7 +11,8 @@
 				"title":"List2 Reuses Table Module",
 				"moduleConfig":{
 					"rowId": "ID",
-       				"divs" : [ 
+					"pollDataSec": "10",
+					"divs" : [ 
 				        { "id" : "ID", "cellType" : "text" }, 
 				        { "id" : "XCust", "cellType" : "div",
 				          "divs" : [ 

@@ -91,6 +91,34 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 			}
 		}
 	}
+  if ( tbl.pollDataSec ) {
+    var t = parseInt( tbl.pollDataSec );
+    if  ( ! isNaN( t ) ) {  
+      poTbl[ divId ].polling = true;
+      var pollHTML = [];
+      pollHTML.push( '<script>' );
+      pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
+      pollHTML.push( '        if ( poTbl[ "'+divId+'" ].polling ) { ' );
+      pollHTML.push( '          pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+      pollHTML.push( '        }' );
+      pollHTML.push( '  }' );
+      pollHTML.push( '</script>' );
+      $( "#"+divId ).append( pollHTML.join("\n") );
+      log( "PoNG-Table", ">>>>> create pongTableUpdateTimer t="+t );
+      poolDataTimerId = setInterval( "pongTableUpdateTimer"+divId+"()", t*1000 );
+      log( "Pong-Table", ">>>>> startet pongTableUpdateTimer"+divId+"()" );
+
+      // toggle pulling action button
+      var html = "";
+      html += '<button id="'+divId+'TableBt">'+$.i18n( 'Start/stop reload' )+'</button>';
+      html += '<script>';
+      html += '  $(function() { $( "#'+divId+'TableBt" ).button( ';
+      html += '    { icons:{primary: "ui-icon-refresh"}, text: false } ).click( function() { pongTableTogglePolling("'+divId+'"); } ); } ); ';
+      html += '</script>';
+      $( "#"+divId+"ActionBtn" ).html( html );
+    
+    } //else alert( "no parseInt tbl.pollDataSec" );
+  } //else alert( "no tbl.pollDataSec" );
 
 	pongListUpdateData( divId, params.get );
 		
