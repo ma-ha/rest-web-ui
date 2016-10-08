@@ -4,7 +4,10 @@
 * [Search header module](modules/pong-search) 
 * [RSS Module](modules/pong-rss)
 * [Lists](modules/pong-list) with hierarchically embedded DIVs
-* List/table with icons and labels
+* List/table with 
+	* icons and labels
+	* pie charts
+	* graphs
 
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
