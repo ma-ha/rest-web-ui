@@ -843,7 +843,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     }
     
   } else if ( cellType == 'label' ) {
-    log( "Pong-Table", '>>>>>>>>>> label: "'+cellId+'"')
+
     $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ $.i18n( cellDef.label ) +'</span>' );
     
   } else if ( cellType == 'icon' ) {
