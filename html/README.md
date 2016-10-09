@@ -8,6 +8,7 @@
 	* icons and labels
 	* pie charts
 	* graphs
+* List w/o maxRows generate scrollbar
 
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
