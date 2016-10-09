@@ -63,17 +63,22 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 		
 	contentItems.push( '<div id="'+divId+'PongList" class="pongList" width="100%">' );
 	// cread table head
-	for ( var r = 0; r < tbl.maxRows; r ++ ) {
-	  log( "PoNG-List", 'row '+r );
-		contentItems.push( '<div class="pongListRow">' );
-		renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, '' );
-		contentItems.push( "</div>" );
-	}
-	contentItems.push( "</div>" );
-
+  if ( tbl.maxRows ) {
+  	for ( var r = 0; r < tbl.maxRows; r ++ ) {
+  	  log( "PoNG-List", 'row '+r );
+  		contentItems.push( '<div class="pongListRow">' );
+  		renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, '' );
+  		contentItems.push( "</div>" );
+  	}
+  	contentItems.push( "</div>" );
+  }
+  
 	// paginator buttons:
-	var paginatorJS = pongTableGenPaginator( divId, tbl, 'pongListCells' );
-
+  var paginatorJS = [];
+  if ( tbl.maxRows ) {
+    paginatorJS = pongTableGenPaginator( divId, tbl, 'pongListCells' );
+  }
+  
 	// AJAX functions:
 	var ajacCommitsJS = pongTableAjaxCommits( divId, resourceURL, params, tbl );
 
@@ -82,6 +87,11 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	$( "#"+divId ).append( paginatorJS.join("\n") );
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	
+	// if there is no paginator:
+  if ( ! tbl.maxRows ) {
+    $( "#"+divId ).css( 'overflow', 'auto' );
+  }
+
 	if ( params != null  && params.filter != null ) {
 		for ( var i = 0; i < params.filter.length; i++ ) {
 			if ( i == 0 ) { 
@@ -220,24 +230,18 @@ function pongListCells( divId ) {
     // need to create empty table rows and cells 
     // del all rows, except 1st
 // TODO: change to list
-//    $( '#'+divId+'PongTable' ).find( "tr:gt(0)" ).remove();
-//    
-//    var contentItems = [];
-//    for ( var r = 0; r < rowEn; r ++ ) {
-//      var tbl = poTbl[ divId ].pongTableDef;
-//      // table:  id="'+divId+'PongTable"
-//      $( '#'+divId+' .'+divId+'Row' ).remove();
-//      contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
-//      for ( var c = 0; c < tbl.cols.length; c ++ ) {
-//        if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
-//            ( tbl.cols[c].cellType != 'largeimg' ) && 
-//            ( tbl.cols[c].cellType != 'linkFor' ) ) {
-//          contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
-//        }
-//      }
-//      contentItems.push( "</tr>" );
-//    }
-//    $( '#'+divId+'PongTable' ).append( contentItems.join( '\n' ) );
+    $( '#'+divId+'PongList' ).find( ".pongListRow" ).remove();
+    
+    var contentItems = [];
+    for ( var r = 0; r < rowEn; r ++ ) {
+      var tbl = poTbl[ divId ].pongTableDef;
+      log( "PoNG-List", 'row '+r );
+      contentItems.push( '<div class="pongListRow">' );
+      renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, '' );
+      contentItems.push( "</div>" );
+
+    }
+    $( '#'+divId+'PongList' ).append( contentItems.join( '\n' ) );
   }
   
   log( "PoNG-List", "tblCells: divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
