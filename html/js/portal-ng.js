@@ -282,8 +282,8 @@ function loadStructure() {
 		      processLayoutResponseJSON
 		  ).fail(
 		      function( jqxhr, textStatus, error ) {
-      			var err = textStatus + ", " + error;
-      			console.log( "Request Failed: " + err );
+      			console.log( 'Request for "'+pPage+'" failed: ' + textStatus + ", " + error );
+            window.location.href = 'index.html'; 
 		      }
 		  ).always(
 		      function() {
