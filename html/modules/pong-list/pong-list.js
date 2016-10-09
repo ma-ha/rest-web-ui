@@ -27,7 +27,7 @@ log( "PoNG-List", "load module");
 
 function pongListDivHTML( divId, resourceURL, params ) {
 	log( "PoNG-List",  "divId="+divId+" resourceURL="+resourceURL );
-	pongTanbleInit( divId );
+	pongTableInit( divId, "PongList"  );
 		
 	if ( moduleConfig[ divId ] != null ) {
 		renderPongListDivHTML( divId, resourceURL, params, moduleConfig[ divId ] );
@@ -190,7 +190,9 @@ function pongListSetData( divId, data, dataDocSubPath ) {
     poTbl[ divId ].pongTableData = data;    
   }
   pongListCells( divId ); 
-  
+
+  pongTableResize( divId );
+
   if ( poTbl[ divId ].setData ) {
     if ( poTbl[ divId ].setData.setData ) {
       var setDta =  poTbl[ divId ].setData.setData

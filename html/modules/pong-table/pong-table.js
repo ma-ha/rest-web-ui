@@ -25,15 +25,16 @@ log( "Pong-Table", "load module");
 
 var poTbl = [];
 
-function pongTanbleInit( divId ) {
+function pongTableInit( divId, type ) {
 	poTbl[ divId ] = 
 	{ 
-		pongTableDef: null,
-		divId: null, 
-		pongTableStartRow: 0, 
-		pongTableEndRow: 0,
-		pongTableData: null, 
-		pongTableFilter: "" 
+		pongTableDef      : null,
+		divId             : null, 
+		pongTableStartRow : 0, 
+		pongTableEndRow   : 0,
+		pongTableData     : null, 
+		pongTableFilter   : "",
+		type              : type
 	};
 
 	poTbl[ divId ].divId = divId;
@@ -41,7 +42,7 @@ function pongTanbleInit( divId ) {
 
 function pongTableDivHTML( divId, resourceURL, params ) {
 	log( "Pong-Table",  "pongTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
-	pongTanbleInit( divId );
+	pongTableInit( divId, "PongTable" );
 	
 	if  ( moduleConfig[ divId ] != null ) {
 		
@@ -117,12 +118,12 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems.push( "$(function() { ");
 	contentItems.push( ' $( ".'+divId+'TblSort").on( "click", function( e ) { ' );
 	contentItems.push( '     if ( poTbl[ "'+divId+'" ].sortCol != $( this ).data("colid") ) { ' );
-    contentItems.push( '        poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); ' );
-    contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = true;' );
-    contentItems.push( '     } else {' ); // reverse sort order
-    contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = ! poTbl[ "'+divId+'" ].sortUp; ' );
-    contentItems.push( '     }' );
-    contentItems.push( '     tblCells( "'+divId+'" ); ' );
+  contentItems.push( '        poTbl[ "'+divId+'" ].sortCol = $( this ).data("colid"); ' );
+  contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = true;' );
+  contentItems.push( '     } else {' ); // reverse sort order
+  contentItems.push( '        poTbl[ "'+divId+'" ].sortUp = ! poTbl[ "'+divId+'" ].sortUp; ' );
+  contentItems.push( '     }' );
+  contentItems.push( '     tblCells( "'+divId+'" ); ' );
 	contentItems.push( ' } ); } ); ' );
 	contentItems.push( '</script> ' );
 	contentItems.push( "</tr>" );
@@ -705,6 +706,8 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 	}
 	tblCells( divId ); 
 	
+	pongTableResize( divId );
+	
 	if ( poTbl[ divId ].setData ) {
 	  if ( poTbl[ divId ].setData.setData ) {
 	    var setDta =  poTbl[ divId ].setData.setData
@@ -714,6 +717,22 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
 	    }
 	  }
 	}
+}
+function pongTableResize( divId ) {
+// TODO get resize wirking
+  
+//  var tbl = poTbl[ divId ].pongTableDef;
+//  var divType = poTbl[ divId ].type;
+//  log( "xPong-Table", 'pongTableResize '+divId+ ' '+ divType );
+//  if ( tbl.heightMin ) {
+//    var heightMin = parseInt( tbl.heightMin );
+//    var divHeight = $( "#"+divId+divType ).innerWidth()
+//    log( "xPong-Table", 'heightMin='+heightMin+ '  divHeight='+ divHeight );
+//    if ( heightMin < divHeight ) {
+//      alert( divHeight+' < '+ heightMin )
+//      $( divId ).innerWidth( divHeight )
+//    } 
+//  }
 }
 
 var pongTable_sc = ''; // little dirty, but works well
@@ -877,7 +896,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
 
     if ( ! cellDef.min ) { cellDef.min =   0 }
     if ( ! cellDef.max ) { cellDef.max = 100 }
-    //console.log( cellId+' '+ cw+ ' '+ ch);
+    //log( 'Pong-Table', cellId+' '+ cw+ ' '+ ch);
     ctx.beginPath()
     ctx.strokeStyle = "#DDD"
     ctx.lineWidth = cw/4
@@ -887,7 +906,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
     var start = Math.PI;
     for ( var v = 0; v < cellVal.length; v++ ){
       var range = Math.PI   * cellVal[v].val / ( cellDef.max - cellDef.min)
-      console.log( cellId+' '+v+ ' '+cellVal[v].label+' '+start+' - '+(start+range)+' '+cellVal[v].color )
+      log( 'Pong-Table', cellId+' '+v+ ' '+cellVal[v].label+' '+start+' - '+(start+range)+' '+cellVal[v].color )
       ctx.beginPath();
       ctx.strokeStyle = cellVal[v].color;
       ctx.lineWidth = cw/4;
@@ -901,7 +920,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
         if ( cellVal[v].label ) {
           var tx = cw/2 + Math.cos( start + range/2 ) * cw/3;
           var ty = cw/2 +  Math.sin( start + range/2 ) * cw/3;
-          console.log( cellId+' x='+tx+' y='+ty )
+          log( 'Pong-Table', cellId+' x='+tx+' y='+ty )
           ctx.beginPath();
           ctx.strokeText( cellVal[v].label, tx, ty );        
         }
