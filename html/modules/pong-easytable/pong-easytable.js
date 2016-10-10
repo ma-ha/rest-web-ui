@@ -26,7 +26,7 @@ log( "Pong-EzTable", "load module");
 
 function pongEzTableDivHTML( divId, resourceURL, params ) {
 	log( "Pong-EzTable",  "pongEzTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
-	pongTanbleInit( divId );
+	pongTableInit( divId );
 	
 	if  ( moduleConfig[ divId ] != null ) {
 		
