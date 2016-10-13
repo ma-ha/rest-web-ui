@@ -1,6 +1,9 @@
 .pongTable {
 	font-size:10pt;
 }
+.pong-easytable {
+	width: 100%;
+}
 
 div.editable { 
 	width: 100%;
