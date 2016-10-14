@@ -264,3 +264,10 @@ moduleMap[ "pong-rss" ] = {
         { hook: "update", method:"pongRss_UpdateData" }
     ]
 };
+
+moduleMap[ "pong-icons" ] = {
+    "name": "pong-icons",
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongIcons_DivHTML" }
+    ]
+};

@@ -26,6 +26,7 @@
 			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
 			       { "pageLink":"tests/histogram2", "label":"Histogram Passive" },
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },
+			       { "pageLink":"tests/icons", "label":"Icon Navigation View" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

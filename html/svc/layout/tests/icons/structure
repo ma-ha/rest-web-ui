@@ -1,0 +1,36 @@
+{
+  "layout":{
+    "title":"Portal: Test 'Icon' Feature",
+    "includeHeader":"main",
+    "rows":[
+        {
+          "rowId":"Main",
+          "height":"600px",
+          "cols":[
+            {
+              "columnId":"Icons",
+              "title":"",
+              "width":"7%",
+              "resourceURL":"svc/test",
+              "type":"pong-icons",
+              "moduleConfig":{
+                "icons":[
+                   { "layout":"main", "label":"Main", "img":"img/p01w.png" },
+                   { "layout":"demos/crm-map", "label":"CRM", "img":"img/p02w.png" },
+                   { "layout":"demos/wiki", "label":"Wiki", "img":"img/p03w.png" }
+                ]
+              }
+            },
+            {
+              "columnId":"out",
+              "title":"Someting Else",
+              "width":"93%",
+              "decor":"decor",
+              "resourceURL":"svc/cloud/setuplog"
+            }
+          ]
+        }
+    ],
+    "includeFooter":"main"
+  }
+}
