@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '0.8.6';
+var PONGVER = '0.8.8';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -282,19 +282,16 @@ function loadStructure() {
 		      processLayoutResponseJSON
 		  ).fail(
 		      function( jqxhr, textStatus, error ) {
+		        //TODO: If "main" not found, then generate a static main page!
       			console.log( 'Request for "'+pPage+'" failed: ' + textStatus + ", " + error );
             window.location.href = 'index.html'; 
 		      }
 		  ).always(
-		      function() {
-  	        ajaxOngoing--;
-  	      }
+		      function() { ajaxOngoing--;  }
 		  );
 		}
 	).always(
-		function() {
-			ajaxOngoing--;
-		}
+		function() { ajaxOngoing--; }
 	);
 }
 
