@@ -12,6 +12,7 @@ and methods are triggered in the lifecycle of the portal page.
 * [Form View](pong-form/)
 * [Help Dialog](pong-help/)
 * [Histogram View](pong-histogram/)
+* [Icon Navigation View](pong-icons/)
 * [I/O View](pong-io/)
 * [List View](pong-list/)
 * [Master Details View](pong-master-details/)
@@ -19,6 +20,7 @@ and methods are triggered in the lifecycle of the portal page.
 * [MediaWiki View](pong-mediawiki/)
 * [Modal Form Dialog](modal-form/)
 * [Table View](pong-table/)
+* [RSS View](pong-rss/)
 * [Source Code View](pong-sourcecode/)
 
 A special one is no real module: 
