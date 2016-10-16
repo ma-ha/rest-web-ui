@@ -57,7 +57,7 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
     role = "&role=" + getParam( 'role' ); 
   } 
 	var contentItems = [];
-	contentItems.push( '<div id="'+divId+'pongIcons_Div" class="pongIconsDiv" style="height:100%;">' );
+	contentItems.push( '<div id="'+divId+'pongIcons_Div" class="pongIconsDiv">' );
 	if ( pmd.icons ) { 
 	  for ( var i = 0; i < pmd.icons.length; i++ ) {
 	        contentItems.push( '<div class="pongIcon pongIcon'+divId+'" data-i="'+pmd.icons[i].layout+'">' );

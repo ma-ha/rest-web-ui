@@ -1,3 +1,7 @@
+.pongIconsDiv {
+	height:100%;
+}
+
 .pongIcon {
 	cursor: pointer;
 }
