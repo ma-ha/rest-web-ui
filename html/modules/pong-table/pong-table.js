@@ -1353,22 +1353,23 @@ function pongTblRenderGraph( divId, ctx, def, dta ) {
 /** helper */
 function pongTblCnvTxt( divId, def, ctx, txt, x, y, opt ) {
   log( "Pong-Table", "pongTblCnvTxt: "+divId+ " "+x+"/"+y);
-  var pmd = moduleConfig[ divId ];
+  if ( ! def ) return; // safety first
+  var pmd = poTbl[ divId ].pongTableDef;
   if ( def.textAlign ) {  ctx.textAlign = def.textAlign; } 
   if ( def.textBaseline ) { ctx.textAlign = def.textBaseline; } 
 
   if ( def.font ) { ctx.font = def.font; } 
-    else if ( pmd.font ) { ctx.font   = pmd.font; } 
+    else if ( pmd && pmd.font ) { ctx.font   = pmd.font; } 
       else if ( opt && opt.font ) { ctx.font   = opt.font; } 
         else { ctx.font   = "14px Courier"; }
 
   if ( def.textFillColor ) {  ctx.fillStyle = def.textFillColor; } 
-    else if ( pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
+    else if ( pmd && pmd.textFillColor ) { ctx.fillStyle   = pmd.textFillColor; } 
       else if ( opt && opt.fillStyle ) { ctx.fillStyle   = opt.fillStyle; } 
         else { ctx.fillStyle   = "#00F"; }
   
   if ( def.textStrokeColor ) {  ctx.strokeStyle = def.textStrokeColor; } 
-    else if ( pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
+    else if ( pmd && pmd.textStrokeColor ) { ctx.strokeStyle   = pmd.textStrokeColor; } 
       else if ( opt && opt.strokeStyle ) { ctx.strokeStyle   = opt.strokeStyle; } 
         else { ctx.strokeStyle   = "#FFF"; }
   
