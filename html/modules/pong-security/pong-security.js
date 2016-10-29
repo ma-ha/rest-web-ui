@@ -95,15 +95,23 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
 				divHtml.push( '<script>' );
 				divHtml.push( '$( function() { $( "#pongLoginDialog" ).dialog( { ' );
-				divHtml.push( '  autoOpen: false, height: 300, width: 300, modal: true, ' );
-				divHtml.push( '  buttons: { "Login": function() { ' );
+				divHtml.push( '  title: $.i18n("Login")+":", autoOpen: false, height: 300, width: 300, modal: true, ' );
+        divHtml.push( '  open: function() { ' );
+        divHtml.push( '     $("#pongLoginDialog").keypress( function(e) { ' );
+        divHtml.push( '        if (e.keyCode == $.ui.keyCode.ENTER) { ' );
+        divHtml.push( '            $(this).parent().find("button:eq(1)").trigger("click"); ' );
+        divHtml.push( '     }});' );
+        divHtml.push( '  }, ' );
+				divHtml.push( '  buttons: { "'+$.i18n('Login')+'": function() { ' );
 				divHtml.push( '      pongSecLogin( "'+params.loginURL+'", "'+params.loginPage+'", "'+lang+'" ) ');
 				divHtml.push( '      return false;' );
 				divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
 				divHtml.push( '});' );			
 				divHtml.push( '$( ".PongLogin" ).click( ' );
 				divHtml.push( '  function( ) { ' ); 
-				divHtml.push( '         $( "#pongLoginDialog" ).dialog( "open" ); return false; ' );
+				divHtml.push( '         $( "#pongLoginDialog" ).dialog( "open" ); ' ); 
+        //divHtml.push( '         $(".ui-dialog-buttonpane > button:last").focus();' ); 
+        divHtml.push( '         return false; ' );
 				divHtml.push( '  } );' );
 				divHtml.push( '</script>' );
 			}

@@ -456,7 +456,7 @@ function loadModules() {
 					ajaxOngoing--;
 				}
 			);
-		    // TODO: this is legacy, JS should be in module dir
+		    // this is to load external CSS or JS, otherwise CSS or JS should be in module dir
 		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
 		    	log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
 		    	//log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length	 );
