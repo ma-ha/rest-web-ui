@@ -59,17 +59,17 @@ function pongTree_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	log( "pongTree", "start '"+resourceURL+"'");
 	if ( ! pmd.maxDeepth ) pmd.maxDeepth = 3;
 	    
-    poTree[divId] = { "config":pmd };
+  poTree[divId] = { "config":pmd };
 	var contentItems = [];
 	contentItems.push( '<div id="'+divId+'pongTreeDiv" class="pongTree"></div>' );
-    contentItems.push( '<script>' );
+  contentItems.push( '<script>' );
 	contentItems.push( '  $( "#'+divId+'pongTreeDiv" ).on( "click", ".treeLink", function() { ' );
-    contentItems.push( '       pongTree_clickUpdates( $(this).data("treeid"), $(this).data("id") ); return false;   ' );
-    contentItems.push( '  } );' );
-    contentItems.push( '</script>' );
-    $( "#"+divId ).html( contentItems.join( "\n" ) );
+  contentItems.push( '       pongTree_clickUpdates( $(this).data("treeid"), $(this).data("id") ); return false;   ' );
+  contentItems.push( '  } );' );
+  contentItems.push( '</script>' );
+  $( "#"+divId ).html( contentItems.join( "\n" ) );
 	
-    pongTree_UpdateData( divId, paramObj );
+  pongTree_UpdateData( divId, paramObj );
     
 	log( "pongTree", "end.");
 }
@@ -99,9 +99,9 @@ function pongTree_getTree( divId, pmd, objArr, deepth ) {
         contentItems.push( '<div class="treeItem treeDepth'+deepth+'">' +
             '<a href="'+t[ pmd.idField ]+'" class="treeLink"'+
             ' data-id="'+t[ pmd.idField ]+'" data-treeid="'+divId+'">' + 
-            t[ pmd.labelField ] + '</a></div>' );
+            $.i18n( t[ pmd.labelField ] ) + '</a></div>' );
       } else {
-        contentItems.push( '<div class="treeItem treeDepth'+deepth+'">'+t[ pmd.labelField ]+'</div>' );        
+        contentItems.push( '<div class="treeItem treeDepth'+deepth+'">'+$.i18n( t[ pmd.labelField ] )+'</div>' );        
       } 
       if ( t[ pmd.treeArray ]  && deepth < pmd.maxDeepth ) {
         contentItems.push( pongTree_getTree( divId, pmd, t[ pmd.treeArray ], deepth+1 )  );
