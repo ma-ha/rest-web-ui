@@ -63,7 +63,8 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	        contentItems.push( '<div class="pongIcon pongIcon'+divId+'" data-i="'+pmd.icons[i].layout+'">' );
           contentItems.push( '<img class="pongIconImg" src="'+pmd.icons[i].img+'">' );
           if ( pmd.icons[i].label ) { 
-            contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="pongIconLabel">'+pmd.icons[i].label+'</div>' );
+            contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="pongIconLabel">'
+                + $.i18n( pmd.icons[i].label ) + '</div>' );
           }
 	        contentItems.push( '</div>' );    
 	  }	  
@@ -71,7 +72,7 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
 	contentItems.push( '</div>' );
   contentItems.push( '<script>' );
   contentItems.push( '  $( ".pongIcon'+divId+'" ).on( "click", function() { ');
-  contentItems.push( '    window.location.href = "index.html?layout="+ $( this ).data( "i" )'+lang+role+';' ); //TODO
+  contentItems.push( '    window.location.href = "index.html?layout="+ $( this ).data( "i" ) +"'+lang+role+'";' ); //TODO
   contentItems.push( '  } );' );
   contentItems.push( '</script>' ); 
   // output
