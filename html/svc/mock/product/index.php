@@ -39,7 +39,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 		$id = $_GET['productName'];
 		$r = array();
 		foreach ( $p as $rec ) {
-			if ( strpos( $rec['item'], $id ) !== false ) {
+			if ( strpos( strtoupper( $rec['item'] ), strtoupper( $id )  ) !== false ) {
 				$r[] = $rec;
 			}
 		}
