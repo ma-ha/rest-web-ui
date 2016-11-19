@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '0.8.9';
+var PONGVER = '0.9.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -70,7 +70,8 @@ var directPage = 'main';
 
 
 loggerEvents = true;
-
+logInfo = false
+logInfoStr = ''
 
 /** Because ajax loads are asynchronous, 
     we have to wait for all calls to be sinished to load HTML into DIV
@@ -1230,6 +1231,9 @@ function getUrlGETparams() {
     for( var i = 0; i < hashes.length; i++ ) {
         hash = hashes[i].split('=');
         vars[ hash[0] ] = hash[1];
+        // switch on console logging
+        if ( hash[0] == 'info') { logInfo = true  }
+        if ( hash[0] == 'info' && hash[1] && hash[1] != '') { logInfoStr = hash[1] }
     }
     //alert( JSON.stringify( vars )  );
     return vars;
@@ -1324,6 +1328,14 @@ function log( func, msg ){
   var logline = '['+func+'] '+msg;
 
   // TODO: Log config
+  if ( logInfo ) {
+    if ( logInfoStr == '' ) {
+      console.log( logline );      
+    } else if ( func ==  logInfoStr ) {
+      console.log( logline );
+    }
+  }
+
   //  console.log( logline );
   // define the "func" you want to log to the console
   //if ( func=='PoNG-List' || func=='xPong-Table' ) { console.log( logline ) }

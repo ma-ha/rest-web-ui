@@ -1,5 +1,15 @@
 # Release Notes
-## Version0.8.x
+## Version 0.9.x
+* Code clean up
+* [Login dialog](modules/pong-security/) with "enter" submit
+* Fixes:
+	* Icons view: i18n (lang pram) fix
+	* Tree view i18n fix
+* configure console log by 
+    * `&info` = all log
+    * `&info=XYZ` = only XYZ logs
+
+## Version 0.8.x
 * added `afterPageLoad(...)` hook
 * [Search header module](modules/pong-search) 
 * [RSS Module](modules/pong-rss)
@@ -10,7 +20,6 @@
 	* graphs
 * List w/o maxRows generate scrollbar
 * [Icon Navigation View](modules/pong-icons/)
-
 
 ## Version 0.7.x 
 * [Navigation tabs](modules/pong-navbar) with pull down sub menus
