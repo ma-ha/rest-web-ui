@@ -231,7 +231,7 @@ function loadLang() {
 
 /** build up the HTML structure of nested DIVs*/
 function loadStructure() {
-	var pPage = getParam( 'layout' );
+  var pPage = getParam( 'layout' );
   
   if ( pPage == '' ) {
     pPage = "main";
@@ -245,25 +245,25 @@ function loadStructure() {
     structureURLfallback =  "svc/layout/"+directPage+"/structure";
   }
   
-	// mobile detect -- to disable: just remove the script include from the index.html
-	if ( typeof MobileDetect == 'function') { 
-	  var md = new MobileDetect(  navigator.userAgent );
-	  //console.log( navigator.userAgent );
-	  if ( md.tablet() ) {
-      pageInfo["layoutMode"] = 'tablet';
-	    pPage = pPage +'-t';
-	  } else if ( md.mobile() ) {
-	    pageInfo["layoutMode"] = 'mobile';
-      pPage = pPage +'-m';
-	  }
-	}
-
-	var pEdit = '';
-	if ( getParam( 'edit' ) == 'true' ) {
-		pEdit = "&edit=true";
-	}
-	
-	var structureURL = "svc/layout/"+pPage+"/structure";
+  // mobile detect -- to disable: just remove the script include from the index.html
+  if ( typeof MobileDetect == 'function') { 
+  	  var md = new MobileDetect(  navigator.userAgent );
+  	  //console.log( navigator.userAgent );
+  	  if ( md.tablet() ) {
+        pageInfo["layoutMode"] = 'tablet';
+  	    pPage = pPage +'-t';
+  	  } else if ( md.mobile() ) {
+  	    pageInfo["layoutMode"] = 'mobile';
+        pPage = pPage +'-m';
+  	  }
+  }
+  
+  var pEdit = '';
+  if ( getParam( 'edit' ) == 'true' ) {
+  	pEdit = "&edit=true";
+  }
+  	
+  var structureURL = "svc/layout/"+pPage+"/structure";
   if( mode == "php" ) {
   	structureURL = "svc/layout.php?page="+pPage+pEdit;
   } else if ( mode == 'direct' ) {
@@ -285,7 +285,7 @@ function loadStructure() {
 		      function( jqxhr, textStatus, error ) {
 		        //TODO: If "main" not found, then generate a static main page!
       			console.log( 'Request for "'+pPage+'" failed: ' + textStatus + ", " + error );
-            window.location.href = 'index.html'; 
+      			window.location.href = 'index.html'; 
 		      }
 		  ).always(
 		      function() { ajaxOngoing--;  }
