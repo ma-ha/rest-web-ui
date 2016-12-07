@@ -39,6 +39,7 @@ function addNavBarHeaderHtml( divId, type , params ) {
 					addNavBarHeaderRenderHtml( divId, type , params, nb );
 				}
 			);
+			// TDOD start update polling
 		} 		
 	}
 }
@@ -75,37 +76,39 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 				actClass = 'pongNavBarItemActive';
 			}
 			html.push( '<div class="pongNavBarItem '+actClass+'">' );
+			html.push( '<div class="pongNavBarItemInfo">'+ (nb.navigations[i].info?nb.navigations[i].info:'') +'</div>' ); 
+
 			if ( nb.navigations[i].page_name != null && mode == 'php' ){
 				html.push( '<a href="show.php?layout='+nb.navigations[i].page_name+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );	
 			} else if ( nb.navigations[i].layout != null) {
 				html.push( '<a href="index.html?layout='+nb.navigations[i].layout+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );					
 			} 
 			else {
-        html.push( '<div class="pongNavBarPullDown" id="navItem'+i+'">'+ $.i18n( nb.navigations[i].label )+'</div>' );         			  
+				html.push( '<div class="pongNavBarPullDown" id="navItem'+i+'">'+ $.i18n( nb.navigations[i].label )+'</div>' );         			  
 			}
 			
 			// submenu
 			if ( nb.navigations[i].menuItems && nb.navigations[i].menuItems.length > 0) {
-	      log( "PoNG-NavBar", " submenu "+i );
-			  var subMenu = nb.navigations[i].menuItems;
-	      html.push( '<div id="navSubMenu'+i+'" class="pongNavBarPullDownMenu">' );
-	      for ( var j = 0; j < subMenu.length; j++ ) {
-	        if ( subMenu[j].page_name != null && mode == 'php' ){
-	          html.push( '<a href="show.php?layout='+subMenu[j].page_name+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );  
-	        } else if (subMenu[j].layout != null) {
-	          html.push( '<a href="index.html?layout='+subMenu[j].layout+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );         
-	        } 
-	        else {
-	          html.push( '<span class="pongNavBarPullItem" id="navItem'+i+'">'+ $.i18n( subMenu[j].label )+'</span>' );                
-	        }
-	      }
-	      html.push( '</div>' );        
-        html.push( '<script>' );        
-        html.push( '$( "#navItem'+i+'" ).click( function(){ $( "#navSubMenu'+i+'" ).toggle() } );' );        
-        html.push( '</script>' );        
-			  
+				log( "PoNG-NavBar", " submenu "+i );
+				var subMenu = nb.navigations[i].menuItems;
+				html.push( '<div id="navSubMenu'+i+'" class="pongNavBarPullDownMenu">' );
+				for ( var j = 0; j < subMenu.length; j++ ) {
+					if ( subMenu[j].page_name != null && mode == 'php' ){
+						html.push( '<a href="show.php?layout='+subMenu[j].page_name+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );  
+					} else if (subMenu[j].layout != null) {
+						html.push( '<a href="index.html?layout='+subMenu[j].layout+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );         
+					} 
+					else {
+						html.push( '<span class="pongNavBarPullItem" id="navItem'+i+'">'+ $.i18n( subMenu[j].label )+'</span>' );                
+					}
+				}
+				html.push( '</div>' );        
+				html.push( '<script>' );        
+				html.push( '$( "#navItem'+i+'" ).click( function(){ $( "#navSubMenu'+i+'" ).toggle() } );' );        
+				html.push( '</script>' );        
+
 			}
-      html.push( '</div>' );  			
+			html.push( '</div>' );  			
 		}
 	}
 

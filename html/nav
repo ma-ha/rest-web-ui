@@ -2,7 +2,7 @@
    "navigations" : [
       { "layout":"main", "label":"Main"  },
       { "layout":"demos/crm-map", "label":"CRM"  },
-      { "layout":"demos/wiki", "label":"Wiki"  },
+      { "layout":"demos/wiki", "label":"Wiki", "info":"NEW!"  },
       { "label":"I/O Demos",
         "menuItems" : [
            { "layout":"demos/io2", "label":"Adruino"  },
