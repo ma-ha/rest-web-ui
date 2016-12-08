@@ -84,7 +84,7 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 				actClass = 'pongNavBarItemActive';
 			}
 			html.push( '<div id="navTab'+id+'" class="pongNavBarItem '+actClass+'">' );
-			html.push( '<div id="navTab'+id+'Info" class="pongNavBarItemInfo">'+ (nb.navigations[i].info?nb.navigations[i].info:'') +'</div>' ); 
+			html.push( '<div id="navTab'+id+'Info" class="pongNavBarItemInfo">'+ (nb.navigations[i].info ? $.i18n( nb.navigations[i].info ):'') +'</div>' ); 
 
 			if ( nb.navigations[i].page_name != null && mode == 'php' ){
 				html.push( '<a href="show.php?layout='+nb.navigations[i].page_name+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );	
