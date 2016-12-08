@@ -36,10 +36,12 @@ function addNavBarHeaderHtml( divId, type , params ) {
 			$.getJSON( 
 				params.confURL, 
 				function ( nb ) {
-					addNavBarHeaderRenderHtml( divId, type , params, nb );
+				  moduleConfig[ divId ] = nb
+				  addNavBarHeaderRenderHtml( divId, type , params, nb );
+                  log( "PoNG-NavBar", ">>>>> start pongNavBarUpdateTimer"+divId+"() once per minute" );
+		          setInterval( "pongNavBarUpdateTimer"+divId+"()", 60000 );
 				}
 			);
-			// TDOD start update polling
 		} 		
 	}
 }
@@ -57,6 +59,12 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 	}	
 	for ( var i=0; i < nb.navigations.length; i++ ) {
 		var showNav = true;
+		var id = null
+		if ( nb.navigations[i].id ) {
+		  id = nb.navigations[i].id
+		} else if ( nb.navigations[i].layout ) {
+		  id = nb.navigations[i].layout.replace(/\//g, '');
+		} else { id = i }
 		if ( nb.navigations[i].userRoles != null ) {
 			showNav = false;
 			for ( var r = 0; r < nb.navigations[i].userRoles.length; r++ ) {
@@ -75,8 +83,8 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 			} else 	if ( act == nb.navigations[i].layout ) {
 				actClass = 'pongNavBarItemActive';
 			}
-			html.push( '<div class="pongNavBarItem '+actClass+'">' );
-			html.push( '<div class="pongNavBarItemInfo">'+ (nb.navigations[i].info?nb.navigations[i].info:'') +'</div>' ); 
+			html.push( '<div id="navTab'+id+'" class="pongNavBarItem '+actClass+'">' );
+			html.push( '<div id="navTab'+id+'Info" class="pongNavBarItemInfo">'+ (nb.navigations[i].info?nb.navigations[i].info:'') +'</div>' ); 
 
 			if ( nb.navigations[i].page_name != null && mode == 'php' ){
 				html.push( '<a href="show.php?layout='+nb.navigations[i].page_name+lang+role+'">'+ $.i18n( nb.navigations[i].label )+'</a>' );	
@@ -111,6 +119,33 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 			html.push( '</div>' );  			
 		}
 	}
+	html.push( '<script>' );
+	html.push( '  function pongNavBarUpdateTimer'+divId+'() { ' );
+	html.push( '      pongNavBarUpdateData( "'+divId+'", { confURL:"'+params.confURL+'" } ); ' );
+	html.push( '  }' );
+	html.push( '</script>' );
 
 	$( "#"+divId ).html( html.join( "\n" ) );
+}
+
+function pongNavBarUpdateData( divId, params ) {
+  log( "PoNG-NavBar", "Update info "+JSON.stringify(params) )
+  if ( ! moduleConfig[ divId ] ) return
+  $.getJSON( 
+      params.confURL, 
+      function ( nb ) {
+        moduleConfig[ divId ] = nb
+        var nb = moduleConfig[ divId ]
+        for ( var i=0; i < nb.navigations.length; i++ ) {
+          var showNav = true;
+          var id = null
+          if ( nb.navigations[i].id ) {
+            id = nb.navigations[i].id
+          } else if ( nb.navigations[i].layout ) {
+            id = nb.navigations[i].layout.replace(/\//g, '');
+          } else { id = i }  
+          $( '#navTab'+id+'Info' ).html( ( nb.navigations[i].info ? nb.navigations[i].info : '' ) )
+        }
+      }
+  )   
 }

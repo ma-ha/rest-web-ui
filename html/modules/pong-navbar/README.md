@@ -72,6 +72,8 @@ Example:
 	   ...
 	}
 
+Hint: If you don't embed the configuration, the service will be polled every minute to update the "info". 
+
 ### Example result 
 Generated HTML is:
 
