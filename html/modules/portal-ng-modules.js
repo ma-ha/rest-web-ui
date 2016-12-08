@@ -63,7 +63,8 @@ moduleMap[ "i18n" ] = {
 moduleMap[ "pong-navbar" ] = {
     "name":  "pong-navbar",
       "hooks": [
-          { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" } 
+          { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" }, 
+          { hook: "update", method:"pongNavBarUpdate" }
       ]
   };
 

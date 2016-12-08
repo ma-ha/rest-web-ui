@@ -121,14 +121,14 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 	}
 	html.push( '<script>' );
 	html.push( '  function pongNavBarUpdateTimer'+divId+'() { ' );
-	html.push( '      pongNavBarUpdateData( "'+divId+'", { confURL:"'+params.confURL+'" } ); ' );
+	html.push( '      pongNavBarUpdate( "'+divId+'", { confURL:"'+params.confURL+'" } ); ' );
 	html.push( '  }' );
 	html.push( '</script>' );
 
 	$( "#"+divId ).html( html.join( "\n" ) );
 }
 
-function pongNavBarUpdateData( divId, params ) {
+function pongNavBarUpdate( divId, params ) {
   log( "PoNG-NavBar", "Update info "+JSON.stringify(params) )
   if ( ! moduleConfig[ divId ] ) return
   $.getJSON( 
