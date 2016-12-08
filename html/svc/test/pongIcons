@@ -1,0 +1,8 @@
+{
+    "icons":[
+       { "layout":"main", "label":"Main", "img":"img/p01w.png" },
+       { "layout":"demos/crm-map", "label":"CRM", "img":"img/p02w.png", "info":"New!" },
+       { "layout":"demos/wiki", "label":"Wiki", "img":"img/p03w.png" }
+    ],
+    "update":"30"
+}

@@ -37,6 +37,12 @@ function pongIcons_DivHTML( divId, resourceURL, paramObj ) {
 			function( pmd ) {
 			  moduleConfig[ divId ] = pmd;
 			  pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd );
+              var update = 60000 // default once per min
+              if ( pmd.update && parseInt( pmd.update ) != NaN ) {
+                update = parseInt( pmd.update ) * 1000
+              }
+              log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
+              setInterval( "pongIconsUpdateTimer"+divId+"()", update );
 			}
 		);					
 	}	
@@ -61,15 +67,15 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
   if ( pmd.icons ) { 
     for ( var i = 0; i < pmd.icons.length; i++ ) {
       var id = null
-      if ( nb.navigations[i].id ) {
-        id = nb.navigations[i].id
-      } else if ( nb.navigations[i].layout ) {
-        id = nb.navigations[i].layout.replace(/\//g, '');
+      if ( pmd.icons[i].id ) {
+        id = pmd.icons[i].id
+      } else if ( pmd.icons[i].layout ) {
+        id = pmd.icons[i].layout.replace(/\//g, '');
       } else { id = i }
 
       contentItems.push( '<div id="icon'+divId+id+'" class="pongIcon pongIcon'+divId+'" data-i="'+pmd.icons[i].layout+'">' );
       contentItems.push( '<img id="icon'+divId+id+'Img" class="pongIconImg" src="'+pmd.icons[i].img+'">' );
-      contentItems.push( '<div id="icon'+divId+id+'Info" class="pongNavBarItemInfo">'+ (pmd.icons[i].info ? $.i18n( pmd.icons[i].info ) : '' ) +'</div>' ); 
+      contentItems.push( '<div id="icon'+divId+id+'Info" class="pongIconInfo">'+ (pmd.icons[i].info ? $.i18n( pmd.icons[i].info )  : '' ) +'</div>' ); 
 
       if ( pmd.icons[i].label ) { 
         contentItems.push( '<div id="'+divId+'xLabel'+i+'" class="pongIconLabel">'
@@ -83,9 +89,24 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
   contentItems.push( '  $( ".pongIcon'+divId+'" ).on( "click", function() { ');
   contentItems.push( '    window.location.href = "index.html?layout="+ $( this ).data( "i" ) +"'+lang+role+'";' ); //TODO
   contentItems.push( '  } );' );
+  contentItems.push( '  function pongIconsUpdateTimer'+divId+'() {' );
+  contentItems.push( '      pongIconsUpdate( "'+divId+'", { resourceURL:"'+resourceURL+'" } ); ' );
+  contentItems.push( '  }' );
   contentItems.push( '</script>' ); 
   // output
   $( "#"+divId ).html( contentItems.join( "\n" ) );	
   log( "pongIcons", "RenderHTML end.");
 }
 
+function pongIconsUpdate( divId, params ) {
+  log( "pongIcons", "Update?");
+  if ( ! params || ! params.resourceURL ) return
+  log( "pongIcons", "Update ...");
+  $.getJSON( 
+      params.resourceURL, 
+      function( pmd ) {
+        moduleConfig[ divId ] = pmd;
+        pongIcons_RenderHTML( divId, params.resourceURL, null, pmd );
+      }
+  )
+}

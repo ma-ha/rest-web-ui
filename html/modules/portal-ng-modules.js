@@ -269,6 +269,7 @@ moduleMap[ "pong-rss" ] = {
 moduleMap[ "pong-icons" ] = {
     "name": "pong-icons",
     "hooks": [
-        { hook: "loadResourcesHtml", method:"pongIcons_DivHTML" }
+        { hook: "loadResourcesHtml", method:"pongIcons_DivHTML" },
+        { hook: "update", method:"pongIconsUpdate" }
     ]
 };
