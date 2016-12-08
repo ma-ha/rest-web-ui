@@ -31,6 +31,11 @@ function pongIcons_DivHTML( divId, resourceURL, paramObj ) {
 	log( "pongIcons",  "Start divId="+divId+" resourceURL="+resourceURL );
 	if ( moduleConfig[ divId ] != null ) {
 		pongIcons_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  );
+        if ( moduleConfig[ divId ].update && parseInt( moduleConfig[ divId ].update ) != NaN ) {
+          update = parseInt( moduleConfig[ divId ].update ) * 1000
+        }
+        log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
+        setInterval( "pongIconsUpdateTimer"+divId+"()", update );
 	} else {
 		$.getJSON( 
 			resourceURL, 
