@@ -8,6 +8,8 @@
 * configure console log by 
     * `&info` = all log
     * `&info=XYZ` = only XYZ logs
+* Nav-Bar with info and updates
+* Icons with Info and refresh
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
