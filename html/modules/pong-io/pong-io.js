@@ -88,7 +88,7 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 		log( "pong-io", ">>>>> create poolDataTimerId t="+t );
 		if  ( ! isNaN( t ) ) {			
 			poolDataTimerId = setInterval( "pongIoUpdateTimer"+divId+"()", t );
-			log( "pong-io", ">>>>> startet poolDataTimerId"+divId+"()" );
+			log( "pong-io", ">>>>> startet pongIoUpdateTimer"+divId+"()" );
 		}
 	}
 	
