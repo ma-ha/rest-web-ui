@@ -100,8 +100,15 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 				log( "PoNG-NavBar", " submenu "+i );
 				var subMenu = nb.navigations[i].menuItems;
 				html.push( '<div id="navSubMenu'+i+'" class="pongNavBarPullDownMenu">' );
-		        html.push( '<div id="navTab'+id+'Info" class="pongNavBarItemInfo">'+ (nb.navigations[i].info ? $.i18n( nb.navigations[i].info ):'') +'</div>' ); 
 		        for ( var j = 0; j < subMenu.length; j++ ) {
+  		          var idS = null
+  		          if ( subMenu[j].id ) {
+  		            idS = subMenu[j].id
+  		          } else if ( subMenu[j].layout ) {
+  		            idS = subMenu[j].layout.replace(/\//g, '');
+  		          } else { idS = i+'-'+j }
+		            html.push( '<div class="pongNavBarPullDownItem">' )
+		            html.push( '<div id="navTab'+idS+'Info" class="pongNavBarItemInfo">'+ (subMenu[j].info ? $.i18n( subMenu[j].info ):'') +'</div>' ); 
 					if ( subMenu[j].page_name != null && mode == 'php' ){
 						html.push( '<a href="show.php?layout='+subMenu[j].page_name+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );  
 					} else if (subMenu[j].layout != null) {
@@ -110,6 +117,7 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 					else {
 						html.push( '<span class="pongNavBarPullItem" id="navItem'+i+'">'+ $.i18n( subMenu[j].label )+'</span>' );                
 					}
+                    html.push( '</div>' )
 				}
 				html.push( '</div>' );        
 				html.push( '<script>' );        

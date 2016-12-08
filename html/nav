@@ -4,7 +4,7 @@
       { "layout":"demos/crm-map", "label":"CRM"  },
       { "layout":"demos/wiki", "label":"Wiki", "info":"NEW!"  },
       { "label":"I/O Demos", 
-        "info":"2",
+        "info":"*",
         "menuItems" : [
            { "layout":"demos/io2", "label":"Adruino"  },
            { "layout":"demos/vacuumlab", "label":"Vacuum&nbsp;Lab", "info":"2"  }
