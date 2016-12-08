@@ -100,7 +100,8 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 				log( "PoNG-NavBar", " submenu "+i );
 				var subMenu = nb.navigations[i].menuItems;
 				html.push( '<div id="navSubMenu'+i+'" class="pongNavBarPullDownMenu">' );
-				for ( var j = 0; j < subMenu.length; j++ ) {
+		        html.push( '<div id="navTab'+id+'Info" class="pongNavBarItemInfo">'+ (nb.navigations[i].info ? $.i18n( nb.navigations[i].info ):'') +'</div>' ); 
+		        for ( var j = 0; j < subMenu.length; j++ ) {
 					if ( subMenu[j].page_name != null && mode == 'php' ){
 						html.push( '<a href="show.php?layout='+subMenu[j].page_name+lang+role+'">'+ $.i18n( subMenu[j].label )+'</a><br>' );  
 					} else if (subMenu[j].layout != null) {

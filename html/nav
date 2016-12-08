@@ -3,10 +3,11 @@
       { "layout":"main", "label":"Main"  },
       { "layout":"demos/crm-map", "label":"CRM"  },
       { "layout":"demos/wiki", "label":"Wiki", "info":"NEW!"  },
-      { "label":"I/O Demos",
+      { "label":"I/O Demos", 
+        "info":"2",
         "menuItems" : [
            { "layout":"demos/io2", "label":"Adruino"  },
-           { "layout":"demos/vacuumlab", "label":"Vacuum&nbsp;Lab"  }
+           { "layout":"demos/vacuumlab", "label":"Vacuum&nbsp;Lab", "info":"2"  }
         ]  
       }
    ]
