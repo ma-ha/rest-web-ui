@@ -280,8 +280,8 @@ function pongIOrender( divId, ctx, io, ioDta ) {
 		} else if ( io.type == 'Img') {
 			pongIOrenderImg( ctx, io, ioDta );
 		} else if ( io.type == 'Label') {
-			pongIOrenderLabel(divId, ctx, def, ioDta );
-		}  
+            pongIOrenderLabel(divId, ctx, io, ioDta, io.pos.x, io.pos.y );
+        }  
 	}	
 }
 
@@ -707,7 +707,7 @@ function pongIOrenderLabel( divId, ctx, def, dta, x , y ) {
 	ctx.textAlign = "center";
 	ctx.textBaseline = "bottom";
 	if ( def.label ) {
-		textOut( divId, def, ctx, def.label, x, x, null )
+		textOut( divId, def, ctx, def.label, x, y, null )
 	} else if ( def.link ) {
 		// TODO
 	} else if ( def.data && def.format ) {
