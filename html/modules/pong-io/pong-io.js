@@ -77,7 +77,9 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
   			ctx.drawImage( background, 0, 0 ); 
   		  // draw panel
   		  pongIoUpdateData( divId, { makeJS: true } );
-  	};
+  	    };
+	} else {
+      pongIoUpdateData( divId, { makeJS: true } );	  
 	}
 	
 	
