@@ -65,19 +65,25 @@ An open plug-in interface and predefined hooks make it easy to add or modify fun
 
 ### Why?
 It started with some googling and evaluations, how to set up a light weight web application (without coding JS). 
-Of course i found a lot rapid application frameworks on the on hand -- but they need an application server. That's not light weight. 
-On the other hand there are frameworks like AngularJS, but they don't do the last step: Creating a web GUI without writing JS code.
+A lot of existing rapid application frameworks needed an application server. That's not light weight. 
+Other frameworks (e.g. Angular) help a lot, but don't offer that: Creating a web GUI by configuration -- without writing any code.
 
-I decided to think of a prototype, of how I would solve the challenge. 
-After some lines of JS code, it was doing first things more quickly than expected. 
-Pushed by this I couldn't stop ;-) Now I use it for a lot of tasks myself and if you like you can also do.
-It is in a state, where you can do a lot of tasks out of the box.
+I decided to do a prototype, how can I solve the challenge. 
+After some lines of JS code, it was doing first things -- more quickly than expected. 
+Pushed by this I couldn't stop ;-) Now I use this framework for a lot of tasks and if you like you can also do.
 
 The heart of the framework file is `html/js/portal-ng.js`, but you rarely need to touch it -- most things are done in plug ins now.
 
 The plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialogs, lists, tables, content, navigation etc.
 The usage of the included set of essential modules is explained in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 The most complex and flexible is the *form* module.  
+
+## Status of the project
+
+* You can do a lot of tasks out of the box!
+* If I get a new "real work task", sometimes I still have to add or change some code :-(
+* The framework is nearly ready to be switched from a version 0.x to a 1.x ;-)
+
 
 ## 30sec Quick Start
 1. Clone this project:<br>
