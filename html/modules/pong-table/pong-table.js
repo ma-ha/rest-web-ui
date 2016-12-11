@@ -740,7 +740,7 @@ var pongTable_sort_up = true; // little dirty, but works well
 function pongTableCmpFields( a, b ) {
 	var cellValA = getSubData( a, pongTable_sc );
 	var cellValB = getSubData( b, pongTable_sc );
-	log( "Pong-Table", pongTable_sc+" "+cellValA+" "+cellValB );
+	log( "Pong-Table", 'Sort: '+pongTable_sc+" "+cellValA+" "+cellValB );
 	if ( Number( cellValA ) && Number( cellValB ) ) {
 		if ( ! isNaN( parseFloat( cellValA ) ) && ! isNaN( parseFloat( cellValB ) ) ) {
 			cellValA = parseFloat( cellValA );
@@ -783,7 +783,7 @@ function tblCells( divId ) {
 	if ( poTbl[ divId ].pongTableDef.maxRows ) {
 	  rowSt = parseInt( poTbl[ divId ].pongTableStartRow );
 	  rowEn = parseInt( poTbl[ divId ].pongTableEndRow );	  
-	  log( "Pong-Table", "update paginator label" );  
+	  log( "Pong-Table", "update paginaor label" );  
 	  var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
 	  var maxP = Math.ceil( dtaArr.length / rPP );
 	  var curP = Math.round( rowEn / rPP );
@@ -861,6 +861,22 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
       }
     }
     
+  } else if ( cellType == 'date' ) {
+
+    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
+    var unixDt = parseInt( cellDta[ cellDef.id ] )
+    log( "Pong-TableX", 'Date: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
+    var datrStr = $.datepicker.formatDate( fmt, new Date( unixDt*1000 ) );
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+' pongDate">'+ datrStr +'</span>' );
+
+  } else if ( cellType == 'datems' ) {
+
+    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
+    var unixDt = parseInt( cellDta[ cellDef.id ] )
+    log( "Pong-TableX", 'DateMS: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
+    var datrStr = $.datepicker.formatDate( fmt, new Date( unixDt ) );
+    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+' pongDate">'+ datrStr +'</span>' );
+
   } else if ( cellType == 'label' ) {
 
     $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ $.i18n( cellDef.label ) +'</span>' );

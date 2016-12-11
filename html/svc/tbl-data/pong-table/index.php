@@ -16,6 +16,7 @@ if ( ! isset( $_SESSION["tbl-demo-config"] ) ) {					// define a start config fo
 				{ "id":"Status", "label":"Status", "cellType":"checkbox" },
 				{ "id":"Rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
 				{ "id":"Description", "label":"Description", "cellType":"text","editable":"true" },
+				{ "id":"Date", "label":"Created", "cellType":"date" },
 				{ "id":"ProductPage", "label":"Product Page", "cellType":"linkLink" }
 			],
 			"maxRows":"4"

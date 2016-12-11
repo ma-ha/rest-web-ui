@@ -99,6 +99,7 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * label
 * icon ([ref icons names](http://api.jqueryui.com/theming/icons/))
 * pie
+* date
 
 The img type and link type will expect a URL as content.
 
@@ -342,6 +343,21 @@ The actions are same like form actions (defined separately), example:
 			]
 		}
 	}
+
+## "date" Column Type
+
+The "date" type displays a Unix Date (milliseconds since 1970) in a human readable format.
+
+Example:
+
+	"cols" : [
+	           { "id": "dt1", "label": "Created", "cellType": "date", "format":"YYYY/MM/DD" }, 
+	           ... 
+
+There are some advantages of the date column rather then formatting the data at the backend:
+* sorting still works
+* sorting uses a higher precision than displayed text does
+* i18n works (in the example you need to add a "translation" string for `"YYYY/MM/DD"`, e.g. `DD.MMM.YYY`)
 
 ## SetData for other views or plug-ins
 

@@ -82,6 +82,7 @@
 						"Status_checkbox",
 						"Rating",
 						"Description_editable",
+						"Created_date",
 						"Product~Page_link"
 					],
 					"maxRows":"3"
