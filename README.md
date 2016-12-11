@@ -20,7 +20,8 @@ Basic functionality of a Web Portal is provided out of the box:
 
 All you need is a modern web browser -- and a web service somewhere. 
 
-No web application server (JEE, Tomcat, NodeJS, PHP, ...) is required to run the GUI!
+No web application server (JEE, Tomcat, NodeJS, PHP, ...) is required to run the GUI! 
+So you can serve complex web apps even from a Raspberry Pi really fast.
 
 But to make life easier there are packaged REST backends available: 
 * <a href="https://www.npmjs.com/package/easy-web-app" target="_blank">NodeJS package</a>: `npm install easy-web-app`
@@ -47,9 +48,11 @@ For more realistic demos some of the examples use simple REST services implement
 
 ## How does it work
 1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
-2. An empty HTML file just defines the JSON page you want to view and calls the framework to start.
-3. The framework injects and initialize all the required page logic: HTML, JS and CSS into the empty page to set up all the views, header and footer. All that within milliseconds!
-4. The views load additional configuration and data via web service as required
+2. An empty `index.html` contains only JS calls this framework initialized with a dedicated JSON page description.
+3. The framework injects and initialize all the required page layout and logic: HTML, JS and CSS into the empty page to set up all the views, header and footer. 
+4. Every individual view can load configuration and/or data via REST/JSON web services as required
+
+All that runs within milliseconds!
 
 The User can now interact with the page, work with the data, modify it in AJAX mode (no page reload), load further data or navigate to other pages. 
 
@@ -104,8 +107,6 @@ Should run in all modern browsers on PC, tablet and phones:
 * ...
 
 IE may have some problems, but who cares ;-)
-
-(Volunteer testers are welcome, i've only some very limited devices for tests.)
 
 ## Tested APIs
 * [Docker](http://docs.docker.com/reference/api/docker_remote_api_v1.17)
