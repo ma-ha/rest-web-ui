@@ -81,7 +81,7 @@ The most complex and flexible is the *form* module.
 ## Status of the project
 
 * You can do a lot of tasks out of the box!
-* If I get a new "real work task", sometimes I still have to add or change some code :-(
+* For some "real world task" I still have to add or change some code :-(
 * The framework is nearly ready to be switched from a version 0.x to a 1.x ;-)
 
 
