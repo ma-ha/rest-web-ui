@@ -104,9 +104,9 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				}
 			} else if ( cStrLC.indexOf( "_date" ) >= 0 ) {
               col.cellType = "date";          
-              col.label = cStr.substr( 0, cStr.length - 5 );
+              col.label = cStr.substr( 0, cStr.indexOf("_date") );
               if ( ! hasIdDef ) {
-                  col.id = cStr.substr( 0, cStr.length - 5 );                 
+                  col.id = cStr.substr( 0, cStr.indexOf("_date") );                 
               }
             } else if ( cStrLC.indexOf( "_zooms_" ) >= 0 ) {
 				col.cellType = "largeimg";

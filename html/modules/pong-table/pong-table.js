@@ -34,7 +34,8 @@ function pongTableInit( divId, type ) {
 		pongTableEndRow   : 0,
 		pongTableData     : null, 
 		pongTableFilter   : "",
-		type              : type
+		type              : type,
+		dataURL           : null
 	};
 
 	poTbl[ divId ].divId = divId;
@@ -79,7 +80,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	if ( tbl.dataURL != null ) {
 		dataUrl = dataUrl+"/"+tbl.dataURL;
 	}
-
+	poTbl[ divId ].dataURL = dataUrl
 	poTbl[ divId ].pongTableDef = tbl;
 	poTbl[ divId ].resourceURL = resourceURL;
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
@@ -325,6 +326,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
     if ( tbl.dataURL.charAt( 0 ) == '/' ||  dataUrl.charAt( dataUrl.length - 1 ) == '/') { slash = '' }
 	  dataUrl = dataUrl + slash + tbl.dataURL;
 	}
+	poTbl[ divId ].dataURL = dataUrl
 //  if ( dataUrl.charAt( dataUrl.length - 1 ) != '/' ) { 
 //    dataUrl = dataUrl + '/';
 //  }
@@ -332,7 +334,8 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   
   contentItems.push( "<script>" );
 	contentItems.push( "$(function() { ");
-	
+    //contentItems.push( '   $( ".editdatepicker" ).datepicker(); ' );
+	  
 	// code to add/set selected attribute by selector-checkbox event
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".rowSelector", ' );
 	contentItems.push( '         function( event ) { ' );
@@ -390,7 +393,8 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 	contentItems.push( '  );' );
 	contentItems.push( '  $( "#'+divId+'PongTable" ).on( "focus", ".editableTblCell", ' );
 	contentItems.push( '     function() { var tbl = $(this); tbl.data("before", tbl.html()); ' );
-	contentItems.push( '        tbl.parent().toggleClass( "edithighlight", true ); return tbl;' );
+    //contentItems.push( '        $(this).datepicker( "show" ); ' );
+    contentItems.push( '        tbl.parent().toggleClass( "edithighlight", true ); return tbl;' );
 	contentItems.push( '  }).on( "focusout", ".editableTblCell", function() { ' );
 	contentItems.push( '     var tbl = $(this); ' );
 	contentItems.push( '     tbl.parent().toggleClass( "edithighlight", false );' );
@@ -816,14 +820,18 @@ function tblCells( divId ) {
 	log( "Pong-Table", "row loop" );	
 	for ( var r = rowSt; r < rowEn; r++ ) {
 		log( "Pong-Table", "row loop" );	
+        var rowIdVal =  dtaArr[r][ poTbl[ divId ].pongTableDef.rowId ]
+        //console.log( '>>>>>>>> '+ poTbl[ divId ].pongTableDef.rowId + JSON.stringify(dtaArr[r]) )
 		if ( r < dtaArr.length ) {
 			log( "Pong-Table", "row "+r );	
 			var cellDta = dtaArr[r];
+			
+			
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
 				log( "Pong-Table", "col "+c );	
 				var cellDef = poTbl[ divId ].pongTableDef.cols[c];
 			  var cellId =  '#'+divId+'R'+i+'C'+c; 
-				tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId);
+				tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal);
 			}
 		} else { // clear the rest of the cells
 			for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
@@ -836,8 +844,10 @@ function tblCells( divId ) {
 }
 
 
-function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
+function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
   log( "Pong-Table", 'tblUpdateCell '+cellId+' cellDef:'+JSON.stringify( cellDef ) );
+  
+  var dataUrl = poTbl[ divId ].dataURL;
   var cellType = cellDef.cellType;
   var cellVal = null;
   if ( cellType != 'label' ) {
@@ -861,21 +871,35 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId ) {
       }
     }
     
-  } else if ( cellType == 'date' ) {
-
+  } else if ( cellType == 'date' || cellType == 'datems' ) {
+    
+    var cls = 'cell'+cellDef.id.replace(/\./g,'') + ' pongDate '
     var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
+    //console.log( JSON.stringify(cellDef) )
     var unixDt = parseInt( cellDta[ cellDef.id ] )
     log( "Pong-TableX", 'Date: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
-    var datrStr = $.datepicker.formatDate( fmt, new Date( unixDt*1000 ) );
-    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+' pongDate">'+ datrStr +'</span>' );
-
-  } else if ( cellType == 'datems' ) {
-
-    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
-    var unixDt = parseInt( cellDta[ cellDef.id ] )
-    log( "Pong-TableX", 'DateMS: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
-    var datrStr = $.datepicker.formatDate( fmt, new Date( unixDt ) );
-    $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+' pongDate">'+ datrStr +'</span>' );
+    var theDate = ( cellType == 'datems' ? new Date( unixDt ) : new Date( unixDt*1000 ) );
+    var datrStr = $.datepicker.formatDate( fmt, theDate );
+    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+      editable = ' data-r="'+r+'" data-c="'+c+'"';
+      var cID = divId+'R'+i+cellDef.id;
+      $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+' editdatepicker">'
+          +'<span id="'+cID+'" class="'+cls+'" '+editable+'>'+ datrStr +'</span>'
+          +'<div id="'+cID+'editmarker" class="ui-icon ui-icon-pencil editmarker"></div></div>'
+          +'<script>$("#'+cID+'").datepicker( "isDisabled" ); '
+          +'$("#'+cID+'editmarker").click( function(){ $("#'+cID+'").datepicker("dialog", new Date('+theDate.valueOf()+'), '
+          +'function(d){ var dtv=new Date(d).valueOf();'
+          +'$.post( "'+dataUrl+'", { '+rowIdVal+': dtv }, function(response) { }, "json"'
+          +' ).done( function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' 
+          +' ).fail( function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
+          // known: wrong data still in poTbl[ divId ].pongTableData -- but who cares
+          +'$( "#'+cID+'" ).html( $.datepicker.formatDate( "'+fmt+'", new Date(d) ) ); '
+          +'} )} ); '
+          +'</script>' 
+      );
+    } else {
+      $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="'+cls+'">'+ datrStr +'</span>' );      
+    }
 
   } else if ( cellType == 'label' ) {
 
