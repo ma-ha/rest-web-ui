@@ -112,7 +112,7 @@ For images in the table you can specify a large image for zooming in, by <largeI
 If you need actions, or filters, you find the documetation of these features in the [table module](../pong-table/).
 
 
-## Cheat Sheet
+## Cheats
 
 * `"*ID"` Field name is ID and it is the index of the row. Index is required if fields are editable, since the POST request must refer a record.
 * `"Flag|5%"` defines the columns width as 5%  
@@ -129,3 +129,6 @@ If you need actions, or filters, you find the documetation of these features in 
 * `"Image"`, `"ProductImage"` or `"ProductPictureXY"` will create a IMG (HTML image) column, since the name contains "Image" or "Picture" (check is not case sensitive).
 * `"ProductImgXL_zooms_Picture"` (does not create a column) suppose the "Picture" column is defined to show a thumbnail picture, then the image URL in the field "ProductImgXL" is used to provice a zoom image, displayed, at mouse over the "Picture"    
 * `"Product~Page_link"`created a column with a link to the URL in "ProductPage" field
+* `"Rating"` or `"Customer~Rating"` or `"Experience_rating"` creates a column to dispaly the values 0, 1, 2 or 3 as "3star" ratingType (field are: `"Rating"`, `"CustomerRating"` and `"Experience"`)
+* `"Rating_5star"` renders a "5star" ratingType "rating" column
+* `"Rating_prio"` renders a "ptio" ratingType "rating" column
