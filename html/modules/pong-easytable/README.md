@@ -121,8 +121,8 @@ If you need actions, or filters, you find the documetation of these features in 
 * `"Name=Name.0"` shows the "ABC" in `{ ... "Name":["ABC","XYZ",...] ...}`
 * `"Name=Product.Name"` shows the "XYZ" in `{... "Product:{ ... "Name":"XYZ", ... }, ...}`
 * `"Name_editable"`indicates, that the the user can click the values in the Name column, edit them an they are POSTed back to REST service.
-* `"Created_datems"` renders a "YYYY-MM-DD" formated date (or any format provided by i18n) from a Unix date (ms since 1970). 
-* `"Created_date"` renders a YYYY-MM-DD formated date from a Long: Sec since 1970
+* `"Created_date"` renders a YYYY-MM-DD formated date (or any format provided by i18n) from a Long: Unix-type date (sec since 1970). 
+* `"Created_datems"` renders a "YYYY-MM-DD" formated date from a Java/JS-style date (ms since 1970). 
 * `"Created_datems_editable"` adds a date picker dialog to motify the value.  
 * `"ProductPage_linkForCol_1"` (does not create a column) it reates a link for column 1 with the URL of the field "ProductPage"
 * `"Status_checkbox"` value of the "Status" field will be rendered as a checkbock (values: "true" or "false")
