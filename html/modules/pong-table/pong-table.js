@@ -883,13 +883,14 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
       editable = ' data-r="'+r+'" data-c="'+c+'"';
       var cID = divId+'R'+i+cellDef.id;
+			poTbl[ divId ].pongTableDef.rowId
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+' editdatepicker">'
           +'<span id="'+cID+'" class="'+cls+'" '+editable+'>'+ datrStr +'</span>'
           +'<div id="'+cID+'editmarker" class="ui-icon ui-icon-pencil editmarker"></div></div>'
           +'<script>$("#'+cID+'").datepicker( "isDisabled" ); '
           +'$("#'+cID+'editmarker").click( function(){ $("#'+cID+'").datepicker("dialog", new Date('+theDate.valueOf()+'), '
           +'function(d){ var dtv=new Date(d).valueOf();'
-          +'$.post( "'+dataUrl+'", { '+rowIdVal+': dtv }, function(response) { }, "json"'
+          +'$.post( "'+dataUrl+'", { '+poTbl[ divId ].pongTableDef.rowId+':"'+rowIdVal+'", '+cellDef.id+':dtv }, function(response) { }, "json"'
           +' ).done( function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' 
           +' ).fail( function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
           // known: wrong data still in poTbl[ divId ].pongTableData -- but who cares
