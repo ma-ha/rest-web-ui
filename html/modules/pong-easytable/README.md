@@ -131,4 +131,4 @@ If you need actions, or filters, you find the documetation of these features in 
 * `"Product~Page_link"`created a column with a link to the URL in "ProductPage" field
 * `"Rating"` or `"Customer~Rating"` or `"Experience_rating"` creates a column to dispaly the values 0, 1, 2 or 3 as "3star" ratingType (field are: `"Rating"`, `"CustomerRating"` and `"Experience"`)
 * `"Rating_5star"` renders a "5star" ratingType "rating" column
-* `"Rating_prio"` renders a "ptio" ratingType "rating" column
+* `"Rating_prio"` renders a "prio" ratingType "rating" column
