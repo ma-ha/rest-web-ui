@@ -11,6 +11,7 @@
 * Nav-Bar with info and updates
 * Icons with Info and refresh
 * added "info=<pkg>" in URL to get console logs
+* date column (editable)
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
