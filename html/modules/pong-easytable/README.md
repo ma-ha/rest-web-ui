@@ -110,3 +110,22 @@ For images in the table you can specify a large image for zooming in, by <largeI
 	}
 
 If you need actions, or filters, you find the documetation of these features in the [table module](../pong-table/).
+
+
+## Cheat Sheet
+
+* `"*ID"` Field name is ID and it is the index of the row. Index is required if fields are editable, since the POST request must refer a record.
+* `"Flag|5%"` defines the columns width as 5%  
+* `Product=Name"` The column label is "Product", the field in JSON is "Name" 
+* `"Product~Name"` The column label is "Product Name", the field in JSON is "ProductName"  
+* `"Name=Name.0"` shows the "ABC" in `{ ... "Name":["ABC","XYZ",...] ...}`
+* `"Name=Product.Name"` shows the "XYZ" in `{... "Product:{ ... "Name":"XYZ", ... }, ...}`
+* `"Name_editable"`indicates, that the the user can click the values in the Name column, edit them an they are POSTed back to REST service.
+* `"Created_datems"` renders a "YYYY-MM-DD" formated date (or any format provided by i18n) from a Unix date (ms since 1970). 
+* `"Created_date"` renders a YYYY-MM-DD formated date from a Long: Sec since 1970
+* `"Created_datems_editable"` adds a date picker dialog to motify the value.  
+* `"ProductPage_linkForCol_1"` (does not create a column) it reates a link for column 1 with the URL of the field "ProductPage"
+* `"Status_checkbox"` value of the "Status" field will be rendered as a checkbock (values: "true" or "false")
+* `"Image"`, `"ProductImage"` or `"ProductPictureXY"` will create a IMG (HTML image) column, since the name contains "Image" or "Picture" (check is not case sensitive).
+* `"ProductImgXL_zooms_Picture"` (does not create a column) suppose the "Picture" column is defined to show a thumbnail picture, then the image URL in the field "ProductImgXL" is used to provice a zoom image, displayed, at mouse over the "Picture"    
+* `"Product~Page_link"`created a column with a link to the URL in "ProductPage" field
