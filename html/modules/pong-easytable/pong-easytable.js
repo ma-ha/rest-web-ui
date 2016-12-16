@@ -102,6 +102,12 @@ function pongEzTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 				if ( ! hasIdDef ) {
 					col.id = cStr.substr( 0, cStr.length - 9 );					
 				}
+			} else if ( cStrLC.indexOf( "_datems" ) >= 0 ) {
+              col.cellType = "datems";          
+              col.label = cStr.substr( 0, cStr.indexOf("_datems") );
+              if ( ! hasIdDef ) {
+                  col.id = cStr.substr( 0, cStr.indexOf("_datems") );                 
+              }
 			} else if ( cStrLC.indexOf( "_date" ) >= 0 ) {
               col.cellType = "date";          
               col.label = cStr.substr( 0, cStr.indexOf("_date") );
