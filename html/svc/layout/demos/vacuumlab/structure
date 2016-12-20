@@ -172,7 +172,7 @@
 				"type":"pong-io",
 				"decor":"decor",
 				"actions":[
-					{ "type":"pong-help", "param":{ "showConfig":"r1" } }			
+					{ "type":"pong-help", "param":{ "showConfig":"io123" } }			
 				]
 			}
 		],
