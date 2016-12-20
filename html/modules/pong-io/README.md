@@ -85,6 +85,15 @@ You can display labels with static "label" text or with "data":
  		]
  	 }
 
+Optional settings for labels (with example values or options):
+
+	"font":"14px Courier",
+	"textAlign":"start | end | center",
+	"textBaseline":"top | middle | bottom | alphabetic",
+	"textFillColor":"#00F",
+	"textStrokeColor":"#FFF",
+
+
 ### Switches
 Switches can have 2 or 3 values, defined in a array.
 
