@@ -279,7 +279,7 @@ function pongIOrender( divId, ctx, io, ioDta ) {
 			pongIOrenderGraph( divId, ctx, io, ioDta );
 		} else if ( io.type == 'Img') {
 			pongIOrenderImg( ctx, io, ioDta );
-		} else if ( io.type == 'Label') {
+	    } else if ( io.type == 'Label') {
             pongIOrenderLabel(divId, ctx, io, ioDta, io.pos.x, io.pos.y );
         }  
 	}	

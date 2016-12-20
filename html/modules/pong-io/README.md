@@ -75,15 +75,15 @@ Setting of posX and posY are optional. The values are absolute values to the vie
 
 ### Labels 
 
+You can display labels with static "label" text or with "data":
+
 	"moduleConfig":{ ...
 		"io":[ ...
-			{
- 				"labels": [
- 					{ "label":"XY", "posX":"123", "posY":"345" },
- 					{ "data":"result.probe[0].speed", "format":"%d B/s", "posX":"123", "posy":"345" },
- 					...
- 				]
+				{ "type":"Label", "label":"XY", "pos"{ "x":"123", "y":"345" } },
+				{ "type":"Label", "data":"result.probe[0].speed", "format":"%d B/s", "pos":{ "y":"123", "y":"345" } },
  			...
+ 		]
+ 	 }
 
 ### Switches
 Switches can have 2 or 3 values, defined in a array.
