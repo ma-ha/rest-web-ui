@@ -261,28 +261,27 @@ function pongIOrenderData( divId,  dta ) {
 
 
 function pongIOrender( divId, ctx, io, ioDta ) {
-	
-	if ( io.type && io.pos && io.pos.x && io.pos.y ) {
-		if ( io.type == 'LED' || io.type == 'Light' ) {
-			pongIOrenderLED( divId, ctx, io, ioDta );
-		} else if ( io.type == 'Switch') {
-			pongIOrenderSwitch( divId, ctx, io, ioDta );
-		} else if ( io.type == 'Button' ) {
-			pongIOrenderButton( divId, ctx, io, ioDta );
-		} else if ( io.type == 'Poti') {
-			pongIOrenderPoti( divId, ctx, io, ioDta );
-		} else if ( io.type == 'Gauge') {
-			pongIOrenderGauge( ctx, io, ioDta );
-		} else if ( io.type == 'Display') {
-			pongIOrenderDisplay(  divId, ctx, io, ioDta );
-		} else if ( io.type == 'Graph') {
-			pongIOrenderGraph( divId, ctx, io, ioDta );
-		} else if ( io.type == 'Img') {
-			pongIOrenderImg( ctx, io, ioDta );
-	    } else if ( io.type == 'Label') {
-            pongIOrenderLabel(divId, ctx, io, ioDta, io.pos.x, io.pos.y );
-        }  
-	}	
+  if ( io.type && io.pos && io.pos.x && io.pos.y ) {
+    if ( io.type == 'LED' || io.type == 'Light' ) {
+      pongIOrenderLED( divId, ctx, io, ioDta );
+    } else if ( io.type == 'Switch') {
+      pongIOrenderSwitch( divId, ctx, io, ioDta );
+    } else if ( io.type == 'Button' ) {
+      pongIOrenderButton( divId, ctx, io, ioDta );
+    } else if ( io.type == 'Poti') {
+      pongIOrenderPoti( divId, ctx, io, ioDta );
+    } else if ( io.type == 'Gauge') {
+      pongIOrenderGauge( ctx, io, ioDta );
+    } else if ( io.type == 'Display') {
+      pongIOrenderDisplay(  divId, ctx, io, ioDta );
+    } else if ( io.type == 'Graph') {
+      pongIOrenderGraph( divId, ctx, io, ioDta );
+    } else if ( io.type == 'Img') {
+      pongIOrenderImg( ctx, io, ioDta );
+    } else if ( io.type == 'Label') {
+      pongIOrenderLabel(divId, ctx, io, ioDta, io.pos.x, io.pos.y );
+    }  
+  }	
 }
 
 //---------------------------------------------------------------------------------------
