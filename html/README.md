@@ -12,6 +12,7 @@
 * Icons with Info and refresh
 * added "info=<pkg>" in URL to get console logs
 * date column (editable)
+* IO: graph with grid
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
