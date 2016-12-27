@@ -217,6 +217,23 @@ Example configuration:
 
 If there is no axisType defined it will be linear. 
 
+Addition "grid" option for y-Axis:
+
+	"yAxis":{ 
+	      ...
+			"grid":["0.1","1","10","100"],
+			"gridColor":"#EEE"
+	}
+
+If data[0] values are Java/JS times (ms since 1970), 
+you van use the "time line" feature for x-Axis is available
+("labelCnt" is optional, the default value is 10):
+
+	"xAxis":{
+         "axisType":"time",
+    		"labelCnt":"10"     
+	}
+
 Optional you can define colors and fonts:
 
 	moduleConfig":{ ...

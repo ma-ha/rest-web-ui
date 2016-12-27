@@ -766,7 +766,17 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ctx.rect( x, y, w, h );
 	ctx.stroke();
 	ctx.fill();  		
-	
+    
+    if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
+        ctx.beginPath();
+        ctx.strokeStyle = "#FFF";
+        ctx.fillStyle   = "#FFF";
+        ctx.lineWidth    = "1";
+        ctx.rect( x-40, y+h+1, w+80, 21 );
+        ctx.stroke();
+        ctx.fill();         
+    }
+    
 	if ( def.layout.name ) {
 		var xx = x + w/2, yy = y-6;
 		ctx.textAlign = "center";
@@ -834,6 +844,51 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		}
 	}
 	
+	if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
+	  var cnt = 10
+	  if ( def.layout.xAxis.labelCnt ) {
+	    cnt = parseInt( def.layout.xAxis.labelCnt );
+	  }
+	  var dx = w / cnt;
+	  log( "pong-io",  'do time '+dx );
+	  var xMin = null; 
+	  var xMax = null;
+
+	  if ( dta  && dta.length ) { 
+	    for ( var c = 0; c < dta.length; c++ ) {
+	      var g = dta[c];
+	      if ( g.data && g.data.length ) {
+	        xMin = g.data[0][0]; 
+	        xMax = g.data[0][0];
+	        for ( var i = 0; i < g.data.length; i++ ) {
+	          if ( xMax < g.data[i][0] ) { xMax = g.data[i][0] }
+	          if ( xMin > g.data[i][0] ) { xMin = g.data[i][0] }
+	        }
+	      }
+	    }
+	  }
+	  log( "pong-io", "##### Min/Max "+ xMin+" / "+xMax  );
+	  var nDef = JSON.parse( JSON.stringify(def) );
+	  nDef.textAlign = 'center';
+	  for ( var xi = 0; xi <= cnt; xi++) {
+	    ctx.beginPath();
+	    ctx.moveTo( x +dx*xi,  y+h );
+	    ctx.strokeStyle = "#00A";
+	    ctx.fillStyle   = "#DDD";
+	    ctx.lineTo( x+dx*xi,  y+h-5 );
+	    ctx.stroke();
+	    if ( xMin && xMax ) {
+	      var lblDt = xMin + ( xMax - xMin ) * xi / cnt;
+	      var lbl = ( new Date( lblDt ) ).toLocaleTimeString();
+	      textOut(  divId, nDef, ctx, lbl, x+dx*xi, y+h+10, {"font":"8pt Arial"} );
+	      if ( xi == 0 || xi == cnt ) {
+	        lbl = ( new Date( lblDt ) ).toLocaleDateString();
+	        textOut(  divId, nDef, ctx, lbl, x+dx*xi, y+h+20, {"font":"8pt Arial"} );                       
+	      }
+	    }           
+	  } 
+	} 
+	   
 	// draw graphs
 	if ( dta  && dta.length ) {
 		for ( var c = 0; c < dta.length; c++ ) {
