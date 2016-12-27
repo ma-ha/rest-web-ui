@@ -117,9 +117,9 @@ function pongIOmakeJS( divId  ) {
 				
 				if ( io.type == 'Switch' && io.values && io.values.length ) {
 
-					log( "pong-io", io.type+' '+io.id );			
+	                log( "pong-io", io.type+' '+io.id );			
 					for ( var val = 0; val < io.values.length; val++ ) {
-            log( "pong-io", io.values[val]  );
+		                log( "pong-io", io.values[val]  );
 						if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] && ioSense[ divId ][ io.id ][ io.values[val] ] ) {
 							log( "pong-io", "sense ("+io.values[val] +")..." );
 							var s = ioSense[ divId ][ io.id ][ io.values[val] ];
@@ -783,6 +783,32 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	}
 	log( "pong-io", "Graph y-min="+lYmin );	
 	log( "pong-io", "Graph y-max="+lYmax );	
+	// render grid
+    if ( def.layout.yAxis.grid && def.layout.yAxis.grid.length ) {
+      var gCol = "#EEE";
+      if ( def.layout.yAxis.gridColor ) { gCol = def.layout.yAxis.gridColor; }
+      log( "pong-io", "Graph y-grid col: "+gCol );
+      //var xx = x + 4, xt= x - 3;
+      for ( var c = 0; c < def.layout.yAxis.grid.length; c++ ) {
+          var l = parseFloat( def.layout.yAxis.grid[c] );
+          if ( ! isNaN( l ) ) {
+              var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+              if ( yLogType ) {
+                  ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+                  log( "pong-io", "Graph y-grid="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+              }
+              var lyy = Math.round( y  + h - ly ); 
+              log( "pong-io", "Graph y-grid: "+x+"/"+lyy+" -- "+x+w+"/"+lyy );
+              ctx.beginPath();
+              ctx.strokeStyle = gCol;
+              ctx.moveTo( x     , lyy );
+              ctx.lineTo( x + w , lyy );
+              ctx.stroke();
+          }
+      }
+    }
+
+	// render graph lables
 	ctx.textAlign = "end";
 	ctx.textBaseline = "middle";
 	if ( def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
@@ -797,7 +823,8 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 				}
 				var lyy = Math.round( y	 + h - ly ); 
 				log( "pong-io", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
-				ctx.moveTo( x,  lyy );
+                ctx.beginPath();
+                ctx.moveTo( x,  lyy );
 				ctx.strokeStyle = "#00A";
 				ctx.fillStyle   = "#DDD";
 				ctx.lineTo( xx, lyy );
