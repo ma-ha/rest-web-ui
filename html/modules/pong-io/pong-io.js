@@ -757,7 +757,18 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	}
 	var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
 		yMin = parseFloat( def.layout.yAxis.min ) , yMax = parseFloat( def.layout.yAxis.max );
-	ctx.beginPath();
+
+    if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
+      ctx.beginPath();
+      ctx.strokeStyle = "#FFF";
+      ctx.fillStyle   = "#FFF";
+      ctx.lineWidth    = "1";
+      ctx.rect( x-40, y+h+1, w+80, 21 );
+      ctx.stroke();
+      ctx.fill();         
+    }
+  
+    ctx.beginPath();
 	ctx.strokeStyle = "#00A";
 	ctx.fillStyle   = "#DDD";
 	ctx.lineWidth    = "1";
@@ -766,16 +777,6 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ctx.rect( x, y, w, h );
 	ctx.stroke();
 	ctx.fill();  		
-    
-    if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
-        ctx.beginPath();
-        ctx.strokeStyle = "#FFF";
-        ctx.fillStyle   = "#FFF";
-        ctx.lineWidth    = "1";
-        ctx.rect( x-40, y+h+1, w+80, 21 );
-        ctx.stroke();
-        ctx.fill();         
-    }
     
 	if ( def.layout.name ) {
 		var xx = x + w/2, yy = y-6;
