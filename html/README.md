@@ -13,6 +13,7 @@
 * added "info=<pkg>" in URL to get console logs
 * date column (editable)
 * IO: graph with grid
+* IO: graph with time x-Axis
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
