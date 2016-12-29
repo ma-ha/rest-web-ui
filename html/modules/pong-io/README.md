@@ -226,13 +226,17 @@ Addition "grid" option for y-Axis:
 	}
 
 If data[0] values are Java/JS times (ms since 1970), 
-you van use the "time line" feature for x-Axis is available
-("labelCnt" is optional, the default value is 10):
+you van use the "time line" feature for x-Axis is available:
 
 	"xAxis":{
          "axisType":"time",
     		"labelCnt":"10"     
 	}
+
+Options for "time" lines:
+* "labelCnt", the default value is 10
+* "gridColor", if you want to render vertical grid lines
+
 
 Optional you can define colors and fonts:
 

@@ -872,6 +872,14 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	  var nDef = JSON.parse( JSON.stringify(def) );
 	  nDef.textAlign = 'center';
 	  for ( var xi = 0; xi <= cnt; xi++) {
+        if ( xi != 0  &&  xi != cnt  &&  def.layout.xAxis.gridColor ) {
+          ctx.beginPath();
+          ctx.strokeStyle = def.layout.xAxis.gridColor;
+          ctx.fillStyle   = def.layout.xAxis.gridColor;
+          ctx.moveTo( x+dx*xi, y+1   );
+          ctx.lineTo( x+dx*xi, y+h-1 );
+          ctx.stroke();        
+        }
 	    ctx.beginPath();
 	    ctx.moveTo( x +dx*xi,  y+h );
 	    ctx.strokeStyle = "#00A";
@@ -885,7 +893,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	      if ( xi == 0 || xi == cnt ) {
 	        lbl = ( new Date( lblDt ) ).toLocaleDateString();
 	        textOut(  divId, nDef, ctx, lbl, x+dx*xi, y+h+20, {"font":"8pt Arial"} );                       
-	      }
+	      } 
 	    }           
 	  } 
 	} 
