@@ -953,7 +953,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 						yy = y + h - Math.round( h * ( g.data[i][1] - lYmin ) / ( lYmax - lYmin ) );
 					}
 					//log( "pong-io", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
-					if ( drawL ) {
+					if ( yMin < g.data[i][1] && g.data[i][1] < yMax && drawL ) {
 						//log( "pong-io", " lineto( "+xx+" / "+yy+" )" );
 						ctx.lineTo( xx, yy );												
 						ctx.stroke();
