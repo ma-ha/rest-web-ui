@@ -217,12 +217,21 @@ Example configuration:
 
 If there is no axisType defined it will be linear. 
 
-Addition "grid" option for y-Axis:
+Addition "grid" option for y-Axis example:
 
 	"yAxis":{ 
 	      ...
 			"grid":["0.1","1","10","100"],
 			"gridColor":"#EEE"
+	}
+
+Example for mouse-drag "scaling" option for y-Axis:
+
+	"yAxis":{ 
+		  "min":"0", "max":"10",
+	      ...
+			"scaleHiMin":"2", "scaleHiMax":"50",
+			"scaleLoMin":"0", "scaleLoMax":"50"
 	}
 
 If data[0] values are Java/JS times (ms since 1970), 

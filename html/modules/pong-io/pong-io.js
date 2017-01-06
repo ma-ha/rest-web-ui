@@ -104,7 +104,11 @@ function pongIOmakeJS( divId  ) {
 	var pmd = moduleConfig[ divId ];
 	var contentItems = [];
 	contentItems.push( '<script>' );
-	contentItems.push( '  $( function() { ' );
+	contentItems.push( '  $( function() { var xMD = 0; xMD = 0;' );
+	contentItems.push( '    $( "#' +divId+ 'Canvas" ).mousedown( function( e ) {' );
+	contentItems.push( '      xMD = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
+	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
+	contentItems.push( '    } ); ' );
 	contentItems.push( '    $( "#' +divId+ 'Canvas" ).click( function( e ) { ' );
 	contentItems.push( '      var x = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
 	contentItems.push( '      var y = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
@@ -117,9 +121,9 @@ function pongIOmakeJS( divId  ) {
 				
 				if ( io.type == 'Switch' && io.values && io.values.length ) {
 
-	                log( "pong-io", io.type+' '+io.id );			
+	        log( "pong-io", io.type+' '+io.id );			
 					for ( var val = 0; val < io.values.length; val++ ) {
-		                log( "pong-io", io.values[val]  );
+		        log( "pong-io", io.values[val]  );
 						if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] && ioSense[ divId ][ io.id ][ io.values[val] ] ) {
 							log( "pong-io", "sense ("+io.values[val] +")..." );
 							var s = ioSense[ divId ][ io.id ][ io.values[val] ];
@@ -145,6 +149,14 @@ function pongIOmakeJS( divId  ) {
 					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
 						var s = ioSense[ divId ][ io.id ];
 						contentItems.push( '      pongIOcheckButtonSense( "'+divId+'", x, y, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+					}
+					
+				}  else if ( io.type == 'Graph' ) {
+
+					log( "pong-io", io.type+' '+io.id );		
+					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
+						var s = ioSense[ divId ][ io.id ];
+						contentItems.push( '      pongIOcheckGraphSense( "'+divId+'", x, y, xMD, yMD, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
 					}
 					
 				}
@@ -754,21 +766,34 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		 def.layout && def.layout.yAxis  &&  def.layout.yAxis.min != null  &&  def.layout.yAxis.max != null ) {} else { 
 		log( "pong-io", "pongIOrenderGraph: Config not OK! End.");
 		return;
-	}
+	} 
 	var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
 		yMin = parseFloat( def.layout.yAxis.min ) , yMax = parseFloat( def.layout.yAxis.max );
+	isa = { xAxis:{}, yAxis:{} };
+	ioSense[ divId ][ def.id ] = isa;
+	isa.yAxis.xmin = x-40;	isa.yAxis.ymin = y;
+	isa.yAxis.xmax = x+10;	isa.yAxis.ymax = y+h;
 
-    if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
-      ctx.beginPath();
-      ctx.strokeStyle = "#FFF";
-      ctx.fillStyle   = "#FFF";
-      ctx.lineWidth    = "1";
-      ctx.rect( x-40, y+h+1, w+80, 21 );
-      ctx.stroke();
-      ctx.fill();         
-    }
-  
-    ctx.beginPath();
+	// if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
+	// 	ctx.beginPath();
+	// 	ctx.strokeStyle = "#FFF";
+	// 	ctx.fillStyle   = "#FFF";
+	// 	ctx.lineWidth    = "1";
+	// 	ctx.rect( x-40, y+h+1, w+80, 21 );
+	// 	ctx.stroke();
+	// 	ctx.fill();         
+	// }
+
+	ctx.beginPath();
+	ctx.strokeStyle = "#FFF";
+	ctx.fillStyle   = "#FFF";
+	ctx.lineWidth    = "1";
+	ctx.rect( x-40, y-10, w+80, h+30 );
+	ctx.stroke();
+	ctx.fill();         
+
+
+	ctx.beginPath();
 	ctx.strokeStyle = "#00A";
 	ctx.fillStyle   = "#DDD";
 	ctx.lineWidth    = "1";
@@ -802,7 +827,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
       //var xx = x + 4, xt= x - 3;
       for ( var c = 0; c < def.layout.yAxis.grid.length; c++ ) {
           var l = parseFloat( def.layout.yAxis.grid[c] );
-          if ( ! isNaN( l ) ) {
+          if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
               var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
               if ( yLogType ) {
                   ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
@@ -826,7 +851,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 		var xx = x + 4, xt= x - 3;
 		for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labels[c] );
-			if ( ! isNaN( l ) ) {
+			if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax ) {
 				var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
 				if ( yLogType ) {
 					ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
@@ -949,6 +974,59 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderGraph end.");
 }
 
+
+function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
+	var def = null;
+	var updateRequired = false;
+	for ( var i = 0; i < moduleConfig[ divId ].io.length; i++ ) {
+		if ( def = moduleConfig[ divId ].io[i].id == id ) {
+			def = moduleConfig[ divId ].io[i];	break;
+		}
+	}
+	if ( def == null ) { return; }
+
+	if ( s.yAxis && s.yAxis.xmin && s.yAxis.xmax && s.yAxis.ymin && s.yAxis.ymax  ) {
+		if ( s.yAxis.xmin < x && x < s.yAxis.xmax && s.yAxis.ymin < yMD && yMD < s.yAxis.ymax ) { // click is for this axis
+			var yAxis = def.layout.yAxis;
+			var yAxismin = parseFloat( yAxis.min );
+			var yAxismax = parseFloat( yAxis.max );
+			console.log( 's.yAxis.ymin:'+s.yAxis.ymin+' s.yAxis.ymax:'+s.yAxis.ymax+'  y:'+y+' yMD:'+yMD+' id:'+id )
+			console.log( 'yAxismin:'+yAxismin+'  yAxismax:'+yAxismax )
+			if ( yAxis.type != 'logarithmic' ) { 
+				var yStart = yAxismin + ( yAxismax - yAxismin )*( s.yAxis.ymax - yMD )/( s.yAxis.ymax - s.yAxis.ymin );
+				var yEnd   = yAxismin + ( yAxismax - yAxismin )*( s.yAxis.ymax - y   )/( s.yAxis.ymax - s.yAxis.ymin );
+				// yMax scaling:
+				var midYAxis = yAxismin + ( yAxismax - yAxismin ) / 2;
+				if ( ( yStart > midYAxis ) ) {
+					if ( yAxis.scaleHiMin && yAxis.scaleHiMax ) { // y-Max scaling allowed
+						console.log( 'NEW-yMAX  Y: '+yStart+' >> '+yEnd )
+						var nYmax =  yAxismin + ( yAxismax - yAxismin ) *  ( yStart - yAxismin) / ( yEnd - yAxismin ) ;
+						console.log( '    scaling: '+nYmax  );
+						def.layout.yAxis.max = nYmax;
+						if ( def.layout.yAxis.max < yAxis.scaleHiMin ) { def.layout.yAxis.max = yAxis.scaleHiMin; }
+						if ( def.layout.yAxis.max > yAxis.scaleHiMax ) { def.layout.yAxis.max = yAxis.scaleHiMax; }
+						updateRequired = true;
+					}
+				} else {  
+					if ( yAxis.scaleHiMin && yAxis.scaleHiMax ) { // y-Max scaling allowed
+						console.log( 'NEW-yMIN  Y: '+yStart+' >> '+yEnd );
+						var nYmin =  yAxismax - ( yAxismax - yAxismin ) *  ( yStart - yAxismax) / ( yEnd - yAxismax ) ;
+						console.log( '    scaling: '+nYmin  );
+						def.layout.yAxis.min = nYmin;
+						if ( def.layout.yAxis.min < yAxis.scaleLoMin ) { def.layout.yAxis.min = yAxis.scaleLoMin; }
+						if ( def.layout.yAxis.min > yAxis.scaleLoMax ) { def.layout.yAxis.min = yAxis.scaleLoMax; }
+						updateRequired = true;
+					}
+				}
+			} else { // logarithmic
+				//TODO
+			}
+		}
+	}
+	if ( updateRequired ) { // re-render IO view...
+		pongIoUpdateData( divId )
+	}
+}
 
 //---------------------------------------------------------------------------------------
 

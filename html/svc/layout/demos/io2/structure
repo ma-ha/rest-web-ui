@@ -7,7 +7,7 @@
 				"rowId":"io0",
 				"title":"\"Arduino\" demo -- please try it also with -> <a href=\"http://johnny-five.io/\" target=\"_blank\">johnny-five.io</a>",
 				"decor":"decor",
-				"height":"400px",
+				"height":"600px",
 				"resourceURL":"none",
 				"type":"pong-io",
 				"moduleConfig":{
@@ -36,12 +36,12 @@
 								"graphType":"timeLog",
 								"colors":{"AD0":"#5A5","AD1":"#0D0"},
 								"yAxis":{
-									"axisType":"logarithmic",
-									"min":"0.1",
+									"min":"0",
 									"max":"10",
-									"labels":["0.1","1","10"],
-									"grid":["0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9",
-										"1","2","3","4","5","6","7","8","9"],
+									"scaleHiMin":"2", "scaleHiMax":"50",
+									"scaleLoMin":"0", "scaleLoMax":"50",
+									"labels":["0","1","2","3","4","5","6","7","8","9","10","20","30","40","50"],
+									"grid":["1","2","3","4","5","6","7","8","9","10","20","30","40","50"],
 									"gridColor":"#EEE"
 								},
 								"xAxis":{
@@ -50,7 +50,7 @@
 									"gridColor":"#EEE"
 								}								
 							},
-							"pos":{ "x":"400", "y":"20" }
+							"pos":{ "x":"400", "y":"100" }
 						}
 					]
 				},
