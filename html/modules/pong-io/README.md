@@ -225,7 +225,7 @@ Addition "grid" option for y-Axis example:
 			"gridColor":"#EEE"
 	}
 
-Example for mouse-drag "scaling" option for y-Axis:
+Example for mouse-drag "scaling" option for y-Axis (currently not logatithmic):
 
 	"yAxis":{ 
 		  "min":"0", "max":"10",

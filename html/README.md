@@ -14,6 +14,7 @@
 * date column (editable)
 * IO: graph with grid
 * IO: graph with time x-Axis
+* IO: graph y-Axis scaling option (mouse drag)
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
