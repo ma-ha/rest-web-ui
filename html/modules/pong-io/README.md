@@ -14,6 +14,8 @@ input and output controllers. Basic 'moduleConfig' is like this:
 
 [Online Demo](http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io)
 
+Sorry: This is now getting complex ;-) But most definitions are optional :-) Start easy !! 
+
 To get the values a GET call is done to 'dataURL'. 
 The response should be an "array" of the values:
 
@@ -217,29 +219,52 @@ Example configuration:
 
 If there is no axisType defined it will be linear. 
 
-Addition "grid" option for y-Axis example:
+Addition "grid" option for y-Axis can contain an array of values. Example:
 
 	"yAxis":{ 
-	      ...
-			"grid":["0.1","1","10","100"],
-			"gridColor":"#EEE"
+	    ...
+	    "grid":["0.1","1","10","100"],
+	    "gridColor":"#EEE"
 	}
 
-Example for mouse-drag "scaling" option for y-Axis (currently not logatithmic):
+Alternatively you can define `"grid":"label"` to draw a line at each label.
+
+Example for mouse-drag/touch "scaling" option for y-Axis (currently not logatithmic):
 
 	"yAxis":{ 
-		  "min":"0", "max":"10",
-	      ...
-			"scaleHiMin":"2", "scaleHiMax":"50",
-			"scaleLoMin":"0", "scaleLoMax":"50"
+	    "min":"0", "max":"10",
+	    ...
+	    "scaleHiMin":"2", "scaleHiMax":"50",
+	    "scaleLoMin":"0", "scaleLoMax":"50"
 	}
+
+By scaling the axis, the labeling may get a problem..
+To prevent this, you can specify a `"labelsLo"` and a `"labelsHi"` array.
+
+The example shows a graph with y axis from 0 to 10, 
+scaling is prepared up til 50 
+
+    "yAxis":{
+        "min":"0", "max":"10",
+        ...
+        "scaleHiMin":"2", "scaleHiMax":"50",
+        "scaleLoMin":"0", "scaleLoMax":"50"
+        "labelsLo":["0","10","20","30","40","50"]
+        "labels":["5","15","25","35","45]
+        "labels":["1","2","3","4","6","7","8","9","11","12", ... ]
+    }
+
+Notice, that values in the `"labelsLo"` are not in the `"labels"` and 
+these values are not in the `"labelsHi"`.
+Thi algorithm is: Render the `"labelsLo"` -- if these are not enough, 
+render additionally the `"labels"` -- if still not enough, add `"labelsHi"`
 
 If data[0] values are Java/JS times (ms since 1970), 
 you van use the "time line" feature for x-Axis is available:
 
 	"xAxis":{
          "axisType":"time",
-    		"labelCnt":"10"     
+         "labelCnt":"10"     
 	}
 
 Options for "time" lines:

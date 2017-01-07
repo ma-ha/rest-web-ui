@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 log( "pong-io", "load module"); // print this on console, when module is loaded
 var ioSense = new Array();
+var ioSenseArea = {};
 
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pongIoDivHTML( divId, resourceURL, paramObj ) {
@@ -111,7 +112,10 @@ function pongIOmakeJS( divId  ) {
 	contentItems.push( '        e = evt.originalEvent.touches[0]; ' );
 	contentItems.push( '      } ' );
 	contentItems.push( '      xMD = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
-	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; return false;' );
+	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
+	contentItems.push( '      for ( var i in ioSenseArea ) { var iS = ioSenseArea[i]; console.log( i+" x:"+xMD+" y:"+yMD+""+" >> "+JSON.stringify(iS));' );
+	contentItems.push( '         if ( iS.xmin <= xMD && xMD <= iS.xmax && iS.ymin <= yMD && yMD <= iS.ymax ) { return false; }' );
+	contentItems.push( '      }' );
 	contentItems.push( '    } ); ' );
 	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "click touchend", function( evt ) {' );
 	contentItems.push( '      var e = evt;' );
@@ -782,6 +786,8 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ioSense[ divId ][ def.id ] = isa;
 	isa.yAxis.xmin = x-40;	isa.yAxis.ymin = y;
 	isa.yAxis.xmax = x+10;	isa.yAxis.ymax = y+h;
+	if (  def.layout.yAxis.scaleHiMin ) { ioSenseArea[ divId+'y' ] = isa.yAxis; } // add sensitive area
+	
 
 	// if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
 	// 	ctx.beginPath();
@@ -829,52 +835,60 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	log( "pong-io", "Graph y-min="+lYmin );	
 	log( "pong-io", "Graph y-max="+lYmax );	
 	// render grid
-    if ( def.layout.yAxis.grid && def.layout.yAxis.grid.length ) {
-      var gCol = "#EEE";
-      if ( def.layout.yAxis.gridColor ) { gCol = def.layout.yAxis.gridColor; }
+	var gCol = "#EEE";
+	if ( def.layout.yAxis.gridColor ) { gCol = def.layout.yAxis.gridColor; }
+	if ( def.layout.yAxis.grid && def.layout.yAxis.grid.length ) {
       log( "pong-io", "Graph y-grid col: "+gCol );
       //var xx = x + 4, xt= x - 3;
       for ( var c = 0; c < def.layout.yAxis.grid.length; c++ ) {
           var l = parseFloat( def.layout.yAxis.grid[c] );
-          if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
-              var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
-              if ( yLogType ) {
-                  ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
-                  log( "pong-io", "Graph y-grid="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
-              }
-              var lyy = Math.round( y  + h - ly ); 
-              log( "pong-io", "Graph y-grid: "+x+"/"+lyy+" -- "+x+w+"/"+lyy );
-              ctx.beginPath();
-              ctx.strokeStyle = gCol;
-              ctx.moveTo( x     , lyy );
-              ctx.lineTo( x + w , lyy );
-              ctx.stroke();
-          }
+					pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType );
+          // if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
+          //     var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+          //     if ( yLogType ) {
+          //         ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+          //         log( "pong-io", "Graph y-grid="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+          //     }
+          //     var lyy = Math.round( y  + h - ly ); 
+          //     log( "pong-io", "Graph y-grid: "+x+"/"+lyy+" -- "+x+w+"/"+lyy );
+          //     ctx.beginPath();
+          //     ctx.strokeStyle = gCol;
+          //     ctx.moveTo( x     , lyy );
+          //     ctx.lineTo( x + w , lyy );
+          //     ctx.stroke();
+          // }
       }
-    }
+	}
 
 	// render graph lables
 	ctx.textAlign = "end";
 	ctx.textBaseline = "middle";
-	if ( def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
-		var xx = x + 4, xt= x - 3;
+	var lblCnt = 0
+	var xx = x + 4, xt= x - 3;
+	if ( def.layout.yAxis.labelsLo && def.layout.yAxis.labelsLo.length) {
+		for ( var c = 0; c < def.layout.yAxis.labelsLo.length; c++ ) {
+			var l = parseFloat( def.layout.yAxis.labelsLo[c] );
+			lblCnt += pongIoGraphLabel ( divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, yLogType );
+			if ( def.layout.yAxis.grid == 'label' ) {
+					pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType );
+			}
+		}
+	}
+	if ( lblCnt <= 4 && def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
 		for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labels[c] );
-			if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax ) {
-				var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
-				if ( yLogType ) {
-					ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
-					log( "pong-io", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
-				}
-				var lyy = Math.round( y	 + h - ly ); 
-				log( "pong-io", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
-                ctx.beginPath();
-                ctx.moveTo( x,  lyy );
-				ctx.strokeStyle = "#00A";
-				ctx.fillStyle   = "#DDD";
-				ctx.lineTo( xx, lyy );
-				ctx.stroke();
-				textOut(  divId, def, ctx, l, xt, lyy, {"font":"8pt Arial"} );
+			lblCnt += pongIoGraphLabel ( divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, yLogType );
+			if ( def.layout.yAxis.grid == 'label' ) {
+					pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType );
+			}
+		}
+	}
+	if ( lblCnt <= 4 && def.layout.yAxis.labelsHi && def.layout.yAxis.labelsHi.length ) {
+		for ( var c = 0; c < def.layout.yAxis.labelsHi.length; c++ ) {
+			var l = parseFloat( def.layout.yAxis.labelsHi[c] );
+			lblCnt += pongIoGraphLabel ( divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, yLogType );
+			if ( def.layout.yAxis.grid == 'label' ) {
+					pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType );
 			}
 		}
 	}
@@ -983,6 +997,42 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	log( "pong-io", "pongIOrenderGraph end.");
 }
 
+function pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType ) {
+		if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
+			var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+			if ( yLogType ) {
+					ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+					log( "pong-io", "Graph y-grid="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+			}
+			var lyy = Math.round( y  + h - ly ); 
+			log( "pong-io", "Graph y-grid: "+x+"/"+lyy+" -- "+x+w+"/"+lyy );
+			ctx.beginPath();
+			ctx.strokeStyle = gCol;
+			ctx.moveTo( x     , lyy );
+			ctx.lineTo( x + w , lyy );
+			ctx.stroke();
+	}
+}
+function pongIoGraphLabel( divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, yLogType ) {
+	if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax ) {
+		var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
+		if ( yLogType ) {
+			ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
+			log( "pong-io", "Graph y-lbl="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
+		}
+		var lyy = Math.round( y	 + h - ly ); 
+		log( "pong-io", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
+		ctx.beginPath();
+		ctx.moveTo( x,  lyy );
+		ctx.strokeStyle = "#00A";
+		ctx.fillStyle   = "#DDD";
+		ctx.lineTo( xx, lyy );
+		ctx.stroke();
+		textOut(  divId, def, ctx, l, xt, lyy, {font:"8pt Arial"} );
+		return 1;
+	}
+	return 0;
+}
 
 function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
 	var def = null;
@@ -999,28 +1049,28 @@ function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
 			var yAxis = def.layout.yAxis;
 			var yAxismin = parseFloat( yAxis.min );
 			var yAxismax = parseFloat( yAxis.max );
-			console.log( 's.yAxis.ymin:'+s.yAxis.ymin+' s.yAxis.ymax:'+s.yAxis.ymax+'  y:'+y+' yMD:'+yMD+' id:'+id )
-			console.log( 'yAxismin:'+yAxismin+'  yAxismax:'+yAxismax )
+			log( "pong-io",  's.yAxis.ymin:'+s.yAxis.ymin+' s.yAxis.ymax:'+s.yAxis.ymax+'  y:'+y+' yMD:'+yMD+' id:'+id )
+			log( "pong-io", 'yAxismin:'+yAxismin+'  yAxismax:'+yAxismax )
 			if ( yAxis.type != 'logarithmic' ) { 
 				var yStart = yAxismin + ( yAxismax - yAxismin )*( s.yAxis.ymax - yMD )/( s.yAxis.ymax - s.yAxis.ymin );
 				var yEnd   = yAxismin + ( yAxismax - yAxismin )*( s.yAxis.ymax - y   )/( s.yAxis.ymax - s.yAxis.ymin );
 				// yMax scaling:
-				var midYAxis = yAxismin + ( yAxismax - yAxismin ) / 2;
-				if ( ( yStart > midYAxis ) ) {
+				if (  ( yStart < yEnd && yStart > yAxismin + ( yAxismax - yAxismin ) / 4  ) 
+				   || ( yStart > yEnd && yStart > yAxismin + ( yAxismax - yAxismin ) / 4 * 3  ) ) {
 					if ( yAxis.scaleHiMin && yAxis.scaleHiMax ) { // y-Max scaling allowed
-						console.log( 'NEW-yMAX  Y: '+yStart+' >> '+yEnd )
+						log( "pong-io", 'NEW-yMAX  Y: '+yStart+' >> '+yEnd )
 						var nYmax =  yAxismin + ( yAxismax - yAxismin ) *  ( yStart - yAxismin) / ( yEnd - yAxismin ) ;
-						console.log( '    scaling: '+nYmax  );
+						log( "pong-io", '    scaling: '+nYmax  );
 						def.layout.yAxis.max = nYmax;
 						if ( def.layout.yAxis.max < yAxis.scaleHiMin ) { def.layout.yAxis.max = yAxis.scaleHiMin; }
 						if ( def.layout.yAxis.max > yAxis.scaleHiMax ) { def.layout.yAxis.max = yAxis.scaleHiMax; }
 						updateRequired = true;
 					}
 				} else {  
-					if ( yAxis.scaleHiMin && yAxis.scaleHiMax ) { // y-Max scaling allowed
-						console.log( 'NEW-yMIN  Y: '+yStart+' >> '+yEnd );
+					if ( yAxis.scaleLoMin && yAxis.scaleLoMax ) { // y-Min scaling allowed
+						log( "pong-io", 'NEW-yMIN  Y: '+yStart+' >> '+yEnd );
 						var nYmin =  yAxismax - ( yAxismax - yAxismin ) *  ( yStart - yAxismax) / ( yEnd - yAxismax ) ;
-						console.log( '    scaling: '+nYmin  );
+						log( "pong-io", '    scaling: '+nYmin  );
 						def.layout.yAxis.min = nYmin;
 						if ( def.layout.yAxis.min < yAxis.scaleLoMin ) { def.layout.yAxis.min = yAxis.scaleLoMin; }
 						if ( def.layout.yAxis.min > yAxis.scaleLoMax ) { def.layout.yAxis.min = yAxis.scaleLoMax; }
@@ -1125,7 +1175,7 @@ function resample_hermite(canvas, W, H, W2, H2){
 			data2[x2 + 3] = gx_a / weights_alpha;
 			}
 		}
-	console.log("hermite = "+(Math.round(Date.now() - time1)/1000)+" s");
+	log( "pong-io","hermite = "+(Math.round(Date.now() - time1)/1000)+" s");
 	canvas.getContext("2d").clearRect(0, 0, Math.max(W, W2), Math.max(H, H2));
 	canvas.width = W2;
 	canvas.height = H2;
