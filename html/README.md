@@ -15,7 +15,7 @@
 * IO: graph with grid
 * IO: graph with time x-Axis
 * 0.9.8: IO: graph y-Axis scaling option (mouse drag)
-* 0.9.8: IO: graph scaling: touch screen support
+* 0.9.9: IO: graph scaling: touch screen support
  
 
 ## Version 0.8.x
