@@ -105,11 +105,19 @@ function pongIOmakeJS( divId  ) {
 	var contentItems = [];
 	contentItems.push( '<script>' );
 	contentItems.push( '  $( function() { var xMD = 0; xMD = 0;' );
-	contentItems.push( '    $( "#' +divId+ 'Canvas" ).mousedown( function( e ) {' );
+	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "mousedown touchstart", function( evt ) { ' );
+	contentItems.push( '      var e = evt;  ' );
+	contentItems.push( '      if ( evt.originalEvent && evt.originalEvent.touches && evt.originalEvent.touches.length > 0 ) { ' );
+	contentItems.push( '        e = evt.originalEvent.touches[0]; ' );
+	contentItems.push( '      } ' );
 	contentItems.push( '      xMD = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
-	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
+	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; return false;' );
 	contentItems.push( '    } ); ' );
-	contentItems.push( '    $( "#' +divId+ 'Canvas" ).click( function( e ) { ' );
+	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "click touchend", function( evt ) {' );
+	contentItems.push( '      var e = evt;' );
+	contentItems.push( '      if ( evt.originalEvent && evt.originalEvent.changedTouches && evt.originalEvent.changedTouches.length > 0 ) { ' );
+	contentItems.push( '        e = evt.originalEvent.changedTouches[0]; ' );
+	contentItems.push( '      } ' );
 	contentItems.push( '      var x = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
 	contentItems.push( '      var y = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
 	//contentItems.push( '      alert( x+" / "+y ); ' );
@@ -164,6 +172,7 @@ function pongIOmakeJS( divId  ) {
 			}
 		}
 	}
+	contentItems.push( '    return false;' );
 	contentItems.push( '  } ) } );' );
 	contentItems.push( '</script>' );
 	$( "#"+divId+'pong-io_Div' ).append( contentItems.join( "\n" ) );
