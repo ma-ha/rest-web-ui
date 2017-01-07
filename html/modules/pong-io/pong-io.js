@@ -115,7 +115,7 @@ function pongIOmakeJS( divId  ) {
 	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
 	contentItems.push( '      for ( var i in ioSenseArea ) { var iS = ioSenseArea[i]; console.log( i+" x:"+xMD+" y:"+yMD+""+" >> "+JSON.stringify(iS));' );
 	contentItems.push( '         if ( iS.xmin <= xMD && xMD <= iS.xmax && iS.ymin <= yMD && yMD <= iS.ymax ) { return false; }' );
-	contentItems.push( '      }' );
+	contentItems.push( '      }' );  // code above don't scrole if touch in sensArea
 	contentItems.push( '    } ); ' );
 	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "click touchend", function( evt ) {' );
 	contentItems.push( '      var e = evt;' );
@@ -788,17 +788,6 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	isa.yAxis.xmax = x+10;	isa.yAxis.ymax = y+h;
 	if (  def.layout.yAxis.scaleHiMin ) { ioSenseArea[ divId+'y' ] = isa.yAxis; } // add sensitive area
 	
-
-	// if ( def.layout.xAxis && def.layout.xAxis.axisType == 'time' ) {
-	// 	ctx.beginPath();
-	// 	ctx.strokeStyle = "#FFF";
-	// 	ctx.fillStyle   = "#FFF";
-	// 	ctx.lineWidth    = "1";
-	// 	ctx.rect( x-40, y+h+1, w+80, 21 );
-	// 	ctx.stroke();
-	// 	ctx.fill();         
-	// }
-
 	ctx.beginPath();
 	ctx.strokeStyle = "#FFF";
 	ctx.fillStyle   = "#FFF";
@@ -843,20 +832,6 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
       for ( var c = 0; c < def.layout.yAxis.grid.length; c++ ) {
           var l = parseFloat( def.layout.yAxis.grid[c] );
 					pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType );
-          // if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
-          //     var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
-          //     if ( yLogType ) {
-          //         ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
-          //         log( "pong-io", "Graph y-grid="+h+" "+y+" "+ly+"   (Log("+l+")="+Math.log(l)+")" );
-          //     }
-          //     var lyy = Math.round( y  + h - ly ); 
-          //     log( "pong-io", "Graph y-grid: "+x+"/"+lyy+" -- "+x+w+"/"+lyy );
-          //     ctx.beginPath();
-          //     ctx.strokeStyle = gCol;
-          //     ctx.moveTo( x     , lyy );
-          //     ctx.lineTo( x + w , lyy );
-          //     ctx.stroke();
-          // }
       }
 	}
 
@@ -987,9 +962,6 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 					if ( yMin <= g.data[i][1] && g.data[i][1] <= yMax ) { drawL = true; } else { drawL = false; }
 				}
 			}
-			//if ( g.length ) {
-			//}
-			
 		}
 	}
 	
