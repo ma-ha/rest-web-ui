@@ -99,32 +99,32 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 }
 
 //---------------------------------------------------------------------------------------
+var ioMTevt = {
+	start: { 
+		xMD1 : 0,    yMD1 : 0,
+		xMD2 : null, yMD2 : null
+	},
+	end :{ 
+		xMD1 : 0,    yMD1 : 0,
+		xMD2 : null, yMD2 : null
+	}
+}
 
 function pongIOmakeJS( divId  ) {
 	log( "pong-io", "pongIOmakeJS "+divId );
 	var pmd = moduleConfig[ divId ];
 	var contentItems = [];
 	contentItems.push( '<script>' );
-	contentItems.push( '  $( function() { var xMD = 0; xMD = 0;' );
+	contentItems.push( '  $( function() { ' );
 	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "mousedown touchstart", function( evt ) { ' );
-	contentItems.push( '      var e = evt;  ' );
-	contentItems.push( '      if ( evt.originalEvent && evt.originalEvent.touches && evt.originalEvent.touches.length > 0 ) { ' );
-	contentItems.push( '        e = evt.originalEvent.touches[0]; ' );
-	contentItems.push( '      } ' );
-	contentItems.push( '      xMD = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
-	contentItems.push( '      yMD = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
-	contentItems.push( '      for ( var i in ioSenseArea ) { var iS = ioSenseArea[i]; console.log( i+" x:"+xMD+" y:"+yMD+""+" >> "+JSON.stringify(iS));' );
-	contentItems.push( '         if ( iS.xmin <= xMD && xMD <= iS.xmax && iS.ymin <= yMD && yMD <= iS.ymax ) { return false; }' );
-	contentItems.push( '      }' );  // code above don't scrole if touch in sensArea
+	contentItems.push( '        return pongIoEvalMouseTouch( "'+divId+'", evt, ioMTevt.start );' );
 	contentItems.push( '    } ); ' );
 	contentItems.push( '    $( "#' +divId+ 'Canvas" ).bind( "click touchend", function( evt ) {' );
-	contentItems.push( '      var e = evt;' );
-	contentItems.push( '      if ( evt.originalEvent && evt.originalEvent.changedTouches && evt.originalEvent.changedTouches.length > 0 ) { ' );
-	contentItems.push( '        e = evt.originalEvent.changedTouches[0]; ' );
-	contentItems.push( '      } ' );
-	contentItems.push( '      var x = e.pageX - $( "#' +divId+ 'Canvas" ).offset().left; ' );
-	contentItems.push( '      var y = e.pageY - $( "#' +divId+ 'Canvas" ).offset().top; ' );
-	//contentItems.push( '      alert( x+" / "+y ); ' );
+	contentItems.push( '      pongIoEvalMouseTouch( "'+divId+'", evt, ioMTevt.end );' );
+	contentItems.push( '      var x  = ioMTevt.end.xMD1; ' );
+	contentItems.push( '      var y  = ioMTevt.end.yMD1; ' );
+	contentItems.push( '      var xS = ioMTevt.start.xMD1; ' );
+	contentItems.push( '      var yS = ioMTevt.start.yMD1; ' );
 	if ( pmd.io && pmd.io.length ) {
 		
 		for ( var c = 0; c < pmd.io.length; c++ ) {
@@ -168,7 +168,12 @@ function pongIOmakeJS( divId  ) {
 					log( "pong-io", io.type+' '+io.id );		
 					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
 						var s = ioSense[ divId ][ io.id ];
-						contentItems.push( '      pongIOcheckGraphSense( "'+divId+'", x, y, xMD, yMD, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+						contentItems.push( '      pongIOcheckGraphSense( "'+divId+'", x, y, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+						contentItems.push( '      x = ioMTevt.end.xMD2; xS = ioMTevt.start.xMD2; ' );
+						contentItems.push( '      y = ioMTevt.end.yMD2; yS = ioMTevt.start.yMD2; ' );
+						contentItems.push( '      if ( x && y && xS && yS) { ' );
+						contentItems.push( '        pongIOcheckGraphSense( "'+divId+'", x, y, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+						contentItems.push( '      }' );
 					}
 					
 				}
@@ -181,6 +186,41 @@ function pongIOmakeJS( divId  ) {
 	contentItems.push( '</script>' );
 	$( "#"+divId+'pong-io_Div' ).append( contentItems.join( "\n" ) );
 	log( "pong-io", "pongIOmakeJS end." );
+}
+
+
+function pongIoEvalMouseTouch ( divId, evt, result  ) {
+	console.log( "pongIoEvalMouseTouch start "+JSON.stringify( result ) )
+	var e = evt;  
+	result.xMD2 = null; 
+	result.yMD2 = null; 
+	if ( evt.originalEvent && evt.originalEvent.touches && evt.originalEvent.touches.length > 0 ) { 
+	  e = evt.originalEvent.touches[0]; 
+	  if ( evt.originalEvent.touches[1] ) { 
+	    result.xMD2 = evt.originalEvent.touches[1].pageX - $( '#'+divId+'Canvas' ).offset().left; 
+	    result.yMD2 = evt.originalEvent.touches[1].pageY - $( '#'+divId+'Canvas' ).offset().top; 
+	  } 
+	} else if ( evt.originalEvent && evt.originalEvent.changedTouches && evt.originalEvent.changedTouches.length > 0 ) { 
+	  e = evt.originalEvent.changedTouches[0]; 
+	  if ( evt.originalEvent.changedTouches[1] ) { 
+	    result.xMD2 = evt.originalEvent.changedTouches[1].pageX - $( '#'+divId+'Canvas' ).offset().left; 
+	    result.yMD2 = evt.originalEvent.changedTouches[1].pageY - $( '#'+divId+'Canvas' ).offset().top; 
+	  } 
+	} 
+	console.log( "pongIoEvalMouseTouch res "+(e.pageX - $( '#'+divId+'Canvas' ).offset().left)+" "+ (e.pageY - $( '#'+divId+'Canvas' ).offset().top) )
+	result.xMD1 = e.pageX - $( '#'+divId+'Canvas' ).offset().left; 
+	result.yMD1 = e.pageY - $( '#'+divId+'Canvas' ).offset().top; 
+	console.log( "pongIoEvalMouseTouch ioSenseArea" )
+	for ( var i in ioSenseArea ) { 
+		var iS = ioSenseArea[i]; 
+		console.log( i+" " +JSON.stringify(iS ));
+		if ( iS.xmin <= result.xMD1 && result.xMD1 <= iS.xmax && iS.ymin <= result.yMD1 && result.yMD1 <= iS.ymax ) { 
+			console.log( "pongIoEvalMouseTouch return false" )
+			return false; // consume event -- don't scrole if touch in sensArea 
+		}
+	}  
+	console.log( "pongIoEvalMouseTouch return true" )
+	return true;
 }
 
 //---------------------------------------------------------------------------------------
