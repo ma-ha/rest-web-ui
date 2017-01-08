@@ -190,7 +190,7 @@ function pongIOmakeJS( divId  ) {
 
 
 function pongIoEvalMouseTouch ( divId, evt, result  ) {
-	console.log( "pongIoEvalMouseTouch start "+JSON.stringify( result ) )
+	log( "pong-io",  "pongIoEvalMouseTouch start "+JSON.stringify( result ) )
 	var e = evt;  
 	result.xMD2 = null; 
 	result.yMD2 = null; 
@@ -207,19 +207,19 @@ function pongIoEvalMouseTouch ( divId, evt, result  ) {
 	    result.yMD2 = evt.originalEvent.changedTouches[1].pageY - $( '#'+divId+'Canvas' ).offset().top; 
 	  } 
 	} 
-	console.log( "pongIoEvalMouseTouch res "+(e.pageX - $( '#'+divId+'Canvas' ).offset().left)+" "+ (e.pageY - $( '#'+divId+'Canvas' ).offset().top) )
+	log( "pong-io",  "pongIoEvalMouseTouch res "+(e.pageX - $( '#'+divId+'Canvas' ).offset().left)+" "+ (e.pageY - $( '#'+divId+'Canvas' ).offset().top) )
 	result.xMD1 = e.pageX - $( '#'+divId+'Canvas' ).offset().left; 
 	result.yMD1 = e.pageY - $( '#'+divId+'Canvas' ).offset().top; 
-	console.log( "pongIoEvalMouseTouch ioSenseArea" )
+	log( "pong-io",  "pongIoEvalMouseTouch ioSenseArea" )
 	for ( var i in ioSenseArea ) { 
 		var iS = ioSenseArea[i]; 
-		console.log( i+" " +JSON.stringify(iS ));
+		log( "pong-io",  i+" " +JSON.stringify(iS ));
 		if ( iS.xmin <= result.xMD1 && result.xMD1 <= iS.xmax && iS.ymin <= result.yMD1 && result.yMD1 <= iS.ymax ) { 
-			console.log( "pongIoEvalMouseTouch return false" )
+			log( "pong-io",  "pongIoEvalMouseTouch return false" )
 			return false; // consume event -- don't scrole if touch in sensArea 
 		}
 	}  
-	console.log( "pongIoEvalMouseTouch return true" )
+	log( "pong-io",  "pongIoEvalMouseTouch return true" )
 	return true;
 }
 
