@@ -1039,7 +1039,9 @@ function pongIoGetLbls( def, yMin, yMax, no, old ) {
 }
 
 function pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType ) {
-		if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax  ) {
+	var ll = l;
+	if ( yLogType ) { ll = Math.log(l); } 
+	if ( ! isNaN( l ) &&  lYmin <= ll  &&  ll <= lYmax ) {
 			var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
 			if ( yLogType ) {
 					ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );
@@ -1055,7 +1057,9 @@ function pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w,
 	}
 }
 function pongIoGraphLabel( divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, yLogType ) {
-	if ( ! isNaN( l ) &&  lYmin <= l  &&  l <= lYmax ) {
+	var ll = l;
+	if ( yLogType ) { ll = Math.log(l); } 
+	if ( ! isNaN( l ) &&  lYmin <= ll  &&  ll <= lYmax ) {
 		var ly = h * (  l - lYmin ) / ( lYmax - lYmin );
 		if ( yLogType ) {
 			ly = h * ( Math.log(l) - lYmin ) / ( lYmax - lYmin );

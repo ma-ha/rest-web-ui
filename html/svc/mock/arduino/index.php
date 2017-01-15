@@ -20,6 +20,7 @@ $data['voltage'] =
 	array(
 		array( 'name' => 'AD0', 'data' => $dta ),
 	);
+$data['voltageLog'] = $data['voltage'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$_POST = json_decode(file_get_contents('php://input'), true);
