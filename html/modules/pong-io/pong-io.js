@@ -953,10 +953,10 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	      var lblDt = xMin + ( xMax - xMin ) * xi / cnt;
 	      var lbl = ( new Date( lblDt ) ).toLocaleTimeString();
 	      textOut(  divId, nDef, ctx, lbl, x+dx*xi, y+h+10, {"font":"8pt Arial"} );
-	      if ( xi == 0 || xi == cnt ) {
+	      //if ( xi == 0 || xi == cnt ) {
 	        lbl = ( new Date( lblDt ) ).toLocaleDateString();
 	        textOut(  divId, nDef, ctx, lbl, x+dx*xi, y+h+20, {"font":"8pt Arial"} );                       
-	      } 
+	      //} 
 	    }           
 	  } 
 	} 
