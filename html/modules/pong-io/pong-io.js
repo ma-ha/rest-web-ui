@@ -878,8 +878,9 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	// render graph lables
 	ctx.textAlign = "end";
 	ctx.textBaseline = "middle";
-	var lblCnt = 0
+	var lblCnt = 0;
 	var xx = x + 4, xt= x - 3;
+	def.layout.yAxis.labelsLo = pongIoGetLbls( def, yMin, yMax, 2 ) || def.layout.yAxis.labelsLo;
 	if ( def.layout.yAxis.labelsLo && def.layout.yAxis.labelsLo.length) {
 		for ( var c = 0; c < def.layout.yAxis.labelsLo.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labelsLo[c] );
@@ -889,6 +890,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 			}
 		}
 	}
+	def.layout.yAxis.labels = pongIoGetLbls( def, yMin, yMax, 1 ) || def.layout.yAxis.labels;
 	if ( lblCnt <= 4 && def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
 		for ( var c = 0; c < def.layout.yAxis.labels.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labels[c] );
@@ -898,6 +900,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 			}
 		}
 	}
+	def.layout.yAxis.labelsHi = pongIoGetLbls( def, yMin, yMax, 0 ) || def.layout.yAxis.labelsHi;
 	if ( lblCnt <= 4 && def.layout.yAxis.labelsHi && def.layout.yAxis.labelsHi.length ) {
 		for ( var c = 0; c < def.layout.yAxis.labelsHi.length; c++ ) {
 			var l = parseFloat( def.layout.yAxis.labelsHi[c] );
@@ -1007,6 +1010,32 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	
 	// TODO IO: implement graph
 	log( "pong-io", "pongIOrenderGraph end.");
+}
+
+function pongIoGetLbls( def, yMin, yMax, no, old ) {
+	if ( def.layout.yAxis.axisType != "logarithmic" ) {
+		if ( def.layout.yAxis.labelInteval && def.layout.yAxis.labelInteval[ no ] ) {
+			log( 'pong-io', 'create label ...' );
+			var lblArr = [];
+			var yLbI = parseFloat( def.layout.yAxis.labelInteval[ no ] );
+			log( 'pong-io', 'create labels: interval='+yLbI );
+			var yIv = Math.round( yMin - yMin % yLbI );
+			log( 'pong-io', 'starting '+yIv +'  min='+yMin+'  max='+yMax );
+			while ( yIv <= yMax ) {
+				var alreadyDone = false;
+				for ( var i=2; i > no; i-- ) {
+					if ( (yIv % def.layout.yAxis.labelInteval[ i ] ) == 0 ) { alreadyDone = true; }
+				}
+				if ( ! alreadyDone ) { 
+					lblArr.push( yIv.toString() );
+				}
+				yIv += yLbI;
+			}
+		  log( 'pong-io', JSON.stringify( lblArr ) );
+			return lblArr;
+		}
+	}
+	return null;
 }
 
 function pongIoGridLine(  divId, def, ctx, l, lYmin, lYmax, x, xx,  xt, y, h, w, gCol, yLogType ) {
