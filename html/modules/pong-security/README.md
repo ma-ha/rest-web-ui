@@ -24,7 +24,9 @@ Clicking _Login_ starts a modal form to request user and password.
 		}
 	}
 
-The param <code>registgerURL<code> is optional to show the _Register_ link.
+The params are option, e.g. `registgerURL` shows the _Register_ link.
+
+If you define a `"loginPage"` (=layout name) in the param this page will bw shown after successful login.
 
 ## Login
 
