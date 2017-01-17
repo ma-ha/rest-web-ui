@@ -876,7 +876,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
     var cls = 'cell'+cellDef.id.replace(/\./g,'') + ' pongDate '
     var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
     //console.log( JSON.stringify(cellDef) )
-    var unixDt = parseInt( cellDta[ cellDef.id ] )
+    var unixDt = parseInt( cellVal )
     log( "Pong-TableX", 'Date: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
     var theDate = ( cellType == 'datems' ? new Date( unixDt ) : new Date( unixDt*1000 ) );
     var datrStr = $.datepicker.formatDate( fmt, theDate );
