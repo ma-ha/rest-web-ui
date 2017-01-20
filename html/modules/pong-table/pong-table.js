@@ -1009,9 +1009,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
         url = addRowIdGetParam ( divId, url, cellDta );
       //} 
       //param = getRowIdPostParam ( divId, cellDta );         
-    } else {
-      //alert( "rowId == null" );
-    }
+    } 
     $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
     
   } else if ( cellType == 'img' ) {
