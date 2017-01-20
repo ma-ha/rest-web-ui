@@ -1010,7 +1010,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
       //} 
       //param = getRowIdPostParam ( divId, cellDta );         
     } else {
-      alert( "rowId == null" );
+      //alert( "rowId == null" );
     }
     $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
     
