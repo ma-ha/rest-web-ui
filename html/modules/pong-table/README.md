@@ -344,9 +344,9 @@ The actions are same like form actions (defined separately), example:
 		}
 	}
 
-## "date" Column Type
+## "date" / "datems" Column Type
 
-The "date" type displays a Unix Date (milliseconds since 1970) in a human readable format.
+The "date" type displays a Unix Date (seconds since 1970) or "datems" a Java/JS date (milliseconds since 1970) in a human readable format.
 
 Example:
 
@@ -358,6 +358,8 @@ There are some advantages of the date column rather then formatting the data at 
 * sorting still works
 * sorting uses a higher precision than displayed text does
 * i18n works (in the example you need to add a "translation" string for `"YYYY/MM/DD"`, e.g. `DD.MMM.YYY`)
+
+For formatting options have a look at: http://momentjs.com/docs/#/displaying/
 
 ## SetData for other views or plug-ins
 

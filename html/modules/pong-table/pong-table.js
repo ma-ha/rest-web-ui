@@ -874,12 +874,15 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
   } else if ( cellType == 'date' || cellType == 'datems' ) {
     
     var cls = 'cell'+cellDef.id.replace(/\./g,'') + ' pongDate '
-    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'yy-mm-dd' ) ); 
+    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'YYYY-MM-DD hh:mm' ) ); 
     //console.log( JSON.stringify(cellDef) )
     var unixDt = parseInt( cellDta[ cellDef.id ] )
     log( "Pong-TableX", 'Date: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
     var theDate = ( cellType == 'datems' ? new Date( unixDt ) : new Date( unixDt*1000 ) );
-    var datrStr = $.datepicker.formatDate( fmt, theDate );
+    //old 
+    //var datrStr = $.datepicker.formatDate( fmt, theDate );
+    // new
+    var datrStr = moment( theDate ).format( fmt );
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
       editable = ' data-r="'+r+'" data-c="'+c+'"';
       var cID = divId+'R'+i+cellDef.id;

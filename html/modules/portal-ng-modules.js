@@ -99,7 +99,7 @@ moduleMap[ "pong-table" ] = {
         { hook: "update", method:"pongTableUpdateData" },
         { hook: "setData", method:"pongTableSetData" }
     ],
-    "include":[ "jquery.elevatezoom.js" ]
+    "include":[ "jquery.elevatezoom.js", "moment.js" ]
 };
 
 moduleMap[ "pong-easytable" ] = {
