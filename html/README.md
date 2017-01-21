@@ -12,11 +12,12 @@
 * Icons with Info and refresh
 * added "info=<pkg>" in URL to get console logs
 * date column (editable)
-* IO: graph with grid
-* IO: graph with time x-Axis
-* 0.9.8: IO: graph y-Axis scaling option (mouse drag)
-* 0.9.9: IO: graph scaling: touch screen support
-* 0.9.13: table: enhanced date formatting 
+* [IO](modules/pong-io): graph with grid
+* [IO](modules/pong-io): graph with time x-Axis
+* 0.9.8: [IO](modules/pong-io): graph y-Axis scaling option (mouse drag)
+* 0.9.9: [IO](modules/pong-io): graph scaling: touch screen support
+* 0.9.13: [Table](modules/pong-table): enhanced date formatting 
+* 0.9.15: [IO](modules/pong-io) pollOptions
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
