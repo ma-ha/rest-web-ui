@@ -28,6 +28,14 @@
 							"values":[ "on", "off" ],
 							"defaultValue":"off"
 						},
+					  { "id": "btn", "type": "Button", "label": "press me",
+							"width": "100", "height": "25",
+							"pos": { "x": "5", "y": "300" },
+							"values": [
+								{ "buttonState": "ON",  "led": "1" },
+								{ "buttonState": "OFF", "led": "0" }
+							]
+						},
 						{
 							"id":"voltage",
 							"type":"Graph",

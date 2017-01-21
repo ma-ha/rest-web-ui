@@ -407,7 +407,7 @@ function pongIOrenderGauge( ctx, def, dta ) {
 //---------------------------------------------------------------------------------------
 
 function pongIOrenderButton( divId, ctx, def, dta ) {
-	log( "pong-ioX", "pongIOrenderButton '"+def.id+"': "+JSON.stringify(dta) );
+	log( "pong-io", "pongIOrenderButton '"+def.id+"': "+JSON.stringify(dta) );
 	if ( ! def.pos || ! def.pos.x || ! def.pos.y ) { log( "pong-ioX", "pos.x or pos.y  not set"); return; }
 	var x = parseInt( def.pos.x );
 	var y = parseInt( def.pos.y );
@@ -465,13 +465,42 @@ function pongIOrenderButton( divId, ctx, def, dta ) {
 		textOut( divId, def, ctx, def.label, xx, yy, { strokeStyle:"#DDD" } );
 	}
 	
-	log( "pong-ioX", "pongIOrenderButton end.");
+	log( "pong-io", "pongIOrenderButton end.");
+}
+
+function pongIoButtonFlash( divId, id, col1, col2 ) {
+	log( "pong-io", "pongIoButtonFlash "+ id );
+	var def = null
+	for ( var i = 0; i < moduleConfig[ divId ].io.length; i++ ) {
+		if ( moduleConfig[ divId ].io[i].id == id ) {
+			def = moduleConfig[ divId ].io[i];	break;
+		}
+	}
+	if ( def && def.label ) {
+		log( "pong-io", "pongIoButtonFlash >>  "+ id );
+		var ctx = document.getElementById( divId+'Canvas' ).getContext("2d");
+		var x = parseInt( def.pos.x );
+		var y = parseInt( def.pos.y );
+		var w = 50;
+		var h = 25;
+		if ( def.width  ) {  w = parseInt( def.width ); }
+		if ( def.height ) {  h = parseInt( def.height ); }
+		var xx = x + w/2, yy = y + h/2; 
+		ctx.textAlign = "center"; 
+		ctx.textBaseline = "middle"; 
+		var ndef = JSON.parse( JSON.stringify( def ) ); 
+		ndef.textStrokeColor = col1;
+		ndef.textFillColor   = col2;
+		log( "pong-io", "pongIoButtonFlash ......." );
+ 		textOut( divId, ndef, ctx, def.label, xx, yy, {} );
+	}
 }
 
 function pongIOcheckButtonSense( divId, x, y, id, s ) {
 	log( "pong-io", "pongIOcheckButtonSense: "+x+"/"+y+"  "+s.x1+"-"+s.x2+"/"+s.y1+"-"+s.y2);
 	if ( ( x > s.x1 ) && ( x < s.x2 ) && ( y > s.y1 ) && ( y < s.y2 ) ) {
 		log( "pong-io", "Button: "+id );
+		pongIoButtonFlash( divId,id,'#0F0','#0F0');
 		$.ajax( 
 			{ url: moduleConfig[ divId ].dataURL, 
 			  type: "POST", 
@@ -813,7 +842,7 @@ function pongIOrenderLED( divId, ctx, def, dta ) {
 //---------------------------------------------------------------------------------------
 
 function pongIOrenderLabel( divId, ctx, def, dta, x , y ) {
-	log( "pong-ioX", "pongIOrenderLabel "+JSON.stringify(def) );
+	log( "pong-io", "pongIOrenderLabel "+JSON.stringify(def) );
 	ctx.textAlign = "center";
 	ctx.textBaseline = "bottom";
 	if ( def.label ) {
@@ -822,7 +851,7 @@ function pongIOrenderLabel( divId, ctx, def, dta, x , y ) {
 		// TODO
 	} else if ( def.data && def.format ) {
 		var txt = getSubData( dta, def.data );
-		log( "pong-ioX", " "+def.data+": "+txt );
+		log( "pong-io", " "+def.data+": "+txt );
 		if ( txt ) {
 			textOut( divId, def, ctx, sprintf( def.format, txt ), x, y, null );				
 		}
