@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 log( "pong-io", "load module"); // print this on console, when module is loaded
 var ioSense = new Array();
+var ioTimer = {};
 var ioSenseArea = {};
 
 // ======= Code for "loadResourcesHtml" hook ================================================
@@ -85,17 +86,62 @@ function pongIoRenderHTML( divId, resourceURL, paramObj, pmd ) {
 	
 	
 	// create polling "loop"
-	log( "pong-io", ">>>>> Try to create poolDataTimerId "+pmd.poll  );
+	log( "pong-io", ">>>>> Try to create ioTimer "+pmd.poll  );
 	if ( pmd.poll ) {
 		var t = parseInt( pmd.poll );
-		log( "pong-io", ">>>>> create poolDataTimerId t="+t );
+		log( "pong-io", ">>>>> create ioTimer t="+t );
 		if  ( ! isNaN( t ) ) {			
-			poolDataTimerId = setInterval( "pongIoUpdateTimer"+divId+"()", t );
+			ioTimer[ divId ] = setInterval( "pongIoUpdateTimer"+divId+"()", t );
 			log( "pong-io", ">>>>> startet pongIoUpdateTimer"+divId+"()" );
 		}
 	}
 	
 	log( "pong-io", "pongIoRenderHTML end.");
+}
+
+//---------------------------------------------------------------------------------------
+function pongIOcreTimerAction( divId, modalName, resourceURL )  {
+	var pmd = moduleConfig[ divId+'Content' ];
+  if ( ! pmd.pollOptions ) { return ""; }
+	var icon = 'ui-icon-arrowrefresh-1-s';
+	var html = '<div id="'+divId+'TimerDlg">';
+	html += '<form id="'+divId+'TimerDlg"><fieldset>';
+	for ( var i=0; i < pmd.pollOptions.length; i++ ) {
+		var ts = pmd.pollOptions[i]
+		if ( pmd.poll = ts*1000 ) {
+		  html += ' <input type="radio" name="'+divId+'ContentIntervalRadio" value="'+ts+'" checked>'+ts+' sec<br>';
+		} else {
+	  	html += ' <input type="radio" name="'+divId+'ContentIntervalRadio" value="'+ts+'">'+ts+' sec<br>';
+		}
+	}
+	html += '</fieldset></form>';
+	html += '</div>';
+	html += '<script> $(function() { $( "#'+divId+'TimerDlg" ).dialog( ';
+	html += ' { autoOpen: false, height: '+(140+25*pmd.pollOptions.length) +', width: 300, modal: true, title:"'+$.i18n('Change Update Insterval')+'",';
+	html += ' buttons: { "OK": function() { pongIoChangeTimer("'+divId+'Content"); $( this ).dialog( "close" );  },';
+	html += ' Cancel: function() { $( this ).dialog( "close" ); } } }); ';
+	html += '});</script>';			
+	html += '<button id="'+divId+'TimerDlgBt">'+$.i18n('Change Timer')+'</button>';
+	html += '<script>  $(function() { $( "#'+divId+'TimerDlgBt" ).button( ';
+	html += ' { icons:{primary: "'+icon+'"}, text: false } ).click( ';
+	html += ' function() { $( "#'+divId+'TimerDlg" ).dialog( "open" ); }); }); ';
+	html += '</script>';		
+	return html;
+}
+
+function pongIoChangeTimer( divId ) {
+	var newTimerMSec = $( 'input[name='+divId+'IntervalRadio]:checked').val() * 1000;
+	if ( ioTimer[ divId ] ) {
+		log( "pong-io", ">>>>> clear Timer for "+divId );
+		clearTimeout( ioTimer[ divId ] );
+	}
+	log( "pong-io", ">>>> new Timer  "+newTimerMSec);
+	if  ( ! isNaN( newTimerMSec ) ) {			
+		log( "pong-io", ">>>>> staring pongIoUpdateTimer"+divId+"() ..." );
+		ioTimer[ divId ] = setInterval( "pongIoUpdateTimer"+divId+"()", newTimerMSec );
+		log( "pong-io", ">>>>> startet pongIoUpdateTimer"+divId+"()" );
+		alert( 'Changed update interval to '+newTimerMSec+' ms' );
+	}
 }
 
 //---------------------------------------------------------------------------------------

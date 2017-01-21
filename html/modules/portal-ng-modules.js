@@ -218,6 +218,7 @@ moduleMap[ "pong-map" ] = {
 moduleMap[ "pong-io" ] = {
 		"name": "pong-io",
 	    "hooks": [
+            { hook: "addActionBtn", method:"pongIOcreTimerAction" },
 	        { hook: "loadResourcesHtml", method:"pongIoDivHTML" },
 	        { hook: "update", method:"pongIoUpdateData" }
 	    ]

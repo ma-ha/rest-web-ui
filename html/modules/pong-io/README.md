@@ -35,6 +35,11 @@ The response should be an "array" of the values:
 	
 Changes are POSTed to the 'dataURL' and the response will be set as update.
 
+If cyclic updates are required you need to set the "poll" value (in milliseconds).
+
+If you want the user to change the poll interval, set an array of options (in second):
+
+    "pollOptions":["1","10","30","60"]
 
 ### Lights / LEDs
 The Lights or LEDs needs only a unique ID and coordinates where to place it.

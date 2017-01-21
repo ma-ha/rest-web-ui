@@ -14,6 +14,7 @@
 					"imgURL":"svc/layout/demos/io2/demo.png",
 					"dataURL":"svc/mock/arduino/",
 					"poll":60000,
+					"pollOptions":["1","5","10","30","60"],
 					"io":[
 						{
 							"id":"myFirstLED",
