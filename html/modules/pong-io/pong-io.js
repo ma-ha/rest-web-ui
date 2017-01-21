@@ -215,10 +215,10 @@ function pongIOmakeJS( divId  ) {
 					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
 						var s = ioSense[ divId ][ io.id ];
 						contentItems.push( '      pongIOcheckGraphSense( "'+divId+'", x, y, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
-						contentItems.push( '      x = ioMTevt.end.xMD2; xS = ioMTevt.start.xMD2; ' );
-						contentItems.push( '      y = ioMTevt.end.yMD2; yS = ioMTevt.start.yMD2; ' );
-						contentItems.push( '      if ( x && y && xS && yS) { ' );
-						contentItems.push( '        pongIOcheckGraphSense( "'+divId+'", x, y, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+						contentItems.push( '      var xE = ioMTevt.end.xMD2; xS = ioMTevt.start.xMD2; ' );
+						contentItems.push( '      var yE = ioMTevt.end.yMD2; yS = ioMTevt.start.yMD2; ' );
+						contentItems.push( '      if ( xE && yE && xS && yS) { ' );
+						contentItems.push( '        pongIOcheckGraphSense( "'+divId+'", xE, yE, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
 						contentItems.push( '      }' );
 					}
 					
