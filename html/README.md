@@ -18,6 +18,7 @@
 * 0.9.9: [IO](modules/pong-io): graph scaling: touch screen support
 * 0.9.13: [Table](modules/pong-table): enhanced date formatting 
 * 0.9.15: [IO](modules/pong-io) pollOptions
+* 0.9.17: IO graph x-scaling
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook

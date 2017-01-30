@@ -215,10 +215,10 @@ function pongIOmakeJS( divId  ) {
 					if ( ioSense[ divId ] && ioSense[ divId ][ io.id ] ) {
 						var s = ioSense[ divId ][ io.id ];
 						contentItems.push( '      pongIOcheckGraphSense( "'+divId+'", x, y, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
-						contentItems.push( '      var xE = ioMTevt.end.xMD2; xS = ioMTevt.start.xMD2; ' );
-						contentItems.push( '      var yE = ioMTevt.end.yMD2; yS = ioMTevt.start.yMD2; ' );
-						contentItems.push( '      if ( xE && yE && xS && yS) { ' );
-						contentItems.push( '        pongIOcheckGraphSense( "'+divId+'", xE, yE, xS, yS, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
+						contentItems.push( '      var xE2 = ioMTevt.end.xMD2; var xS2 = ioMTevt.start.xMD2; ' );
+						contentItems.push( '      var yE2 = ioMTevt.end.yMD2; var yS2 = ioMTevt.start.yMD2; ' );
+						contentItems.push( '      if ( xE2 && yE2 && xS2 && yS2 ) { ' );
+						contentItems.push( '        pongIOcheckGraphSense( "'+divId+'", xE2, yE2, xS2, yS2, "'+io.id+'", '+JSON.stringify( s )+' ); ' );						
 						contentItems.push( '      }' );
 					}
 					
@@ -901,8 +901,11 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ioSense[ divId ][ def.id ] = isa;
 	isa.yAxis.xmin = x-40;	isa.yAxis.ymin = y;
 	isa.yAxis.xmax = x+10;	isa.yAxis.ymax = y+h;
+	isa.xAxis.xmin = x;    	isa.xAxis.ymin = y+h-10;
+	isa.xAxis.xmax = x+w;	  isa.xAxis.ymax = y+h+40;
 	if (  def.layout.yAxis.scaleHiMin ) { ioSenseArea[ divId+'y' ] = isa.yAxis; } // add sensitive area
-	
+	ioSenseArea[ divId+'x' ] = isa.xAxis;
+
 	ctx.beginPath();
 	ctx.strokeStyle = "#FFF";
 	ctx.fillStyle   = "#FFF";
@@ -922,8 +925,9 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	ctx.stroke();
 	ctx.fill();  		
     
+	var xx = x + w/2;
+	var yy = y-6;
 	if ( def.layout.name ) {
-		var xx = x + w/2, yy = y-6;
 		ctx.textAlign = "center";
 		ctx.textBaseline = "bottom";
 		textOut(  divId, def, ctx, def.layout.name, xx, y, {"font":"10pt Arial"} );		
@@ -995,7 +999,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	  log( "pong-io",  'do time '+dx );
 	  var xMin = null; 
 	  var xMax = null;
-
+		// determin xMin and xMax
 	  if ( dta  && dta.length ) { 
 	    for ( var c = 0; c < dta.length; c++ ) {
 	      var g = dta[c];
@@ -1009,6 +1013,15 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	      }
 	    }
 	  }
+		if ( xMin == xMax ) { xMax += 1; }
+		else 
+		if ( def.layout.yAxis.zoomMin && def.layout.yAxis.zoomMax 
+			   && def.layout.yAxis.zoomMin > 0.0 && def.layout.yAxis.zoomMax < 1.0  ) { // zoom x
+			xMin = xMin + def.layout.yAxis.zoomMin * ( xMax - xMin );
+			xMax = xMin + def.layout.yAxis.zoomMax * ( xMax - xMin );
+			log( "pong-io", 'Scale x '+xMin+' - '+xMax)
+		}
+
 	  log( "pong-io", "##### Min/Max "+ xMin+" / "+xMax  );
 	  var nDef = JSON.parse( JSON.stringify(def) );
 	  nDef.textAlign = 'center';
@@ -1045,12 +1058,6 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 			var g = dta[c];
 			log( "pong-io", ">>>>>>>>>>> #d="+ g.data.length  );
 			if ( g.data && g.data.length ) {
-				var xMin = g.data[0][0]; xMax = g.data[0][0];
-				for ( var i = 0; i < g.data.length; i++ ) {
-					if ( xMax < g.data[i][0] ) { xMax = g.data[i][0] }
-					if ( xMin > g.data[i][0] ) { xMin = g.data[i][0] }
-				}
-				if ( xMin == xMax ) { xMax += 1; }
 				log( "pong-io", " xMin="+xMin+" xMax="+xMax );
 				var drawL = false;
 				ctx.beginPath();
@@ -1062,6 +1069,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 					var xx = x + Math.round(  w * ( g.data[i][0] - xMin ) / ( xMax - xMin) );
 					//log( "pong-io", " xx = "+xx +"    > "+g.data[i][0]+" "+w+" "+x );
 					var yy = y;
+					if ( g.data[i][0] < xMin || g.data[i][0] > xMax ) { continue; }
 					if ( yLogType ) {
 						yy = y + h - Math.round( h * ( Math.log( g.data[i][1] ) - lYmin ) / ( lYmax - lYmin ) );
 						//log( "pong-io", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
@@ -1163,6 +1171,23 @@ function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
 		}
 	}
 	if ( def == null ) { return; }
+
+	if ( s.xAxis && s.xAxis.xmin && s.xAxis.xmax && s.xAxis.ymin && s.xAxis.ymax  ) {
+		if ( s.xAxis.xmin < x && x < s.xAxis.xmax && s.xAxis.ymin < yMD && yMD < s.xAxis.ymax ) { // click is for this axis
+			if ( x == xMD && y == yMD ) {
+				def.layout.yAxis.zoomMin = 0.0;
+				def.layout.yAxis.zoomMax = 1.0;					
+				log( "pong-io", 'pongIOcheckGraphSense: '+id+'  UNZOOM!' );
+			} else {
+				var xI = ( x < xMD ? x   : xMD );
+				var xJ = ( x < xMD ? xMD : x   );
+				def.layout.yAxis.zoomMin =  ( xI - s.xAxis.xmin ) / ( s.xAxis.xmax - s.xAxis.xmin );  
+				def.layout.yAxis.zoomMax =  ( xJ - s.xAxis.xmin ) / ( s.xAxis.xmax - s.xAxis.xmin );  
+				log( "pong-io", 'pongIOcheckGraphSense: '+id+' '+def.layout.yAxis.zoomMin +' / '+def.layout.yAxis.zoomMax );
+			}
+			updateRequired = true;
+		}
+	}
 
 	if ( s.yAxis && s.yAxis.xmin && s.yAxis.xmax && s.yAxis.ymin && s.yAxis.ymax  ) {
 		if ( s.yAxis.xmin < x && x < s.yAxis.xmax && s.yAxis.ymin < yMD && yMD < s.yAxis.ymax ) { // click is for this axis
