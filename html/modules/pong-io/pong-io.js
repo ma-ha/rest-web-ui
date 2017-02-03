@@ -902,7 +902,7 @@ function pongIOrenderGraph( divId, ctx, def, dta ) {
 	isa.yAxis.xmin = x-40;	isa.yAxis.ymin = y;
 	isa.yAxis.xmax = x+10;	isa.yAxis.ymax = y+h;
 	isa.xAxis.xmin = x;    	isa.xAxis.ymin = y+h-10;
-	isa.xAxis.xmax = x+w;	  isa.xAxis.ymax = y+h+40;
+	isa.xAxis.xmax = x+w+20;	  isa.xAxis.ymax = y+h+40;
 	if (  def.layout.yAxis.scaleHiMin ) { ioSenseArea[ divId+'y' ] = isa.yAxis; } // add sensitive area
 	ioSenseArea[ divId+'x' ] = isa.xAxis;
 
@@ -1170,6 +1170,7 @@ function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
 			def = moduleConfig[ divId ].io[i];	break;
 		}
 	}
+
 	if ( def == null ) { return; }
 
 	if ( s.xAxis && s.xAxis.xmin && s.xAxis.xmax && s.xAxis.ymin && s.xAxis.ymax  ) {
@@ -1179,6 +1180,7 @@ function pongIOcheckGraphSense(  divId, x, y, xMD, yMD,  id, s ) {
 				def.layout.yAxis.zoomMax = 1.0;					
 				log( "pong-io", 'pongIOcheckGraphSense: '+id+'  UNZOOM!' );
 			} else {
+				if ( x > s.xAxis.xmax -20 ) { x = s.xAxis.xmax - 20; }
 				var xI = ( x < xMD ? x   : xMD );
 				var xJ = ( x < xMD ? xMD : x   );
 				def.layout.yAxis.zoomMin =  ( xI - s.xAxis.xmin ) / ( s.xAxis.xmax - s.xAxis.xmin );  
