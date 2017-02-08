@@ -282,7 +282,8 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
 				prop = tbl.filter.dataReqParams[y];
 				contentItems.push( '<p><label for="'+divId+prop.id+'filter">'+ $.i18n( prop.label ) +'</label>' );
-				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'filter" class="text ui-widget-content ui-corner-all"'; 
+				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'filter" class="text ui-widget-content ui-corner-all"';
+				if ( prop.description ) { nameAndClass += ' title="'+prop.description+'"'} 
 				postLst.push( prop.id+": $( '#"+divId+prop.id+"filter' ).val()" );
 
 				if ( prop.type && prop.type == 'date' ) {
