@@ -26,17 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$d = $d - 1000000;
 	}                                
 	if ( isset( $_GET['dataFilter'] ) ) {
-		error_log( 'we have dataFilter ');
+		// error_log( 'we have dataFilter ');
 		$filter = $_GET['dataFilter'];
 		if ( isset( $filter['dateMin'] ) &&  $filter['dateMin']  != '' ) {
 			$time = strtotime(  $filter['dateMin'] );
-			error_log( 'we have dateMin '.$time );
+			// error_log( 'we have dateMin '.$time );
 			for ( $i = count( $rows )-1; $i>=0; $i-- ) {
 				if ( $rows[$i]['Created'] < $time ) 
 					array_splice( $rows, $i, 1 );
 			}
 		}
-	} else 		error_log( implode("|",$_GET) );
+	} 
+	// else 		error_log( implode("|",$_GET) );
 
 	echo json_encode( $rows );
 }
