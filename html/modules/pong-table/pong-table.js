@@ -205,7 +205,11 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			pollHTML.push( '<script>' );
 			pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
 			pollHTML.push( '      	if ( poTbl[ "'+divId+'" ].polling ) { ' );
-			pollHTML.push( '      		pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+			if ( tbl  && tbl.filter ) {
+				pollHTML.push( '      		pongTableUpdateData( "'+divId+'", { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ');
+			} else {
+				pollHTML.push( '      		pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+			}
 			pollHTML.push( '        }' );
 			pollHTML.push( '  }' );
 			pollHTML.push( '</script>' );
@@ -812,6 +816,8 @@ function tblCells( divId ) {
 	  var maxP = Math.ceil( dtaArr.length / rPP );
 	  var curP = Math.round( rowEn / rPP );
 	  $( "#"+divId+'PaginLbl' ).html( $.i18n( "page" )+" "+curP+"/"+maxP+ " ("+dtaArr.length+" "+$.i18n("rows")+")" );
+	  $( '#'+divId+'PongTable' ).find( "td" ).html( '...' );
+
 	} else {
 	  // need to create empty table rows and cells 
 	  // del all rows, except 1st
@@ -894,7 +900,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
   } else if ( cellType == 'date' || cellType == 'datems' ) {
     
     var cls = 'cell'+cellDef.id.replace(/\./g,'') + ' pongDate '
-    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'YYYY-MM-DD hh:mm' ) ); 
+    var fmt = $.i18n( ( cellDef.format ? cellDef.format : 'YYYY-MM-DD HH:mm' ) ); 
     //console.log( JSON.stringify(cellDef) )
     var unixDt = parseInt( cellVal )
     log( "Pong-TableX", 'Date: ID="'+cellId+ '"  format:'+ fmt + ' '+unixDt);
