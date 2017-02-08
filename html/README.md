@@ -19,6 +19,7 @@
 * 0.9.13: [Table](modules/pong-table): enhanced date formatting 
 * 0.9.15: [IO](modules/pong-io) pollOptions
 * 0.9.17/18: IO graph x-scaling
+* 0.9.19: date picker in [table](modules/pong-table) filter and filter default value
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
