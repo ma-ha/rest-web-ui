@@ -924,7 +924,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
           +' ).done( function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' 
           +' ).fail( function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
           // known: wrong data still in poTbl[ divId ].pongTableData -- but who cares
-          +'$( "#'+cID+'" ).html( $.datepicker.formatDate( "'+fmt+'", new Date(d) ) ); '
+          +'$( "#'+cID+'" ).html( moment( new Date( d ) ).format( "'+fmt+'" ) ); '
           +'} )} ); '
           +'</script>' 
       );
