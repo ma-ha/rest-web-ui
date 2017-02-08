@@ -45,7 +45,11 @@ Example JSON definiton from <code><nowiki>../svc/[resourceUrl]/pong-table</nowik
 	    "maxRows":"10"
 	 }
 
-The <code>"filter"</code> is optional. 
+The `"filter":{...}` is optional and adds parameters to the dataURL GET request. 
+The `dataReqParams` must have an `id` and `label` defined. 
+Also supported:
+* `"type":"date"` 
+* `"defaultVal":"...."`
 
 In the example the table is the top level object in the content. It may happen, that the table is somewhere in the object tree of the JSON result. 
 You can use the _dataDocSubPath_ attribute, to tell the module the sub-path of the table data, e.g.

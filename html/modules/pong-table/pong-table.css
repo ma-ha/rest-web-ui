@@ -39,3 +39,11 @@ div.editable {
 	margin-left: 4px;
 	
 }
+
+.pongListFrm { font-size: 10pt; }
+.pongListFrm  p {
+        display: inline;
+        margin-right: 15px;
+}
+.pongListFrm button { font-size: 0.8em; } 
+.pongListFrm .hasDatepicker {width: 100px; text-align: center; }

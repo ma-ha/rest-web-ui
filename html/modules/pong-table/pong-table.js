@@ -277,12 +277,32 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			postLst = [];						
 			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
 				prop = tbl.filter.dataReqParams[y];
-				contentItems.push( '<p><label for="'+divId+prop.id+'">'+ $.i18n( prop.label ) +'</label>' );
-				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'" class="text ui-widget-content ui-corner-all"'; 
-				postLst.push( prop.id+": $( '#"+divId+prop.id+"' ).val()" )
-				contentItems.push( '<input type="text" '+nameAndClass+'/></p>' );
-				// TODO add field types
+				contentItems.push( '<p><label for="'+divId+prop.id+'filter">'+ $.i18n( prop.label ) +'</label>' );
+				var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'filter" class="text ui-widget-content ui-corner-all"'; 
+				postLst.push( prop.id+": $( '#"+divId+prop.id+"filter' ).val()" );
+
+				if ( prop.type && prop.type == 'date' ) {
+
+					var fmt = $.i18n( ( prop.format ? prop.format : 'yy-mm-dd' ) ); 
+				  var editable = '';
+					var datrStr  = ''  
+					if ( prop.defaultVal ) {
+						var unixDt = parseInt( prop.defaultVal  ); //TODO no default defined ??
+						log( "Pong-Table", 'Filter Date  format:'+ fmt + ' '+unixDt);
+						var theDate = ( unixDt > 30000000000 ? new Date( unixDt ) : new Date( unixDt*1000 ) );
+						datrStr = $.datepicker.formatDate( fmt, theDate );
+					}
+					// var datrStr = moment( theDate ).format( fmt );
+					contentItems.push( '<input type="text" '+	nameAndClass+' class="dateinput" value="'+datrStr+'" /></p>'
+							+'<script> $( "#'+divId+prop.id+'filter" ).datepicker( {dateFormat:"'+fmt+'"} ); </script>' 
+					);
 				
+				} else { // default type => text 
+					var val = '';
+					if ( prop.defaultVal ) { val = prop.defaultVal }
+					contentItems.push( '<input type="text" '+nameAndClass+' value="'+val+'" /></p>' );
+				}
+				// TODO add field types
 			}
 			log( "Pong-Table", "cre filter 3" );
 			var btTxt = "Search";

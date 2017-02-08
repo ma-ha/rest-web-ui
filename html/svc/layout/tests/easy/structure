@@ -5,7 +5,7 @@
 		"rows":[
 			{
 				"rowId":"instform",
-				"height":"175px",
+				"height":"178px",
 				"cols":[
 					{
 						"columnId":"ezFrm",
@@ -66,13 +66,20 @@
 			},
 			{
 				"rowId":"r1",
-				"height":"230px",
+				"height":"330px",
 				"type":"pong-easytable",
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
 				"moduleConfig":{
 					"pollDataSec":"150",	
 					"dataURL":"",
+					"filter":{
+						"dataReqParams": [ 
+							{"id":"name", "label":"Name", "defaultVal":"*"}, 
+							{"id":"dateMin", "label":"Newer than", "type":"date"} 
+						],
+         		"dataReqParamsSrc": "Form"
+					},
 					"easyCols":[
 						"*ID|5%",
 						"Name=Name.0",
