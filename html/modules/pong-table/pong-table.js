@@ -347,6 +347,8 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			contentItems.push( '$(function() { ' );
 			contentItems.push( '    $( "#'+divId+'SrchBt" ).button().click( ' );
 			contentItems.push( '       function( event ) { ' );
+			contentItems.push( '           poTbl[ "'+divId+'" ].pongTableStartRow = 0; ');
+			contentItems.push( '           poTbl[ "'+divId+'" ].pongTableEndRow = poTbl[ "'+divId+'" ].pongTableDef.maxRows; ');
 			contentItems.push( '           event.preventDefault(); ' );
 			contentItems.push( '           udateModuleData( "'+divId+'", { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ' );
 			contentItems.push( '          return false;  ' );
@@ -841,6 +843,12 @@ function tblCells( divId ) {
 	if ( poTbl[ divId ].pongTableDef.maxRows ) {
 	  rowSt = parseInt( poTbl[ divId ].pongTableStartRow );
 	  rowEn = parseInt( poTbl[ divId ].pongTableEndRow );	  
+		if ( rowSt > dtaArr.length ) {
+			poTbl[ divId ].pongTableStartRow = 0;
+			poTbl[ divId ].pongTableEndRow   = poTbl[ divId ].pongTableDef.maxRows;
+			rowSt = 0;
+			rowEn = poTbl[ divId ].pongTableDef.maxRows;
+		}
 	  log( "Pong-Table", "update paginaor label" );  
 	  var rPP = parseInt( poTbl[ divId ].pongTableDef.maxRows );
 	  var maxP = Math.ceil( dtaArr.length / rPP );
