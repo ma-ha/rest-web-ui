@@ -85,7 +85,8 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	poTbl[ divId ].resourceURL = resourceURL;
 	poTbl[ divId ].pongTableDef.dataUrlFull = dataUrl;
 	poTbl[ divId ].sortCol = '';
-    poTbl[ divId ].sortUp = true;
+  poTbl[ divId ].sortUp = true;
+  poTbl[ divId ].params = params;
 
 	poTbl[ divId ].pongTableEndRow = tbl.maxRows;
 	var contentItems = [];
@@ -208,7 +209,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 			if ( tbl  && tbl.filter ) {
 				pollHTML.push( '      		pongTableUpdateData( "'+divId+'", { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ');
 			} else {
-				pollHTML.push( '      		pongTableUpdateData( "'+divId+'", '+JSON.stringify( params.get )+' ); ' );
+				pollHTML.push( '      		pongTableUpdateData( "'+divId+'", null ); ' );
 			}
 			pollHTML.push( '        }' );
 			pollHTML.push( '  }' );
@@ -232,7 +233,16 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	
 	if ( tbl.dataURL != null ) { 
 	  // load table data on page load only if dataURL is set
-	  pongTableUpdateData( divId, params.get );	  
+		if ( tbl  && tbl.filter ) {
+			var fPar = {};
+			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
+				prop = tbl.filter.dataReqParams[y];
+				fPar[ prop.id] = $( '#'+divId+prop.id+'filter' ).val();
+			} 
+			pongTableUpdateData( divId, fPar );
+		} else {
+	  	pongTableUpdateData( divId, null );	  
+		} 
 	}
 }
 
@@ -278,7 +288,7 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			contentItems.push( '<fieldset><legend>' +$.i18n(titleTxt) +'</legend>' );
 			
 			log( "Pong-Table", "cre filter 2" );
-			postLst = [];						
+			var postLst = [];						
 			for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
 				prop = tbl.filter.dataReqParams[y];
 				contentItems.push( '<p><label for="'+divId+prop.id+'filter">'+ $.i18n( prop.label ) +'</label>' );
@@ -707,9 +717,19 @@ function parseRowPlaceHolders( row, str ) {
 function pongTableUpdateData( divId, paramsObj ) {
 	log( "Pong-Table",  'update '+divId );
 	var tblDef = poTbl[ divId ].pongTableDef;
-
 	if ( poTbl[ divId ].resourceURL != '-' ) {
 		
+		var callParams = {}
+		if ( paramsObj == null) {
+			callParams = poTbl[ divId ].params.get;
+		} else {
+			callParams = JSON.parse( JSON.stringify ( poTbl[ divId ].params.get ) );
+			for ( var attr in paramsObj ) { 
+				callParams[ attr ] = paramsObj[ attr ]; 
+			}		
+		}
+		alert( JSON.stringify( callParams ) );			
+
 		$.getJSON( tblDef.dataUrlFull, paramsObj ,
 			function( data ) { 	
 		    log( "Pong-Table",  JSON.stringify( data ) );
