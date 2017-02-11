@@ -1,12 +1,18 @@
 .pongTable {
 	font-size:10pt;
+	width: 100%;
+	/*height: 100%;	*/
+}
+
+.pongTableDiv {
+	/*height: 100%;	*/
+	top: 0px;
 }
 
 div.editable { 
 	width: 100%;
 	height: 100%;
 }
-
  
 .pongTableFrm button { 
 	font-size:10pt; font-style: normal; font-weight: normal;  
@@ -40,7 +46,7 @@ div.editable {
 	
 }
 
-.pongListFrm { font-size: 10pt; }
+.pongListFrm { font-size: 10pt; width: 100%; }
 .pongListFrm  p {
         display: inline;
         margin-right: 15px;

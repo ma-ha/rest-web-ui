@@ -95,7 +95,8 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	contentItems = pongTableRenderFilterHTML( divId, resourceURL, params, tbl );	
   log( "Pong-Table", "cre table 1" );
 
-	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable" width="100%">' );
+	contentItems.push( '<div id="'+divId+'PongTableDiv"  class="pongTableDiv">' );
+	contentItems.push( '<table id="'+divId+'PongTable" class="pongTable">' );
 	// create table head
 	contentItems.push( '<tr class="'+divId+'HeaderRow">' );
 	if ( tbl.cols != null ) {
@@ -139,7 +140,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	          contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
 	        }
 	    }
-	    contentItems.push( "</tr>" );
+	    contentItems.push( "</tr></div>" );
 	  }	  
 	}
 	contentItems.push( "</table>" );
@@ -165,9 +166,19 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	$( "#"+divId ).append( actionsJS.join("\n") );
 	
+	var tHeight = $( "#"+divId ).height();
+	if ( $( '#'+divId+'SrchFrmDiv' ).height() ) {
+		tHeight -= $( '#'+divId+'SrchFrmDiv' ).height();
+	} 
+	if ( $( '#'+divId+'Pagin' ).height() ) {
+		tHeight -= $( '#'+divId+'Pagin' ).height();
+	} 
+	//alert( $( "#"+divId ).height() +' - '+ $( '#'+divId+'SrchFrmDiv' ).height() );
+	$( "#"+divId+'PongTableDiv' ).height( tHeight );
+	
 	// if there is no paginator:
   if ( ! tbl.maxRows ) {
-    $( "#"+divId ).css( 'overflow', 'auto' );
+    $( '#'+divId+'PongTableDiv' ).css( 'overflow', 'auto' );
   }
   
   log( "Pong-Table", "cre table 6" );
@@ -336,7 +347,6 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			contentItems.push( '<button id="'+divId+'SrchBt">'+  $.i18n( btTxt ) +'</button>' );
 			contentItems.push( '</fieldset>' );
 			contentItems.push( "</form>" );
-			contentItems.push( '</div>' );
 
 
 			log( "Pong-Table", "cre filter 4" );
@@ -357,6 +367,7 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 			contentItems.push( ' }); ' );
 			contentItems.push( "</script>" );
 			
+			contentItems.push( '</div>' );
 			log( "Pong-Table", "cre filter 6" );
 		} if ( tbl.filter.dataReqParamsSrc == 'sessionInfo' ) {
 			log( "Pong-Table", "cre filter sessionInfo (TODO)" );

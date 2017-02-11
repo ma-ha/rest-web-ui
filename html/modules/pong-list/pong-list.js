@@ -87,9 +87,19 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 	$( "#"+divId ).append( paginatorJS.join("\n") );
 	$( "#"+divId ).append( ajacCommitsJS.join("\n") );
 	
+  var tHeight = $( "#"+divId ).height();
+	if ( $( '#'+divId+'SrchFrmDiv' ).height() ) {
+		tHeight -= $( '#'+divId+'SrchFrmDiv' ).height();
+	} 
+	if ( $( '#'+divId+'Pagin' ).height() ) {
+		tHeight -= $( '#'+divId+'Pagin' ).height();
+	} 
+	//alert( $( "#"+divId ).height() +' - '+ $( '#'+divId+'SrchFrmDiv' ).height() );
+	$( "#"+divId+'PongList' ).height( tHeight );
+
 	// if there is no paginator:
   if ( ! tbl.maxRows ) {
-    $( "#"+divId ).css( 'overflow', 'auto' );
+    $( '#'+divId+'PongList' ).css( 'overflow', 'auto' );
   }
 
 	if ( params != null  && params.filter != null ) {

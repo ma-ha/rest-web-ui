@@ -14,7 +14,8 @@
       			"title": "Test Cases",
       			"menuItems" : [
 			       { "html":"<b>Regression Tests:</b>" },
-			       { "pageLink":"tests/easy", "label":"Easy-Form/Easy-Table" },
+			       { "pageLink":"tests/easyPgn", "label":"Easy-Form/-Table (Paginator)" },
+			       { "pageLink":"tests/easy", "label":"Easy-Form/-Table (Scollbar)" },
 			       { "pageLink":"tests/action", "label":"Action Test" },
 			       { "pageLink":"tests/list", "label":"List Test (Paginator)" },
 			       { "pageLink":"tests/list2", "label":"List Test (Scollbar)" },

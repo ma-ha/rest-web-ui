@@ -92,7 +92,8 @@
 						"Description_editable",
 						"Created_date_editable",
 						"Product~Page_link"
-					]
+					],
+					"maxRows":"3"
 				},
 				"type_id":"5",
 				"decor":"decor",
