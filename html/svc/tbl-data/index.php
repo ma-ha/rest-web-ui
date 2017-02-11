@@ -36,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					array_splice( $rows, $i, 1 );
 			}
 		}
+		if ( isset( $filter['rating'] ) && $filter['rating'] == '1' ) {
+			for ( $i = count( $rows )-1; $i>=0; $i-- ) {
+				if ( $rows[$i]['Rating'] != '3' ) 
+					array_splice( $rows, $i, 1 );
+			}
+		} 
 	} 
 	// else 		error_log( implode("|",$_GET) );
 

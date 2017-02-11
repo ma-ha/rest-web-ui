@@ -5,7 +5,7 @@
 		"rows":[
 			{
 				"rowId":"instform",
-				"height":"178px",
+				"height":"220px",
 				"cols":[
 					{
 						"columnId":"ezFrm",
@@ -66,7 +66,7 @@
 			},
 			{
 				"rowId":"r1",
-				"height":"330px",
+				"height":"290px",
 				"type":"pong-easytable",
 				"resourceURL":"svc/tbl-data",
 				"title":"Easy Table",
@@ -75,7 +75,8 @@
 					"dataURL":"",
 					"filter":{
 						"dataReqParams": [ 
-							{"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"}, 
+							{"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"},
+							{"id":"rating", "type":"select", "label":"Rating", "options": [ { "value":"0", "option":"doesn't matter" },{ "value":"1", "option":"top rated" } ] }, 
 							{"id":"dateMin", "label":"Newer than", "description":"Yes - this should really filer the data!", "type":"date"} 
 						],
          		"dataReqParamsSrc": "Form"
@@ -108,7 +109,7 @@
 			{
 				"rowId":"log",
 				"title":"Debug Log",
-				"height":"250px",
+				"height":"200px",
 				"resourceURL":"svc/tbl-data",
 				"type":"pong-log",
 				"decor":"decor",

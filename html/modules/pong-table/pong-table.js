@@ -312,6 +312,17 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
 							+'<script> $( "#'+divId+prop.id+'filter" ).datepicker( {dateFormat:"'+fmt+'"} ); </script>' 
 					);
 				
+				} else if ( prop.type && prop.type == 'select' && prop.options ) {
+
+					var selVal = ( prop.defaultVal ? ' value="'+prop.defaultVal+'"' : '' );
+					contentItems.push( '<select '+	nameAndClass + selVal+'>' );
+					for ( var so = 0; so < prop.options.length; so++ ) {
+						var optValue = ( prop.options[so].value ? 'value="'+prop.options[so].value+'"' : 'value="'+field.options[so].option+'"' );					 
+						contentItems.push( '<option '+optValue+'>'+ $.i18n( prop.options[so].option ) +'</option>' );	
+						log( "Pong-Table",'<option '+optValue+'>'+ $.i18n( prop.options[so].option ) +'</option>' )
+					}
+					contentItems.push( '</select></p>' );
+
 				} else { // default type => text 
 					var val = '';
 					if ( prop.defaultVal ) { val = prop.defaultVal }
@@ -711,15 +722,13 @@ function parseRowPlaceHolders( row, str ) {
 }
 
 
-
-
 /** update data call back hook */
 function pongTableUpdateData( divId, paramsObj ) {
 	log( "Pong-Table",  'update '+divId );
 	var tblDef = poTbl[ divId ].pongTableDef;
 	if ( poTbl[ divId ].resourceURL != '-' ) {
 		
-		var callParams = {}
+		var callParams = {} // merge paramsObj and GET-params:
 		if ( paramsObj == null) {
 			callParams = poTbl[ divId ].params.get;
 		} else {
@@ -728,7 +737,7 @@ function pongTableUpdateData( divId, paramsObj ) {
 				callParams[ attr ] = paramsObj[ attr ]; 
 			}		
 		}
-		alert( JSON.stringify( callParams ) );			
+		log( "Pong-Table",  'update parma= '+JSON.stringify( callParams ) );			
 
 		$.getJSON( tblDef.dataUrlFull, paramsObj ,
 			function( data ) { 	
