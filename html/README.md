@@ -21,6 +21,7 @@
 * 0.9.17/18: IO graph x-scaling
 * 0.9.19: date picker in [table](modules/pong-table) filter and filter default value
 * 0.9.20: select in [table](modules/pong-table) filter, jump to 1st page if required, calculate optimal fitting height
+* 0.9.21: CSRF token passsed from layout responst header to AJAX reqest headers
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook

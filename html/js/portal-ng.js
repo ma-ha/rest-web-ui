@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '0.9.20';
+var PONGVER = '0.9.21';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -72,6 +72,8 @@ var directPage = 'main';
 loggerEvents = true;
 logInfo = false
 logInfoStr = ''
+
+csrfToken = 'default'
 
 /** Because ajax loads are asynchronous, 
     we have to wait for all calls to be sinished to load HTML into DIV
@@ -296,9 +298,14 @@ function loadStructure() {
 	);
 }
 
-function processLayoutResponseJSON( d ) {
+function processLayoutResponseJSON( d, textStatus, xhr ) {
   layout = d.layout;
   layoutOrig = JSON.parse( JSON.stringify( layout ) ); // backup w/o modification intentions
+	if ( xhr.getResponseHeader("X-Protect") ) { 
+		csrfToken = xhr.getResponseHeader("X-Protect");
+	}
+	$.ajaxSetup( { headers: { "X-Protect": csrfToken } } ) 
+
   // load includes ...
   if ( d.layout.includeHeader != null && d.layout.includeFooter != null &&  d.layout.includeHeader == d.layout.includeFooter ) {
     // optimize to one additional load
