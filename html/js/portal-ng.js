@@ -353,6 +353,12 @@ function processLayoutResponseJSON( d, textStatus, xhr ) {
 
 /** build up the HTML structure of nested DIVs*/
 function buildStructure( d ) {
+	if ( d.header.frameWarning == "true" ) {
+		if( self != top) {
+			alert( 'Security Warning: This page is embedded in a frame, so it may be a "click hijacking" attack.' )
+		}
+	}
+
 	$( "title" ).html( d.title );
 	// crunch layout into html divs
 	var contentItems = layoutToHTML( d );			

@@ -6,6 +6,7 @@
       "linkList": [
       	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
       ],
+      "frameWarning":"true",
       "modules" : [ 
       	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
       	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
