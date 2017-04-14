@@ -687,7 +687,7 @@ function pongFormRenderField( divId, field, col ) {
 			nameAndClass = 'name="'+field.id+'" ' + nameAndClass; 			
 		}
 
-		if ( field.hidden != null && field.hidden == 'true' ) { 
+		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
 			nameAndClass += ' hidden'; 
 		} else {
 			contentItems.push( '<p>' );
@@ -700,7 +700,7 @@ function pongFormRenderField( divId, field, col ) {
 		
 		if ( field.type == "text" ) {
 			var modifier = '';
-			if ( field.readonly != null && field.readonly == 'true') { modifier += ' disabled="disabled"'; }
+			if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 
 			if ( field.rows != null ) { 
 				contentItems.push( '<textarea type="text" '+nameAndClass + title + ' rows="'+field.rows+'">'+ defaultVal +'</textarea>' );
@@ -740,7 +740,7 @@ function pongFormRenderField( divId, field, col ) {
 		} else if ( field.type == "email" ) {
 
 			var modifier = '';
-			if ( field.readonly != null && field.readonly == 'true') { modifier += ' disabled="disabled"'; }
+			if ( field.readonly != null && ( field.readonly === true || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 			contentItems.push( '<input type="email" '+nameAndClass + title + defaultVal + modifier+'/>' );				
 			
 		} else if ( field.type == "password" ) {
@@ -750,7 +750,7 @@ function pongFormRenderField( divId, field, col ) {
 		} else  if ( field.type == "date" ) {
 
 			var modifier = '';
-			if ( field.readonly != null && field.readonly == 'true') { modifier += ' disabled="disabled"'; }
+			if ( field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 			
 			contentItems.push( '<input type="text" '+nameAndClass + title + defaultVal + modifier+'/>' );
 			contentItems.push( '<script>' );
@@ -765,7 +765,7 @@ function pongFormRenderField( divId, field, col ) {
 			if ( field.value != null ) { cbValue = 'value="'+field.value+'" '; }
 			var modifier = '';
 			if ( field.defaultVal != null && field.defaultVal == 'true') { modifier += ' checked'; }
-			if ( field.readonly != null && field.readonly == 'true') { modifier += ' disabled'; }
+			if (field.readonly != null && ( field.readonly === true || field.readonly == 'true' ) ) { modifier += ' disabled'; }
 			contentItems.push( '<input type="checkbox" '+ cbValue + nameAndClass + title + modifier +'/>' );
 			
 		} else if ( field.type == "checkboxList" ) {
@@ -777,7 +777,7 @@ function pongFormRenderField( divId, field, col ) {
 						for ( var i = 0; i < optData.length; i++ ) {
 							var cbValue = 'value="'+optData[i][field.valueField]+'" '; // default value=title
 							var modifier = '';
-							if ( field.defaultValField != null && optData[i][field.defaultValField] == 'true') { 
+							if ( field.defaultValField != null && ( field.defaultValField === true || optData[i][field.defaultValField] == 'true' ) ) { 
 								modifier += ' checked'; 
 							}
 							contentItems.push( '<input type="checkbox" '+ cbValue + nameAndClass + title + modifier +'/>' );
