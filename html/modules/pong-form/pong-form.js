@@ -764,8 +764,8 @@ function pongFormRenderField( divId, field, col ) {
 			var cbValue = 'value="'+field.id+'" '; // default value=title
 			if ( field.value != null ) { cbValue = 'value="'+field.value+'" '; }
 			var modifier = '';
-			if ( field.defaultVal != null && field.defaultVal == 'true') { modifier += ' checked'; }
-			if (field.readonly != null && ( field.readonly === true || field.readonly == 'true' ) ) { modifier += ' disabled'; }
+			if ( field.defaultVal != null && ( field.defaultVal === true || field.defaultVal == 'true' ) ) { modifier += ' checked';  }
+			if ( field.readonly   != null && ( field.readonly   === true || field.readonly   == 'true' ) ) { modifier += ' disabled'; }
 			contentItems.push( '<input type="checkbox" '+ cbValue + nameAndClass + title + modifier +'/>' );
 			
 		} else if ( field.type == "checkboxList" ) {
