@@ -7,9 +7,11 @@
 	        "columns":[
 		        {
 		 	        "formFields":[     
-					 	{ "id":"user", "label":"User ID",  "type":"text" }, 
-					 	{ "id":"pwd",  "label":"Password", "type":"password" },
-					 	{ "id":"f3",   "label":"email",  "type":"email" }		      
+		 	          { "id":"user", "label":"User ID",  "type":"text" }, 
+		 	          { "id":"pwd",  "label":"Password", "type":"password" },
+		 	          { "id":"pwd",  "label":"Role",   "type":"text", 
+								  "options": [ { "value":"Admin" }, { "value":"Author" } ] },
+		 	          { "id":"f3",   "label":"email",  "type":"email" }		      
 		        	 ]
 		        },
 		        {

@@ -101,6 +101,12 @@ Optional attribute:
 * <code>"basicAuth":"user"</code> used to create a HTTP basic-auth header field, ref. also password field
 * <code>"basicAuth":"user+field"</code> used to create a HTTP basic-auth header field, and send it also as POST param, ref. also password field
 
+Support for static `datafield`: Use <code>options</code> array, e.g. 
+*  <code>"options": [ { "value":"1" }, { "value":"2" } ]</code>
+
+Dynamic `datafield` options: <code>optionsResource</code>, e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionValue":"name" } </code>
+
+
 ### EMail 
 
 <code>"type:"email"</code> 

@@ -705,7 +705,36 @@ function pongFormRenderField( divId, field, col ) {
 			if ( field.rows != null ) { 
 				contentItems.push( '<textarea type="text" '+nameAndClass + title + ' rows="'+field.rows+'">'+ defaultVal +'</textarea>' );
 			} else {
-				contentItems.push( '<input type="text" '+nameAndClass + title + defaultVal + modifier+'/>' );				
+				if ( field.options != null || field.optionsResource != null ) {
+					defaultVal += ' list="'+field.id+'DataList" ';
+				}
+				contentItems.push( '<input type="text" '+nameAndClass + title + defaultVal + modifier+'/>' );
+
+					if ( field.options != null ) {
+						contentItems.push( '<datalist id="'+field.id+'DataList">' );
+						for ( var i = 0; i < field.options.length; i++ ) {
+							if ( field.options[i].value != null  ) {
+								contentItems.push( '<option value="'+ $.i18n( field.options[i].value )+'">' );	
+							}
+						} 		
+						contentItems.push( '</datalist>' );
+					} else 	if ( field.optionsResource != null ) {
+						contentItems.push( '<datalist id="'+field.id+'DataList">' );
+						$.ajaxSetup({'async': false});
+						$.getJSON( 
+								field.optionsResource.resourceURL, 
+								function( optData ) {
+									for ( var i = 0; i < optData.length; i++ ) {
+										contentItems.push( '<option value="'+ $.i18n( optData[i][ field.optionsResource.optionValue ] )+ '">' );
+									}
+								}
+							);					
+						$.ajaxSetup({'async': true});				
+						contentItems.push( '</datalist>' );
+					}
+
+
+
 			}
 			
 		} else if ( field.type == "email" ) {
