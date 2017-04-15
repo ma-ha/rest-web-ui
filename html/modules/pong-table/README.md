@@ -471,6 +471,8 @@ Example:
       {
     ...
 
+See [DEMO](mh-svr.de/pong_dev/index.html?layout=tests/table)
+
 ## Table CSS 
 You can use the following CCS elements to define thy style of the table:
 * Table ID: #<resId>ContentPongTable

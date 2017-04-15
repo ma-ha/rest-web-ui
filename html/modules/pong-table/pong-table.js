@@ -1304,7 +1304,7 @@ function pongTableExpand( divId, id, r, divs ) {
   var expandDivId = divId+'R'+r+'E';
   var contentItems = [];
   contentItems.push( '<div id="'+expandDivId+'">' );
-  renderPongListDivHTMLsub( contentItems, expandDivId, divs, r, '' );
+  renderPongListDivHTMLsub( contentItems, expandDivId, divs, r, 0 );
   contentItems.push( '</div>' );
   
   $( '#'+divId+'R'+r ).after( 
@@ -1316,7 +1316,7 @@ function pongTableExpand( divId, id, r, divs ) {
   // fill data into structure
   var rowDta = poTbl[ divId ].pongTableData[r];
   log( "Pong-Table",  '  rowDta=' +JSON.stringify( rowDta ) );
-  pongListUpdateRow( expandDivId, divs, rowDta, r, '', r, divId );
+  pongListUpdateRow( expandDivId, divs, rowDta, r, 0, r, divId );
 
   // remember what which button and row was expanded
   $( id ).button( { icons: { primary: 'ui-icon-circle-triangle-n' } })

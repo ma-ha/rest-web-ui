@@ -23,7 +23,8 @@
 * 0.9.20: select in [table](modules/pong-table) filter, jump to 1st page if required, calculate optimal fitting height
 * 0.9.21: CSRF token passsed from layout responst header to AJAX reqest headers
 * 0.9.22: Warning if embedded in frame to prevent click hijacking attack
-* 0.9.23: Input with datalist
+* 0.9.23: Input with [datalist](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-form#text)
+* 0.9.24: Table: [Expand](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-table#expand-details)
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
