@@ -1,5 +1,10 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+  "editor.tabSize": 2,
+
+  // Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+  "editor.insertSpaces": true,
+
    // Defines space handling after opening and before closing non empty parenthesis.
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
 

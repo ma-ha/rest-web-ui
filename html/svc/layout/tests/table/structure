@@ -10,7 +10,6 @@
     "resourceURL":"svc/tbl-data",
     "title":"Easy Table",
     "moduleConfig":{
-     "pollDataSec":"150", 
      "dataURL":"",
      "filter":{
       "dataReqParams": [ 
@@ -30,15 +29,26 @@
        "expand": {
           "heightMin":"100px",
           "divs" : [ 
-             { "id" : "ID", "cellType" : "text" }, 
-             { "id" : "XCust", "cellType" : "div",
-               "divs" : [ 
+              { "id" : "ID", "cellType" : "text" }, 
+              {
+                "id": "Picture",
+                "label": "Picture",
+                "cellType": "img"
+              },
+              {
+                "id": "ZoomImg",
+                  "label": "ZoomImg_zooms_Picture",
+                  "cellType": "largeimg",
+                  "forImg": "Picture"
+              },
+              { "id" : "XCust", "cellType" : "div",
+                "divs" : [ 
                   { "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers" }, 
                   { "id" : "CustomerCount", "cellType" : "text" },
                   { "id" : "RatingLb", "cellType" : "label", "label" : "Rating" }, 
                   { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" }         
-               ]
-             }
+                ]
+              }
           ]
         }
       },
@@ -52,23 +62,6 @@
        "id": "Name.0",
        "label": "Name",
        "cellType": "text"
-      },
-      {
-       "id": "ProductPage",
-       "label": "ProductPage_linkForCol_1",
-       "cellType": "linkFor",
-       "col": "1"
-      },
-      {
-       "id": "Picture",
-       "label": "Picture",
-       "cellType": "img"
-      },
-      {
-       "id": "ZoomImg",
-       "label": "ZoomImg_zooms_Picture",
-       "cellType": "largeimg",
-       "forImg": "Picture"
       },
       {
        "id": "Status",
