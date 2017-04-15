@@ -145,27 +145,6 @@ function renderPongListDivHTML( divId, resourceURL, params, tbl ) {
 }
 
 
-function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
-  log( "PoNG-List", 'div row='+r+'/'+cx );
-  for ( var c = 0; c < divs.length; c ++ ) {
-    log( "PoNG-List", 'div '+cx+'/'+c );
-    if ( divs[c].cellType == 'div' ) {
-      log( "PoNG-List", 'div-x '+divs[c].id );
-      contentItems.push( '<div class="pongListCell pongListCell'+divs[c].id.replace(/\./g,'')+'" id="'+divId+'R'+r+'X'+cx+'C'+c+'">' );
-      if ( divs[c].divs ) {
-        renderPongListDivHTMLsub( contentItems, divId, divs[c].divs, r, cx+c ); 
-      }      
-      contentItems.push( '</div>'  );
-    } else if ( ( divs[c].cellType != 'tooltip' ) && 
-         ( divs[c].cellType != 'largeimg' ) && 
-         ( divs[c].cellType != 'linkFor' ) ) {
-      log( "PoNG-List", 'div-n '+divs[c].id );
-      contentItems.push( '<div class="pongListCell pongListValCell pongListCell'+divs[c].id.replace(/\./g,'')
-          +'" id="'+divId+'R'+r+'X'+cx+'C'+c+'"></div>'  );
-      log( "PoNG-List", 'div end' );
-    }
-  }
-}
 
 
 /** update data call back hook */
@@ -241,7 +220,6 @@ function pongListCells( divId ) {
   } else {
     // need to create empty table rows and cells 
     // del all rows, except 1st
-// TODO: change to list
     $( '#'+divId+'PongList' ).find( ".pongListRow" ).remove();
     
     var contentItems = [];
@@ -249,7 +227,10 @@ function pongListCells( divId ) {
       var tbl = poTbl[ divId ].pongTableDef;
       log( "PoNG-List", 'row '+r );
       contentItems.push( '<div class="pongListRow">' );
+      // Render empty data cells as nested structure:
+      // >>>>>>>>>>>>>>>>>> 
       renderPongListDivHTMLsub( contentItems, divId, tbl.divs, r, '' );
+      // <<<<<<<<<<<<<<<<<< moved to pong-table.js
       contentItems.push( "</div>" );
 
     }
@@ -258,6 +239,7 @@ function pongListCells( divId ) {
   
   log( "PoNG-List", "tblCells: divId="+divId+"Data #"+poTbl[ divId ].pongTableData.length + " rowSt="+rowSt + " rowEn="+rowEn );
   
+  // fill empty cells with data:
   log( "PoNG-List", "row loop" );  
   var i = 0;
   $( ".pongListValCell" ).html( '&nbsp;' );
@@ -266,26 +248,11 @@ function pongListCells( divId ) {
     if ( r < dtaArr.length ) {
       log( "PoNG-List", "row "+r );  
       var rowDta = dtaArr[r];
-      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i ); 
+      // >>>>>>>>>>>>>>>>>>>>
+      // pongListUpdateRow() is moved to pong-table.js
+      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i );
+      // <<<<<<<<<<<<<<<<<<<< 
     } 
     i++;
   } 
-}
-
-
-function pongListUpdateRow( divId, divs, rowDta, r, cx, i ) {
-  log( "PoNG-List", 'upd-div row='+r+'/'+cx );
-  for ( var c = 0; c < divs.length; c ++ ) {
-    log( "PoNG-List", 'upd-div '+cx+'/'+c );
-    if ( divs[c].cellType == 'div' ) {
-      log( "PoNG-List", 'upd-div-x '+divs[c].id );
-      if ( divs[c].divs ) {
-        pongListUpdateRow( divId, divs[c].divs, rowDta, r, cx+c, i ); 
-      }      
-    } else {
-      var cellId = '#'+divId+'R'+i+'X'+cx+'C'+c;
-      log( "PoNG-List", 'upd-div-n '+cellId );
-      tblUpdateCell( divId, divs[c], r, c, i, rowDta, cellId );
-   }
-  }
 }

@@ -311,11 +311,11 @@ The actions are same like form actions (defined separately), example:
 	    "height": "530px",
 	    "resourceURL": "/contacts",
 	    "title": "SugarCRM Contacts",
-        "type": "pong-table",
+      "type": "pong-table",
 	    "moduleConfig": {
 	        "dataURL": "/contacts",
 	        "rowId": "id",
-            "maxRows":"10",
+          "maxRows":"10",
 	        "cols": [
 	            {
 	                "id": "selector",
@@ -324,7 +324,7 @@ The actions are same like form actions (defined separately), example:
 	                "width": "5%"
 	            }, ...
 	        ]                     
-			"actions": [
+			    "actions": [
 			    {
 			        "id":"findRoute",
 			        "actionName":"Caclulate Route",
@@ -437,6 +437,39 @@ Simply define the seconds in "pollDataSec":
 	    "cols" : [ ... ]
 	    ...
 	}
+
+## Expand Details
+
+Most times it is hard to put data into a table, i.e. if we have a JSON tree type data -- 
+but tables have the advantage of a clear structure.
+
+The expand data details feature allows you to expand a row to show additional data in 
+non table form. A column with a `"method":"expand"` button does thst.
+
+Example:
+
+    ...
+    "cols": [
+      {
+       "width": "5%",
+       "id": "Det",
+       "cellType": "button",
+       "method":"expand",
+			 "expand":{
+          "heightMin":"100px",
+          "divs" : [ 
+             .... (syntax is the same like "list")
+          ]
+       }
+      },
+      {
+       "width": "5%",
+       "id": "ID",
+       "label": "ID",
+       "cellType": "text"
+      },
+      {
+    ...
 
 ## Table CSS 
 You can use the following CCS elements to define thy style of the table:

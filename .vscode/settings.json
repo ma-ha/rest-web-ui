@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  // Defines space handling after opening and before closing non empty brackets.
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+
+  // Defines space handling after opening and before closing template string braces. Requires TypeScript >= 2.0.6.
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true
+  
+}
