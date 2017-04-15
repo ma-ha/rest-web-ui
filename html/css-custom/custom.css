@@ -187,3 +187,5 @@ body {
 	width: 100px;
 	height: 70px;
 }
+
+.r1ContentRowExpand div { float: left; } 

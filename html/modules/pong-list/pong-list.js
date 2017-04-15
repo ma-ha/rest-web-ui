@@ -250,7 +250,7 @@ function pongListCells( divId ) {
       var rowDta = dtaArr[r];
       // >>>>>>>>>>>>>>>>>>>>
       // pongListUpdateRow() is moved to pong-table.js
-      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i );
+      pongListUpdateRow( divId, poTbl[ divId ].pongTableDef.divs, rowDta, r, '', i, divId );
       // <<<<<<<<<<<<<<<<<<<< 
     } 
     i++;

@@ -896,8 +896,8 @@ function tblCells( divId ) {
   log( "Pong-Table", "row loop" );	
   for ( var r = rowSt; r < rowEn; r++ ) {
     log( "Pong-Table", "row loop" );	
-        var rowIdVal =  dtaArr[r][ poTbl[ divId ].pongTableDef.rowId ]
-        //console.log( '>>>>>>>> '+ poTbl[ divId ].pongTableDef.rowId + JSON.stringify(dtaArr[r]) )
+    var rowIdVal =  dtaArr[r][ poTbl[ divId ].pongTableDef.rowId ];
+    //console.log( '>>>>>>>> '+ poTbl[ divId ].pongTableDef.rowId + JSON.stringify(dtaArr[r]) )
     if ( r < dtaArr.length ) {
       log( "Pong-Table", "row "+r );	
       var cellDta = dtaArr[r];
@@ -907,7 +907,7 @@ function tblCells( divId ) {
         log( "Pong-Table", "col "+c );	
         var cellDef = poTbl[ divId ].pongTableDef.cols[c];
         var cellId =  '#'+divId+'R'+i+'C'+c; 
-        tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal);
+        tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, divId );
       }
     } else { // clear the rest of the cells
       for ( var c = 0; c < poTbl[ divId ].pongTableDef.cols.length; c++ ) {
@@ -919,11 +919,10 @@ function tblCells( divId ) {
   }	
 }
 
-
-function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
+function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblDiv ) {
   log( "Pong-Table", 'tblUpdateCell '+cellId+' cellDef:'+JSON.stringify( cellDef ) );
   
-  var dataUrl = poTbl[ divId ].dataURL;
+  var dataUrl = '';
   var cellType = cellDef.cellType;
   var cellVal = null;
   if ( cellType != 'label' ) {
@@ -959,20 +958,20 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
     //var datrStr = $.datepicker.formatDate( fmt, theDate );
     // new
     var datrStr = moment( theDate ).format( fmt );
-    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" && poTbl[ tblDiv ] && poTbl[ tblDiv ].dataURL) ) {
       editable = ' data-r="'+r+'" data-c="'+c+'"';
       var cID = divId+'R'+i+cellDef.id;
-      poTbl[ divId ].pongTableDef.rowId
+      //poTbl[ tblDiv ].pongTableDef.rowId;
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+' editdatepicker">'
           +'<span id="'+cID+'" class="'+cls+'" '+editable+'>'+ datrStr +'</span>'
           +'<div id="'+cID+'editmarker" class="ui-icon ui-icon-pencil editmarker"></div></div>'
           +'<script>$("#'+cID+'").datepicker( "isDisabled" ); '
           +'$("#'+cID+'editmarker").click( function(){ $("#'+cID+'").datepicker("dialog", new Date('+theDate.valueOf()+'), '
           +'function(d){ var dtv=new Date(d).valueOf();'
-          +'$.post( "'+dataUrl+'", { '+poTbl[ divId ].pongTableDef.rowId+':"'+rowIdVal+'", '+cellDef.id+':dtv }, function(response) { }, "json"'
+          +'$.post( "'+poTbl[ tblDiv ].dataURL+'", { '+poTbl[ tblDiv ].pongTableDef.rowId+':"'+rowIdVal+'", '+cellDef.id+':dtv }, function(response) { }, "json"'
           +' ).done( function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' 
           +' ).fail( function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
-          // known: wrong data still in poTbl[ divId ].pongTableData -- but who cares
+          // known: wrong data still in poTbl[ tblDiv ].pongTableData -- but who cares
           +'$( "#'+cID+'" ).html( moment( new Date( d ) ).format( "'+fmt+'" ) ); '
           +'} )} ); '
           +'</script>' 
@@ -1080,28 +1079,39 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
     if ( cellDef.URL != null ) {
       url = cellDef.URL;
     }
-    if ( poTbl[ divId ].pongTableDef.rowId != null ) {
+    if ( poTbl[ tblDiv ].pongTableDef.rowId != null ) {
       //if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
-        url = addRowIdGetParam ( divId, url, cellDta );
+        url = addRowIdGetParam ( tblDiv, url, cellDta );
       //} 
       //param = getRowIdPostParam ( divId, cellDta );         
     } 
     $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
     
   } else if ( cellType == 'img' ) {
-    
+
     var tblImg  = cellVal; // TODO impl zoom image
     var zoomImg = cellVal; // TODO impl zoom image
     
-//    //search for zoom image def 
-    for ( var cZI = 0; cZI < poTbl[ divId ].pongTableDef.cols.length; cZI++ ) {
-      var cellDefZI = poTbl[ divId ].pongTableDef.cols[ cZI ];
-      if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
-        var cellValZI = getSubData( cellDta, cellDefZI.id );
-        if ( cellValZI != null ) { zoomImg = cellValZI }              
+//    //search for zoom image def
+    if ( poTbl[ tblDiv ] && poTbl[ tblDiv ].pongTableDef )
+      for ( var cZI = 0; cZI < poTbl[ tblDiv ].pongTableDef.cols.length; cZI++ ) {
+        var cellDefZI = poTbl[ tblDiv ].pongTableDef.cols[ cZI ];
+        if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
+          var cellValZI = getSubData( cellDta, cellDefZI.id );
+          if ( cellValZI != null ) { zoomImg = cellValZI }              
+        }
+        if ( cellDefZI.cellType == 'button' && cellDefZI.expand && 
+            cellDefZI.expand.divs &&  cellDefZI.expand.divs.length > 0 ) {
+          for ( var cZJ = 0; cZJ < cellDefZI.expand.divs.length; cZJ++ ) {
+            var cellDefZj = cellDefZI.expand.divs[ cZJ ];
+            if ( cellDefZj.cellType == 'largeimg' && cellDefZj.forImg && cellDefZj.forImg == cellDef.id ) { // found
+              var cellDefZj = getSubData( cellDta, cellDefZj.id );
+              if ( cellDefZj != null ) { zoomImg = cellDefZj }
+            }              
+          }
+        }
       }
-    }
-    
+
     $( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=  "'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
     $( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
     
@@ -1133,7 +1143,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
       icon = cellDef.icon;                
     }         
     log( "Pong-Table", cellDef.label+" icon="+icon );
-    var url = poTbl[ divId ].resourceURL;
+    var url = poTbl[ tblDiv ].resourceURL;
     if ( cellDef.URL != null ) {
       url = cellDef.URL;
     }
@@ -1162,10 +1172,11 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
     } 
     if ( ajaxType == 'expand'  ) {
         contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
-        contentItems.push( '          function() {  ' );
-        contentItems.push( '              pongTableExpand( "'+divId+'", "#'+divId+'R'+i+cellDef.id+'", '+r+');' );
-        contentItems.push( '              return false;');
-        contentItems.push( '          }');
+        contentItems.push( '         function() {  ' );
+        contentItems.push( '           pongTableExpand( "'+divId+'", ' +
+           '"#'+divId+'R'+i+cellDef.id+'", '+r+', '+JSON.stringify(cellDef.expand.divs)+');' );
+        contentItems.push( '           return false;');
+        contentItems.push( '         }');
         contentItems.push( '       ); ' );
     } else if ( ajaxType == 'JS'  ) {
       if ( cellDef.js != null ) {
@@ -1278,7 +1289,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
 
 // ----------------------------------------------------------------------------
 /** expand row to show additionla data */
-function pongTableExpand( divId, id, r ) {
+function pongTableExpand( divId, id, r, divs ) {
   if ( poTbl[ divId ].expand[ 'row' + r ] === id ) { // request to colapse extra data
     pongTableUnExpand( divId, id, r );
     return;
@@ -1287,14 +1298,25 @@ function pongTableExpand( divId, id, r ) {
     // row is expanded, but other data is reauested (other button in row)
     pongTableUnExpand( divId, id, r );
   }
-  console.log( 'Expand div=' + divId + ' id='+id+' row=' + r );
+  log( "Pong-Table",  'Expand divid=' + divId + ' id='+id+' row=' + r );
 
+  // render empty structure:  
+  var expandDivId = divId+'R'+r+'E';
+  var contentItems = [];
+  contentItems.push( '<div id="'+expandDivId+'">' );
+  renderPongListDivHTMLsub( contentItems, expandDivId, divs, r, '' );
+  contentItems.push( '</div>' );
+  
   $( '#'+divId+'R'+r ).after( 
-    '<tr id="'+divId+'R'+r+'ExpRow" class="'+divId+'RowExpand">'+
-    '<td colspan="100%">'+
-    '<div id="'+divId+'R'+r+'E"">...</div>'+
+    '<tr id="'+divId+'R'+r+'ExpRow" class="'+divId+'RowExpand">' +
+    '<td colspan="100%">' +
+    contentItems.join( '\n' ) +
     '</td></tr>' );
-  // TODO pongTableExpand
+
+  // fill data into structure
+  var rowDta = poTbl[ divId ].pongTableData[r];
+  log( "Pong-Table",  '  rowDta=' +JSON.stringify( rowDta ) );
+  pongListUpdateRow( expandDivId, divs, rowDta, r, '', r, divId );
 
   // remember what which button and row was expanded
   $( id ).button( { icons: { primary: 'ui-icon-circle-triangle-n' } })
@@ -1302,11 +1324,8 @@ function pongTableExpand( divId, id, r ) {
 }
 
 function pongTableUnExpand( divId, id, r ) {
-  console.log( 'Un-Expand div=' + divId + ' id='+id+' row=' + r );
-
-  // TODO pongTableUnExpand
+  log( "Pong-Table",  'Un-Expand div=' + divId + ' id='+id+' row=' + r );
   $( '#'+divId+'R'+r+'ExpRow' ).remove(); 
-
   // remove the remember what which button and row was expanded
   $( poTbl[ divId ].expand[ 'row' + r ] ).button(
     { icons: { primary: 'ui-icon-triangle-1-s' } } )
@@ -1540,19 +1559,21 @@ function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
 }
 
 /** fill recursively empty cells of one row with data */
-function pongListUpdateRow( divId, divs, rowDta, r, cx, i ) {
+function pongListUpdateRow( divId, divs, rowDta, r, cx, i, tblDiv ) {
   log( "PoNG-List", 'upd-div row='+r+'/'+cx );
   for ( var c = 0; c < divs.length; c ++ ) {
     log( "PoNG-List", 'upd-div '+cx+'/'+c );
     if ( divs[c].cellType == 'div' ) {
       log( "PoNG-List", 'upd-div-x '+divs[c].id );
       if ( divs[c].divs ) {
-        pongListUpdateRow( divId, divs[c].divs, rowDta, r, cx+c, i ); 
+        pongListUpdateRow( divId, divs[c].divs, rowDta, r, cx+c, i, tblDiv  ); 
       }      
     } else {
       var cellId = '#'+divId+'R'+i+'X'+cx+'C'+c;
       log( "PoNG-List", 'upd-div-n '+cellId );
-      tblUpdateCell( divId, divs[c], r, c, i, rowDta, cellId );
+      var dtaArr = poTbl[ tblDiv ].pongTableData;
+      var rowIdVal =  dtaArr[r][ poTbl[ tblDiv ].pongTableDef.rowId ];
+      tblUpdateCell( divId, divs[c], r, c, i, rowDta, cellId, rowIdVal, tblDiv );
    }
   }
 }

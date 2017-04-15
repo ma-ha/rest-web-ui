@@ -30,17 +30,9 @@
           "heightMin":"100px",
           "divs" : [ 
               { "id" : "ID", "cellType" : "text" }, 
-              {
-                "id": "Picture",
-                "label": "Picture",
-                "cellType": "img"
-              },
-              {
-                "id": "ZoomImg",
-                  "label": "ZoomImg_zooms_Picture",
-                  "cellType": "largeimg",
-                  "forImg": "Picture"
-              },
+              { "id": "Picture", "label": "Picture", "cellType": "img" },
+              { "id": "ZoomImg", "label": "ZoomImg_zooms_Picture",
+                "cellType": "largeimg", "forImg": "Picture" },
               { "id" : "XCust", "cellType" : "div",
                 "divs" : [ 
                   { "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers" }, 
