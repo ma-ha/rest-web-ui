@@ -1279,32 +1279,32 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId , rowIdVal ) {
 // ----------------------------------------------------------------------------
 /** expand row to show additionla data */
 function pongTableExpand( divId, id, r ) {
-  if ( poTbl[ divId ].expand[ 'row'+r ] === id ) { // request to colapse extra data
-    pongTableUnExpand( divId, id, r );
-    return;
-  } 
-  if ( poTbl[ divId ].expand[ 'row'+r ] ) {
-  	// row is expanded, but other data is reauested (other button in row)
-    pongTableUnExpand( divId, id, r );
-  } 
-  console.log( 'Expand id='+divId+' row='+r );
+	if ( poTbl[ divId ].expand[ 'row' + r ] === id ) { // request to colapse extra data
+		pongTableUnExpand( divId, id, r );
+		return;
+	}
+	if ( poTbl[ divId ].expand[ 'row' + r ] ) {
+		// row is expanded, but other data is reauested (other button in row)
+		pongTableUnExpand( divId, id, r );
+	}
+	console.log( 'Expand id=' + divId + ' row=' + r );
 
-  // TODO pongTableExpand
+	// TODO pongTableExpand
 
-  // remember what which button and row was expanded
-  $( id ).button( { icons: { primary: 'ui-icon-circle-triangle-n' } } )
-  poTbl[ divId ].expand[ 'row'+r ] = id;
+	// remember what which button and row was expanded
+	$( id ).button( { icons: { primary: 'ui-icon-circle-triangle-n' } })
+	poTbl[ divId ].expand[ 'row' + r ] = id;
 }
 
 function pongTableUnExpand( divId, id, r ) {
-  console.log( 'Un-Expand id='+divId+' row='+r );
+	console.log( 'Un-Expand id=' + divId + ' row=' + r );
 
-  // TODO pongTableUnExpand
+	// TODO pongTableUnExpand
 
-  // remove the remember what which button and row was expanded
-  $( poTbl[ divId ].expand[ 'row'+r ] ).button( 
+	// remove the remember what which button and row was expanded
+	$( poTbl[ divId ].expand[ 'row' + r ] ).button(
 		{ icons: { primary: 'ui-icon-triangle-1-s' } } )
-	poTbl[ divId ].expand[ 'row'+r ] = null;
+	poTbl[ divId ].expand[ 'row' + r ] = null;
 }
 
 // ----------------------------------------------------------------------------
