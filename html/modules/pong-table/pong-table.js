@@ -1308,7 +1308,7 @@ function pongTableExpand( divId, id, r, divs ) {
   contentItems.push( '</div>' );
   
   $( '#'+divId+'R'+r ).after( 
-    '<tr id="'+divId+'R'+r+'ExpRow" class="'+divId+'RowExpand">' +
+    '<tr id="'+divId+'R'+r+'ExpRow" class="'+divId+'RowExpand tableExpandRow">' +
     '<td colspan="100%">' +
     contentItems.join( '\n' ) +
     '</td></tr>' );
