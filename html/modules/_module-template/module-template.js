@@ -48,6 +48,24 @@ function MODULENAME_DivHTML( divId, resourceURL, paramObj ) {
 	if ( moduleConfig[ divId ] != null ) {
 		MODULENAME_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  );
 	} else {
+
+		//TODO: move that to portal-ng.js
+		var metaURL =  resourceURL+"/MODULENAME";
+    if ( paramObj != null ) {
+      if ( paramObj.def != null ) {
+        metaURL = resourceURL+"/"+paramObj.def;
+      }
+		}
+		// pass get params of page to module config loader call, to enable dynamic table columns
+		if ( paramObj.get != null ) {
+			var first = true;
+			for (var key in paramObj.get) {
+				metaURL += (first ? "?" :"&");
+				metaURL += key + "=" + paramObj.get[ key ];
+				first = false;
+			}
+		}
+
 		$.getJSON( 
 			resourceURL+"/MODULENAME", 
 			function( pmd ) {
@@ -111,7 +129,7 @@ function MODULENAME_CreModalFromMeta( id, modalName, resourceURL, paramObj  ) {
 	}	
 	var resourceSub = ""; // e.g. "/help"
 	$.get( resourceURL+resourceSub, 
-		{ lang: lang }, // other params required?
+	  getUrlGETparams(), // other params required?
 		function( divHtml ) {
 			$(  "#"+id+modalName+"Dialog" ).html( '<div class"MODULENAMEmodal">'+divHtml+'</div>' );
 			log( "MODULENAME", "loaded" );
