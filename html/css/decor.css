@@ -11,3 +11,18 @@
 .decor-inner { padding: 28px 9px 11px 9px; }
 .decor-inner.pong-table { margin-right: 10px; padding-bottom: 0px; }
 .decor-inner.pong-tree { margin-right: 10px; padding-bottom: 0px; }
+
+
+.tedge-tm { position: absolute; width: 100%; height: 28px; background: url(../img/tedge_tm.png); top: 0px; left: 0px; }
+.tedge-tm-title { padding-left: 9px; padding-top: 5px; font-weight: bold; }
+.tedge-bm { position: absolute; width: 100%; height:  9px; background: url(../img/tedge_bm.png); bottom: 0px; left: 0px; }
+.tedge-lm { position: absolute; width: 9px;  height: 100%; background: url(../img/tedge_lm.png); top: 0px; left: 0px; }
+.tedge-rm { position: absolute; width: 9px;  height: 100%; background: url(../img/tedge_rm.png); top: 0px; right: 0px; }
+.tedge-tl { position: absolute; width: 9px;  height: 28px; background: url(../img/tedge_tl.png); top: 0px; left: 0px; }
+.tedge-tr { position: absolute; width: 9px;  height: 28px; background: url(../img/tedge_tr.png); top: 0px; right: 0px; }
+.tedge-bl { position: absolute; width: 11px; height:  9px; background: url(../img/tedge_bl.png); bottom: 0px; left: 0px; }
+.tedge-br { position: absolute; width: 11px; height:  9px; background: url(../img/tedge_br.png); bottom: 0px; right: 0px; }
+.tedge-menu  { position: absolute;  height: 28px; top: 3px; right: 10px; font-size: 8pt; color: #999999; }
+.tedge-inner { padding: 28px 9px 11px 9px; }
+.tedge-inner.pong-table { margin-right: 10px; padding-bottom: 0px; }
+.tedge-inner.pong-tree { margin-right: 10px; padding-bottom: 0px; }
