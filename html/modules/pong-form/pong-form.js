@@ -30,8 +30,23 @@ function pongFormDivHTML( divId, resourceURL, params ) {
 		moduleConfig[ divId ].resourceURL = resourceURL;
 		pongFormRenderHTML( divId, resourceURL, params, moduleConfig[ divId ]  );
 	} else {
-		$.getJSON( 
-			resourceURL+"/pong-form", 
+
+		var metaURL =  resourceURL+"/pong-form";
+    if ( params != null ) {
+      if ( params.def != null ) {
+        metaURL = resourceURL+"/"+params.def;
+      }
+		}
+		// pass get params of page to module config loader call, to enable dynamic table columns
+		if ( params.get != null ) {
+			var first = true;
+			for (var key in params.get) {
+				metaURL += (first ? "?" :"&");
+				metaURL += key + "=" + params.get[ key ];
+				first = false;
+			}
+		}
+    $.getJSON( metaURL, 
 			function( pmd ) {
 				moduleConfig[ divId ] = pmd;
 				moduleConfig[ divId ].resourceURL = resourceURL;
@@ -723,6 +738,7 @@ function pongFormRenderField( divId, field, col ) {
 						$.ajaxSetup({'async': false});
 						$.getJSON( 
 								field.optionsResource.resourceURL, 
+								getUrlGETparams(),
 								function( optData ) {
 									for ( var i = 0; i < optData.length; i++ ) {
 										contentItems.push( '<option value="'+ $.i18n( optData[i][ field.optionsResource.optionValue ] )+ '">' );
@@ -773,6 +789,7 @@ function pongFormRenderField( divId, field, col ) {
 			$.ajaxSetup({'async': false});
 			$.getJSON( 
 					field.resourceURL, 
+					getUrlGETparams(),
 					function( optData ) {
 						for ( var i = 0; i < optData.length; i++ ) {
 							var cbValue = 'value="'+optData[i][field.valueField]+'" '; // default value=title
@@ -803,6 +820,7 @@ function pongFormRenderField( divId, field, col ) {
 				$.ajaxSetup({'async': false});
 				$.getJSON( 
 						field.optionsResource.resourceURL, 
+						getUrlGETparams(),
 						function( optData ) {
 							for ( var i = 0; i < optData.length; i++ ) {
 								contentItems.push( '<option value="'+optData[i][ field.optionsResource.optionValue ]+'">'+
