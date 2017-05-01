@@ -19,19 +19,18 @@
               "columns": [
                 {
                   "formFields": [
-                    { "id": "f01", "label": "Text", "type": "text" },
-                    { "id": "f06", "label": "Select", "type": "select",
+                    { "id": "cat", "label": "Select", "type": "select",
                       "options":[ 
                         {"option":"","value":""}, 
-                        {"option":"first","value":"Option1"}, 
-                        {"option":"second","value":"Option2"}, 
-                        {"option":"third","value":"Option3"} ] },
-                    { "id": "f07", "label": "Select", "type": "select", 
+                        {"option":"Shirt","value":"Shirt"}, 
+                        {"option":"Shoes","value":"Shoes"}, 
+                        {"option":"Hat","value":"Hat"} ] },
+                    { "id": "prod", "label": "Select", "type": "select", 
                       "optionsResource": 
                         { "resourceURL": "svc/mock/select/", 
                           "optionField":"name",
                           "optionValue":"name",
-                          "loadOnChange": "f06" } }
+                          "loadOnChange": "cat" } }
                   ]
                 }
               ]
