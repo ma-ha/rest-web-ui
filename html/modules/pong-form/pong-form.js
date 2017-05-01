@@ -816,22 +816,44 @@ function pongFormRenderField( divId, field, col ) {
 					}
 					contentItems.push( '<option '+optValue+'>'+ $.i18n( field.options[i].option )+'</option>' );	
 				} 		
-			} else 	if ( field.optionsResource != null ) {
-				$.ajaxSetup({'async': false});
-				$.getJSON( 
-						field.optionsResource.resourceURL, 
-						getUrlGETparams(),
-						function( optData ) {
-							for ( var i = 0; i < optData.length; i++ ) {
-								contentItems.push( '<option value="'+optData[i][ field.optionsResource.optionValue ]+'">'+
-										 $.i18n( optData[i][ field.optionsResource.optionField ] ) +'</option>' );
-							}
-						}
-					);					
-				$.ajaxSetup({'async': true});				
-			}
+				contentItems.push( '</select>' );
 
-			contentItems.push( '</select>' );
+			} else 	if ( field.optionsResource != null ) {
+
+				if ( field.optionsResource.loadOnChange ) {
+
+					var aId  = divId + field.id;
+					var aURL = field.optionsResource.resourceURL;
+					var otherParams = JSON.stringify( getUrlGETparams() );
+					var val = field.optionsResource.optionValue;
+					var fld = field.optionsResource.optionField;
+					contentItems.push( '</select>' );
+					contentItems.push( '<script>' )
+					contentItems.push( ' $( "#'+divId+field.optionsResource.loadOnChange+'" ).change( ' );
+					contentItems.push( '   function() { ' )
+					contentItems.push( '     var prm = '+otherParams+'; ' )
+					contentItems.push( '     prm["'+field.id+'"] = this.value;' )
+					contentItems.push( '     pongFormLoadOptions( "'+aId+'", "'+aURL+'", prm, "'+val+'", "'+fld+'" ) }' );
+					contentItems.push(  ')' ); 
+					contentItems.push( '</script>' )
+
+				} else {
+
+					$.ajaxSetup({'async': false});
+					$.getJSON( 
+							field.optionsResource.resourceURL, 
+							getUrlGETparams(),
+							function( optData ) {
+								for ( var i = 0; i < optData.length; i++ ) {
+									contentItems.push( '<option value="'+optData[i][ field.optionsResource.optionValue ]+'">'+
+											$.i18n( optData[i][ field.optionsResource.optionField ] ) +'</option>' );
+								}
+							}
+						);					
+					$.ajaxSetup({'async': true});				
+					contentItems.push( '</select>' );
+				}
+			}
 			
     } else if ( field.type == "radio" ) {
 
@@ -853,3 +875,18 @@ function pongFormRenderField( divId, field, col ) {
 	return contentItems;
 }
 
+
+function pongFormLoadOptions( selId, resUrl, params, fVal, fName ) {
+	$.getJSON( resUrl, params, function( data ) { 
+			// alert("Grrrmmm: "+ selId+"/"+fVal+"/"+fName);
+			var opt = [];
+			// alert( JSON.stringify( data ) );
+			for ( var i = 0; i < data.length; i++ ) {
+				opt.push( '<option value="'+data[i][ fVal ]+'">'+
+						$.i18n( data[i][ fName ] ) +'</option>' );
+						//  alert( data[i][ fName ] );
+			}
+			// alert( opt.join( "\n" ) );
+			$( "#"+selId ).html( opt.join( "\n" ) );
+	});
+}

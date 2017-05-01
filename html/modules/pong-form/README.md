@@ -136,9 +136,13 @@ Static options: <code>options</code> array, e.g.
 *  <code>"options": [ { "option":"ABC" }, { "option":"XYZ" } ]</code>
 *  <code>"options": [ { "value":"1", "option":"ABC" }, { "value":"2", "option":"XYZ" } ]</code>
 
-Dynamic options: <code>optionsResource</code>, e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionField":"name", "optionValue":"id" } </code>
+Dynamic options: <code>optionsResource</code>, 
+e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionField":"name", "optionValue":"id" } </code>
 
 ''Warning: The dynamic options will perform a blocking call. If there fails something, it will block the browser.''
+
+Dependent selects: Suppose you need to fill the select based on the changed value of another form field. 
+You can use the `"loadOnChange"="id-xy"` in `optionsResource`.
 
 ### Checkbox 
 <code>"type:"checkbox"</code>
