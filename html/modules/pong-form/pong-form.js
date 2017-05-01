@@ -832,7 +832,7 @@ function pongFormRenderField( divId, field, col ) {
 					contentItems.push( ' $( "#'+divId+field.optionsResource.loadOnChange+'" ).change( ' );
 					contentItems.push( '   function() { ' )
 					contentItems.push( '     var prm = '+otherParams+'; ' )
-					contentItems.push( '     prm["'+field.id+'"] = this.value;' )
+					contentItems.push( '     prm["'+field.optionsResource.loadOnChange+'"] = this.value;' )
 					contentItems.push( '     pongFormLoadOptions( "'+aId+'", "'+aURL+'", prm, "'+val+'", "'+fld+'" ) }' );
 					contentItems.push(  ')' ); 
 					contentItems.push( '</script>' )
