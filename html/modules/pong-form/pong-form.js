@@ -888,5 +888,6 @@ function pongFormLoadOptions( selId, resUrl, params, fVal, fName ) {
 			}
 			// alert( opt.join( "\n" ) );
 			$( "#"+selId ).html( opt.join( "\n" ) );
+			$( "#"+selId ).trigger("change");
 	});
 }

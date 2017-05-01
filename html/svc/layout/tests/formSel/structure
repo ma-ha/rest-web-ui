@@ -27,10 +27,16 @@
                         {"option":"Hat","value":"Hat"} ] },
                     { "id": "prod", "label": "Select", "type": "select", 
                       "optionsResource": 
-                        { "resourceURL": "svc/mock/select/", 
+                        { "resourceURL": "svc/mock/selectProd/", 
                           "optionField":"name",
                           "optionValue":"name",
-                          "loadOnChange": "cat" } }
+                          "loadOnChange": "cat" } },
+                    { "id": "size", "label": "Select", "type": "select", 
+                      "optionsResource": 
+                        { "resourceURL": "svc/mock/selectSize/", 
+                          "optionField":"name",
+                          "optionValue":"name",
+                          "loadOnChange": "prod" } }
                   ]
                 }
               ]
