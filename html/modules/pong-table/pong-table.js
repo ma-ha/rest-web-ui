@@ -945,7 +945,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
         //TODO why additional span ?? $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'">'+ cellVal +'</span><span class="ui-icon ui-icon-plusthick " style="display:inline-block" />' );             
       }
     }
-    
+
   } else if ( cellType == 'date' || cellType == 'datems' ) {
     
     var cls = 'cell'+cellDef.id.replace(/\./g,'') + ' pongDate '
@@ -957,7 +957,8 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     //old 
     //var datrStr = $.datepicker.formatDate( fmt, theDate );
     // new
-    var datrStr = moment( theDate ).format( fmt );
+    var datrStr = '-';
+    if ( ! isNaN( unixDt ) ) { datrStr = moment( theDate ).format( fmt ); }
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" && poTbl[ tblDiv ] && poTbl[ tblDiv ].dataURL) ) {
       editable = ' data-r="'+r+'" data-c="'+c+'"';
       var cID = divId+'R'+i+cellDef.id;
