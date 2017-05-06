@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$rows = 
 		array(
 			array( 'ID' => 'yyy1', 'Created' => '1481483418', 'Name' => array( "Prod F", "A" ), 'Rating' => '2', 'Status' => 'false', 'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p07w.png', 'ZoomImg'=>'img/p07.jpg' ),
-			array( 'ID' => 'yy02D', 'Created' => NULL, 'Name' => array( "Prod N", "A" ), 'Rating' => '2', 'Status' => 'true',  'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p01w.png', 'ZoomImg'=>'img/p01.jpg' ),
+			array( 'ID' => 'yy02null', 'Created' => NULL, 'Name' => array( "Prod N", "A" ), 'Rating' => null, 'Status' => 'true',  'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p01w.png', 'ZoomImg'=>'img/p01.jpg' ),
 			array( 'ID' => 'yyy3t', 'Created' => '1461610061', 'Name' => array( "Prod B", "A" ), 'Rating' => '2', 'Status' => true,  'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p02w.png', 'ZoomImg'=>'img/p02.jpg' ),
 			array( 'ID' => 'yyy4', 'Created' => '1451610061', 'Name' => array( "Prod B", "A" ), 'Rating' => '2', 'Status' => 'true',  'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p03w.png', 'ZoomImg'=>'img/p03.jpg' ),
 			array( 'ID' => 'yy05', 'Created' => '1441610061', 'Name' => array( "Prod N", "A" ), 'Rating' => '2', 'Status' => 'true',  'ProductPage' => 'http://mh-svr.de/pong_dev/README.md', 'descr' => 'Blah blub bubber.', 'Picture' => 'img/p04w.png', 'ZoomImg'=>'img/p04.jpg' ),

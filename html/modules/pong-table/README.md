@@ -94,6 +94,7 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 ### Cell Types 
 <code>"cellType"</code> property can be:
 * text 
+* number
 * checkbox
 * img
 * link (TODO)
@@ -107,6 +108,10 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * date
 
 The img type and link type will expect a URL as content.
+
+### number
+Optional attributes:
+* "digits": integer value 
 
 ### linkLink 
 Generates a link with "label" as link text and "id" is set as href URL.

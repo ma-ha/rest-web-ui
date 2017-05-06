@@ -67,6 +67,12 @@
        "ratingType": "3star"
       },
       {
+       "id": "Rating",
+       "label": "Rating No",
+       "cellType": "number",
+       "digits": "2"
+      },
+      {
        "id": "Description",
        "label": "Description",
        "cellType": "text",
