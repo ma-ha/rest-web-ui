@@ -25,6 +25,7 @@
 * 0.9.22: Warning if embedded in frame to prevent click hijacking attack
 * 0.9.23: Input with [datalist](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-form#text)
 * 0.9.24: Table: [Expand](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-table#expand-details)
+* 0.9.28: Table supports [number](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-table#number)
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
