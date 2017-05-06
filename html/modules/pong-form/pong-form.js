@@ -52,7 +52,7 @@ function pongFormDivHTML( divId, resourceURL, params ) {
 				moduleConfig[ divId ].resourceURL = resourceURL;
 				pongFormRenderHTML( divId, resourceURL, params, pmd );
 			}
-		).fatal(
+		).fail(
 		    function() {
 	        publishEvent( 'feedback', {'text':'Form: Service offline?'} )
 		    }
