@@ -1304,11 +1304,14 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   } else if ( cellType == 'rating'  ) {
     
     ratingType = "5star";
-    if ( cellVal == null ) { cellVal = 0; }
     if ( cellDef.ratingType != null ) {
       ratingType = cellDef.ratingType;
     }
-    $( cellId ).html( '<img class="RatingImg cell'+cellDef.id+'"" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
+    if ( cellVal != '' ) { 
+      $( cellId ).html( '<img class="RatingImg cell'+cellDef.id+'"" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
+    } else {
+      $( cellId ).html( '' );
+    }
     
   } else {
     // ???
