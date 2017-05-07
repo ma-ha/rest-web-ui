@@ -948,30 +948,21 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   } else if ( cellType == 'number' ) {
 
     var noStr = '-';
-      console.log( '>>> v='+cellVal );
     if ( cellVal != '' ){
-      console.log( '>>> v='+cellVal );
       noStr = cellVal;
       if ( cellDef.digits ) {
-        console.log( '>>> '+cellDef.digits );
         var noVal = Number.parseFloat( cellVal );
         var digits = Number.parseInt( cellDef.digits );
-        console.log( '>>> '+noVal +' / ' +digits );
         if ( ! isNaN( noVal) && ! isNaN( digits) ) { 
-          console.log( '>>> '+noStr );
           noStr = noVal.toFixed( digits ); 
-          console.log( '>>> '+noStr );
         }
       }
     }
-    console.log( '>>> 1' );
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
       editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+noStr + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
-      console.log( '>>> 2' );
         $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ noStr +'</span>' );             
-    console.log( '>>> 3' );
     }
 
   } else if ( cellType == 'date' || cellType == 'datems' ) {
