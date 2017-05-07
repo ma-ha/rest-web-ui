@@ -1193,7 +1193,12 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     if ( ( cellDef.url != null ) && ( cellDef.url.length != null ) ) {
       url = cellDef.url;
     }
-    contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
+    
+    if ( cellDef.label ) {
+      contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
+    } else if ( cellVal != '' ) {
+      contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellVal+'</button>' );
+    }
     contentItems.push( '<script>' );
     contentItems.push( '  $( function() { ' );
     if ( icon.lenght != 0 ) {

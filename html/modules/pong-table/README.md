@@ -144,7 +144,7 @@ By default the link opens a new browser tab/window. Other options are
 * "target":"_parent"
 
 ### Button 
-The button will do an asynchronous call to <code><nowiki>svc/<resourceURL>/<id of button>?rowId=<rowId></nowiki></code> 
+The button will do an asynchronous call to `svc/<resourceURL>/<id of button>?rowId=<rowId>' 
 In the example above this will be posted (productId of the row may be 1234): <code>svc/Products/addToOrder?rowId=1234</code>
 
 You can set the <code>URL</code> parameter to any other AJAX target.
@@ -162,6 +162,10 @@ Example: <code>"update": [ { "resId":"xyz" } ] </code>
 ** target may me "modal", to show the call result in a modal dialog
 * <code>"setData"</code>: define array of <code>resId</code> and optional <code>dataDocSubPath</code> 	  
 For POST; GET, DELETE methods the rowId(s) are used as params to identify the row of the table.
+
+You can use the `"label"` property to define a static text. 
+If the `"label"` property is undefined, the table data field `id` is used, 
+if it's `null` the button is not shown.
 
 #### Update a resource
 <code>"method":"UPDATE"</code> must be set. The update is specified by <code>"update"</code> array.

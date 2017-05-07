@@ -88,6 +88,10 @@
        "id": "ProductPage",
        "label": "Product Page",
        "cellType": "linkLink"
+      },
+      {
+       "id": "act",
+       "cellType": "button"
       }
      ]
     },
