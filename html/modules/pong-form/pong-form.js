@@ -820,38 +820,45 @@ function pongFormRenderField( divId, field, col ) {
 
 			} else 	if ( field.optionsResource != null ) {
 
+				var aId  = divId + field.id;
+				var aURL = field.optionsResource.resourceURL;
+				var otherParams = JSON.stringify( getUrlGETparams() );
+				var val = field.optionsResource.optionValue;
+				var fld = field.optionsResource.optionField;
+
 				if ( field.optionsResource.loadOnChange ) {
 
-					var aId  = divId + field.id;
-					var aURL = field.optionsResource.resourceURL;
-					var otherParams = JSON.stringify( getUrlGETparams() );
-					var val = field.optionsResource.optionValue;
-					var fld = field.optionsResource.optionField;
 					contentItems.push( '</select>' );
 					contentItems.push( '<script>' )
 					contentItems.push( ' $( "#'+divId+field.optionsResource.loadOnChange+'" ).change( ' );
 					contentItems.push( '   function() { ' )
 					contentItems.push( '     var prm = '+otherParams+'; ' )
 					contentItems.push( '     prm["'+field.optionsResource.loadOnChange+'"] = this.value;' )
-					contentItems.push( '     pongFormLoadOptions( "'+aId+'", "'+aURL+'", prm, "'+val+'", "'+fld+'" ) }' );
+					contentItems.push( '     pongFormLoadOptions( "'+aId+'", "'+aURL+'", prm, "'+val+'", "'+fld+'" ); }' );
 					contentItems.push(  ')' ); 
 					contentItems.push( '</script>' )
 
 				} else {
 
-					$.ajaxSetup({'async': false});
-					$.getJSON( 
-							field.optionsResource.resourceURL, 
-							getUrlGETparams(),
-							function( optData ) {
-								for ( var i = 0; i < optData.length; i++ ) {
-									contentItems.push( '<option value="'+optData[i][ field.optionsResource.optionValue ]+'">'+
-											$.i18n( optData[i][ field.optionsResource.optionField ] ) +'</option>' );
-								}
-							}
-						);					
-					$.ajaxSetup({'async': true});				
+					// $.ajaxSetup({'async': false});
+					// $.getJSON( 
+					// 		field.optionsResource.resourceURL, 
+					// 		getUrlGETparams(),
+					// 		function( optData ) {
+					// 			for ( var i = 0; i < optData.length; i++ ) {
+					// 				contentItems.push( '<option value="'+optData[i][ field.optionsResource.optionValue ]+'">'+
+					// 						$.i18n( optData[i][ field.optionsResource.optionField ] ) +'</option>' );
+					// 			}
+					// 		}
+					// 	);					
+					// $.ajaxSetup({'async': true});				
 					contentItems.push( '</select>' );
+					contentItems.push( '<script>' )
+					contentItems.push( ' $( function() { ' )
+					contentItems.push( '     var prm = '+otherParams+'; ' )
+					contentItems.push( '     pongFormLoadOptions( "'+aId+'", "'+aURL+'", prm, "'+val+'", "'+fld+'" ); }' );
+					contentItems.push(  ')' ); 
+					contentItems.push( '</script>' )
 				}
 			}
 			
