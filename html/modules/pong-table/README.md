@@ -106,6 +106,8 @@ On touch devices you also may get a problem to scroll the page, if a scroll-tabl
 * icon ([ref icons names](http://api.jqueryui.com/theming/icons/))
 * pie
 * date
+* select
+* selector (checkbox to select row)
 
 The img type and link type will expect a URL as content.
 
@@ -305,7 +307,7 @@ Currently the table module supports:
 * <code>"ratingType":"prio"</code>: rating values= [ "0", "1", "2", "3" ]
 
 ### Selector
-A selector can be used once per row to link selected data to actions. 
+A selector renders a checkbox and can be used once per row to link selected data to actions. 
 These data collection actions are web service. Data fields are used as parameter for the calls. 
 
 Example use case:
