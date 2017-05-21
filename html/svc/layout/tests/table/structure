@@ -11,6 +11,7 @@
     "title":"Easy Table",
     "moduleConfig":{
      "dataURL":"",
+     "rowId":"ID",
      "filter":{
       "dataReqParams": [ 
        {"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"},
@@ -39,6 +40,15 @@
                   { "id" : "CustomerCount", "cellType" : "text" },
                   { "id" : "RatingLb", "cellType" : "label", "label" : "Rating" }, 
                   { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" }         
+                ]
+              },
+              { "id": "SelT", "cellType":"select",
+                "options": [
+                  {"option":"One"},
+                  {"option":"Two"},
+                  {"option":"Three"},
+                  {"option":"Four"},
+                  {"option":"Five"}
                 ]
               }
           ]

@@ -378,6 +378,35 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
   return contentItems;
 }
 
+function pongTablePostSelectChange( divId, dataUrl, tbl, val ) {
+  var rowIdVal  =  ""; 
+  var postParam =  { };
+  var tblDef = poTbl[ divId ].pongTableDef;
+  if ( ( typeof tblDef.rowId === 'string' ) ) {
+    var rowIdVal =  poTbl[ divId ]["pongTableData"][ tbl.data("r") ][ tblDef.rowId ]; 
+    postParam[ tblDef.rowId ] = rowIdVal; 
+  } else if ( Array.isArray( tblDef.rowId ) ) {
+    for ( var x = 0; x < tblDef.rowId.length; x++ ) {
+      postParam[ tblDef.rowId[x] ] = poTbl[ divId ].pongTableData[ tbl.data("r") ][ tblDef.rowId[x] ];
+    }
+  } else {  // something is wrong
+    log( "Pong-Table", "can't evaluate params for pongTablePostSelectChange" );
+    return; 
+  }
+  var colId =  tblDef.cols[ tbl.data("c") ].id; 
+  postParam[ colId ] = val;
+  log( "Pong-Table", "Post "+dataUrl+"  " + JSON.stringify(postParam) ); 
+  $.post( 
+    dataUrl, postParam, 
+    function( response ) { }, 
+    "json"
+  ).done( 
+    function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } 
+  ).fail( 
+    function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) }
+  );
+}
+
 function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   var contentItems = [];
   var dataUrl = resourceURL;
@@ -396,6 +425,15 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   contentItems.push( "$(function() { ");
     //contentItems.push( '   $( ".editdatepicker" ).datepicker(); ' );
     
+  // code to add/set selected attribute by selector-checkbox event
+  contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".changeSelect", ' );
+  contentItems.push( '         function( event ) { ' );
+  contentItems.push( '            var tbl = $(this); ' );
+  contentItems.push( '            pongTablePostSelectChange( "'+divId+'", "'+dataUrl+'", tbl, this.value ); ' );
+  contentItems.push( '            event.preventDefault(); return false; ' );
+  contentItems.push( '         } ); ');
+  
+  // TODO: change to something like "pongTablePostSelectChange"
   // code to add/set selected attribute by selector-checkbox event
   contentItems.push( '  $( "#'+divId+'PongTable" ).on( "change", ".rowSelector", ' );
   contentItems.push( '         function( event ) { ' );
@@ -1107,6 +1145,17 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     } 
     $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
     
+  } else if ( cellType == 'select' && cellDef.options ) {
+    var selVal = ( cellVal ? ' value="'+cellVal+'"' : '' );
+    var html = '<select id="'+divId+'R'+i+cellDef.id+'"' + selVal+' class="changeSelect" data-r="'+r+'" data-c="'+c+'">';
+    for ( var so = 0; so < cellDef.options.length; so++ ) {
+      var optValue = ( cellDef.options[so].value ? 'value="'+cellDef.options[so].value+'"' : 'value="'+cellDef.options[so].option+'"' );					 
+      html += '<option '+optValue+'>'+ $.i18n( cellDef.options[so].option ) +'</option>';	
+      log( "Pong-Table",'<option '+optValue+'>'+ $.i18n( cellDef.options[so].option ) +'</option>' )
+    }
+    html +='</select>';
+    $( cellId ).html( html )
+
   } else if ( cellType == 'img' ) {
 
     var tblImg  = cellVal; // TODO impl zoom image
