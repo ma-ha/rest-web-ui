@@ -977,7 +977,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   if ( cellType == 'text' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
-      editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
+      editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'"'; 
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
       if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
@@ -1001,7 +1001,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       }
     }
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
-      editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'"'; 
+      editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'"'; 
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+noStr + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
         $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'">'+ noStr +'</span>' );             
@@ -1021,7 +1021,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     var datrStr = '-';
     if ( ! isNaN( unixDt ) ) { datrStr = moment( theDate ).format( fmt ); }
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" && poTbl[ tblDiv ] && poTbl[ tblDiv ].dataURL) ) {
-      editable = ' data-r="'+r+'" data-c="'+c+'"';
+      editable = ' data-r="'+r+'" data-c="'+c+'"  data-cid="'+cellDef.id+'"';
       var cID = divId+'R'+i+cellDef.id;
       //poTbl[ tblDiv ].pongTableDef.rowId;
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+' editdatepicker">'
@@ -1116,7 +1116,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   } else if ( cellType == 'checkbox' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
-      editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'"';
+      editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+' data-cid="'+cellDef.id+'""';
     } else { editable = 'disabled' };
     if ( cellVal == "true" || cellVal==true ) {
       $( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'" checked />' );                        
@@ -1129,7 +1129,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     var selected = "";
     if ( cellDta[ "selected" ] ) { selected = "checked"; }
     //editable = 'class="rowSelector"  data-r="'+r+'" data-c="'+c+'"';
-    $( cellId ).html( '<input type="checkbox" class="rowSelector"  data-r="'+r+'" data-c="'+c+'" value="selected" id="'+divId+'R'+i+cellDef.id+'" '+selected+' />' );
+    $( cellId ).html( '<input type="checkbox" class="rowSelector"  data-r="'+r+'" data-c="'+c+'"  data-cid="'+cellDef.id+'" value="selected" id="'+divId+'R'+i+cellDef.id+'" '+selected+' />' );
     
   } else if ( cellType == 'linkLink' ) {
     
