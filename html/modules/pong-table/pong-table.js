@@ -465,7 +465,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
     contentItems.push( '            var rowIdVal  =  ""; ' ); // TODO handle rowId Array
     contentItems.push( '            var postParam =  { }; ' );
   }
-  contentItems.push( '            var colId =  poTbl["'+divId+'"].pongTableDef.cols[ tbl.data("c") ].id; ' );
+  contentItems.push( '            var colId =  tbl.data("cid"); ' );
   contentItems.push( '            var colVal =  tbl.is(":checked"); ' ); // TODO: need if(checkbox) ???
   contentItems.push( '            postParam[ colId ] =  colVal; ' );
   //contentItems.push( '            alert( "Post '+dataUrl+' "+ JSON.stringify(postParam) ); ' );
@@ -518,7 +518,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
     contentItems.push( '        var rowIdVal  = ""; ' );   // TODO handle rowId Array
     contentItems.push( '        var postParam = {  }; ' );
   }
-  contentItems.push( '        var colId =  poTbl["'+divId+'"].pongTableDef.cols[ tbl.data("c") ].id; ' );		
+  contentItems.push( '        var colId =  tbl.data("cid"); ' );		
   contentItems.push( '        var colVal =  tbl.html(); ' );
   contentItems.push( '        postParam[ colId ] =  colVal; ' );
   contentItems.push( '        $.post( ' );
