@@ -378,6 +378,8 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
   return contentItems;
 }
 
+// ============================================================================
+
 function pongTablePostSelectChange( divId, dataUrl, tbl, val ) {
   var rowIdVal  =  ""; 
   var postParam =  { };
@@ -393,7 +395,7 @@ function pongTablePostSelectChange( divId, dataUrl, tbl, val ) {
     log( "Pong-Table", "can't evaluate params for pongTablePostSelectChange" );
     return; 
   }
-  var colId =  tblDef.cols[ tbl.data("c") ].id; 
+  var colId =  tbl.data("cid"); 
   postParam[ colId ] = val;
   log( "Pong-Table", "Post "+dataUrl+"  " + JSON.stringify(postParam) ); 
   $.post( 
@@ -406,6 +408,8 @@ function pongTablePostSelectChange( divId, dataUrl, tbl, val ) {
     function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) }
   );
 }
+
+// ============================================================================
 
 function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   var contentItems = [];
@@ -1147,7 +1151,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     
   } else if ( cellType == 'select' && cellDef.options ) {
     var selVal = ( cellVal ? ' value="'+cellVal+'"' : '' );
-    var html = '<select id="'+divId+'R'+i+cellDef.id+'"' + selVal+' class="changeSelect" data-r="'+r+'" data-c="'+c+'">';
+    var html = '<select id="'+divId+'R'+i+cellDef.id+'"' + selVal+' class="changeSelect" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'">';
     for ( var so = 0; so < cellDef.options.length; so++ ) {
       var optValue = ( cellDef.options[so].value ? 'value="'+cellDef.options[so].value+'"' : 'value="'+cellDef.options[so].option+'"' );					 
       html += '<option '+optValue+'>'+ $.i18n( cellDef.options[so].option ) +'</option>';	
