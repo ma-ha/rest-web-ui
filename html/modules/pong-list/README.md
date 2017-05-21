@@ -39,4 +39,6 @@ The advantage is be able to cluster DIVs hierarchically.
 	    ...
 	}
 
-Please notice, that `"label"` is now a `cellType` and labels inside the divs are ignored.
+Please notice:
+* `"label"` is now a `cellType` and labels inside the divs are ignored
+* layout must be done insinde the `custom.css` 
