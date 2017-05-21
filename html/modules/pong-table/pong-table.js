@@ -1153,9 +1153,11 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     var selVal = ( cellVal ? ' value="'+cellVal+'"' : '' );
     var html = '<select id="'+divId+'R'+i+cellDef.id+'"' + selVal+' class="changeSelect" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'">';
     for ( var so = 0; so < cellDef.options.length; so++ ) {
-      var optValue = ( cellDef.options[so].value ? 'value="'+cellDef.options[so].value+'"' : 'value="'+cellDef.options[so].option+'"' );					 
-      html += '<option '+optValue+'>'+ $.i18n( cellDef.options[so].option ) +'</option>';	
-      log( "Pong-Table",'<option '+optValue+'>'+ $.i18n( cellDef.options[so].option ) +'</option>' )
+      var optValue = ( cellDef.options[so].value ? cellDef.options[so].value : cellDef.options[so].option );					 
+      var selY = '';
+      if ( cellVal === optValue ) { selY = 'selected' }
+      html += '<option value="'+optValue+'"  '+selY+'>'+ $.i18n( cellDef.options[so].option ) +'</option>';	
+      log( "Pong-Table",'<option value="'+optValue+'" '+selY+'>'+ $.i18n( cellDef.options[so].option ) +'</option>' )
     }
     html +='</select>';
     $( cellId ).html( html )

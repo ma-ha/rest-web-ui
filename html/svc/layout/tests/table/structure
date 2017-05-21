@@ -42,7 +42,7 @@
                   { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" }         
                 ]
               },
-              { "id": "SelT", "cellType":"select",
+              { "id": "SelC", "cellType":"select",
                 "options": [
                   {"option":"One"},
                   {"option":"Two"},
