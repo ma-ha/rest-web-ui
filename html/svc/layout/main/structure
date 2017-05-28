@@ -29,8 +29,9 @@
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
 			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
-			       { "pageLink":"tests/tree", "label":"Tree Test" },
 			       { "pageLink":"tests/table", "label":"Table Test" },
+			       { "pageLink":"tests/theme", "label":"Theme Test" },
+			       { "pageLink":"tests/tree", "label":"Tree Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

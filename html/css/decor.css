@@ -1,3 +1,8 @@
+.res-title { 
+  position: absolute; width: 100%; height: 28px; top: 0px; left: 0px; 
+  padding-left: 9px; padding-top: 5px; font-weight: bold; 
+}
+
 .decor-tm { position: absolute; width: 100%; height: 28px; background: url(../img/decor_tm.png); top: 0px; left: 0px; }
 .decor-tm-title { padding-left: 9px; padding-top: 5px; font-weight: bold; }
 .decor-bm { position: absolute; width: 100%; height:  9px; background: url(../img/decor_bm.png); bottom: 0px; left: 0px; }
@@ -11,7 +16,6 @@
 .decor-inner { padding: 28px 9px 11px 9px; }
 .decor-inner.pong-table { margin-right: 10px; padding-bottom: 0px; }
 .decor-inner.pong-tree { margin-right: 10px; padding-bottom: 0px; }
-
 
 .tedge-tm { position: absolute; width: 100%; height: 28px; background: url(../img/tedge_tm.png); top: 0px; left: 0px; }
 .tedge-tm-title { padding-left: 9px; padding-top: 5px; font-weight: bold; }

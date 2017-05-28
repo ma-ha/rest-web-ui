@@ -111,12 +111,15 @@ function inits() {
 			ajaxOngoing++;
 			log( 'init', 'Start to load JS modules ...');
 			loadModules();
-            jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
-            if ( pageInfo["layoutMode"] == 'tablet' ) {
-              jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
-            } else if ( pageInfo["layoutMode"] == 'mobile' ) {
-              jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
-            } 
+			if ( layout.theme != null ) {
+				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/'+layout.theme+'.css" type="text/css" />');				
+			}
+			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
+			if ( pageInfo["layoutMode"] == 'tablet' ) {
+				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
+			} else if ( pageInfo["layoutMode"] == 'mobile' ) {
+				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
+			} 
 			step = "initmodules";
 		} else	if ( step == "initmodules" ) {
 			ajaxOngoing++;
@@ -366,8 +369,11 @@ function buildStructure( d ) {
 	if ( d.page_name != null ) {
 		pagename = " page"+d.page_name.replace( " ","_" );
 	} 
+	var theme = ( d.theme ? " "+d.theme : "" );
 	$( "<div/>", 
-		{ "id": "maindiv", "class": "page-width" + pagename, html: contentItems.join( "" ) } 
+		{ "id": "maindiv", 
+		  "class": "page-width" + pagename + theme, 
+			html: contentItems.join( "" ) } 
 	).appendTo( "body" );
 	loadHeaderFooter( d );
 	if ( d.page_width ) {
@@ -947,15 +953,16 @@ function resToHTML( id, res, style ) {
 		moduleConfig[ id+'Content' ] = res.moduleConfig;
 	}
 
-	if ( res.title != null && res.decor == null ) {
-		html += '<div id="'+id+'Title" class="res-title">'+res.title+'</div>';
-	}
 	if ( res.headerURL != null ) {
 		html += '<div id="'+id+'HeaderContent" class="res-header '+addCSS+'">'+ $.i18n( res.header )+'</div>';
 		resMap.push( [ id+'HeaderContent', res.headerURL, 'inner', {} ] ); 	
 	}
 	if ( res.decor == null ) {
-		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"></div>';		
+		if ( res.title != null ) {
+			html += '<div id="'+id+'Title" class="res-title">'+res.title+'</div>';
+		}
+		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; }
+		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"'+h+'></div>';		
 	} else {
 		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, res.decor )+'"'; }
 		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"'+h+'></div>'+
@@ -1397,6 +1404,7 @@ function getEventBroker (id) {
     var subscriptions = {
           'main': []
       }
+    var cleanupInProgress = false;
 
 //      check.verifyUnemptyString(id, 'Invalid id');
     if (typeof eventBrokers[id] === 'undefined') {
@@ -1466,7 +1474,6 @@ function getEventBroker (id) {
       publish( event )
     }
     
-    var cleanupInProgress = false;
     
     function cleanupQueue( maxCnt ) {
       if ( ! cleanupInProgress ) { // don't run two cleanups in parallel

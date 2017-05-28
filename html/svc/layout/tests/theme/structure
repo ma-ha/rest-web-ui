@@ -1,0 +1,24 @@
+{
+	"layout":{
+		"title":"Portal: Source View Test",
+		"theme":"tedge",
+		"includeHeader":"main",
+		"rows":[
+			{
+				"rowId":"r1",
+				"height":"600px",
+				"type":"pong-sourcecode",
+				"resourceURL":"modules/pong-sourcecode/pong-sourcecode.js",
+				"title":"Source View",
+				"moduleConfig":{
+					"type":"javascript"
+				},
+				"actions":[
+					{ "type":"pong-help", "param":{ "showConfig":"r1" } }
+			
+				]
+			}
+		],
+		"includeFooter":"main"
+	}
+}
