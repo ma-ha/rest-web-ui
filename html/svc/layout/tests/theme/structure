@@ -2,6 +2,7 @@
 	"layout":{
 		"title":"Portal: Source View Test",
 		"theme":"tedge",
+		"decor":"tedge",
 		"includeHeader":"main",
 		"rows":[
 			{

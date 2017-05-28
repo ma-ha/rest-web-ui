@@ -1,0 +1,147 @@
+/* You can add all your custom styles here */
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana",
+		"sans-serif";
+	background-color: #D2EEF2;
+}
+
+#maindiv {
+	background-color: #14606B;
+ 	margin: 0 auto;	
+	width: 100%;
+}
+
+#header {
+	height: 80px;
+	background-image: url();
+	background-size: 100%;
+	background-color: #14606B;
+	color: #88B8B3;
+}
+
+button {
+	height: 26px;
+	font-size: 11pt;
+}
+
+.pong-navbar {
+	top: 50px;
+}
+.pong-pulldown {
+	top: 50px;
+  right: 100px
+}
+.header-logo {
+	padding-top: 0px;
+	padding-left: 30px;
+}
+
+
+.pong-search {
+  top:55px;
+  right:230px;
+}
+#header .header-links {
+  top: 10px;
+}
+.pongSearchInput {
+  width:100px;
+}
+.i18n {
+  top: 60px;
+}
+
+#MainNav {
+	width: 100%;
+}
+.pongNavBarItem {
+	width: 140px;
+	background-color: #4D8B94;
+}
+.pongNavBarItemActive{
+	background-color: #5DB3BF;
+}
+
+.pong-form, .pong-table {
+	background-color: #C2D2D4;
+}
+
+.pongFormInputProjectContentGrp0Col0 {
+	width: 360px;
+}
+
+#row1viewContentPongFormFrm input {
+	margin-left: 10px;
+	width: 200px;
+}
+#row1viewContentPongFormFrm select {
+	margin-left: 10px;
+	width: 200px;
+}
+
+
+p {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+label {
+	margin-left: 10px;
+}
+
+#ProjectContentprjId {
+	width: 200px;
+}
+#row1 input {
+	width: 180px;	
+}
+#row1 label {
+	width: 80px;	
+}
+.pongFormFrm {
+	margin-top: 8px;
+}
+
+.pongFormActions {
+	margin-top: 4px;
+	float: left;
+	margin-left: 90px;
+}
+
+.cellresource {
+	font-weight: bold;
+}
+
+#footer {
+	background-color: #14606B;
+	color: #88B8B3;
+}
+.decor-tm, .decor-tl, .decor-tr, 
+.decor-lm, .decor-rm,
+.decor-bl, .decor-bm, .decor-br {
+	background-color: #14606B;
+}
+
+.tedge-tm, .tedge-tl, .tedge-tr, 
+.tedge-lm, .tedge-rm,
+.tedge-bl, .tedge-bm, .tedge-br {
+	background-color: #14606B;
+}
+
+
+#row1viewContentPongFormFrm label {
+	width: 180px;
+}
+#row1viewContentprj, #row1viewContentrole {
+	width: 222px;
+}
+
+#AccessMatrixTblContentPongTable {
+	text-align: center;
+}
+#AccessMatrixTblContentPongTable th{
+	text-align: center;
+}
+.syntax-div {
+  background-color: #DDD;
+}

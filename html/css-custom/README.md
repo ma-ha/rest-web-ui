@@ -12,11 +12,13 @@ There are some basic methods you should know:
    * ... and so on
 2. Every single view can have a `"decor"` setting, 
    to define a frame (divs with background images) and 
-   also different CSS classes.
-   There are currently three decors build in:
-   * If no decor or theme is defined at all, just DIVs are arranged
+   also different CSS classes. 
+   The `"decor"` can be defined on on the layout level to apply
+   it on views, if the view has no `"decor"` defined.
+   There are currently two decors build in:
    * `"decor":"decor"` with rounded white and gray borders 
    * `"decor":"tedge"` rounded half transparent borders
+   * If no decor or theme is defined at all, just DIVs are arranged
 3. CSS files:
    * Predefined CSS files are loaded first.
    * If you define a `"theme":"themename"` on the layout level of 

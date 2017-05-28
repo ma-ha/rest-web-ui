@@ -28,6 +28,7 @@
 * 0.9.28: Table supports [number](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-table#number)
 * 0.9.29: Table buttons with dynamic labels
 * 0.9.30: Form: change from optionsResource loader
+* 0.9.32: "theme" and "decor" in [layout](https://github.com/ma-ha/rest-web-ui/tree/master/html/css-custom/)
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
