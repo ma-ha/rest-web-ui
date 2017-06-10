@@ -490,18 +490,16 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   // AJAX commit changes for editable text cells
   contentItems.push( '  $( "#'+divId+'PongTable" ).on( "mouseover", ".editableTblCell", ' );
   contentItems.push( '         function() { $(this).parent().toggleClass( "optedithighlight", true ); return $(this); }' );
-  contentItems.push( '  ).on( "mouseout", ".editableTblCell", ' );
+  contentItems.push( '  ).on( "mouseout", ".editableTblCell,.editableTblCellX", ' );
   contentItems.push( '         function() { $(this).parent().toggleClass( "optedithighlight", false ); return $(this); }' );
   contentItems.push( '  );' );
   contentItems.push( '  $( "#'+divId+'PongTable" ).on( "focus", ".editableTblCell", ' );
-  contentItems.push( '     function() { var tbl = $(this); tbl.data("before", tbl.html()); ' );
-    //contentItems.push( '        $(this).datepicker( "show" ); ' );
-    contentItems.push( '        tbl.parent().toggleClass( "edithighlight", true ); return tbl;' );
-  contentItems.push( '  }).on( "focusout", ".editableTblCell", function() { ' );
+  contentItems.push( '     function() { pongTableSpanToInput( $(this) ); }');
+  contentItems.push( '  ).on( "focusout", ".editableTblCellX", function() { ' );
   contentItems.push( '     var tbl = $(this); ' );
-  contentItems.push( '     tbl.parent().toggleClass( "edithighlight", false );' );
-  contentItems.push( '     if ( tbl.data("before") !== tbl.html() ) { ' );
-  contentItems.push( '        tbl.data("before", tbl.html()); ' ); 
+  contentItems.push( '     pongTableInputToSpan( tbl );');
+  contentItems.push( '     if ( tbl.data("before") !== tbl.val() ) { ' );
+  contentItems.push( '        tbl.data("before", tbl.val()); ' ); 
   if ( ( typeof tbl.rowId === 'string' ) ) {
     contentItems.push( '        var rowIdVal =  poTbl["'+divId+'"].pongTableData[ tbl.data("r") ]["'+tbl.rowId+'"]; ' );
     contentItems.push( '        var postParam =  { '+tbl.rowId+': rowIdVal }; ' );		
@@ -519,7 +517,7 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
     contentItems.push( '        var postParam = {  }; ' );
   }
   contentItems.push( '        var colId =  tbl.data("cid"); ' );		
-  contentItems.push( '        var colVal =  tbl.html(); ' );
+  contentItems.push( '        var colVal =  tbl.val(); ' );
   contentItems.push( '        postParam[ colId ] =  colVal; ' );
   contentItems.push( '        $.post( ' );
   contentItems.push( '           "'+dataUrl+'", postParam , function(response) {  }, "json"' );
@@ -536,6 +534,31 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
 
   return contentItems;
 }
+
+function pongTableSpanToInput( tbl ) {
+  var colVal = tbl.html().trim(); 
+  if ( colVal == "&nbsp;&nbsp;&nbsp;&nbsp;" ) { colVal=""; }
+  var attr = 'id="'+tbl.attr("id")+'" '; 
+  attr += 'value="'+colVal+'" '; 
+  attr += 'data-before="'+colVal+'" '; 
+  attr += 'data-r="'+tbl.data("r")+'" '; 
+  attr += 'data-c="'+tbl.data("c")+'" '; 
+  attr += 'data-cid="'+tbl.data("cid")+'" '; 
+  tbl.parent().html( '<input '+attr+' class="editableTblCellX"><div class="ui-icon ui-icon-pencil editmarker"></div>' ); 
+  $( "#"+tbl.attr("id") ).focus(); 
+}
+
+function pongTableInputToSpan( tbl ) {
+  var attr = 'id="'+tbl.attr("id")+'" '; 
+  attr +=  'data-r="'+tbl.data("r")+'" '; 
+  attr +=  'data-c="'+tbl.data("c")+'" '; 
+  attr +=  'data-cid="'+tbl.data("cid")+'" '; 
+  var cVal =  tbl.val(); 
+  if ( cVal == "" ) { cVal = "&nbsp;&nbsp;&nbsp;&nbsp;";}
+  tbl.parent().html( '<span '+attr+' class="editableTblCell" contenteditable="true">'
+    +cVal+'</span><div class="ui-icon ui-icon-pencil editmarker"></div>' ); 
+}
+
 
 function pongTableGenPaginator( divId, tbl, renderCallback ) {
   var contentItems = [];
@@ -1131,7 +1154,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     //editable = 'class="rowSelector"  data-r="'+r+'" data-c="'+c+'"';
     $( cellId ).html( '<input type="checkbox" class="rowSelector"  data-r="'+r+'" data-c="'+c+'"  data-cid="'+cellDef.id+'" value="selected" id="'+divId+'R'+i+cellDef.id+'" '+selected+' />' );
     
-  } else if ( cellType == 'linkLink' ) {
+  } else if ( cellType == 'linkLink' || cellType == 'link' ) {
     
     var target = '';
     if ( cellDef.target != null ) {
