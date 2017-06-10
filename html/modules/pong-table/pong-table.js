@@ -555,8 +555,14 @@ function pongTableInputToSpan( tbl ) {
   attr +=  'data-cid="'+tbl.data("cid")+'" '; 
   var cVal =  tbl.val(); 
   if ( cVal == "" ) { cVal = "&nbsp;&nbsp;&nbsp;&nbsp;";}
-  tbl.parent().html( '<span '+attr+' class="editableTblCell" contenteditable="true">'
-    +cVal+'</span><div class="ui-icon ui-icon-pencil editmarker"></div>' ); 
+  if ( cVal.indexOf('http://') == 0 || cVal.indexOf('https://') == 0 || cVal.indexOf('sftp://') == 0 ) {
+    tbl.parent().html( '<a href="'+cVal.trim()+'" class="ui-icon  ui-icon-extlink linkicon" target="_blank"></a>&nbsp;'
+      +'<span '+attr+' class="editableTblCell" contenteditable="true">'+cVal+'</span>'
+      +'<div class="ui-icon ui-icon-pencil editmarker"></div>' ); 
+  }else {
+    tbl.parent().html( '<span '+attr+' class="editableTblCell" contenteditable="true">'
+      +cVal+'</span><div class="ui-icon ui-icon-pencil editmarker"></div>' ); 
+  }
 }
 
 

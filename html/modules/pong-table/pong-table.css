@@ -55,3 +55,7 @@ div.editable {
 .pongListFrm .hasDatepicker {width: 100px; text-align: center; }
 
 .editableTblCellX { font-size: 10pt; }
+.linkicon { 
+	background-color: #EEE; 
+	float:left;
+}
