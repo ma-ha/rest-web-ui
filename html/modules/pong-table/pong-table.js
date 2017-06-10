@@ -1006,8 +1006,14 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   if ( cellType == 'text' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+      var lnkIco = "";
+      if ( cVal.indexOf('http://') == 0 || cVal.indexOf('https://') == 0 || cVal.indexOf('sftp://') == 0 ) {
+        lnkIco = '<a href="'+cVal.trim()+'" class="ui-icon  ui-icon-extlink linkicon" target="_blank"></a>&nbsp;'
+      }
       editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'"'; 
-      $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellVal + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
+      $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'"">'
+        +lnkIco+'<span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+cellDta[ cellDef.id ] + '</span>'
+        +'<div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
       if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 ) {
         $( cellId ).html( '<span id="'+divId+'R'+i+cellDef.id+'" class="cell'+cellDef.id.replace(/\./g,'')+'"><a href="'+ cellVal +'" target="_blank">'+ cellVal +'</a></span>' );
