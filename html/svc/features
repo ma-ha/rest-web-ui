@@ -1,0 +1,17 @@
+{
+    "icons":[
+       { "layout":"Header", "label":"Header+Footer", "img":"img/icon-headerfooter.svg" },
+       { "layout":"ViewLayout", "label":"Arrage Views", "img":"img/icon-layout.svg" },
+       { "layout":"Sec", "label":"Security", "img":"modules/pong-security/icon.svg" },
+       { "layout":"i18n", "label":"i18n", "img":"modules/_module-template/icon.svg" },
+       { "layout":"Menu", "label":"Menu Tabs", "img":"modules/pong-navbar/icon.svg" },
+       { "layout":"PullDownMenu", "label":"Pull Down Menu", "img":"modules/pong-pulldown/icon.svg" },
+       { "layout":"Themes", "label":"Themes", "img":"modules/_module-template/icon.svg" },
+       { "layout":"ModalFrm", "label":"Modal Form", "img":"modules/modal-form/icon.svg" },
+       { "layout":"HelpDlg", "label":"Inline Help", "img":"modules/pong-help/icon.svg" },
+       { "layout":"Feedback", "label":"Feedback", "img":"modules/_module-template/icon.svg" },
+       { "layout":"Session", "label":"Session", "img":"modules/_module-template/icon.svg" },
+       { "layout":"Feedback", "label":"Feedback", "img":"modules/_module-template/icon.svg" }
+    ],
+    "update":"300"
+}

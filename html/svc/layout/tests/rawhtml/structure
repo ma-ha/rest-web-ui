@@ -1,0 +1,16 @@
+{
+  "layout": {
+    "title": "New Portal",
+		"includeHeader":"main",
+    "rows": [
+      {
+        "rowId": "home",
+        "title": "Home",
+        "resourceURL": "svc/info",
+        "height": "400px",
+        "decor" : "decor"
+      }
+    ],
+		"includeFooter":"main"
+  }
+}

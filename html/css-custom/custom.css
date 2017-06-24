@@ -9,6 +9,42 @@ body {
 	margin: 0 auto;
 }
 
+#ViewTypesContentpongIcons_Div {
+	width: 800px;
+	padding-left: 100px;
+}
+.pongIconViewTypesContent {
+	width: 130px;
+	height: 130px;
+	float: left;
+}
+#ViewTypesContentpongIcons_Div .pongIconImg {
+	width: 100px;
+	height: 100px;
+	margin-left: 15px;
+}
+#ViewTypesContentpongIcons_Div .pongIconLabel {
+	text-align: center;
+}
+
+#FeaturesContentpongIcons_Div {
+	width: 800px;
+	padding-left: 100px;
+}
+.pongIconFeaturesContent {
+	width: 130px;
+	height: 130px;
+	float: left;
+}
+#FeaturesContentpongIcons_Div .pongIconImg {
+	width: 100px;
+	height: 100px;
+	margin-left: 15px;
+}
+#FeaturesContentpongIcons_Div .pongIconLabel {
+	text-align: center;
+}
+
 #r1ContentPongList .pongListRow {
 	border-top-width: 1px; 
 	border-top-style: solid;

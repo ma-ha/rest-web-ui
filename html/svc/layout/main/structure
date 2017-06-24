@@ -20,6 +20,7 @@
 			       { "pageLink":"tests/easy", "label":"Easy-Form/-Table (Scollbar)" },
 			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
 			       { "pageLink":"tests/formSel", "label":"Form Select Test" },
+			       { "pageLink":"tests/rawhtml", "label":"HTML" },
 			       { "pageLink":"tests/list", "label":"List Test (Paginator)" },
 			       { "pageLink":"tests/list2", "label":"List Test (Scollbar)" },
 			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
@@ -53,11 +54,18 @@
     },
     "rows": [
       {
-        "rowId": "home",
-        "title": "Home",
-        "resourceURL": "svc/info",
-        "height": "400px",
-        "decor" : "decor"
+        "rowId": "ViewTypes",
+        "title":"View Types",
+        "height":"280px",
+        "resourceURL":"svc/viewtypes",
+        "type":"pong-icons"
+      },
+      {
+        "rowId": "Features",
+        "title":"Features",
+        "height":"280px",
+        "resourceURL":"svc/features",
+        "type":"pong-icons"
       }
     ],
     "footer": {
