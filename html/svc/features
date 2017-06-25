@@ -1,17 +1,16 @@
 {
     "icons":[
-       { "layout":"Header", "label":"Header+Footer", "img":"img/icon-headerfooter.svg" },
-       { "layout":"ViewLayout", "label":"Arrage Views", "img":"img/icon-layout.svg" },
-       { "layout":"Sec", "label":"Security", "img":"modules/pong-security/icon.svg" },
-       { "layout":"i18n", "label":"i18n", "img":"modules/_module-template/icon.svg" },
-       { "layout":"Menu", "label":"Menu Tabs", "img":"modules/pong-navbar/icon.svg" },
-       { "layout":"PullDownMenu", "label":"Pull Down Menu", "img":"modules/pong-pulldown/icon.svg" },
-       { "layout":"Themes", "label":"Themes", "img":"modules/_module-template/icon.svg" },
-       { "layout":"ModalFrm", "label":"Modal Form", "img":"modules/modal-form/icon.svg" },
-       { "layout":"HelpDlg", "label":"Inline Help", "img":"modules/pong-help/icon.svg" },
-       { "layout":"Feedback", "label":"Feedback", "img":"modules/_module-template/icon.svg" },
-       { "layout":"Session", "label":"Session", "img":"modules/_module-template/icon.svg" },
-       { "layout":"Feedback", "label":"Feedback", "img":"modules/_module-template/icon.svg" }
+       { "id":"Header", "layout":"main", "label":"Header+Footer", "img":"img/icon-headerfooter.svg" },
+       { "id":"ViewLayout", "layout":"demos/crm-map", "label":"Arrage Views", "img":"img/icon-layout.svg" },
+       { "id":"Sec", "layout":"tests/sec", "label":"Security", "img":"modules/pong-security/icon.svg" },
+       { "id":"i18n", "layout":"i18n", "label":"i18n", "img":"modules/i18n/icon.svg" },
+       { "id":"Menu", "layout":"main", "label":"Menu Tabs", "img":"modules/pong-navbar/icon.svg" },
+       { "id":"PullDownMenu", "layout":"main", "label":"Pull Down Menu", "img":"modules/pong-pulldown/icon.svg" },
+       { "id":"Themes", "layout":"tests/theme", "label":"Themes", "img":"img/icon-themes.svg" },
+       { "id":"ModalFrm", "layout":"main", "label":"Modal Form", "img":"modules/modal-form/icon.svg" },
+       { "id":"HelpDlg", "layout":"tests/action", "label":"Inline Help", "img":"modules/pong-help/icon.svg" },
+       { "id":"Session", "layout":"main", "label":"Session", "img":"img/icon-session.svg" },
+       { "id":"Feedback", "layout":"tests/feedback", "label":"Feedback", "img":"modules/pong-feedback/icon.svg" }
     ],
     "update":"300"
 }
