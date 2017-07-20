@@ -39,3 +39,22 @@ If the framework detects a tablet device:
 
 1. The page will try use the layout structure `<name>-t/structure` 
 2. The page will try to load `css-custom/custom-t.css` 
+
+
+Optimize the `structure` for mobile design assuming a HTML page width of `980px`:
+
+    {
+      "layout": { 
+        "title": "New Portal", 
+        "page_width": "980px", 
+        ... 
+      } 
+      ... 
+    }
+
+# Cheats
+
+* Caching is annoying, if you work on CSS or structure files. 
+  To avoid caching you can append a `nc=true`as query parameter to the URL.
+  I.e. all CSS files will equippted with a random query parameter, so your 
+  browser will not cache them.

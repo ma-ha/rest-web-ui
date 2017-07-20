@@ -1,0 +1,84 @@
+{
+  "layout": {
+    "title": "New Portal",
+    "page_width": "980px",
+    "header": {
+      "logoURL": "img/logo.png",
+      "linkList": [
+      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
+      ],
+      "frameWarning":"true",
+      "modules" : [ 
+      	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
+      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
+      	{ "id": "PullDownMenu", "type": "pong-pulldown", 
+      		"moduleConfig": {
+      			"title": "Test Cases",
+      			"menuItems" : [
+			       { "html":"<b>Regression Tests:</b>" },
+			       { "pageLink":"tests/action", "label":"Action Test" },
+			       { "pageLink":"tests/easyPgn", "label":"Easy-Form/-Table (Paginator)" },
+			       { "pageLink":"tests/easy", "label":"Easy-Form/-Table (Scollbar)" },
+			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
+			       { "pageLink":"tests/formSel", "label":"Form Select Test" },
+			       { "pageLink":"tests/rawhtml", "label":"HTML" },
+			       { "pageLink":"tests/list", "label":"List Test (Paginator)" },
+			       { "pageLink":"tests/list2", "label":"List Test (Scollbar)" },
+			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
+			       { "pageLink":"tests/histogram2", "label":"Histogram Passive" },
+			       { "pageLink":"tests/icons", "label":"Icon Navigation View" },
+			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
+			       { "pageLink":"tests/rss", "label":"RSS Demo" },
+			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
+			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
+			       { "pageLink":"tests/table", "label":"Table Test" },
+			       { "pageLink":"tests/theme", "label":"Theme Test" },
+			       { "pageLink":"tests/tree", "label":"Tree Test" },
+			       { "html":"... greetings, ${tstUser} ;-)" }
+			    ]   
+      		} 
+      	},
+      	{ 
+          "id":"Search", 
+          "type": "pong-search", 
+      	  "moduleConfig": {
+	          "page": "tests/histogram",
+	          "label": "Quick Search:",
+	          "title": "Quick Search",
+	          "update": [ 
+	          	{ "id":"outTbl", "param":"productName"}, 
+	          	{ "id":"r1", "param":"productName" } 
+	          ]
+	      }
+        }
+      ] 
+    },
+    "rows": [
+      {
+        "rowId": "ViewTypes",
+        "title":"View Types",
+        "height":"700px",
+        "resourceURL":"svc/viewtypes",
+        "type":"pong-icons"
+      },
+      {
+        "rowId": "Features",
+        "title":"Features",
+        "height":"700px",
+        "resourceURL":"svc/features",
+        "type":"pong-icons"
+      }
+    ],
+    "footer": {
+      "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' {{PONGVER}}</a>, &copy; 2016, MH.",
+      "linkList": [
+      	{ "text":"About", "url": "index.html?layout=about"},
+      	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
+      	{ "text":"Wiki", "url": "http://mh-svr.de/mw/index.php/Portal_as_a_Service"}
+      ],
+      "modules" : [ 
+  		{ "id": "feedbackView", "type": "pong-feedback", "param": { } }
+  	  ]
+    }
+  }
+}

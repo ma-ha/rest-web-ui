@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '0.9.34';
+var PONGVER = '0.9.35';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -74,12 +74,17 @@ logInfo = false
 logInfoStr = ''
 
 csrfToken = 'default'
+var noCache = "";
 
 /** Because ajax loads are asynchronous, 
     we have to wait for all calls to be sinished to load HTML into DIV
     and then we have to wait to do all the callbacks */
 function inits() {
 	log( "init", "step="+step+" ajaxOngoing="+ajaxOngoing );
+	if ( getParam( 'nc' ) == 'true' ) {
+		noCache = "?nc="+ Math.random();
+  }
+
 	if ( ajaxOngoing == 0 ) { 
 		if ( step == "load-lang" ) {
 			ajaxOngoing++;
@@ -112,13 +117,16 @@ function inits() {
 			log( 'init', 'Start to load JS modules ...');
 			loadModules();
 			if ( layout.theme != null ) {
-				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/'+layout.theme+'.css" type="text/css" />');				
+				loadCSSrelPath( 'css-custom/'+layout.theme+'.css' );
+				//jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/'+layout.theme+'.css" type="text/css" />');				
 			}
-			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom.css" type="text/css" />');
+			loadCSSrelPath( "css-custom/custom.css" );
 			if ( pageInfo["layoutMode"] == 'tablet' ) {
-				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
+				loadCSSrelPath( "css-custom/custom-t.css" );
+				//jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
 			} else if ( pageInfo["layoutMode"] == 'mobile' ) {
-				jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
+				loadCSSrelPath( "css-custom/custom-m.css" );
+				//jQuery('head').append('<link rel="st<ylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
 			} 
 			step = "initmodules";
 		} else	if ( step == "initmodules" ) {
@@ -168,20 +176,20 @@ var jsPath  = ' js/';
 var modulesPath  = 'modules/';
 var themeCssPath = 'css/';
 
-function loadCSS( cssFile ) {
+function loadCSSrelPath( cssFileInclPath ) {
 	var cssLnk = document.createElement( 'link' );
 	cssLnk.setAttribute( 'rel', 'stylesheet' );
 	cssLnk.setAttribute( 'type', 'text/css' );
-	cssLnk.setAttribute( 'href', cssPath+cssFile );
+	cssLnk.setAttribute( 'href', cssFileInclPath + noCache );
 	document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
 }
 
+function loadCSS( cssFile ) {
+	loadCSSrelPath( cssPath+cssFile );
+}
+
 function loadThemeCSS( cssFile ) {
-	var cssLnk = document.createElement( 'link' );
-	cssLnk.setAttribute( 'rel', 'stylesheet' );
-	cssLnk.setAttribute( 'type', 'text/css' );
-	cssLnk.setAttribute( 'href', themeCssPath+cssFile );
-	document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
+	loadCSSrelPath( themeCssPath+cssFile );
 }
 
 //=====================================================================================================
@@ -242,12 +250,16 @@ function loadStructure() {
     pPage = "main";
   }
   pageInfo[ 'layout' ] = pPage;
+	var avoidCache = false;
+	if ( getParam( 'nc' ) == 'true' ) {
+		avoidCache = true;
+	}	
 
-  var structureURLfallback = "svc/layout/"+pPage+"/structure";
+  var structureURLfallback = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   if( mode == "php" ) {
-    structureURLfallback = "svc/layout.php?page="+pPage+pEdit;
+    structureURLfallback = "svc/layout.php?page="+pPage+pEdit+ ( avoidCache ?  nc = '&nc='+Math.random(): '' );
   } else if ( mode == 'direct' ) {
-    structureURLfallback =  "svc/layout/"+directPage+"/structure";
+    structureURLfallback =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   }
   
   // mobile detect -- to disable: just remove the script include from the index.html
@@ -267,13 +279,14 @@ function loadStructure() {
   if ( getParam( 'edit' ) == 'true' ) {
   	pEdit = "&edit=true";
   }
-  	
-  var structureURL = "svc/layout/"+pPage+"/structure";
+  
+  var structureURL = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   if( mode == "php" ) {
-  	structureURL = "svc/layout.php?page="+pPage+pEdit;
+  	structureURL = "svc/layout.php?page="+pPage+pEdit + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
   } else if ( mode == 'direct' ) {
-  	structureURL =  "svc/layout/"+directPage+"/structure";
+  	structureURL =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   } 
+	
 
   console.log("loadStructure: "+structureURL);
 	$.getJSON( 

@@ -30,6 +30,7 @@
 * 0.9.30: Form: change from optionsResource loader
 * 0.9.32: "theme" and "decor" in [layout](https://github.com/ma-ha/rest-web-ui/tree/master/html/css-custom/)
 * 0.9.33: Table: editable cells are now swiched to HTML input on focus
+* 0.9.35: Start on Mobile main page + Avoid Cache flag (URL: ?nc=true) 
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
