@@ -33,7 +33,7 @@ function pongNavEmbed_DivHTML( divId, resourceURL, paramObj ) {
     pongNavEmbed_interval( divId );
 	} else {
 		$.getJSON( 
-			resourceURL, 
+			resourceURL + '?page='+pageInfo[ 'layout' ] , 
 			function( pmd ) {
 			  moduleConfig[ divId ] = pmd;
 			  pongNavEmbed_RenderHTML( divId, resourceURL, paramObj, pmd );
@@ -112,7 +112,7 @@ function pongNavEmbedUpdate( divId, params ) {
   if ( ! params || ! params.resourceURL ) return
   log( "pongNavEmbed", "Update ...");
   $.getJSON( 
-      params.resourceURL, 
+      params.resourceURL + '?page='+pageInfo[ 'layout' ], 
       function( pmd ) {
         moduleConfig[ divId ] = pmd;
         pongNavEmbed_RenderHTML( divId, params.resourceURL, null, pmd );
