@@ -54,12 +54,12 @@ Example:
 	                     "navigations": [
 	                            {
 	                                "layout": "abc",
-	                                "page_name": "ORLpAl",
+	                                "page_name": "tab1",
 	                                "label": "Tab 1"
 	                            },
 	                            {
 	                                "layout": "xyz",
-	                                "page_name": "1fRK2h",
+	                                "page_name": "tab2",
 	                                "label": "Tab 2"
 	                            }
 	                     ]
@@ -100,6 +100,7 @@ Generated HTML is:
 ## Sub-Menu Configuration
 
 Example:
+
     {
        "navigations" : [
           { "layout":"main", "label":"Main"  },
@@ -110,7 +111,8 @@ Example:
 			       { "html":"<b>Regression Tests:</b>" },
 			       { "layout":"tests/xx", "label":"Demo 3" }
             ]  
-          }
+          },
+		{ "layout":"second", "label":"Other Menu"  },
        ]
     }
 
