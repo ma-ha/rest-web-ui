@@ -1,0 +1,29 @@
+.pongNavEmbedDiv {
+	height:100%;
+	
+}
+
+.pongNavEmbed {
+	float:left; 
+	cursor: pointer;
+	position: relative;
+	width: 150px;
+	text-align: center;
+	background-color: #bbb;
+	color: #fff;
+	margin: 2px;
+	padding: 2px;
+
+}
+
+.pongNavEmbedInfo {
+	position: absolute;
+	top: 0px;
+	background-color: rgba(255, 255, 79, 0.8);
+	color: black;
+	font-size: 0.7em;
+}
+
+.pongNavEmbedActive {
+	font-weight: bold;
+}

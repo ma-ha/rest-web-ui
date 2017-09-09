@@ -274,3 +274,11 @@ moduleMap[ "pong-icons" ] = {
         { hook: "update", method:"pongIconsUpdate" }
     ]
 };
+
+moduleMap[ "pong-nav-embed" ] = {
+    "name": "pong-nav-embed",
+    "hooks": [
+        { hook: "loadResourcesHtml", method:"pongNavEmbed_DivHTML" },
+        { hook: "update", method:"pongNavEmbedUpdate" }
+    ]
+};

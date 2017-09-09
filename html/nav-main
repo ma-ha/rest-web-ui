@@ -1,0 +1,7 @@
+{
+   "navigations" : [
+      { "layout":"main", "label":"Main"  },
+      { "layout":"demos/crm-map", "label":"CRM"  },
+      { "layout":"tests/navbar", "label":"Navbar", "info":"NEW!" }
+   ]
+}
