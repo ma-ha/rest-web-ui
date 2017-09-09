@@ -112,7 +112,7 @@ Example:
 			       { "layout":"tests/xx", "label":"Demo 3" }
             ]  
           },
-		{ "layout":"second", "label":"Other Menu"  },
+          { "layout":"second", "label":"Other Menu"  },
        ]
     }
 
