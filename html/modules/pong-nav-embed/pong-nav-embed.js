@@ -75,7 +75,7 @@ function pongNavEmbed_RenderHTML( divId, resourceURL, paramObj, pmd ) {
         id = pmd.navigations[i].layout.replace(/\//g, '');
       } else { id = i }
       var cls = 'pongNavEmbed pongNavEmbed'+divId;
-      if ( pmd.navigations[i].layout == pageInfo[ 'layout' ] ) {
+      if ( pageInfo[ 'layout' ].indexOf( pmd.navigations[i].layout ) >= 0 ) {
 				cls += ' pongNavEmbedActive';
 			}
       contentItems.push( '<div id="navEmbed'+divId+id+'" class="'+cls+'" data-i="'+pmd.navigations[i].layout+'">' );
