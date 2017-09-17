@@ -11,7 +11,8 @@
 		 	          { "id":"pwd",  "label":"Password", "type":"password" },
 		 	          { "id":"pwd",  "label":"Role",   "type":"text", 
 								  "options": [ { "value":"Admin" }, { "value":"Author" } ] },
-		 	          { "id":"f3",   "label":"email",  "type":"email" }		      
+		 	          { "id":"f3",   "label":"email",  "type":"email" },
+		 	          { "id":"comm", "label":"Comment", "type":"text", "rows":"3", "defaultVal":"..." }
 		        	 ]
 		        },
 		        {

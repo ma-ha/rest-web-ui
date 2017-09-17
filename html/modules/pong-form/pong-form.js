@@ -693,7 +693,7 @@ function pongFormRenderField( divId, field, col ) {
 	} else {
 		
 		var title      = ""; if ( field.descr != null ) { title = ' title="'+field.descr+'" '; }
-		var defaultVal = ""; if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }
+		var defaultVal  = ""; if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }
 
 		var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+divId+'PongFormField"'; 
 		if ( field.type == "checkbox"  && field.name != null ) {
@@ -718,7 +718,8 @@ function pongFormRenderField( divId, field, col ) {
 			if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 
 			if ( field.rows != null ) { 
-				contentItems.push( '<textarea type="text" '+nameAndClass + title + ' rows="'+field.rows+'">'+ defaultVal +'</textarea>' );
+				contentItems.push( '<textarea type="text" '+nameAndClass + title + ' rows="'+field.rows+'">'
+					+ ( field.defaultVal ? field.defaultVal : '' ) +'</textarea>' );
 			} else {
 				if ( field.options != null || field.optionsResource != null ) {
 					defaultVal += ' list="'+field.id+'DataList" ';
