@@ -703,7 +703,7 @@ function pongFormRenderField( divId, field, col ) {
 		}
 
 		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
-			nameAndClass += ' hidden'; 
+			//nameAndClass += ''; 
 		} else {
 			contentItems.push( '<p>' );
 			if ( field.label != null && field.label != '' ) {
@@ -714,7 +714,7 @@ function pongFormRenderField( divId, field, col ) {
 		}
     
 		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
-      contentItems.push( '<input '+fnameAndClass+' type="hidden" value="'+field.value+'"/>' );
+      contentItems.push( '<input '+nameAndClass+' type="hidden" value="'+field.value+'"/>' );
     } else if ( field.type == "text" ) {
 			var modifier = '';
 			if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
