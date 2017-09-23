@@ -81,7 +81,7 @@ The idea is to have a two column form.
 
 For all fields is supported:
 * hide fields with hidden attribute
- * <code>"hidden":"true"</code> 
+ * <code>"hidden":"true", "value":"..."</code> 
  * <code>"hidden":"false"</code> ''(default)'' 
 * put field int HTTP request header or only in the request params or both
  * <code>"request":"header"</code>
