@@ -712,8 +712,10 @@ function pongFormRenderField( divId, field, col ) {
 				contentItems.push( '<label for="'+divId+field.id+'"></label>' );								
 			}
 		}
-		
-		if ( field.type == "text" ) {
+    
+		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
+      contentItems.push( '<input type="hidden" value="'+field.value+'"/>' );
+    } else if ( field.type == "text" ) {
 			var modifier = '';
 			if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 
