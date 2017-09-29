@@ -27,6 +27,11 @@ body {
 	height: 20px;
 }
 
+.htmldiv{
+  overflow: auto;
+  margin: 10px;
+}
+
 .header-logo-url { float: left; }
 .header-logo-text { font-size: 32pt; }
 

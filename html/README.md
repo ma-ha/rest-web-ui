@@ -33,7 +33,8 @@
 * 0.9.35: Start on Mobile main page + Avoid Cache flag (URL: ?nc=true) 
 * 0.9.36: New module [pong-nav-embed](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-nav-embed)
 * 0.9.36: Form: Fix defaultVal in textarea
- 
+* 0.9.40: Fix plain HTML overflow and scrollbar (see HTML test) 
+
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
 * [Search header module](modules/pong-search) 
