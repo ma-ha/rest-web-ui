@@ -69,7 +69,8 @@
       {
        "id": "Status",
        "label": "Status",
-       "cellType": "checkbox"
+       "cellType": "checkbox",
+       "editable": "true"
       },
       {
        "id": "Rating",

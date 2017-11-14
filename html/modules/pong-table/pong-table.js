@@ -1151,7 +1151,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   } else if ( cellType == 'checkbox' ) {
     
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
-      editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+' data-cid="'+cellDef.id+'""';
+      editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'""';
     } else { editable = 'disabled' };
     if ( cellVal == "true" || cellVal==true ) {
       $( cellId ).html( '<input type="checkbox" '+editable+' value="'+cellDef.id+'" id="'+divId+'R'+i+cellDef.id+'" checked />' );                        
