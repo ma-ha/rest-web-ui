@@ -81,15 +81,21 @@ The idea is to have a two column form.
 
 For all fields is supported:
 * hide fields with hidden attribute
- * <code>"hidden":"true", "value":"..."</code> 
- * <code>"hidden":"false"</code> ''(default)'' 
-* put field int HTTP request header or only in the request params or both
- * <code>"request":"header"</code>
- * <code>"request":"header+param"</code>
- * <code>"request":"param"</code> ''(default)''
- * <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
+  * <code>"hidden":"true", "value":"..."</code> 
+  * <code>"hidden":"false"</code> ''(default)'' 
+* put field into HTTP request header or only in the request params or both
+  * <code>"request":"header"</code>
+  * <code>"request":"header+param"</code>
+  * <code>"request":"param"</code> ''(default)''
+  * <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
+* disaable fields (initially*)
+  * <code>"readonly":"true", </code> 
+  * <code>"readonly":"false"</code>  ''(default)'' 
+
 or in combination.
  
+*) can be swichted by checkbox
+
 ### Text 
 <code>"type:"text"</code> (default)
 
@@ -153,23 +159,25 @@ You're able to preselect a checkbox by defining <code>"defaultVal":"true"</code>
 
 For checkboxes you can also set <code>"readonly":"true"</code>.
  
-Example
+Example:
 
-	"formFields":[     
+    "formFields":[     
 	     { "id":"c0", "type":"checkbox", "name":"extras", "value":"ac-adapter", "label":"include AC adapter" , defaultVal":"true" }, 
 	     { "id":"c1", "type":"checkbox", "name":"extras", "value":"colordisplay", "label":"with color display" }, 
 	     { "id":"c2", "type":"checkbox"  "name":"extras", "value":"double", "label":"double size" }
-	]
+	  ]
 
-<strike><code>"type:"checkboxList"</code>
+Optional you can enable (`"activate": [<ids>}`) or disable (`"deactivate": [<ids>}`) fields or buttons in a form by a checkbox:
+  
+    ...
+	    "formFields":[     
+	      { "id":"c0", "type":"checkbox", "activate":["myButton"], ... }, 
+         ...
+       ]
+    ...
+    "actions" : [ { "id": "myButton",  ... } ]
 
-You can load checkbox inputs from a resource per HTTP GET:
-
-	"formFields":[     
-	     { "id":"c0", "type":"checkboxList", "name":"extras", 
-	       "resourceURL":"myresource", "valueField":"id", "labelField":"name" , "defaultValField":"default" }
-	]
-</strike>
+This is e.g. useful to enable a "Register" button, by accepting the "customer agreement".
 
 ### Radio
 Example:
@@ -265,13 +273,14 @@ Example:
 	}
 
 * Action <code>dataEncoding</code> is optional 
- * default is <code>"dataEncoding":"JSON"</code>
- * also available is <code>"dataEncoding":"GETstyle"</code>, so payload is e.g. <code>a=b&c=d</code>
+  * default is <code>"dataEncoding":"JSON"</code>
+  * also available is <code>"dataEncoding":"GETstyle"</code>, so payload is e.g. <code>a=b&c=d</code>
 * Action <code>target</code> has three options:
- * give the resource id of the module, where the output has to go to 
- * or <code>"_parent"</code>, if the whole page should be replaced. The result should be an URL.
- * special value "modal", to display an alert box with the result
- * <code>target</code> is optional, you can also ignore the response.
+  * give the resource id of the module, where the output has to go to 
+  * or <code>"_parent"</code>, if the whole page should be replaced. The result should be an URL.
+  * special value "modal", to display an alert box with the result
+  * <code>target</code> is optional, you can also ignore the response.
+* Action buttons can be disabled by default using`"enabled":"false"`. This can be toggled by a checkboxes.
 
 ''Warning: If you set <code>"method":"GET"</code>, you may get problems with the length of the URL.''
 

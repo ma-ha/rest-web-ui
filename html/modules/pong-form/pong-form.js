@@ -277,7 +277,12 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 	var def = moduleConfig[ divId ];
 
 	if ( action.method != null ) { method = action.method; }
-	
+
+  var active = ""
+  if ( action.enabled != null && ( action.enabled === "false" ||  action.enabled === false ) ) {
+     active = ' disabled="disabled"'
+  }
+
 	if ( action.onChange != null ) { // no button, but a onChange event is done for the form
 
 		var onChngSelector = '.'+divId+'PongFormField';
@@ -358,7 +363,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		
 	} else if ( ( action.updateButton != null ) && ( action.updateButton.length != null ) ) {
 
-		contentItems.push( '<button id="'+divId+'Bt'+action.id+'">'+  $.i18n( action.name ) +'</button>' );
+		contentItems.push( '<button id="'+divId+'Bt'+action.id+'" '+active+'>'+  $.i18n( action.name ) +'</button>' );
 		contentItems.push( '<script>' );
 		contentItems.push( '  $(function() { ' );
 		contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
@@ -372,7 +377,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 		contentItems.push( '  } ); ' );
 		contentItems.push( '</script>' );
 		
-	} else if ( action. afterUpdate != null ) {
+	} else if ( action.afterUpdate != null ) {
 		// do nothing
 		
 	} else if ( action.link != null && action.linkURL != null ) { // simple link with id-field as GET parameter
@@ -423,7 +428,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 	
 		log( "Pong-Form", "action: "+ action.id );
 		// render a button
-		contentItems.push( '<button id="'+divId+'Bt'+action.id+'">'+  $.i18n( action.actionName ) +'</button>' );
+		contentItems.push( '<button id="'+divId+'Bt'+action.id+'" '+active+'>'+  $.i18n( action.actionName ) +'</button>' );
 		contentItems.push( '<script>' );
 		contentItems.push( '  $(function() { ' );
 		contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
@@ -695,12 +700,23 @@ function pongFormRenderField( divId, field, col ) {
 		var title      = ""; if ( field.descr != null ) { title = ' title="'+field.descr+'" '; }
 		var defaultVal  = ""; if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }
 
-		var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+divId+'PongFormField"'; 
+    var uiRO = ''
+    var modifier = '';
+    if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { 
+      uiRO     =  ' ui-disabled ';
+      modifier = ' disabled="disabled" '; 
+    }
+    var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+uiRO+ divId+'PongFormField"'; 
 		if ( field.type == "checkbox"  && field.name != null ) {
 			nameAndClass = 'name="'+field.name+'" ' + nameAndClass; 
 		} else {
 			nameAndClass = 'name="'+field.id+'" ' + nameAndClass; 			
-		}
+    }
+
+    // TODO: How to validate form in ajax style
+    // if (  field.required != null && ( field.required === true  || field.required == 'true' ) ) { 
+    //   modifier += ' required' 
+    // }
 
 		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
 			//nameAndClass += ''; 
@@ -711,18 +727,18 @@ function pongFormRenderField( divId, field, col ) {
 			} else {
 				contentItems.push( '<label for="'+divId+field.id+'"></label>' );								
 			}
-		}
+    }
     
 		if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
       contentItems.push( '<input '+nameAndClass+' type="hidden" value="'+field.value+'"/>' );
     } else if ( field.type == "text" ) {
-			var modifier = '';
-			if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 
 			if ( field.rows != null ) { 
-				contentItems.push( '<textarea type="text" '+nameAndClass + title + ' rows="'+field.rows+'">'
+
+        contentItems.push( '<textarea type="text" '+nameAndClass + title + modifier + ' rows="'+field.rows+'">'
 					+ ( field.defaultVal ? field.defaultVal : '' ) +'</textarea>' );
-			} else {
+
+      } else {
 				if ( field.options != null || field.optionsResource != null ) {
 					defaultVal += ' list="'+field.id+'DataList" ';
 				}
@@ -758,13 +774,11 @@ function pongFormRenderField( divId, field, col ) {
 			
 		} else if ( field.type == "email" ) {
 
-			var modifier = '';
-			if ( field.readonly != null && ( field.readonly === true || field.readonly == 'true' ) ) { modifier += ' disabled="disabled"'; }
 			contentItems.push( '<input type="email" '+nameAndClass + title + defaultVal + modifier+'/>' );				
 			
 		} else if ( field.type == "password" ) {
 			
-			contentItems.push( '<input type="password" '+nameAndClass + title +'/>' );
+			contentItems.push( '<input type="password" '+nameAndClass + title + modifier +'/>' );
 							
 		} else  if ( field.type == "date" ) {
 
@@ -779,13 +793,37 @@ function pongFormRenderField( divId, field, col ) {
 			contentItems.push( '</script>' );
 			
 		} else if ( field.type == "checkbox" ) {
-			
+      
 			var cbValue = 'value="'+field.id+'" '; // default value=title
 			if ( field.value != null ) { cbValue = 'value="'+field.value+'" '; }
-			var modifier = '';
+			if ( field.readonly   != null && ( field.readonly   === true || field.readonly   == 'true' ) ) { modifier = ' disabled'; }
 			if ( field.defaultVal != null && ( field.defaultVal === true || field.defaultVal == 'true' ) ) { modifier += ' checked';  }
-			if ( field.readonly   != null && ( field.readonly   === true || field.readonly   == 'true' ) ) { modifier += ' disabled'; }
 			contentItems.push( '<input type="checkbox" '+ cbValue + nameAndClass + title + modifier +'/>' );
+      
+      var cbActivate   = "[]";
+      var cbDeactivate = "[]";
+      var cbDoScript   = false;
+      if ( field.activate != null  &&
+           Object.prototype.toString.call( field.activate ) === '[object Array]' ) {
+        cbActivate = JSON.stringify( field.activate );
+        cbDoScript = true;
+      }
+      if ( field.deactivate != null  && 
+           Object.prototype.toString.call( field.deactivate ) === '[object Array]' ) {
+        cbDeactivate = JSON.stringify( field.deactivate );
+        cbDoScript = true;
+      }
+      if ( cbDoScript ) {
+        contentItems.push( '<script>' );
+        contentItems.push( ' $(function(){ ' );
+        contentItems.push( '   $( "#'+divId+field.id+'" ).on( "change", function() {' )
+        contentItems.push( '       var activateArr   = '+cbActivate+'; ' )
+        contentItems.push( '       var deactivateArr = '+cbDeactivate+'; ' )
+        contentItems.push( '       pongFormCbActivate( "'+divId+'", "'+field.id+'",  activateArr, deactivateArr ); ' )
+        contentItems.push( '   });' );
+        contentItems.push( ' }); ' );
+        contentItems.push( '</script>' );
+      }
 			
 		} else if ( field.type == "checkboxList" ) {
 
@@ -807,8 +845,8 @@ function pongFormRenderField( divId, field, col ) {
 			$.ajaxSetup({'async': true});				
 
 		} else if ( field.type == "select" ) {
-			
-			contentItems.push( '<select ' + nameAndClass  + title + '>' );
+      
+			contentItems.push( '<select ' + nameAndClass  + title + modifier+ '>' );
 			if ( field.options != null ) {
 				for ( var i = 0; i < field.options.length; i++ ) {
 					var optValue = '';
@@ -870,14 +908,16 @@ function pongFormRenderField( divId, field, col ) {
       if ( field.name && field.value ) {
         var ch = ( field.checked ? 'checked' : '' );
         var lb = ( field.label ? field.label : field.value ); 
-        contentItems.push( '<input type="radio" name="'+field.name+'" value="'+field.value+'" '+ch+'>'+ $.i18n( lb )+'</input>' );  
+        contentItems.push( '<input type="radio" name="'+field.name+'" value="'+field.value+'" '+ch+modifier+'>'+ $.i18n( lb )+'</input>' );  
       } else { 
         logErr( "Pong-Form", "radio input must have a name and value");
       }
       
     } else { 
-			contentItems.push( '<input type="text" '+ nameAndClass  + title + defaultVal +'/>' );			
-		}
+
+      contentItems.push( '<input type="text" '+ nameAndClass  + title + defaultVal +modifier+'/>' );			
+
+    }
 		// TODO: support other form input types 
 		contentItems.push( '</p>' );		
 	}		
@@ -900,4 +940,31 @@ function pongFormLoadOptions( selId, resUrl, params, fVal, fName ) {
 			$( "#"+selId ).html( opt.join( "\n" ) );
 			$( "#"+selId ).trigger("change");
 	});
+}
+
+
+function pongFormCbActivate( divId, cbId, activateArr, deactivateArr ) {
+  var cbValue = $( "#"+divId+cbId ).is( ':checked' );
+  for ( var i = 0; i < activateArr.length; i++ ) {
+    $( "#"+divId+activateArr[i] ).prop( 'disabled', !cbValue );
+    if ( cbValue ) {
+      $( "#"+divId+activateArr[i] ).removeClass( 'ui-disabled' )
+      $( "#"+divId+"Bt"+activateArr[i] ).removeAttr( 'disabled' );
+    } else {
+      $( "#"+divId+activateArr[i] ).addClass( 'ui-disabled' )
+      $( "#"+divId+"Bt"+activateArr[i] ).attr( 'disabled', 'disabled' );
+    }
+    // alert( "disabled #"+divId+activateArr[i]+ +'  '+ (!cbValue) )
+  }
+  for ( var i = 0; i < deactivateArr.length; i++ ) {
+    $( "#"+divId+deactivateArr[i] ).prop( 'disabled', cbValue );
+    if ( ! cbValue ) {
+      $( "#"+divId+deactivateArr[i] ).removeClass( 'ui-disabled' )
+      $( "#"+divId+"Bt"+deactivateArr[i] ).removeAttr( 'disabled' );
+    } else {
+      $( "#"+divId+deactivateArr[i] ).addClass( 'ui-disabled' )
+      $( "#"+divId+"Bt"+deactivateArr[i] ).attr( 'disabled', 'disabled' );
+    }
+    // alert( "disabled #"+divId+deactivateArr[i]+ +'  '+ (cbValue) )
+  }
 }

@@ -3,30 +3,33 @@
     "description": "Test Form",
     "id": "tstFormId", 
     "fieldGroups":[
-	      {
-	        "columns":[
-		        {
-		 	        "formFields":[     
-		 	          { "id":"user", "label":"User ID",  "type":"text" }, 
-		 	          { "id":"pwd",  "label":"Password", "type":"password" },
-		 	          { "id":"pwd",  "label":"Role",   "type":"text", 
-								  "options": [ { "value":"Admin" }, { "value":"Author" } ] },
-		 	          { "id":"f3",   "label":"email",  "type":"email" },
-		 	          { "id":"comm", "label":"Comment", "type":"text", "rows":"3", "defaultVal":"..." }
-		        	 ]
-		        },
-		        {
-		 	        "formFields":[     
-		 	        	{ "id":"c1", "name":"status", "value":"enabled", "label":"Enabled", "type":"checkbox" }, 
-		 	        	{ "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
-		 	        	{ "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" }
-		        	 ]
-		        }
-		    ]
-		 }
+        {
+          "columns":[
+            {
+               "formFields":[     
+                 { "id":"user", "label":"User ID",  "type":"text" }, 
+                 { "id":"pwd",  "label":"Password", "type":"password" },
+                 { "id":"pwd",  "label":"Role",   "type":"text", 
+                  "options": [ { "value":"Admin" }, { "value":"Author" } ] },
+                 { "id":"f3",   "label":"email",  "type":"email" },
+                 { "id":"comm", "label":"Comment", "type":"text", "rows":"3", 
+                   "readonly":"true", "defaultVal":"..." }
+               ]
+            },
+            {
+               "formFields":[     
+                 { "id":"c1", "name":"status", "value":"enabled", "label":"Enable", 
+                  "activate":["Chk","comm"], "deactivate":["Info","f3"], "type":"checkbox" }, 
+                 { "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
+                 { "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" }
+               ]
+            }
+        ]
+     }
     ],
     "actions" : [ 
-    	{ "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
-    	{ "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", "dataEncoding":"GETstyle", "target": "out2" } 
+      { "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
+      { "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", 
+        "enabled":"false", "dataEncoding":"GETstyle", "target": "out2" } 
     ]
 }

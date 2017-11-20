@@ -14,3 +14,7 @@
     float: left;
 	margin-top: 16px;	
 }
+
+.ui-disabled { 
+    opacity: 0.3 !important;
+} 
