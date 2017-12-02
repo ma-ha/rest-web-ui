@@ -99,7 +99,12 @@
       {
        "id": "ProductPage",
        "label": "Product Page",
-       "cellType": "linkLink"
+       "cellType": "link"
+      },
+      {
+       "id": "ProductPage",
+       "label": "Created",
+       "cellType": "linkFor"
       },
       {
        "id": "act",

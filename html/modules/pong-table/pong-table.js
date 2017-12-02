@@ -1176,13 +1176,17 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     if ( cellDef.URL != null ) {
       url = cellDef.URL;
     }
-    if ( poTbl[ tblDiv ].pongTableDef.rowId != null ) {
+    if ( url && url != '' && poTbl[ tblDiv ].pongTableDef.rowId != null ) {
       //if ( ( ajaxType == 'GET' ) || ( ajaxType == 'DELETE' ) ) {
         url = addRowIdGetParam ( tblDiv, url, cellDta );
       //} 
       //param = getRowIdPostParam ( divId, cellDta );         
     } 
-    $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
+    if ( cellVal && url != '' ) {
+      $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
+    } else {
+       $( cellId ).html( '' )
+    }
     
   } else if ( cellType == 'select' && cellDef.options ) {
     var selVal = ( cellVal ? ' value="'+cellVal+'"' : '' );
@@ -1385,8 +1389,9 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     
     var target = "_parent";
     if ( cellDef.target ) { target = cellDef.target; }
-    $( '#'+divId+'R'+i+'C'+cellDef.col ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
-    
+    if ( cellVal && cellVal != '' ) {
+      $( '#'+divId+'R'+i+cellDef.label ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
+    }
   } else if ( cellType == 'rating'  ) {
     
     ratingType = "5star";
