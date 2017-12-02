@@ -36,7 +36,7 @@
 * 0.9.40: Fix plain HTML overflow and scrollbar (see HTML test) 
 * 0.9.42: Table: Fix editable checkbox
 * 0.9.43: Form Checkbox: enable/disable feature for other elements
-* 0.9.44: Table: Fix "linkFor" and suppress empty links 
+* 0.9.44/45: Table: Fix "linkFor" and suppress empty links 
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook

@@ -1182,7 +1182,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       //} 
       //param = getRowIdPostParam ( divId, cellDta );         
     } 
-    if ( cellVal && url != '' ) {
+    if ( url != '' ) {
       $( cellId ).html( '<a href="'+url+'" id="'+divId+'R'+i+cellDef.id+'" '+target+' class="cell'+cellDef.id.replace(/\./g,'')+'">'+$.i18n( cellDef.label )+'</a>' );
     } else {
        $( cellId ).html( '' )
