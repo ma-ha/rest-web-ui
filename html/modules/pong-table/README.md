@@ -36,7 +36,7 @@ Example JSON definiton from <code><nowiki>../svc/[resourceUrl]/pong-table</nowik
 	         "dataReqParamsSrc": "Form"
 	     },
 	     "rowId": "productId",
-	     "cols" : [, 
+	     "cols" : [
 	        { "id": "name", "label": "Name", "cellType": "text", "editable":"true", "width":"20%" }, 
 	        { "id": "descr", "label": "Description", "cellType": "text", "width":"40%" },  
 	        { "id": "img", "label": "Picture", "cellType": "img", "width":"20%" },  
@@ -55,10 +55,10 @@ Also supported:
 In the example the table is the top level object in the content. It may happen, that the table is somewhere in the object tree of the JSON result. 
 You can use the _dataDocSubPath_ attribute, to tell the module the sub-path of the table data, e.g.
 
-	{
-		"dataURL": "webdata/",
-		"dataDocSubPath": "searchResult.dataTbl",
-		...
+    {
+      "dataURL": "webdata/",
+      "dataDocSubPath": "searchResult.dataTbl",
+      ...
     }
 
 The definition of `dataURL` also initiates a data load on page load. 
@@ -89,6 +89,36 @@ Sometimes you also have no space for this extra paginator line on your page.
 If <code>maxRows</code> is not specified, the table will be scrollable (overflow:true). 
 But be aware that all values are rendered in HTML rows. This makes the page slow if the table becomes huge.
 On touch devices you also may get a problem to scroll the page, if a scroll-table is shown.
+
+### Continuous data loading (Planed TODO)
+
+To load the table-data in batches, the data need to contain a link. 
+This enables data load ahead, if you scroll down to the table end. 
+Please add <code>nextDataLink</code> to reference the field in the JSON.
+
+    {
+      "dataURL": "webdata/",
+      "dataDocSubPath": "product.search",
+      "nextDataLink": "product.search.nextLink",
+	    "cols" : [ ... ]
+    }
+
+### OData Example
+
+    {
+      "odata.metadata":"http://xyz.com/api/$metadata#MyResource",
+      "value":[
+        { "ID":0,"Name":"foo" },
+        ...
+        { "ID":19,"Name":"bar" }
+      ],
+      "odata.nextLink":"http://xyz.com/api/MyResource?$skip=20"
+    }
+
+In case of OData, there are dots in the field name, which must be escaped:
+
+    "nextDataLink": "odata\.nextLink",
+
 
 ## Columns 
 ### Cell Types 

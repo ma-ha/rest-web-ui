@@ -715,10 +715,16 @@ function getHook( resId, hookName ) {
 
 
 function layoutToHTML( d ) {
-	var content = [];
-	content.push( '<div id="header"></div>' );
-	content = content.concat( rowsToHTML( d.rows, d.page_width ) );
-	content.push( '<div id="footer"></div>' );
+  var content = [];
+  var laCls = '';
+  var layoutId = '';
+  if ( d.layoutId && d.layoutId != '' ) { 
+    laCls = ' class="'+d.layoutId+'"'; 
+    layoutId = d.layoutId; 
+  }
+	content.push( '<div id="header" '+laCls+'></div>' );
+	content = content.concat( rowsToHTML( d.rows, d.page_width, layoutId ) );
+	content.push( '<div id="footer" '+laCls+'></div>' );
 	return content;
 }
 
@@ -864,7 +870,7 @@ function replaceVar( str ) {
 	return rStr;
 }
 
-function colsToHTML( colsLayout, h ) {
+function colsToHTML( colsLayout, h, laCls ) {
 	log( 'colsToHTML', "COL >>>>>>>>>>>>>>>>>>>>>>>>LEN="+colsLayout.length );		
 	var cols = [];
 	for ( var i = 0; i < colsLayout.length; i++ ) {
@@ -883,9 +889,9 @@ function colsToHTML( colsLayout, h ) {
 			aCol.height = h;
 		}
 		if ( aCol.resourceURL != null ) {
-			cols.push( '<div id="'+id+'" class="coldiv '+(aCol.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative; height:100%;">' );
+			cols.push( '<div id="'+id+'" class="coldiv '+laCls+' '+(aCol.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative; height:100%;">' );
 			//cols.push( id+" "+ aCol.resourceURL ); 
-			cols.push( resToHTML( id, aCol, style ) );	
+			cols.push( resToHTML( id, aCol, style, laCls ) );	
 			resMap.push( [ id+"Content", aCol.resourceURL, (aCol.type != null ? aCol.type : 'html'), aCol.resourceParam ] );
 			log( ' colsToHTML',  id+"  "+aCol.resourceURL );		
 			if ( aCol.callback != null ) {
@@ -893,18 +899,18 @@ function colsToHTML( colsLayout, h ) {
 			}
 			cols.push( "</div>");
 		} else if ( aCol.rows != null ) {
-			cols.push( '<div id="'+id+'" class="coldiv" style="'+style+' position:relative; height:100%;">' );
-			cols = cols.concat( rowsToHTML( aCol.rows, aCol.width ) );
+			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'" style="'+style+' position:relative; height:100%;">' );
+			cols = cols.concat( rowsToHTML( aCol.rows, aCol.width, laCls ) );
 			cols.push( "</div>");
 		} else {
-			cols.push( '<div id="'+id+'" class="coldiv" style="'+style+' position:relative; height:100%;">empty</div>' );
+			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'" style="'+style+' position:relative; height:100%;">empty</div>' );
 		}  
 	}	
 	log( 'colsToHTML', "COL <<<<<<<<<<<<<<<<<<<<<<<<" );		
 	return cols;
 }
 
-function rowsToHTML( rowsLayout, w ) {
+function rowsToHTML( rowsLayout, w, laCls ) {
 	log( 'rowsToHTML', "ROW >>>>>>>>>>>>>>>>>>>>>>>>LEN="+rowsLayout.length );		
 	var rows = [];
 	for ( var i = 0; i < rowsLayout.length; i++ ) {
@@ -919,8 +925,8 @@ function rowsToHTML( rowsLayout, w ) {
 			style += " height:"+aRow.height+";";  				
 		}
 		if ( aRow.resourceURL != null ) {
-			rows.push( '<div id="'+id+'" class="rowdiv '+(aRow.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative;">' );
-			rows.push( resToHTML( id, aRow, style ) );
+			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative;">' );
+			rows.push( resToHTML( id, aRow, style, laCls ) );
 			resMap.push( [ id+"Content", aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] ); 	
 			log( ' rowsToHTML', id+"  "+aRow.resourceURL );		
 			if ( aRow.callback != null ) {
@@ -928,11 +934,11 @@ function rowsToHTML( rowsLayout, w ) {
 			}
 			rows.push( "</div>");
 		} else if ( aRow.cols != null ) {
-			rows.push( '<div id="'+id+'" class="rowdiv" style="'+style+' position:relative;">' );
-			rows = rows.concat( colsToHTML( aRow.cols, aRow.height ) );
+			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'" style="'+style+' position:relative;">' );
+			rows = rows.concat( colsToHTML( aRow.cols, aRow.height, laCls ) );
 			rows.push( "</div>");
 		} else {
-			rows.push( '<div id="'+id+'" class="rowdiv" style="'+style+' position:relative; height:100%;">empty</div>' );
+			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'" style="'+style+' position:relative; height:100%;">empty</div>' );
 		}
 	}
 	log( 'rowsToHTML', "ROW <<<<<<<<<<<<<<<<<<<<<<<<" );		
@@ -956,10 +962,10 @@ function getCorrectedHeight( height, decor ) {
 	
 }
 	
-function resToHTML( id, res, style ) {
+function resToHTML( id, res, style, laCls ) {
 	log("resToHTML"," > "+id );
 	var html = "";
-	var addCSS = "";
+	var addCSS = laCls+" ";
 	if ( res.type != null ) { addCSS = res.type; }
 
 	if ( layout.decor ) { res.decor = layout.decor; }
@@ -974,7 +980,7 @@ function resToHTML( id, res, style ) {
 	}
 	if ( res.decor == null ) {
 		if ( res.title != null ) {
-			html += '<div id="'+id+'Title" class="res-title">'+$.i18n( res.title )+'</div>';
+			html += '<div id="'+id+'Title" class="res-title '+laCls+'">'+$.i18n( res.title )+'</div>';
 		}
 		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; }
 		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"'+h+'></div>';		

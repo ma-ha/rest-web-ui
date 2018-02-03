@@ -9,10 +9,19 @@ body {
 	margin: 0 auto;
 }
 
+#MainNav {
+  left: 5px;
+}
+
 #ViewTypesContentpongIcons_Div {
 	width: 800px;
 	padding-left: 100px;
 }
+.main-m #ViewTypesContentpongIcons_Div {
+	width: 600px;
+	padding-left: 20px;
+}
+
 .pongIconViewTypesContent {
 	width: 130px;
 	height: 130px;
@@ -31,6 +40,12 @@ body {
 	width: 800px;
 	padding-left: 100px;
 }
+
+.main-m #FeaturesContentpongIcons_Div {
+	width: 600px;
+	padding-left: 20px;
+}
+
 .pongIconFeaturesContent {
 	width: 130px;
 	height: 130px;
