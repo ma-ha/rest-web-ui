@@ -38,6 +38,7 @@
 * 0.9.43: Form Checkbox: enable/disable feature for other elements
 * 0.9.44/45: Table: Fix "linkFor" and suppress empty links 
 * 0.9.46: add "layoutId" as CSS class, if defined in layout: i.e. for mobile layouts
+* 0.9.47: add meta viewport to index.html
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook

@@ -2,7 +2,7 @@
   "layout": {
     "title": "New Portal",
     "layoutId":"main-m",
-    "page_width": "600px",
+    "page_width": "320px",
     "header": {
       "logoURL": "img/logo.png",
       "linkList": [
