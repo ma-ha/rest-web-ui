@@ -204,16 +204,19 @@ moduleMap[ "pong-log" ] = {
 	};
 
 moduleMap[ "pong-map" ] = {
-		"name": "pong-map",
-		"loadCSS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" ],
-		"loadJS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js" ],
-	    "hooks": [
-  	      { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
-	        { hook:"addActionBtn", method:"pong_map_AddActionBtn" },
-	        { hook:"update", method:"pong_map_Update" },
-	        { hook:"setData", method:"pong_map_setData" }
-	    ]
-	};
+  "name": "pong-map",
+  // TODO: migrate to https://unpkg.com/leaflet@1.3.1/dist/
+  //"loadCSS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" ],
+  //"loadJS": [ "http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js" ],
+  "loadCSS": [ "modules/pong-map/leaflet_0.7.3.css" ],
+  "hooks": [
+      { hook:"loadResourcesHtml", method:"pong_map_DivHTML" },
+      { hook:"addActionBtn", method:"pong_map_AddActionBtn" },
+      { hook:"update", method:"pong_map_Update" },
+      { hook:"setData", method:"pong_map_setData" }
+    ],
+    "include": [ "leaflet_0.7.3.js" ]
+  };
 
 moduleMap[ "pong-io" ] = {
 		"name": "pong-io",
