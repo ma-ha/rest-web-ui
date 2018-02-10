@@ -4,24 +4,24 @@
 Framework to create descriptive web applications for REST/JSON type web services. 
 
 Basic functionality of a Web Portal is provided out of the box:
-* arrange data and content views on GUI
-* lot of interactive view types available: 
+* Layouting: arrange data and content views on GUI
+* View Types: The framework comes with lot of interactive view types 
 	* form, table, lists, map/route, content, feeds, I/O, modal dialogs/forms, trees
 	* icon navigation, user feedback
-* configuration and help functions per view
-* header and footer offering lots of functionality
-* i18n: switch languages without changing anything -- just provide a translation map (or web service for that)
-* user sessions (transfer data between views and pages) and a build in pub-sub event broker
+* Context functions per view: Optional configuration and help 
+* Richt header and footer 
+* i18n: switch languages easily -- just provide a translation map (or web service for that)
+* User sessions (transfer data between views and pages) and a build in pub-sub event broker
 * OAauth2 security for web services
 
-![features screen shot](http://mh-svr.de/Pong-Features.png) 
+![features screen shot](https://mh-svr.de/Pong-Features.png) 
 
-### Everything runs in browser:
+### It Scales: The Browser Does The Crunching
 
-All you need is a modern web browser -- and a web service somewhere. 
+All you need is a modern web browser -- and a web service somewhere.
 
 No web application server (JEE, Tomcat, NodeJS, PHP, ...) is required to run the GUI! 
-So you can serve complex web apps even from a Raspberry Pi really fast.
+So you can serve complex web apps even from a Raspberry Pi -- really fast.
 
 But to make life easier there are packaged REST backends available: 
 * <a href="https://www.npmjs.com/package/easy-web-app" target="_blank">NodeJS package</a>: `npm install easy-web-app`
@@ -30,19 +30,19 @@ But to make life easier there are packaged REST backends available:
 ## Click and try examples
 Here are some demos of view type and demo of real world web seb service integration:
 * Content integration via MediaWIKI API:
-<a href="http://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Service API to load some content</a>.
+<a href="https://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Service API to load some content</a>.
 * Form and table demo: 
-<a href="http://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search via EBay API</a>.
-* <a href="http://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geo-coding API)</a>.
-* <a href="http://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
-* <a href="http://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
-* <a href="http://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
-* <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="http://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttons, displays, graphs ...
+<a href="https://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search via EBay API</a>.
+* <a href="https://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geo-coding API)</a>.
+* <a href="https://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
+* <a href="https://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
+* <a href="https://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
+* <a href="https://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="https://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttons, displays, graphs ...
 
 These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
 
-### More Tests
-Most recent GIT checkout of all **[ONLINE DEMOS](http://mh-svr.de/pong_dev)**.
+### Test It !!
+Most recent GIT checkout of all **[ONLINE DEMOS](https://mh-svr.de/pong_dev)**.
 
 For more realistic demos some of the examples use simple REST services implemented in PHP.
 
@@ -86,7 +86,7 @@ The most complex and flexible is the *form* module.
 
 ## 2nd Option Quick Start
 I run a *Portal-as-a-Service* web site, where you can sign in for free and
-create complex Web UIs intuitively: <a href="http://mh-svr.de/portal" target="_blank">http://mh-svr.de/portal</a>.
+create complex Web UIs intuitively: <a href="https://mh-svr.de/portal" target="_blank">https://mh-svr.de/portal</a>.
 
 You can host your portals and views this *Portal-as-a-Service* web site. 
 

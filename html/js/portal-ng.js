@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Markus Harms, ma@mh-svr.de
+Copyright (c) 2018 Markus Harms, ma@mh-svr.de
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,10 @@ THE SOFTWARE.
  A framework to create web applications and portals w/o coding and w/o application servers
  https://github.com/ma-ha/rest-web-ui
   
- former: Portal-NG (PoNG) http://mh-svr.de/mw/index.php/PoNG
+ former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '0.9.46';
+var PONGVER = '1.0.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -824,7 +824,7 @@ function footerHTML( footer ) {
 		if ( footer.copyrightText != null ) {
 			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
 		} else {
-			content.push( '<div class="copyright-div">&copy; MH 2015</div>' );
+			content.push( '<div class="copyright-div">&copy; MH 2018</div>' );
 		}
 		
 		// header hooks

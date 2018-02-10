@@ -1,4 +1,10 @@
 # Release Notes
+## Version 1.0.x
+* v1.0.0
+  * Option to change default layout width and heigth by CSS
+  * Fixed responsive design (incl. some demos)
+  * Fixed minor bug fixes
+
 ## Version 0.9.x
 * Code clean up
 * [Login dialog](modules/pong-security/) with "enter" submit
@@ -128,7 +134,7 @@ Fixes
 
 ## Version 0.2 
 General:
-* PHP Backend Base for [Portal as a service](http://mh-svr.de/portal/)
+* PHP Backend Base for [Portal as a service](https://mh-svr.de/portal/)
 * Header/Footer Improvements
 * Allow links in Copyright
 * Basic auth mechnism
