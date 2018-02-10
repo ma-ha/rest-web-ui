@@ -78,13 +78,6 @@ The plug-ins do all the job in the *views* (="portlets") for forms, i18n, dialog
 The usage of the included set of essential modules is explained in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki).
 The most complex and flexible is the *form* module.  
 
-## Status of the project
-
-* You can do a lot of tasks out of the box!
-* For some "real world task" I still have to add or change some code :-(
-* The framework is nearly ready to be switched from a version 0.x to a 1.x ;-)
-
-
 ## 30sec Quick Start
 1. Clone this project:<br>
     `git clone https://github.com/ma-ha/rest-web-ui.git`
@@ -109,10 +102,13 @@ Should run in all modern browsers on PC, tablet and phones:
 * Chrome (also Android)
 * Firefox
 * Opera
-* Safari (also iPad)
+* Safari (incl. iPhone/iPad)
+* IE (latest versions)
 * ...
 
-IE may have some problems, but who cares ;-)
+Chek out [how to use CSS and how to build responsive designs](https://github.com/ma-ha/rest-web-ui/blob/master/html/css-custom/). 
+
+Older IE may have some problems, but who cares ;-)
 
 ## Tested APIs
 * [Docker](http://docs.docker.com/reference/api/docker_remote_api_v1.17)
