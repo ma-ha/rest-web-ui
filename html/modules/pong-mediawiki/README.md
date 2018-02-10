@@ -13,7 +13,7 @@ Example structure file extract:
 	      {
 	        "rowId": "bla",
 	        "type" : "pong-mediawiki",
-	        "resourceURL": "http://mh-svr.de/mw/",        
+	        "resourceURL": "https://mh-svr.de/mw/",        
 	        "resourceParam": { "page": "PoNG", "wikiRef":"/mw/index.php/", "wikiImg":"/mw/images/" },
 	        ...
 	      },

@@ -8,9 +8,9 @@ This is not working out of the box, since eBay don't allow CORS requests and so 
 You also need to [register at eBay](https://developer.ebay.com) to get a SECURITY-APPNAME key.
 
 ##Working example
-To can [test this sample fully working here](http://mh-svr.de/portal/show.php?layout=57aqwA687d). 
+To can [test this sample fully working here](https://mh-svr.de/portal/show.php?layout=57aqwA687d). 
 
-You are invited to [register for free at my 'portal as a service'](http://mh-svr.de/portal), to play around with the eBay API by yourself.
+You are invited to [register for free at my 'portal as a service'](https://mh-svr.de/portal), to play around with the eBay API by yourself.
 
 
 

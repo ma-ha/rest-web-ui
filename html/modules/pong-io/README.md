@@ -12,7 +12,7 @@ input and output controllers. Basic 'moduleConfig' is like this:
 		]
 	}
 
-[Online Demo](http://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io)
+[Online Demo](https://mh-svr.de/pong_v0.6.2/index.html?layout=demo_io)
 
 Sorry: This is now getting complex ;-) But most definitions are optional :-) Start easy !! 
 
