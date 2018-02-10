@@ -37,6 +37,9 @@ if (  count( $_SESSION['graphP1'] ) > 100 ) {
 if (  count( $_SESSION['graphP2'] ) > 100 ) {
 	$_SESSION['graphP2'] = array_slice( $_SESSION['graphP2'] , count( $_SESSION['graphP2'] ) - 100 );
 }
+if (  count( $_SESSION['graphP3'] ) > 100 ) {
+	$_SESSION['graphP3'] = array_slice( $_SESSION['graphP3'] , count( $_SESSION['graphP3'] ) - 100 );
+}
 if (  count( $_SESSION['graphT'] ) > 100 ) {
 	$_SESSION['graphT']  = array_slice( $_SESSION['graphT']  , count( $_SESSION['graphT'] )  - 100 );
 }
@@ -102,7 +105,6 @@ if ( ! isset( $_SESSION["p1"] ) ) {
 	$pVal[1] = $_SESSION["p3"];
 	$_SESSION['graphP3'][] = $pVal;
 }
-
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' && 	$_SESSION["switchMain"] != 'Power OFF' ) {
 

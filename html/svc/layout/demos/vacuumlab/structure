@@ -114,36 +114,49 @@
 						{
 							"id":"graphP",
 							"type":"Graph",
-							"width":"150", "height":"150",
 							"layout":{
 								"name":"P[kPa]",
 								"graphType":"timeLog",
-								"colors":{"pump":"#5A5","chamber":"#0D0"},
+								"colors":{"pump":"#5A5","chamber":"#0D0","prevac":"#DD0"},
 								"yAxis":{
 									"axisType":"logarithmic",
-									"min":"0.01",
-									"max":"110",
-									"labels":["0.1","1","10","100"],
-									"grid":["0.1","1","10","100"],
+									"min":"0.08", "max":"1010",
+									"labels":["0.0001","0.001","0.01","0.1","1","10","100","1000"],
+									"grid":["0.0001","0.001","0.01","0.1","1","10","100","1000",
+												"0.0002","0.002","0.02","0.2","2","20","200",
+												"0.0004","0.004","0.04","0.4","4","40","400",
+												"0.0006","0.006","0.06","0.6","6","60","600",
+												"0.0008","0.008","0.08","0.8","8","80","800"],
+									"gridColor":"#EEE"
+								},
+								"xAxis":{
+									"axisType":"time",
+									"labelCnt":"3",
 									"gridColor":"#EEE"
 								}
 							},
-							"pos":{ "x":"820", "y":"50" }
+							"width":"130", "height":"150",
+							"pos":{ "x":"840", "y":"20" }
 						},
 						{
 							"id":"graphT",
 							"type":"Graph",
-							"width":"150", "height":"100",
 							"layout":{
-								"name":"T[°C] ",
+								"name":"T[°C]",
 								"colors":{"pump":"#5A5","chamber":"#55A"},
 								"yAxis":{
 									"min":"-50",
 									"max":"450",
 									"labels":["0","100","200","300","400"]
+								},
+								"xAxis":{
+									"axisType":"time",
+									"labelCnt":"3",
+									"gridColor":"#EEE"
 								}
 							},
-							"pos":{ "x":"820", "y":"225" }
+							"width":"130", "height":"100",
+							"pos":{ "x":"840", "y":"225" }
 						},
 						{
 							"id":"buttonRP",
