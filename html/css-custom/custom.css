@@ -17,10 +17,10 @@ body {
 	width: 800px;
 	padding-left: 100px;
 }
-.main-m #ViewTypesContentpongIcons_Div {
-	width: 600px;
-	padding-left: 20px;
-}
+  /* .main-m #ViewTypesContentpongIcons_Div {
+    width: 600px;
+    padding-left: 20px;
+  } */
 
 .pongIconViewTypesContent {
 	width: 130px;
@@ -41,10 +41,10 @@ body {
 	padding-left: 100px;
 }
 
-.main-m #FeaturesContentpongIcons_Div {
+/* .main-m #FeaturesContentpongIcons_Div {
 	width: 600px;
 	padding-left: 20px;
-}
+} */
 
 .pongIconFeaturesContent {
 	width: 130px;
@@ -240,3 +240,137 @@ body {
 }
 
 .r1ContentRowExpand div { float: left; } 
+
+
+/* FOR MOBILE PHONE VIEWPORTS ======================================== */
+@media screen and (max-device-width: 480px) {
+  /*--- iPhone only CSS here ---*/
+
+  body {
+    margin:0px;
+  } 
+
+  #header {
+    height: 142px;
+  }
+
+  #feedbackView {
+    display: none;
+  }
+
+  #maindiv {
+    width:320px;
+    margin: 0 auto;
+  }
+
+  #PullDownMenuPullDownButton {
+    width: 60px;
+    position: absolute;
+    right:5px;
+  }
+  #PullDownMenu, .PullDownBtn  {
+    width: 200px;
+    height: 60px;
+  }
+  #ViewTypesContentpongIcons_Div, #FeaturesContentpongIcons_Div {
+    width:100%;
+    padding-left: 10px;
+  }
+
+  #Search {
+    display: none;
+  }
+
+  .pongIconViewTypesContent, 
+  .pongIconFeaturesContent {
+    width: 100px;	
+    height: 100px;
+    float: left;
+  }
+
+  #ViewTypesContentpongIcons_Div .pongIconImg, 
+  #FeaturesContentpongIcons_Div  .pongIconImg {
+    width: 80px;
+    height: 80px;
+    margin-left: 5px;
+  }
+
+  #ViewTypesContentpongIcons_Div .pongIconLabel, 
+  #FeaturesContentpongIcons_Div  .pongIconLabel {
+    text-align: center;
+    font-size: 0.9em;
+  }
+
+  #SubNav {
+    height: 50px;
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  /* For landscape layouts only */
+  
+  body {
+    margin:0px;
+  } 
+
+  #header {
+    height: 142px;
+  }
+
+  #feedbackView {
+    display: none;
+  }
+  
+  #maindiv {
+    width:667px;
+    margin: 0 auto;
+  }
+
+  #PullDownMenuPullDownButton {
+    width: 60px;
+    position: absolute;
+    right:5px;
+  }
+  #PullDownMenu, .PullDownBtn  {
+    width: 200px;
+    height: 60px;
+  }
+
+  #ViewTypes,
+  #Features {
+    height: 255px;
+  }
+
+  #ViewTypesContentpongIcons_Div, #FeaturesContentpongIcons_Div {
+    width:100%;
+    padding-left: 10px;
+  }
+
+  #Search {
+    display: none;
+  }
+
+  .pongIconViewTypesContent, 
+  .pongIconFeaturesContent {
+    width: 100px;	
+    height: 100px;
+    float: left;
+  }
+
+  #ViewTypesContentpongIcons_Div .pongIconImg, 
+  #FeaturesContentpongIcons_Div  .pongIconImg {
+    width: 80px;
+    height: 80px;
+    margin-left: 5px;
+  }
+
+  #ViewTypesContentpongIcons_Div .pongIconLabel, 
+  #FeaturesContentpongIcons_Div  .pongIconLabel {
+    text-align: center;
+    font-size: 0.9em;
+  }
+
+  #SubNav {
+    height: 50px;
+  }
+}

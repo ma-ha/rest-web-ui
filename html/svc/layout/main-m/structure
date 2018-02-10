@@ -2,7 +2,7 @@
   "layout": {
     "title": "New Portal",
     "layoutId":"main-m",
-    "page_width": "320px",
+    "page_width": "100%",
     "header": {
       "logoURL": "img/logo.png",
       "linkList": [
@@ -61,12 +61,10 @@
       "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' {{PONGVER}}</a>, &copy; 2016, MH.",
       "linkList": [
       	{ "text":"About", "url": "index.html?layout=about"},
-      	{ "text":"Portal-as-a-Service", "url": "http://mh-svr.de/portal"},
-      	{ "text":"Wiki", "url": "http://mh-svr.de/mw/index.php/Portal_as_a_Service"}
+      	{ "text":"Portal-as-a-Service", "url": "https://mh-svr.de/portal"},
+      	{ "text":"Wiki", "url": "https://mh-svr.de/mw/index.php/Portal_as_a_Service"}
       ],
-      "modules" : [ 
-  		{ "id": "feedbackView", "type": "pong-feedback", "param": { } }
-  	  ]
+      "modules" : [ ]
     }
   }
 }

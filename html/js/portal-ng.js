@@ -882,10 +882,12 @@ function colsToHTML( colsLayout, h, laCls ) {
 		log("colsToHTML", " col:"+i+" "+id );
 		var style = "";
 		if ( aCol.width != null ) {
-			style += " width:"+aCol.width+";";
+			//style += " width:"+aCol.width+";";
+      $( "#viewSizes" ).append(  "#"+id+" { width: "+aCol.width+"; }" );
 		}
 		if ( h != null ) {
-			style += " height:"+h+";";  
+			//style += " height:"+h+";";  
+      $( "#viewSizes" ).append(  "#"+id+" { height: "+h+"; }" );
 			aCol.height = h;
 		}
 		if ( aCol.resourceURL != null ) {
@@ -922,7 +924,8 @@ function rowsToHTML( rowsLayout, w, laCls ) {
 		log( "rowsToHTML", " row:"+i+" Id="+id );
 		var style = "";
 		if ( aRow.height != null ) {
-			style += " height:"+aRow.height+";";  				
+			//style += " height:"+aRow.height+";";
+      $( "#viewSizes" ).append( "#"+id+" { height: "+aRow.height+"; }" );
 		}
 		if ( aRow.resourceURL != null ) {
 			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative;">' );
@@ -981,8 +984,13 @@ function resToHTML( id, res, style, laCls ) {
 	if ( res.decor == null ) {
 		if ( res.title != null ) {
 			html += '<div id="'+id+'Title" class="res-title '+laCls+'">'+$.i18n( res.title )+'</div>';
+      res.decor = 'decor'
 		}
-		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; }
+		var h = ""; 
+    if ( res.height != null ) { 
+      //h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; 
+      $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
+    }
 		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"'+h+'></div>';		
 	} else if ( res.decor == 'none' ) {
 		if ( res.title != null ) {
@@ -991,7 +999,11 @@ function resToHTML( id, res, style, laCls ) {
 		var h = ""; //if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; }
 		html += '<div id="'+id+'Content" class="'+addCSS+'"'+h+'></div>';		
 	} else {
-		var h = ""; if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, res.decor )+'"'; }
+		var h = ""; 
+    if ( res.height != null ) { 
+      //h = ' style="height:'+getCorrectedHeight( res.height, res.decor )+'"'; 
+      $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
+    }
 		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"'+h+'></div>'+
 			'<div class="'+res.decor+'-tm">'+(res.title == null ? '' : '<div id="'+id+'Title" class="decor-tm-title">'+ $.i18n( res.title )+'</div>')+'</div>'+
 			'<div class="'+res.decor+'-bm"></div><div class="'+res.decor+'-lm"></div><div class="'+res.decor+'-rm"></div>'+

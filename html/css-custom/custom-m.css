@@ -1,13 +1,14 @@
 /* You can add all your custom styles here */
-
+/*
 body {
 		font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
 		font-size:1.5em;
     background-color: #EEE;
-    width:320px;
+    width:360px;
 }
 
 #maindiv {
+  width:320px;
 	margin: 0 auto;
 }
 
@@ -23,13 +24,15 @@ body {
 	float: left;
 }
 
-#ViewTypesContentpongIcons_Div .pongIconImg, #FeaturesContentpongIcons_Div .pongIconImg{
-	width: 170px;
-	height: 170px;
-	margin-left: 15px;
+
+#ViewTypesContentpongIcons_Div .pongIconImg {
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
 }
 
 #ViewTypesContentpongIcons_Div .pongIconLabel, #FeaturesContentpongIcons_Div .pongIconLabel{
 	text-align: center;
 	font-size: 1.4em;
 }
+*/

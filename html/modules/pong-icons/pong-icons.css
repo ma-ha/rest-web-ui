@@ -1,6 +1,8 @@
 .pongIconsDiv {
 	height:100%;
+  overflow: auto;
 }
+
 
 .pongIcon {
 	cursor: pointer;

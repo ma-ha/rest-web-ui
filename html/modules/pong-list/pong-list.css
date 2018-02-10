@@ -26,7 +26,8 @@
 .PongListFrmFld { float:left; }
 
 .pongList {
-	font-size:10pt;
+  font-size:10pt;
+  overflow: auto;
 }
 
 .pongListRow {

@@ -6,15 +6,15 @@
 		"includeHeader":"main",
         "rows": [
             {
-                "rowId": "42",
+                "rowId": "V42",
                 "height": "550px",
                 "cols": [
                     {
-                        "columnId": "44",
+                        "columnId": "V44",
                         "width": "50%",
                         "rows": [
                             {
-                                "rowId": "66",
+                                "rowId": "V66",
                                 "height": "90px",
                                 "resourceURL": "change_me",
                                 "title": "Load Contacts",
@@ -60,7 +60,7 @@
                                             "setData": [
                                                 {
                                                     "dataDocSubPath": "records",
-                                                    "resId": "60"
+                                                    "resId": "V60"
                                                 }
                                             ]
                                         }
@@ -72,13 +72,13 @@
 									{
 										"type":"pong-help",
 										"param":{
-											"showConfig":"66"
+											"showConfig":"V66"
 										}
 									}
 								]
                             },
                             {
-                                "rowId": "60",
+                                "rowId": "V60",
                                 "height": "460px",
                                 "resourceURL": "change_me",
                                 "title": "SugarCRM Contacts",
@@ -111,7 +111,7 @@
                                             "method": "UPDATE",
                                             "update": [
                                                 {
-                                                    "resId": "62",
+                                                    "resId": "V62",
                                                     "params": [
                                                         {
                                                             "name": "search",
@@ -134,7 +134,7 @@
                                             "method": "UPDATE",
                                             "update": [
                                                 {
-                                                    "resId": "62",
+                                                    "resId": "V62",
                                                     "params": [
                                                         {
                                                             "name": "routeTo",
@@ -156,7 +156,7 @@
                                             "actionName":"Get Route",
                                             "setData": [
                                                 {
-                                                    "resId": "62",
+                                                    "resId": "V62",
 		                                            "paramLstName":"roundTrip",
 		                                            "params": [
 		                                                {
@@ -189,7 +189,7 @@
 									{
 										"type":"pong-help",
 										"param":{
-											"showConfig":"60"
+											"showConfig":"V60"
 										}
 									}
 								]
@@ -197,7 +197,7 @@
                         ]
                     },
                     {
-                        "columnId": "62",
+                        "columnId": "V62",
                         "width": "50%",
                         "resourceURL": "change_me",
                         "title": "Contact On Map",
@@ -205,7 +205,7 @@
                             "mapKey": "5c7GcAGnCtz0E83RHRnJnsk6wCj5Q63C",
                             "setRouteData": [
                                 {
-                                    "resId": "65"
+                                    "resId": "V65"
                                 }
                             ]
                         },
@@ -215,7 +215,7 @@
 							{
 								"type":"pong-help",
 								"param":{
-									"showConfig":"62"
+									"showConfig":"V62"
 								}
 							}
 						]
@@ -223,7 +223,7 @@
                 ]
             },
             {
-                "rowId": "65",
+                "rowId": "V65",
                 "height": "150px",
                 "resourceURL": "change_me",
                 "title": "Routes",
@@ -268,7 +268,7 @@
 					{
 						"type":"pong-help",
 						"param":{
-							"showConfig":"65"
+							"showConfig":"V65"
 						}
 					}
 				]

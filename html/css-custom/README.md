@@ -2,7 +2,7 @@
 
 There are some basic methods you should know:
 
-1. Dimensions layout of the views must be set in the structure 
+1. Dimensions layout of the views *must* be set in the structure 
    files for each layout and view (i.e. not done via CSS files):
    * `layout.page_width` in `px` or `%` (e.g. `"height":"1000px"` 
       or `"height":"95%"`)
@@ -10,6 +10,7 @@ There are some basic methods you should know:
    * `layout.rows.cols.width` in `px` or `%`
    * `layout.rows.cols.rows.height` in `px`
    * ... and so on
+   * buut: since v1.0 you can change width and heigth using CSS
 2. Every single view can have a `"decor"` setting, 
    to define a frame (divs with background images) and 
    also different CSS classes. 
@@ -20,12 +21,13 @@ There are some basic methods you should know:
    * `"decor":"tedge"` rounded half transparent borders
    * If no decor or theme is defined at all, just DIVs are arranged
 3. CSS files:
-   * Predefined CSS files are loaded first.
+   * Framework CSS default files are loaded first.
    * If you define a `"theme":"themename"` on the layout level of 
      the page, the page will try to load `css-custom/<themename>.css`. 
    * The last CSS file is the `css-custom/custom.css`. 
      You can place all your modifications here. 
-    
+   * If a smart phone is detected, it tries to load `css-custom/custom-m.css`
+   * If a tablet browser is detected, it tries to load `css-custom/custom-t.css`
 
 # Responsive Desing for Mobile Phone and Tablet Support   
 In the `index.html` a viewport is defined, so CSS for responsive design is prepared.
@@ -57,9 +59,9 @@ Optimize the `structure` for mobile design assuming a HTML page width of `980px`
       ... 
     }
 
-# Cheats
+# Caching Cheat
 
-* Caching is annoying, if you work on CSS or structure files. 
-  To avoid caching you can append a `nc=true`as query parameter to the URL.
-  I.e. all CSS files will equippted with a random query parameter, so your 
-  browser will not cache them.
+Caching is annoying, if you work on CSS or structure files. 
+To avoid caching you can append a `nc=true`as query parameter to the URL.
+I.e. all CSS files will equippted with a random query parameter, so your 
+browser will not cache them.

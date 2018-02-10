@@ -44,8 +44,8 @@ body {
 .res-footer { padding-left: 9px; padding-top: 5px; font-size: 9pt; }
 
 #footer { 
-    height: 55px;  	
-	background-color: white; 
+  height: 55px;  	
+  background-color: white; 
 }
 
 #footer a:link{color:#AAA;}
@@ -55,18 +55,21 @@ body {
 
 #footer .footer-links {
 	position : absolute;
-	bottom: 10px;
-	left: 400px;
-	width: 600px;
-	font-size: 10pt;
+	top: 10px;
+	left: 10%;
+	width: 90%;
+	font-size: 0.9em;
 	color: gray;
+}
+#footer .footer-links a {
+  padding-right: 4px;
 }
 #footer .copyright-div {
 	position : absolute;
-	bottom: 10px;
-	left: 50px;
-	width: 300px;
-	font-size: 10pt;
+	top: 30px;
+  left: 10%;
+	width: 90%;
+	font-size: 0.7em;
 	color: gray;
 }
 
