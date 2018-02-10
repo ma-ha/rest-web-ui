@@ -6,7 +6,7 @@
     "header": {
       "logoURL": "img/logo.png",
       "linkList": [
-      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
+      	{ "text":"Help", "url": "https://mh-svr.de/mw/index.php/PoNG"}
       ],
       "frameWarning":"true",
       "modules" : [ 

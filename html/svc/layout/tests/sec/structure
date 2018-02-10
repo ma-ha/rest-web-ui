@@ -5,7 +5,7 @@
 	      "logoURL": "img/p02w.png",
 	      "logoText": "Demo",
 	      "linkList": [
-	      	{ "text":"Help", "url": "http://mh-svr.de/mw/index.php/PoNG"}
+	      	{ "text":"Help", "url": "https://mh-svr.de/mw/index.php/PoNG"}
 	      ],
 	      "modules" : [ 
 	      	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
