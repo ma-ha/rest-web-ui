@@ -6,7 +6,7 @@
             {
                 "rowId": "WikiDemo",
                 "height": "600px",
-                "resourceURL": "http://${lang}.wikipedia.org/w/",
+                "resourceURL": "https://${lang}.wikipedia.org/w/",
                 "title": "Wikipedia per REST API",
                 "moduleConfig": {
                     "page": {
