@@ -27,8 +27,13 @@ There are some basic methods you should know:
      You can place all your modifications here. 
     
 
-# Mobile Phone and Tablet Support   
-The framework tries to detect mobile phones or tablets. 
+# Responsive Desing for Mobile Phone and Tablet Support   
+In the `index.html` a viewport is defined, so CSS for responsive design is prepared.
+The custom.css defines some pattern, you should look at to start your desing.
+
+The framework additionally tries to detect mobile phones or tablets. 
+By this, you have the option to replace the whole GUI layout and CSS for 
+phones and tablets.
 
 If the framework detects a mobile phone:
 
