@@ -4,6 +4,10 @@
 	/*height: 100%;	*/
 }
 
+.pong-table {
+  overflow: auto;
+}
+
 .pongTableDiv {
 	/*height: 100%;	*/
 	top: 0px;
