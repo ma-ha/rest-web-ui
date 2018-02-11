@@ -880,20 +880,18 @@ function colsToHTML( colsLayout, h, laCls ) {
 			id = aCol.columnId;
 		}
 		log("colsToHTML", " col:"+i+" "+id );
-		var style = "";
 		if ( aCol.width != null ) {
-			//style += " width:"+aCol.width+";";
       $( "#viewSizes" ).append(  "#"+id+" { width: "+aCol.width+"; }" );
 		}
 		if ( h != null ) {
-			//style += " height:"+h+";";  
       $( "#viewSizes" ).append(  "#"+id+" { height: "+h+"; }" );
 			aCol.height = h;
 		}
 		if ( aCol.resourceURL != null ) {
-			cols.push( '<div id="'+id+'" class="coldiv '+laCls+' '+(aCol.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative; height:100%;">' );
+			cols.push( '<div id="'+id+'" class="coldiv '+laCls+' '+(aCol.decor!=null ? 'withDecor': '')+'">' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
 			//cols.push( id+" "+ aCol.resourceURL ); 
-			cols.push( resToHTML( id, aCol, style, laCls ) );	
+			cols.push( resToHTML( id, aCol, '', laCls ) );	
 			resMap.push( [ id+"Content", aCol.resourceURL, (aCol.type != null ? aCol.type : 'html'), aCol.resourceParam ] );
 			log( ' colsToHTML',  id+"  "+aCol.resourceURL );		
 			if ( aCol.callback != null ) {
@@ -901,11 +899,13 @@ function colsToHTML( colsLayout, h, laCls ) {
 			}
 			cols.push( "</div>");
 		} else if ( aCol.rows != null ) {
-			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'" style="'+style+' position:relative; height:100%;">' );
+      cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
 			cols = cols.concat( rowsToHTML( aCol.rows, aCol.width, laCls ) );
 			cols.push( "</div>");
 		} else {
-			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'" style="'+style+' position:relative; height:100%;">empty</div>' );
+			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">empty</div>' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
 		}  
 	}	
 	log( 'colsToHTML', "COL <<<<<<<<<<<<<<<<<<<<<<<<" );		
@@ -922,14 +922,13 @@ function rowsToHTML( rowsLayout, w, laCls ) {
 			id = aRow.rowId;
 		}
 		log( "rowsToHTML", " row:"+i+" Id="+id );
-		var style = "";
 		if ( aRow.height != null ) {
-			//style += " height:"+aRow.height+";";
       $( "#viewSizes" ).append( "#"+id+" { height: "+aRow.height+"; }" );
 		}
 		if ( aRow.resourceURL != null ) {
-			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'" style="'+style+' position:relative;">' );
-			rows.push( resToHTML( id, aRow, style, laCls ) );
+      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'">' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
+			rows.push( resToHTML( id, aRow, '', laCls ) );
 			resMap.push( [ id+"Content", aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] ); 	
 			log( ' rowsToHTML', id+"  "+aRow.resourceURL );		
 			if ( aRow.callback != null ) {
@@ -937,11 +936,13 @@ function rowsToHTML( rowsLayout, w, laCls ) {
 			}
 			rows.push( "</div>");
 		} else if ( aRow.cols != null ) {
-			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'" style="'+style+' position:relative;">' );
+			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; + }" );
 			rows = rows.concat( colsToHTML( aRow.cols, aRow.height, laCls ) );
 			rows.push( "</div>");
 		} else {
-			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'" style="'+style+' position:relative; height:100%;">empty</div>' );
+			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">empty</div>' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
 		}
 	}
 	log( 'rowsToHTML', "ROW <<<<<<<<<<<<<<<<<<<<<<<<" );		
@@ -986,25 +987,20 @@ function resToHTML( id, res, style, laCls ) {
 			html += '<div id="'+id+'Title" class="res-title '+laCls+'">'+$.i18n( res.title )+'</div>';
       res.decor = 'decor'
 		}
-		var h = ""; 
     if ( res.height != null ) { 
-      //h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; 
       $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
     }
-		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"'+h+'></div>';		
+		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"></div>';		
 	} else if ( res.decor == 'none' ) {
 		if ( res.title != null ) {
 			html += '<div id="'+id+'Title" class="res-title">'+$.i18n( res.title )+'</div>';
 		}
-		var h = ""; //if ( res.height != null ) { h = ' style="height:'+getCorrectedHeight( res.height, null )+'"'; }
-		html += '<div id="'+id+'Content" class="'+addCSS+'"'+h+'></div>';		
+		html += '<div id="'+id+'Content" class="'+addCSS+'"></div>';		
 	} else {
-		var h = ""; 
     if ( res.height != null ) { 
-      //h = ' style="height:'+getCorrectedHeight( res.height, res.decor )+'"'; 
       $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
     }
-		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"'+h+'></div>'+
+		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"></div>'+
 			'<div class="'+res.decor+'-tm">'+(res.title == null ? '' : '<div id="'+id+'Title" class="decor-tm-title">'+ $.i18n( res.title )+'</div>')+'</div>'+
 			'<div class="'+res.decor+'-bm"></div><div class="'+res.decor+'-lm"></div><div class="'+res.decor+'-rm"></div>'+
 			'<div class="'+res.decor+'-tr"></div><div class="'+res.decor+'-tl"></div><div class="'+res.decor+'-br"></div>'+
