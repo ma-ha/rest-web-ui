@@ -708,7 +708,7 @@ function pongFormRenderField( divId, field, col ) {
     }
     if (  field.readonly != null && ( field.readonly === true  || field.readonly == 'true' ) ) { 
       uiRO     =  ' ui-disabled ';
-      modifier += ' "readonly" '; 
+      modifier += ' readonly '; 
     }
     var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+uiRO+ divId+'PongFormField"'; 
 		if ( field.type == "checkbox"  && field.name != null ) {
