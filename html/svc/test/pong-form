@@ -11,9 +11,11 @@
                  { "id":"pwd",  "label":"Password", "type":"password" },
                  { "id":"pwd",  "label":"Role",   "type":"text", 
                   "options": [ { "value":"Admin" }, { "value":"Author" } ] },
-                 { "id":"f3",   "label":"email",  "type":"email" },
+                 { "id":"f3", "label":"email", "type":"email" },
+                 { "id":"f4", "label":"Disabled", "disabled":"true",  
+                   "type":"text", "defaultVal":"You can't select this."  },
                  { "id":"comm", "label":"Comment", "type":"text", "rows":"3", 
-                   "readonly":"true", "defaultVal":"..." }
+                   "readonly":"true", "defaultVal":"Readonly, but you can select this." }
                ]
             },
             {
