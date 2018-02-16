@@ -4,6 +4,9 @@
   * Option to change default layout width and heigth by CSS
   * Fixed responsive design (incl. some demos)
   * Fixed minor bug fixes
+* v1.0.1
+  * inline styles all moved to `#viewSizes`, so all height and width can changed in `custom.css`
+  * Form: Supports readonly and disabled
 
 ## Version 0.9.x
 * Code clean up
