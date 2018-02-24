@@ -9,8 +9,7 @@
         "height": "360px",
         "resourceURL": "svc/test",
         "type": "pong-form",
-        "decor" : "decor",
-        "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ] 
+        "decor" : "decor"
       },
       {
         "rowId": "r1",
@@ -21,7 +20,10 @@
             "title": "Output 1",
             "width": "40%",
             "resourceURL": "svc/cloud/resinfo",
-            "decor" : "decor"
+            "decor" : "decor",
+            "actions" : [ 
+              { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } 
+            ] 
           },
           {
             "columnId": "out2",

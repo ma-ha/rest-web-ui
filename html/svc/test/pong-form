@@ -8,7 +8,7 @@
             {
                "formFields":[     
                  { "id":"user", "label":"User ID",  "type":"text" }, 
-                 { "id":"pwd",  "label":"Password", "type":"password" },
+                 { "id":"pwd",  "label":"Password", "type":"password", "required":true },
                  { "id":"pwd",  "label":"Role",   "type":"text", 
                   "options": [ { "value":"Admin" }, { "value":"Author" } ] },
                  { "id":"f3", "label":"email", "type":"email" },
@@ -23,7 +23,8 @@
                  { "id":"c1", "name":"status", "value":"enabled", "label":"Enable", 
                   "activate":["Chk","comm"], "deactivate":["Info","f3"], "type":"checkbox" }, 
                  { "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
-                 { "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" }
+                 { "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" },
+                 { "id":"captcha", "type":"reCAPTCHA", "sitekey": "6LczUUgUAAAAAPAykoKVT7bsX0aWH33cbEJmg9Fw" }
                ]
             }
         ]

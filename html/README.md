@@ -7,6 +7,10 @@
 * v1.0.1
   * inline styles all moved to `#viewSizes`, so all height and width can changed in `custom.css`
   * Form: Supports readonly and disabled
+* v1.0.2
+  * Form: [reCAPTCHA](modules/pong-form/) as field 
+  * Form field option "required"=true
+  * Form with old "2-column" layout removed from docu
 
 ## Version 0.9.x
 * Code clean up

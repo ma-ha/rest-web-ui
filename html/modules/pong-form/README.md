@@ -8,78 +8,57 @@ If you start your first form, perhaps it is easier to start with the [easy form 
 ## Usage in "structure" 
 Simply <code>"type": "pong-form"</code> to the <code>rows</code> or <code>cols</code> resource. Example [[PoNG Structure Specification|structure file]] extract:
 
-	{
-	   "layout": {
-	      ...
-	      "rows": [
-	      {
-	        "rowId": "bla",
-	        "resourceURL": "customer",
-	        "type": "pong-form",
-	        ...
-	      },
-	      ...
-	    ],
-	    ...
-	}
+  {
+     "layout": {
+        ...
+        "rows": [
+        {
+          "rowId": "bla",
+          "resourceURL": "customer",
+          "type": "pong-form",
+          ...
+        },
+        ...
+      ],
+      ...
+  }
 
 ## Form Definition 
 The resource will load the form definition from the URL <code>../svc/<resourceUrl>/pong-form</code>
-### Two column form layout 
-An easy one or two column layout (formFields2 is optional) is available. Example JSON definition from <code><nowiki>../svc/customer/pong-form</nowiki></code>
 
-	{
-	    "label": "Customers",
-	    "description": "Create or edit a customer data record", 
-	    "id": "name", 
-	    "formFields1": [ 
-	    	{ "id":"name", "label":"Name", "type":"text" }, 
-	    	{ "id":"email", "label":"E-Mail" }, 
-	    	{ "id":"phone", "label":"Phone" }
-	    ],
-	    "formFields2": [ 
-	    	{ "id":"company", "label":"Company" }, 
-	    	{ "id":"address", "label":"Address" }
-	    ],
-	    "actions" : [ 
-	    	{ "id":"CustomerLoad", "actionName": "Load Customer", "method":"GET" ,"actionURL": "svc/customer", "target": "customerActionOut" }, 
-	    	{ "id":"CustomerCreate", "actionName": "Create Customer", "method":"POST", "actionURL": "svc/customer", "update": [ { "resId":"customerTbl" } ] },
-	     	{ "id":"CustomerDelete", "actionName": "Delete Customer", "method":"DELETE", "actionURL": "svc/customer", "target": "customerActionOut" } 
-	    ]
-	}
+Groups and columns form layout: 
+You can do a more flexible form set up by arranging groups and columns: 
 
-### Groups and columns form layout
-You can do a more flexible form set up by arranging groups and columns, but you can't mix the 2-column and the flexible form layout: 
-
-	{
-	    "label": "Customers",
-	    "description": "Create or edit a customer data record", 
-	    "id": "cloudFormId", 
-	    "fieldGroups":[
-	       {
-	         "fieldset":"name",
-	         "columns":[
-	            {
-	               "fieldset":"name",
-	               "formFields":[     
-	                  { ... field def ... }
-	                  { ... field def ... }
-	               ]
-	            }
-	         ] 
-	      }
-	    ],
-	    "actions" : [ 
-	        ...
-	    ]
-	}
+  {
+      "label": "Customers",
+      "description": "Create or edit a customer data record", 
+      "id": "cloudFormId", 
+      "fieldGroups":[
+         {
+           "fieldset":"name",
+           "columns":[
+              {
+                 "fieldset":"name",
+                 "formFields":[     
+                    { ... field def ... }
+                    { ... field def ... }
+                 ]
+              }
+           ] 
+        }
+      ],
+      "actions" : [ 
+          ...
+      ]
+  }
 
 The <code>fieldset</code> is optional and will render a fieldset (border) for this section and the name in the legend.
 
-## Field Types 
-The idea is to have a two column form. 
+REMARK: The "two-column" layout is not supported any more.
 
-For all fields is supported:
+## Fields 
+
+For all fields following options are supported:
 * hide fields with hidden attribute
   * <code>"hidden":"true", "value":"..."</code> 
   * <code>"hidden":"false"</code> ''(default)'' 
@@ -88,9 +67,15 @@ For all fields is supported:
   * <code>"request":"header+param"</code>
   * <code>"request":"param"</code> ''(default)''
   * <code>"request":"substitute"</code> or  <code>"request":"variable"</code> 
-* disaable fields (initially*)
+* disable fields (initially*)
+  * <code>"disabled":"true", </code> 
+  * <code>"disabled":"false"</code>  ''(default)'' 
+* readonly fields
   * <code>"readonly":"true", </code> 
   * <code>"readonly":"false"</code>  ''(default)'' 
+* required
+  * `"required": true `
+  * `"required": false `  ''(default)'' 
 
 or in combination.
  
@@ -122,7 +107,6 @@ Dynamic `datafield` options: <code>optionsResource</code>, e.g.  <code>"optionsR
 ### Password 
 <code>"type:"password"</code>
 
-
 Optional attribute: 
 * <code>"basicAuth":"password"</code> used to create a HTTP basic-auth header field, ref. also text field
 * <code>"basicAuth":"password+field"</code> used to create a HTTP basic-auth header field and send also as POST field, ref. also text field
@@ -132,7 +116,7 @@ Optional attribute:
 
 You can switch the date format for the (e.g. German) language by adding e.g. the following line to *i18n/DE.json*:
 
-	"yy-mm-dd":"dd.mm.yy"
+  "yy-mm-dd":"dd.mm.yy"
 
 
 ### Select 
@@ -162,29 +146,31 @@ For checkboxes you can also set <code>"readonly":"true"</code>.
 Example:
 
     "formFields":[     
-	     { "id":"c0", "type":"checkbox", "name":"extras", "value":"ac-adapter", "label":"include AC adapter" , defaultVal":"true" }, 
-	     { "id":"c1", "type":"checkbox", "name":"extras", "value":"colordisplay", "label":"with color display" }, 
-	     { "id":"c2", "type":"checkbox"  "name":"extras", "value":"double", "label":"double size" }
-	  ]
+      { "id":"c0", "type":"checkbox", "name":"extras", "value":"ac-adapter", "label":"include AC adapter" , defaultVal":"true" }, 
+      { "id":"c1", "type":"checkbox", "name":"extras", "value":"colordisplay", "label":"with color display" }, 
+      { "id":"c2", "type":"checkbox"  "name":"extras", "value":"double", "label":"double size" }
+   ]
 
-Optional you can enable (`"activate": [<ids>}`) or disable (`"deactivate": [<ids>}`) fields or buttons in a form by a checkbox:
+Optional you can enable (`"activate": [<id1>,<id2>...]`) or disable (`"deactivate": [<id1>,...]`) 
+fields or buttons in a form by a checkbox:
   
     ...
-	    "formFields":[     
-	      { "id":"c0", "type":"checkbox", "activate":["myButton"], ... }, 
+    "formFields":[     
+      { "id":"c0", "type":"checkbox", "activate":["myButton"], ... }, 
          ...
-       ]
+      ]
     ...
-    "actions" : [ { "id": "myButton",  ... } ]
+    "actions" : [ { "id": "myButton", "enabled":"false", ... } ]
 
-This is e.g. useful to enable a "Register" button, by accepting the "customer agreement".
+This is e.g. useful to enable a "Create Account" button, by accepting the "Customer Agreement".
 
 ### Radio
 Example:
-	"formFields":[     
-    	{ "id":"r1", "type":"radio", "name":"usergroup", "value":"User", "checked":"true" }, 
-    	{ "id":"r2", "type":"radio", "name":"usergroup", "value":"Admin" }
-	]
+
+    "formFields":[     
+      { "id":"r1", "type":"radio", "name":"usergroup", "value":"User", "checked":"true" }, 
+      { "id":"r2", "type":"radio", "name":"usergroup", "value":"Admin" }
+    ]
 
 ### Separator 
 <code>"type:"separator"</code> adds a horizontal line instead of a field
@@ -193,64 +179,81 @@ Example:
 * <code>"type:"label"</code> adds the text in label as a simple text w/o any form related things, good for hints or explanations
 * <code>descr</code> field adds a tool tip to the field.
 
-### Substitue and Variable
+### Captcha
+
+The form supports [reCAPTCHA](http://www.google.com/recaptcha/intro/):
+
+    "formFields":[
+      ...
+      { "id":"captcha", "type":"reCAPTCHA", "sitekey":"6ULczgU...7bsXbsX0a" }, 
+    ]
+
+The form will include Googles JS, generate the captcha.
+The request to your backend will include the `g-recaptcha-response` field.
+You must verify this which you can verify this at https://www.google.com/recaptcha/api/siteverify
+with the params:
+* `secret` (your secret key)
+* `response` (the value of `g-recaptcha-response`) 
+* `remoteip` IP address of user
+
+## Substitue and Variable
 As mentioned, you can set the  <code>"request":"substitute"</code> or <code>"request":"variable"</code> for a field.
 With this you construct can pass complex structures as parameter, if you want for example pass this parameter in a POST:
 
-	"filter":[
-	   {
-	     "name":[
-	        { "name1":"Nelson Inc" },
-	        { "name2":"Nelson LLC" }
-	      ]
-	   }
-	]
-	
+    "filter":[
+        {
+          "name":[
+            { "name1":"Nelson Inc" },
+            { "name2":"Nelson LLC" }
+          ]
+        }
+    ]
+
 You can specify a form like this:
 
-	{ 
-	  "id": "cloudFormId", 
-	  "fieldGroups":[ 
-	     {  "columns":[  
-	           { "fieldset":"Col1", 
-	             "formFields":[   
-	                 { "id":"filter", "request":"substitute", 
-	                 	"defaultVal":"[ {name:[{name:${name1}},{name:${name2}}]} ]", 
-	                 	"hidden":"true" },
-	                 { "id":"name1",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
-	                 { "id":"name2",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
-	                 ...
-	             ] 
-	          } 
-	       ]  
-	     } 
-	  ], 
-	  "actions" : [  
-	  		...
-	   ] 
-	}
+    { 
+      "id": "cloudFormId", 
+      "fieldGroups":[ 
+        {  "columns":[  
+              { "fieldset":"Col1", 
+                "formFields":[   
+                    { "id":"filter", "request":"substitute", 
+                      "defaultVal":"[ {name:[{name:${name1}},{name:${name2}}]} ]", 
+                      "hidden":"true" },
+                    { "id":"name1",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
+                    { "id":"name2",  "request":"variable", "type":"text", "label":"Filter","defaultVal":"" },
+                    ...
+                ] 
+              } 
+          ]  
+        } 
+      ], 
+      "actions" : [  
+          ...
+      ] 
+    }
 
 Interesting option is to replace the URL by an form field. 
 
-	{ 
-	  "id": "cloudFormId", 
-	  "fieldGroups":[ 
-	     {  "columns":[  
-	           {  "formFields":[   
-	                 { "id":"urlInput", "type":"text", "label":"URL", "defaultVal":"http://localhost:8888/" }
-	             ] 
-	          } 
-	       ]  
-	     } 
-	  ], 
-	  "actions" : [  
-	  	   { "id":"loadSrcBtn", 
-	  	     "actionName": "Load Source File", 
-	  	     "actionURL": "${urlInput}", 
-	  	     "setData": [ { "resId":"srcView" } ] 
-	  	   }
-	   ] 
-	}
+    { 
+      "id": "cloudFormId", 
+      "fieldGroups":[ 
+        {  "columns":[  
+              {  "formFields":[   
+                    { "id":"urlInput", "type":"text", "label":"URL", "defaultVal":"http://localhost:8888/" }
+                ] 
+              } 
+          ]  
+        } 
+      ], 
+      "actions" : [  
+          { "id":"loadSrcBtn", 
+            "actionName": "Load Source File", 
+            "actionURL": "${urlInput}", 
+            "setData": [ { "resId":"srcView" } ] 
+          }
+      ] 
+    }
 
 This will initiate CORS request, so your browser will start with an OPTIONS call.
 But be aware of possible security issues.
@@ -265,12 +268,12 @@ To render a button and perform an AJAX request, simply define an action with a <
 
 Example: 
 
-	{
-	    ...
-	    "actions" : [ 
-	       { "id":"btn", "actionName":"Save Data" }  
-	    ]
-	}
+    {
+        ...
+        "actions" : [ 
+          { "id":"btn", "actionName":"Save Data" }  
+        ]
+    }
 
 * Action <code>dataEncoding</code> is optional 
   * default is <code>"dataEncoding":"JSON"</code>
@@ -290,40 +293,40 @@ You can add add further actions to you button:
 
 A button doing an update only has to sprecify the "updateButton" array and a "name" for the button, e.g.
 
-	{ 
-	  "fieldGroups":[ 
-	     {  "columns":[  
-	           { 
-	             "formFields":[   
-	                  { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
-	             ]
-	          } 
-	       ]  
-	     } 
-	  ], 
-	  "actions":[
-	     {  "id":"Search",
-	        "name":"Search",
-			"updateButton":[ 
-	             { "resId":"MapView" }
-			]
-	     }
-	  ]
-	}
+  { 
+    "fieldGroups":[ 
+       {  "columns":[  
+             { 
+               "formFields":[   
+                    { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
+               ]
+            } 
+         ]  
+       } 
+    ], 
+    "actions":[
+       {  "id":"Search",
+          "name":"Search",
+      "updateButton":[ 
+               { "resId":"MapView" }
+      ]
+       }
+    ]
+  }
 
 
 #### Update 
 Action <code>update</code> parameter in the action is an (optional) array of resource (column/row) ids, where data updates should be triggered. 
 Example: 
 
-	{
-	    ...
-	    "actions" : [ 
-	       { "id":"OnInit", ..., 
-	         "update": [ { "resId":"xyz" } ]  
-	       }
-	    ]
-	}
+  {
+      ...
+      "actions" : [ 
+         { "id":"OnInit", ..., 
+           "update": [ { "resId":"xyz" } ]  
+         }
+      ]
+  }
 
 As GET call parameter the id is send to the service.
 
@@ -332,14 +335,14 @@ Action <code>setResponse</code> parameter in the action is an (optional) array o
 The response of the actions will be handed over to the named resource to be processed and shown in the view. 
 Example: 
 
-	{
-	    ...
-	    "actions" : [ 
-	       { "id":"setData", ..., 
-	         "setData": [ { "resId":"xyz", "dataDocSubPath": "searchResult.dataTbl" } ] } 
-	       }
-	    ]
-	}
+  {
+      ...
+      "actions" : [ 
+         { "id":"setData", ..., 
+           "setData": [ { "resId":"xyz", "dataDocSubPath": "searchResult.dataTbl" } ] } 
+         }
+      ]
+  }
 A typical use case is a search form and a table to display the response of the GET request. 
 
 Optional the <code>dataDocSubPath</code> can be set to point to the data inside the result.
@@ -349,12 +352,12 @@ If you want to open a new window or tab in the browser you can add a simple link
 
 Example:
  
-	{
-	    ...
-	    "actions" : [ 
-	       { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy" }  
-	    ]
-	}
+  {
+      ...
+      "actions" : [ 
+         { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy" }  
+      ]
+  }
 
 Action <code>target</code> is optional and has three values:
 * <code>"_blank"</code> (=default) opens a new tab or window. 
@@ -363,12 +366,12 @@ Action <code>target</code> is optional and has three values:
 
 To pass parameters you can define a <code>getParams</code> array, example:
  
-	{
-	    ...
-	    "actions" : [ 
-	       { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy", getParams: [ "name", "id" ] }  
-	    ]
-	}
+  {
+      ...
+      "actions" : [ 
+         { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy", getParams: [ "name", "id" ] }  
+      ]
+  }
 
 ### OnInit 
 Value should be 
@@ -378,13 +381,14 @@ Value should be
 
 Example
 
-	{
-    	"label": "Product Configuration",
-    	...
-    	"actions" : [ 
-       		...
-       		{ "id":"OnInit", "onInit":{ "getInitValues":"defaultValues" }, "actionURL":"svc/product/calcQuote/", "target":"quote" } 
-    	]
+  {
+      "label": "Product Configuration",
+      ...
+      "actions" : [ 
+           ...
+           { "id":"OnInit", "onInit":{ "getInitValues":"defaultValues" }, 
+              "actionURL":"svc/product/calcQuote/", "target":"quote" } 
+      ]
     }
 
 ### OnChange 
@@ -394,27 +398,27 @@ No button is generated, but a JS to handle changes in the form. The main use cas
 
 Example
 
-	{
-	    "label": "Product Configuration",
-	    ...
-	    "actions" : [ 
-	       ...
-	       { "id":"doSomething", "onChange":"*", "actionURL":"svc/product/calcQuote/", "target":"quote" } 
-	    ]
-	}
+  {
+      "label": "Product Configuration",
+      ...
+      "actions" : [ 
+         ...
+         { "id":"doSomething", "onChange":"*", "actionURL":"svc/product/calcQuote/", "target":"quote" } 
+      ]
+  }
 
 It is also possible to do an upate after the backend call.
 
 Another option is to sepcify an update only. Example:
 
-	{
-	    "label": "Product Configuration",
-	    ...
-	    "actions" : [ 
-	       ...
-	       { "id":"doSomething", "onChange":"*", "update":[ { "resId":"shipping" } ] } 
-	    ]
-	}
+  {
+      "label": "Product Configuration",
+      ...
+      "actions" : [ 
+         ...
+         { "id":"doSomething", "onChange":"*", "update":[ { "resId":"shipping" } ] } 
+      ]
+  }
 
 
 Improvement TODO: Default delay is 1 sec to wait for an other change before calling the backend, but you can use <code>"onChangeDelay":"3"</code> to set it (to 3 sec in this example).
@@ -425,12 +429,12 @@ To do cascading updated.
 
 Example
 
-	 {
-	    "label": "Product Configuration",
-	    ...
-	    "actions" : [ 
-	       ...
-	       { "id":"cascadeUpdate", "afterUpdate":"*", "update": [ { "resId":"anotherView" } ] } 
-	    ]
-	 }
+   {
+      "label": "Product Configuration",
+      ...
+      "actions" : [ 
+         ...
+         { "id":"cascadeUpdate", "afterUpdate":"*", "update": [ { "resId":"anotherView" } ] } 
+      ]
+   }
 
