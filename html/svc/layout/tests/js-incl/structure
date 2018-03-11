@@ -1,0 +1,42 @@
+{
+  "layout": {
+    "title": "New Portal: JS Include Test",
+    "includeJS":[
+      "https://checkout.stripe.com/checkout.js"
+    ],
+    "includeHeader": "main",
+    "rows": [
+      {
+        "rowId": "instform",
+        "title": "This is a Test",
+        "height": "360px",
+        "resourceURL": "svc/test",
+        "type": "pong-form",
+        "decor" : "decor",
+        "moduleConfig": {
+            "label": "Sim Payment Form",
+            "id": "tstFormId", 
+            "fieldGroups":[
+                {
+                  "columns":[
+                    {
+                      "formFields":[     
+                        { "id":"user", "type":"text", "label":"Total Price", "defaultVal":"$ 20.00" , "readonly":true }, 
+                        { "id":"user", "type":"text", "label":"Name" }, 
+                        { "id":"user", "type":"text", "label":"Address" },
+                        { "id":"js01", "type":"js",
+                          "js": "var handler = StripeCheckout.configure({ key: 'pk_test_p0IVFfbBJjsNyOLWioaLRpWW', image: 'https://stripe.com/img/documentation/checkout/marketplace.png',locale: 'auto',token: function(token) { alert(token) }});document.getElementById('instformContentBtInfo').addEventListener('click', function(e) { handler.open({name: 'ma-ha',description: '2 widgets',currency: 'eur',amount: 2000});e.preventDefault();});window.addEventListener('popstate', function() {handler.close();});"}
+                      ]
+                    }
+                ]
+            }
+            ],
+            "actions" : [ 
+              { "id":"Pay", "actionName": "Test Payment ;-)", "actionURL": "svc/test/info" }
+            ]
+        }
+      }
+    ],
+    "includeFooter": "main"
+  }
+}

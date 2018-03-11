@@ -196,6 +196,71 @@ with the params:
 * `response` (the value of `g-recaptcha-response`) 
 * `remoteip` IP address of user
 
+### JS
+
+Sometimes you need special code to run inside your form, typical example is a payment form. 
+
+By `"type"="js"` no field is rendered, just the JS code is injected into the form. 
+
+You have two options to include the code:
+* `"js": " ... add your code here in one line ..."`
+* `"jsURL": "/pathTo/myscript.js"`
+
+Combine this with `includeJS` in the header.
+
+Example:
+
+    { 
+      "layout": {
+      "title": "My Payment",
+      "includeJS":[
+        "https://paymentprovider.com/checkout.js"
+      ],
+      "includeHeader": "main",
+      "rows": [
+        ...
+        {
+          "rowId": "payment",
+          "title": "Payment Test",
+          "type": "pong-form",
+          "moduleConfig": {
+            "fieldGroups": [{ "columns": [{ "formFields":[     
+              { "id":"name", "type":"text", "label":"Name"}, 
+              { "id":"shipAddr", "type":"text", "label":"Address"},
+              { "id":"shipCity", "type":"text", "label":"Postal code and city"},
+              { "id":"js", "type":"js", "js":"var handler = Checkout.configure(...)" }
+            ] }] }],
+            "actions" : [ 
+              { "id":"PayNow", "actionName": "Pay Now", "actionURL": "svc/pay" }
+            ]
+          }
+        }
+        ...
+      ]
+      ...
+    }
+  }
+
+If you use `"js":"alert('Hello World');"` JS is wapped with script tags and jQuery loader like this:
+
+    <html>
+    ...
+    <form>
+    ...
+    <input ... >
+    ...
+    <script> $( function() { alert('Hello World'); } )</script>
+    ...
+    <button ...>
+    </form>
+    ...
+
+If you use `"jsURL":"myscript.js"` you should have `myscript.js` like:
+
+    $( function() { 
+      alert('Hello World');
+    });
+
 ## Substitue and Variable
 As mentioned, you can set the  <code>"request":"substitute"</code> or <code>"request":"variable"</code> for a field.
 With this you construct can pass complex structures as parameter, if you want for example pass this parameter in a POST:

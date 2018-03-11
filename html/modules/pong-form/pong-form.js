@@ -710,10 +710,40 @@ function pongFormRenderField( divId, field, col ) {
 	contentItems.push( '<div class="pongFormField pongFormField'+col+'">' );
 	
 	if ( field.type == "separator" ) {
-		contentItems.push( '<hr/>' );
-	} else if ( field.type == "label" ) {
-		contentItems.push( '<span class="pongFormLabelField">'+$.i18n( field.label )+'</span>' );
-	} else {
+
+    contentItems.push( '<hr/>' );
+    
+  } else if ( field.type == "label" ) {
+
+    contentItems.push( '<span class="pongFormLabelField">'+$.i18n( field.label )+'</span>' );
+    
+  } else if ( field.type == "js" && field.js ) {
+
+    contentItems.push( '<script>' );
+    contentItems.push( ' $( function() { ' );
+    contentItems.push( field.js );
+    contentItems.push(  '})' ); 
+    contentItems.push( '</script>' );
+
+  } else if ( field.type == "js" && field.jsURL ) {
+
+    $.getScript( field.jsURL );
+    // $.ajaxSetup({'async': false});
+    // $.get( 
+    //     field.jsURL, 
+    //     getUrlGETparams(),
+    //     function( jsCode ) {
+    //       alert( jsCode );
+    //       contentItems.push( '<script>' );
+    //       contentItems.push( ' $( function() { ' );
+    //       contentItems.push( jsCode );
+    //       contentItems.push(  '})' ); 
+    //       contentItems.push( '</script>' ); 
+    //     }
+    //   );
+    // $.ajaxSetup({'async': true});
+
+  } else {
 		
 		var title      = ""; if ( field.descr != null ) { title = ' title="'+field.descr+'" '; }
 		var defaultVal  = ""; if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }

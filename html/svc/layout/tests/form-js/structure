@@ -1,0 +1,41 @@
+{
+  "layout": {
+    "title": "New Portal: JS Include Test",
+    "includeJS":[
+      "https://checkout.stripe.com/checkout.js"
+    ],
+    "includeHeader": "main",
+    "rows": [
+      {
+        "rowId": "instform",
+        "title": "This is a Test",
+        "height": "360px",
+        "resourceURL": "svc/test",
+        "type": "pong-form",
+        "decor" : "decor",
+        "moduleConfig": {
+            "label": "Sim Payment Form",
+            "id": "tstFormId", 
+            "fieldGroups":[
+                {
+                  "columns":[
+                    {
+                      "formFields":[     
+                        { "id":"user", "type":"text", "label":"Total Price", "defaultVal":"$ 20.00" , "readonly":true }, 
+                        { "id":"user", "type":"text", "label":"Name" }, 
+                        { "id":"user", "type":"text", "label":"Address" },
+                        { "id":"js01", "type":"js", "jsURL":"svc/test/payment.js" }
+                      ]
+                    }
+                ]
+            }
+            ],
+            "actions" : [ 
+              { "id":"Pay", "actionName": "Test Payment ;-)", "actionURL": "svc/test/info" }
+            ]
+        }
+      }
+    ],
+    "includeFooter": "main"
+  }
+}
