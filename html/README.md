@@ -1,4 +1,9 @@
 # Release Notes
+## Version 1.1.x
+* v1.1.0
+  * header: includeJS array 
+  * form: load or include JS
+
 ## Version 1.0.x
 * v1.0.0
   * Option to change default layout width and heigth by CSS
