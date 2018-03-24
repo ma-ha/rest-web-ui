@@ -3,6 +3,8 @@
 * v1.1.0
   * header: includeJS array 
   * form: load or include JS
+* v1.1.1
+  * added $.support.cors = true;
 
 ## Version 1.0.x
 * v1.0.0

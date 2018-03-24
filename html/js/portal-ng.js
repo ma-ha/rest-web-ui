@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '1.1.0';
+var PONGVER = '1.1.1';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -75,6 +75,9 @@ logInfoStr = ''
 
 csrfToken = 'default'
 var noCache = "";
+
+// fix "transport undefined" problem in mocha :
+$.support.cors = true;
 
 /** Because ajax loads are asynchronous, 
     we have to wait for all calls to be sinished to load HTML into DIV
