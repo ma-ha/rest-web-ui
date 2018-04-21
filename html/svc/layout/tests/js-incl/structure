@@ -29,7 +29,7 @@
                       ]
                     }
                 ]
-            }
+              }
             ],
             "actions" : [ 
               { "id":"Pay", "actionName": "Test Payment ;-)", "actionURL": "svc/test/info" }

@@ -7,6 +7,9 @@
   * added $.support.cors = true;
 * v1.1.2
   * pass URL params to load plain html view
+* v1.1.3
+  * fix Stripe payment demo (JS include)
+  * 
 
 ## Version 1.0.x
 * v1.0.0
