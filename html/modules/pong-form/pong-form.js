@@ -473,7 +473,10 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
 			} else if ( action.target == '_blank' ) {
 				contentItems.push( '                       window.open( dta );');
 			} else if ( action.target == 'modal' ) {
-				contentItems.push( '                       alert( dta );  ' );
+        contentItems.push( '                       alert( $.i18n( dta ) );  ' );
+        if ( action.navto ) {
+          contentItems.push( '                       window.location.replace( "'+action.navto +'" ); ' );
+        }
 			} else {
 				contentItems.push( '                       $( "#'+action.target+'Content" ).html( dta );  ' );
 			}
