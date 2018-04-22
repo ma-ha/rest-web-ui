@@ -8,8 +8,8 @@ If you start your first form, perhaps it is easier to start with the [easy form 
 ## Usage in "structure" 
 Simply <code>"type": "pong-form"</code> to the <code>rows</code> or <code>cols</code> resource. Example [[PoNG Structure Specification|structure file]] extract:
 
-  {
-     "layout": {
+    {
+      "layout": {
         ...
         "rows": [
         {
@@ -21,7 +21,7 @@ Simply <code>"type": "pong-form"</code> to the <code>rows</code> or <code>cols</
         ...
       ],
       ...
-  }
+    }
 
 ## Form Definition 
 The resource will load the form definition from the URL <code>../svc/<resourceUrl>/pong-form</code>
@@ -29,7 +29,7 @@ The resource will load the form definition from the URL <code>../svc/<resourceUr
 Groups and columns form layout: 
 You can do a more flexible form set up by arranging groups and columns: 
 
-  {
+    {
       "label": "Customers",
       "description": "Create or edit a customer data record", 
       "id": "cloudFormId", 
@@ -50,7 +50,7 @@ You can do a more flexible form set up by arranging groups and columns:
       "actions" : [ 
           ...
       ]
-  }
+    }
 
 The <code>fieldset</code> is optional and will render a fieldset (border) for this section and the name in the legend.
 
@@ -176,7 +176,7 @@ Example:
 <code>"type:"separator"</code> adds a horizontal line instead of a field
 
 ### Text in Form 
-* <code>"type:"label"</code> adds the text in label as a simple text w/o any form related things, good for hints or explanations
+* <code>"type:"label", "label":"Text XYZ"</code> adds the text in label as a simple text w/o any form related things, good for hints or explanations
 * <code>descr</code> field adds a tool tip to the field.
 
 ### Captcha
@@ -504,3 +504,5 @@ Example
       ]
    }
 
+# CSS
+Each field has a DIV with an ID and classes attached for field-group and field-column.

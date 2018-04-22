@@ -709,8 +709,12 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
 
 function pongFormRenderField( divId, field, col ) {
 	log( "Pong-Form", "field '"+field.id+"' ("+ field.type+")");
-	var contentItems = [];
-	contentItems.push( '<div class="pongFormField pongFormField'+col+'">' );
+  var contentItems = [];
+  if ( field.id ) {
+    contentItems.push( '<div id="'+divId+field.id+'Div" class="pongFormField pongFormField'+col+'">' );
+  } else {
+    contentItems.push( '<div class="pongFormField pongFormField'+col+'">' );
+  }
 	
 	if ( field.type == "separator" ) {
 

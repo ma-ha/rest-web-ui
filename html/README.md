@@ -9,7 +9,8 @@
   * pass URL params to load plain html view
 * v1.1.3
   * fix Stripe payment demo (JS include)
-  * 
+* v1.1.4
+  * Form: Added ID to DIVs: divId+field.id+'Div'
 
 ## Version 1.0.x
 * v1.0.0
