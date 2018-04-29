@@ -11,7 +11,9 @@
   * fix Stripe payment demo (JS include)
 * v1.1.4
   * Form: Added ID to DIVs: divId+field.id+'Div'
-
+* v1.1.5
+  * Form: Select/options support `"selected"=true` and `"disabled"=true`
+  
 ## Version 1.0.x
 * v1.0.0
   * Option to change default layout width and heigth by CSS

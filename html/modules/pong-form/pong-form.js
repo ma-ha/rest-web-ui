@@ -807,7 +807,10 @@ function pongFormRenderField( divId, field, col ) {
             contentItems.push( '<datalist id="'+field.id+'DataList">' );
             for ( var i = 0; i < field.options.length; i++ ) {
               if ( field.options[i].value != null  ) {
-                contentItems.push( '<option value="'+ $.i18n( field.options[i].value )+'">' );  
+                var optMod = ''
+                if ( field.options[i].selected ) { optMod += ' selected'; }
+                if ( field.options[i].disabled ) { optMod += ' disabled'; }
+                contentItems.push( '<option value="'+ $.i18n( field.options[i].value )+'"'+optMod+'>' );  
               }
             }     
             contentItems.push( '</datalist>' );
@@ -819,7 +822,10 @@ function pongFormRenderField( divId, field, col ) {
                 getUrlGETparams(),
                 function( optData ) {
                   for ( var i = 0; i < optData.length; i++ ) {
-                    contentItems.push( '<option value="'+ $.i18n( optData[i][ field.optionsResource.optionValue ] )+ '">' );
+                    var optMod = ''
+                    if ( field.options[i].selected ) { optMod += ' selected'; }
+                    if ( field.options[i].disabled ) { optMod += ' disabled'; }
+                    contentItems.push( '<option value="'+ $.i18n( optData[i][ field.optionsResource.optionValue ] )+ '"'+optMod+'>' );
                   }
                 }
               );          
@@ -914,7 +920,11 @@ function pongFormRenderField( divId, field, col ) {
           } else {
             optValue = 'value="'+field.options[i].option+'"';            
           }
-          contentItems.push( '<option '+optValue+'>'+ $.i18n( field.options[i].option )+'</option>' );  
+          var optMod = ''
+          if ( field.options[i].selected ) { optMod += ' selected'; }
+          if ( field.options[i].disabled ) { optMod += ' disabled'; }
+
+          contentItems.push( '<option '+optValue+optMod+'>'+ $.i18n( field.options[i].option )+'</option>' );  
         }     
         contentItems.push( '</select>' );
 
@@ -996,7 +1006,11 @@ function pongFormLoadOptions( selId, resUrl, params, fVal, fName ) {
       var opt = [];
       // alert( JSON.stringify( data ) );
       for ( var i = 0; i < data.length; i++ ) {
-        opt.push( '<option value="'+data[i][ fVal ]+'">'+
+        var optMod = ''
+        if ( data[i].selected ) { optMod += ' selected'; }
+        if ( data[i].disabled ) { optMod += ' disabled'; }
+
+        opt.push( '<option value="'+data[i][ fVal ]+'" '+optMod+'>'+
             $.i18n( data[i][ fName ] ) +'</option>' );
             //  alert( data[i][ fName ] );
       }

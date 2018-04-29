@@ -9,8 +9,22 @@
                "formFields":[     
                  { "id":"user", "label":"User ID",  "type":"text" }, 
                  { "id":"pwd",  "label":"Password", "type":"password", "required":true },
-                 { "id":"pwd",  "label":"Role",   "type":"text", 
-                  "options": [ { "value":"Admin" }, { "value":"Author" } ] },
+                 { "id":"pwd",  "label":"Role (txt with options)", "type":"text", 
+                   "options": [ 
+                    { "value":"Admin" }, 
+                    { "value":"Super Admin", "disabled":true }, 
+                    { "value":"Myself", "selected":true }, 
+                    { "value":"Author" } 
+                   ]
+                 },
+                 { "id":"pwd",  "label":"Role", "type":"select", 
+                   "options": [ 
+                    { "option":"Admin" }, 
+                    { "option":"Super Admin", "disabled":true }, 
+                    { "option":"Myself", "selected":true }, 
+                    { "option":"Author" } 
+                   ]
+                 },
                  { "id":"f3", "label":"email", "type":"email" },
                  { "id":"f4", "label":"Disabled", "disabled":"true",  
                    "type":"text", "defaultVal":"You can't select this."  },
