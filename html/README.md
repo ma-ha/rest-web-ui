@@ -13,6 +13,9 @@
   * Form: Added ID to DIVs: divId+field.id+'Div'
 * v1.1.5
   * Form: Select/options support `"selected"=true` and `"disabled"=true`
+* v1.1.5
+  * Form: Cursor waiting
+  * Form: Label with id and can update content
   
 ## Version 1.0.x
 * v1.0.0

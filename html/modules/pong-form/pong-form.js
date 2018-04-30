@@ -307,6 +307,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
       contentItems.push( '  $( function() { ' );
       contentItems.push( '       $( "' +onChngSelector+ '" ).change(' );
       contentItems.push( '          function() { ' );
+      contentItems.push( '              $("body").addClass("waiting"); ' ); 
       contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
       contentItems.push( '              $.ajax( ' );
       contentItems.push( '                 { url: actionUrl, type: "'+method+'", dataType: "json", ' );
@@ -334,9 +335,13 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
           contentItems.push( '                   udateModuleData( "'+action.update[i].resId+'Content", { '+postLst+' } );' );          
         }
       }
+      contentItems.push( '                       $("body").removeClass("waiting"); ' ); 
       contentItems.push( '                       return false;' ); 
       contentItems.push( '                  }  ' );
-      contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
+      contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { ' ); 
+      contentItems.push( '                  $("body").removeClass("waiting"); ' ); 
+      contentItems.push( '                  alert( textStatus+": "+jqXHR.responseText ); ' ); 
+      contentItems.push( '              }); ');
       contentItems.push( '              return false;' ); 
       contentItems.push( '          }' );
       contentItems.push( '       ); ' );
@@ -436,6 +441,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
     contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
     contentItems.push( '          function(e) { ' );    
     contentItems.push( '              try{ if ( ! jQuery("#'+divId+'PongFormFrm")[0].checkValidity() ) { return; } }catch(exc){}');
+    contentItems.push( '              $("body").addClass("waiting"); ' ); 
     contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
     contentItems.push( '              var request = $.ajax( { url: actionUrl, type: "'+method+'", ' );
     contentItems.push( '                       crossDomain: true, ' );
@@ -465,6 +471,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
     //contentItems.push( '                     xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } ');
     contentItems.push( '              } ).done(  ' );
     contentItems.push( '                 function( dta ) {' );
+    contentItems.push( '                    $("body").removeClass("waiting"); ' ); 
     contentItems.push( '                    publishEvent( "feedback", { text:"Form data send"} );' );
     contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
     if ( action.target != null ) {
@@ -499,10 +506,16 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
     }
     contentItems.push( '                       return false;' ); 
     contentItems.push( '                  }  ' );
-    contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
+    contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) {' ); 
+    contentItems.push( '                   $("body").removeClass("waiting"); ' ); 
+    contentItems.push( '                   alert( textStatus+": "+jqXHR.responseText ); ' ); 
+    contentItems.push( '              }); ');
 
     if ( action.target == 'modal' ) {
-      contentItems.push( '               request.fail(  function(jqXHR, textStatus) { alert( "Failed: "+textStatus ); } ); ' );
+      contentItems.push( '            request.fail(  function(jqXHR, textStatus) { ' ); 
+      contentItems.push( '                   $("body").removeClass("waiting"); ' ); 
+      contentItems.push( '                   alert( "Failed: "+textStatus );' ); 
+      contentItems.push( '            });' );
     }    
 
     contentItems.push( '              return false;' ); 
@@ -693,6 +706,11 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
               $( fieldId ).val( -1 );
             }
             //TODO update select value
+
+          } else if ( field.type == "label" ) {
+            if ( dta[field.id] ) {
+              $( fieldId ).html( $.i18n( dta[field.id] ) )
+            }
           } else {
             log( "Pong-Form", "ERROR '"+fieldDd+"': Can't update "+field.type);
 
@@ -722,8 +740,8 @@ function pongFormRenderField( divId, field, col ) {
     
   } else if ( field.type == "label" ) {
 
-    contentItems.push( '<span class="pongFormLabelField">'+$.i18n( field.label )+'</span>' );
-    
+    contentItems.push( '<span id="'+divId+field.id+'" class="pongFormLabelField">'+$.i18n( field.label )+'</span>' );
+      
   } else if ( field.type == "js" && field.js ) {
 
     contentItems.push( '<script>' );
@@ -790,7 +808,7 @@ function pongFormRenderField( divId, field, col ) {
     
     if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
       contentItems.push( '<input '+nameAndClass+' type="hidden" value="'+field.value+'"/>' );
-    } else if ( field.type == "text" ) {
+    } else if ( field.type == "text"  ||  field.type == null ) {
 
       if ( field.rows != null ) { 
 
@@ -836,7 +854,7 @@ function pongFormRenderField( divId, field, col ) {
 
 
       }
-      
+     
     } else if ( field.type == "email" ) {
 
       contentItems.push( '<input type="email" '+nameAndClass + title + defaultVal + modifier+'/>' );        

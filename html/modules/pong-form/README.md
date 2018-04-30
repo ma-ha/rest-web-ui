@@ -58,10 +58,35 @@ REMARK: The "two-column" layout is not supported any more.
 
 ## Fields 
 
+Typical `formFields` definition is:
+
+    { "id": "<field-id>", "type": "<field-type>, "label": "<label-text>" }
+
+The Field `id` must be unique within the form. 
+The HTML id is build as `<form-id>Content<field-id>`
+
+Supported field-types:
+* checkbox
+* checkboxList
+* date
+* email
+* radio
+* reCAPTCHA
+* select
+* text (=default)
+
+Special types
+* label
+* separator
+* js
+
+
+
 For all fields following options are supported:
 * hide fields with hidden attribute
   * <code>"hidden":"true", "value":"..."</code> 
   * <code>"hidden":"false"</code> ''(default)'' 
+  * hidden fields don't needa a label ;-)
 * put field into HTTP request header or only in the request params or both
   * <code>"request":"header"</code>
   * <code>"request":"header+param"</code>
@@ -178,6 +203,8 @@ Example:
 ### Text in Form 
 * <code>"type:"label", "label":"Text XYZ"</code> adds the text in label as a simple text w/o any form related things, good for hints or explanations
 * <code>descr</code> field adds a tool tip to the field.
+
+Label conctent can be updated by "setData" or "OnInit".
 
 ### Captcha
 

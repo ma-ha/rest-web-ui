@@ -34,6 +34,7 @@
             },
             {
                "formFields":[     
+                 { "id":"l1", "type":"label", "label":"This is a label" },
                  { "id":"c1", "name":"status", "value":"enabled", "label":"Enable", 
                   "activate":["Chk","comm"], "deactivate":["Info","f3"], "type":"checkbox" }, 
                  { "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
