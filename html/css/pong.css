@@ -11,3 +11,20 @@
 #footer { 
 	position:relative;
 }
+
+.tabDiv{
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 12pt;
+}
+.tabColDiv{
+  float: left;
+}
+.aTabRowDiv {
+  position: absolute;
+ 
+}
+.aTabColDiv {
+  position: absolute;
+}

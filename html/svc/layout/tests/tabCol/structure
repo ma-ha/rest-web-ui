@@ -1,0 +1,39 @@
+{
+  "layout": {
+    "title": "New Portal: Test",
+    "includeHeader": "main",
+    "rows": [
+      {
+        "rowId": "r1",
+        "height": "700px",
+        "cols": [
+          {
+            "columnId": "out1",
+            "width": "65%",
+            "title": "This is a Test",
+            "resourceURL": "svc/test",
+            "type": "pong-form",
+            "decor" : "decor"
+          },
+          {
+            "columnId": "out2",
+            "width": "35%",
+            "tabs": [
+              {
+                "tabId": "tab1",
+                "title": "Output 1",            
+                "resourceURL": "svc/cloud/resinfo"
+              },
+              {
+                "tabId": "tab2",
+                "title": "Output 2",
+                "resourceURL": "svc/cloud/setuplog"
+              }
+            ]          
+          }
+        ]
+      }
+    ],
+    "includeFooter": "main"
+  }
+}

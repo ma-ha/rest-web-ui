@@ -2,8 +2,9 @@
     "icons":[
        { "id":"Header", "layout":"main", "label":"Header+Footer", "img":"img/icon-headerfooter.svg" },
        { "id":"ViewLayout", "layout":"demos/crm-map", "label":"Arrage Views", "img":"img/icon-layout.svg" },
-       { "id":"Menu", "layout":"main", "label":"Menu Tabs", "img":"modules/pong-navbar/icon.svg" },
+       { "id":"Menu", "layout":"main", "label":"Menu", "img":"modules/pong-navbar/icon.svg" },
        { "id":"PullDownMenu", "layout":"main", "label":"Pull Down Menu", "img":"modules/pong-pulldown/icon.svg" },
+       { "id":"ViewTabs", "layout":"tests/tabRow", "label":"View Tabs", "img":"modules/pong-navbar/icon.svg" },
        { "id":"Sec", "layout":"tests/sec", "label":"Security", "img":"modules/pong-security/icon.svg" },
        { "id":"i18n", "layout":"i18n", "label":"i18n", "img":"modules/i18n/icon.svg" },
        { "id":"Themes", "layout":"tests/theme", "label":"Themes", "img":"img/icon-themes.svg" },

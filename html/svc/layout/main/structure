@@ -33,6 +33,8 @@
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
 			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
+			       { "pageLink":"tests/tabRow", "label":"Tab in Row" },
+			       { "pageLink":"tests/tabCol", "label":"Tab in Column" },
 			       { "pageLink":"tests/table", "label":"Table Test" },
 			       { "pageLink":"tests/theme", "label":"Theme Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
@@ -59,14 +61,14 @@
       {
         "rowId": "ViewTypes",
         "title":"View Types",
-        "height":"280px",
+        "height":"300px",
         "resourceURL":"svc/viewtypes",
         "type":"pong-icons"
       },
       {
         "rowId": "Features",
         "title":"Features",
-        "height":"280px",
+        "height":"300px",
         "resourceURL":"svc/features",
         "type":"pong-icons"
       }

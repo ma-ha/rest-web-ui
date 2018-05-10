@@ -820,233 +820,264 @@ function callHooks() {
 //=====================================================================================================
 
 function footerHTML( footer ) {
-	var content = [];
-	content.push( '<div class="footer-cnt"></div>' );
-	if ( footer != null ) {
-		// footer links
-		if ( footer.linkList != null ) {
-			content.push( '<div class="footer-links">' );
-			for ( var i = 0; i < footer.linkList.length; i++ ) {
-			  if ( footer.linkList[i] ) {
-				var lnk = footer.linkList[i];
-				if ( lnk.target != null ) {
-					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a> 	' );
-				} else {
-					content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );					
-				}
-			  }
-			}
-			content.push( "</div>" );
-		}
-		if ( footer.copyrightText != null ) {
-			content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
-		} else {
-			content.push( '<div class="copyright-div">&copy; MH 2018</div>' );
-		}
-		
-		// header hooks
-		if ( footer.modules != null ) {
-			for ( var i = 0; i < footer.modules.length; i++ ) {
-			  if ( footer.modules[i] ) {
-				var fMod =  footer.modules[i];
-				log( 'footerHTML', "addFooterHtml "+ fMod.type );
-				var hook = getHookMethod( "addFooterHtml", fMod.type );
-				if ( hook != "" ) {
-					log( 'footerHTML', hook+"( ... )");
-					content.push( '<div id="'+fMod.id+'" class="'+fMod.type+'"></div>' );
-					
-					if ( fMod.moduleConfig != null) {
-						moduleConfig[ fMod.id ] = fMod.moduleConfig;
-					}
-					
-					if ( fMod.param == null ) {
-						fMod.param = {};
-					}
-					fMod.param.get = getUrlGETparams();
-					
-					hookCalls.push( hook+'( "'+fMod.id+'", "'+fMod.type+'", '+JSON.stringify(fMod.param)+' )'  );
-				}
-			  }
-			}
-		}
-	}
-	$( '#footer' ).html( content.join("\n") );
+  var content = [];
+  content.push( '<div class="footer-cnt"></div>' );
+  if ( footer != null ) {
+    // footer links
+    if ( footer.linkList != null ) {
+      content.push( '<div class="footer-links">' );
+      for ( var i = 0; i < footer.linkList.length; i++ ) {
+        if ( footer.linkList[i] ) {
+        var lnk = footer.linkList[i];
+        if ( lnk.target != null ) {
+          content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a> 	' );
+        } else {
+          content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );          
+        }
+        }
+      }
+      content.push( "</div>" );
+    }
+    if ( footer.copyrightText != null ) {
+      content.push( '<div class="copyright-div">'+ $.i18n( footer.copyrightText ) +'</div>' );
+    } else {
+      content.push( '<div class="copyright-div">&copy; MH 2018</div>' );
+    }
+    
+    // header hooks
+    if ( footer.modules != null ) {
+      for ( var i = 0; i < footer.modules.length; i++ ) {
+        if ( footer.modules[i] ) {
+        var fMod =  footer.modules[i];
+        log( 'footerHTML', "addFooterHtml "+ fMod.type );
+        var hook = getHookMethod( "addFooterHtml", fMod.type );
+        if ( hook != "" ) {
+          log( 'footerHTML', hook+"( ... )");
+          content.push( '<div id="'+fMod.id+'" class="'+fMod.type+'"></div>' );
+          
+          if ( fMod.moduleConfig != null) {
+            moduleConfig[ fMod.id ] = fMod.moduleConfig;
+          }
+          
+          if ( fMod.param == null ) {
+            fMod.param = {};
+          }
+          fMod.param.get = getUrlGETparams();
+          
+          hookCalls.push( hook+'( "'+fMod.id+'", "'+fMod.type+'", '+JSON.stringify(fMod.param)+' )'  );
+        }
+        }
+      }
+    }
+  }
+  $( '#footer' ).html( content.join("\n") );
 }
 
 function replaceVar( str ) {
-	console.log("replaceVar");
-	var rStr = str;
-	
-	if ( str.indexOf( "{{.pongVersion}}" ) != -1 ) {
-		var find = 'abc';
-		var re = new RegExp( find, "{{.pongVersion}}" );
+  console.log("replaceVar");
+  var rStr = str;
+  
+  if ( str.indexOf( "{{.pongVersion}}" ) != -1 ) {
+    var find = 'abc';
+    var re = new RegExp( find, "{{.pongVersion}}" );
 
-		str = str.replace( re, pongVersion );
-	}
-	
-	return rStr;
+    str = str.replace( re, pongVersion );
+  }
+  
+  return rStr;
 }
 
 function colsToHTML( colsLayout, h, laCls ) {
-	log( 'colsToHTML', "COL >>>>>>>>>>>>>>>>>>>>>>>>LEN="+colsLayout.length );		
-	var cols = [];
-	for ( var i = 0; i < colsLayout.length; i++ ) {
-		var aCol = colsLayout[i];
-		var id = "unknown";
-		if ( aCol.columnId != null ) {
-			id = aCol.columnId;
-		}
-		log("colsToHTML", " col:"+i+" "+id );
-		if ( aCol.width != null ) {
+  log( 'colsToHTML', "COL >>>>>>>>>>>>>>>>>>>>>>>>LEN="+colsLayout.length );    
+  var cols = [];
+  for ( var i = 0; i < colsLayout.length; i++ ) {
+    var aCol = colsLayout[i];
+    var id = "unknown";
+    if ( aCol.columnId != null ) {
+      id = aCol.columnId;
+    }
+    log("colsToHTML", " col:"+i+" "+id );
+    if ( aCol.width != null ) {
       $( "#viewSizes" ).append(  "#"+id+" { width: "+aCol.width+"; }" );
-		}
-		if ( h != null ) {
+    }
+    if ( h != null ) {
       $( "#viewSizes" ).append(  "#"+id+" { height: "+h+"; }" );
-			aCol.height = h;
-		}
-		if ( aCol.resourceURL != null ) {
-			cols.push( '<div id="'+id+'" class="coldiv '+laCls+' '+(aCol.decor!=null ? 'withDecor': '')+'">' );
+      aCol.height = h;
+    }
+    if ( aCol.resourceURL != null ) {
+      cols.push( '<div id="'+id+'" class="coldiv '+laCls+' '+(aCol.decor!=null ? 'withDecor': '')+'">' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
-			//cols.push( id+" "+ aCol.resourceURL ); 
-			cols.push( resToHTML( id, aCol, '', laCls ) );	
-			resMap.push( [ id+"Content", aCol.resourceURL, (aCol.type != null ? aCol.type : 'html'), aCol.resourceParam ] );
-			log( ' colsToHTML',  id+"  "+aCol.resourceURL );		
-			if ( aCol.callback != null ) {
-				callbackMap.push( aCol.callback );		  	  
-			}
-			cols.push( "</div>");
-		} else if ( aCol.rows != null ) {
+      //cols.push( id+" "+ aCol.resourceURL ); 
+      cols.push( resToHTML( id, aCol, '', laCls ) );  
+      resMap.push( [ id+"Content", aCol.resourceURL, (aCol.type != null ? aCol.type : 'html'), aCol.resourceParam ] );
+      log( ' colsToHTML',  id+"  "+aCol.resourceURL );    
+      if ( aCol.callback != null ) {
+        callbackMap.push( aCol.callback );          
+      }
+      cols.push( "</div>");
+    } else if ( aCol.rows != null ) {
       cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
-			cols = cols.concat( rowsToHTML( aCol.rows, aCol.width, laCls ) );
-			cols.push( "</div>");
-		} else {
-			cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">empty</div>' );
+      cols = cols.concat( rowsToHTML( aCol.rows, aCol.width, laCls ) );
+      cols.push( "</div>");
+    } else if ( aCol.tabs != null  &&  aCol.tabs.constructor === Array ) {
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
-		}  
-	}	
-	log( 'colsToHTML', "COL <<<<<<<<<<<<<<<<<<<<<<<<" );		
-	return cols;
+      cols.push( '<div id="'+id+'" class="tabDiv tabColDiv'+laCls+'">' );
+      cols = cols.concat( tabsToHTML( aCol.tabs, 'aTabRowDiv' ) );
+      cols.push( "</div>");
+      cols.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
+    } else {
+      cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">empty</div>' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
+    }  
+  }  
+  log( 'colsToHTML', "COL <<<<<<<<<<<<<<<<<<<<<<<<" );    
+  return cols;
 }
 
 function rowsToHTML( rowsLayout, w, laCls ) {
-	log( 'rowsToHTML', "ROW >>>>>>>>>>>>>>>>>>>>>>>>LEN="+rowsLayout.length );		
-	var rows = [];
-	for ( var i = 0; i < rowsLayout.length; i++ ) {
-		var aRow = rowsLayout[i];
-		var id = "unknown";
-		if ( aRow.rowId != null ) {
-			id = aRow.rowId;
-		}
-		log( "rowsToHTML", " row:"+i+" Id="+id );
-		if ( aRow.height != null ) {
+  log( 'rowsToHTML', "ROW >>>>>>>>>>>>>>>>>>>>>>>>LEN="+rowsLayout.length );
+  var rows = [];
+  for ( var i = 0; i < rowsLayout.length; i++ ) {
+    var aRow = rowsLayout[i];
+    var id = "unknown";
+    if ( aRow.rowId != null ) {
+      id = aRow.rowId;
+    }
+    log( "rowsToHTML", " row:"+i+" Id="+id );
+    if ( aRow.height != null ) {
       $( "#viewSizes" ).append( "#"+id+" { height: "+aRow.height+"; }" );
-		}
-		if ( aRow.resourceURL != null ) {
+    }
+    if ( aRow.resourceURL != null ) {
       rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'">' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
-			rows.push( resToHTML( id, aRow, '', laCls ) );
-			resMap.push( [ id+"Content", aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] ); 	
-			log( ' rowsToHTML', id+"  "+aRow.resourceURL );		
-			if ( aRow.callback != null ) {
-				callbackMap.push( aRow.callback );		  	  
-			}
-			rows.push( "</div>");
-		} else if ( aRow.cols != null ) {
-			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">' );
-      $( "#viewSizes" ).append( "#"+id+" { position:relative; + }" );
-			rows = rows.concat( colsToHTML( aRow.cols, aRow.height, laCls ) );
-			rows.push( "</div>");
-		} else {
-			rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">empty</div>' );
+      rows.push( resToHTML( id, aRow, '', laCls ) );
+      resMap.push( [ id+"Content", aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] );
+      log( ' rowsToHTML', id+"  "+aRow.resourceURL );
+      if ( aRow.callback != null ) {
+        callbackMap.push( aRow.callback );
+      }
+      rows.push( "</div>");
+    } else if ( aRow.cols != null ) {
+      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">' );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
+      rows = rows.concat( colsToHTML( aRow.cols, aRow.height, laCls ) );
+      rows.push( "</div>");
+    } else if ( aRow.tabs != null  &&  aRow.tabs.constructor === Array ) {
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
+      rows.push( '<div id="'+id+'" class="tabDiv '+laCls+'">' );
+      rows = rows.concat( tabsToHTML( aRow.tabs, 'aTabRowDiv' ) );
+      rows.push( "</div>");
+      rows.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
+    } else {
+      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">empty</div>' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
-		}
-	}
-	log( 'rowsToHTML', "ROW <<<<<<<<<<<<<<<<<<<<<<<<" );		
-	return rows;
+    }
+  }
+  log( 'rowsToHTML', "ROW <<<<<<<<<<<<<<<<<<<<<<<<" );
+  return rows;
 }
+
+
+function tabsToHTML( tabs, cls ) {
+  var div = [];
+  div.push( '<ul>' );
+  for ( var i = 0; i < tabs.length; i++ ) {
+    div.push( '<li><a href="#'+tabs[i].tabId+'TabDiv">'+$.i18n( tabs[i].title )+'</a></li>' );
+  }
+  div.push( '</ul>' );
+  for ( var i = 0; i < tabs.length; i++ ) {
+    div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="'+cls+'">' );
+    tabs[i].decor = 'none';
+    tabs[i].title = null;
+    div.push( resToHTML( tabs[i].tabId, tabs[i], '', '' ) );
+    div.push( '</div>' );
+  }
+  return div;
+}
+
 
 function getCorrectedHeight( height, decor ) {
-	var heightCorr = height
-	// test, if we can do a corredtion
-	if ( ( decor != null ) && ( decorConfig[ decor ] != null ) && ( decorConfig[ decor ].heigthCorrect != null ) ) {
-		var heightOrig = parseInt( height );
-		var heightUnit = "";
-		if ( endsWith( height, 'px' ) ) { heightUnit = "px;" }
-		if ( endsWith( height, 'pt' ) ) { heightUnit = "pt;" }
-		if ( endsWith( height,  '%' ) ) { heightUnit =  "%;" }
-		heightCorr = heightOrig - decorConfig[ decor ].heigthCorrect;	
-		heightCorr += heightUnit;
-		log(  'getCorrectedHeight', '   H='+heightOrig+' cor='+ decorConfig[ decor ].heigthCorrect+'   Hc='+heightCorr );
-	} 
-	return heightCorr;
-	
+  var heightCorr = height
+  // test, if we can do a corredtion
+  if ( ( decor != null ) && ( decorConfig[ decor ] != null ) && ( decorConfig[ decor ].heigthCorrect != null ) ) {
+    var heightOrig = parseInt( height );
+    var heightUnit = "";
+    if ( endsWith( height, 'px' ) ) { heightUnit = "px;" }
+    if ( endsWith( height, 'pt' ) ) { heightUnit = "pt;" }
+    if ( endsWith( height,  '%' ) ) { heightUnit =  "%;" }
+    heightCorr = heightOrig - decorConfig[ decor ].heigthCorrect;  
+    heightCorr += heightUnit;
+    log(  'getCorrectedHeight', '   H='+heightOrig+' cor='+ decorConfig[ decor ].heigthCorrect+'   Hc='+heightCorr );
+  } 
+  return heightCorr;
+  
 }
-	
+  
 function resToHTML( id, res, style, laCls ) {
-	log("resToHTML"," > "+id );
-	var html = "";
-	var addCSS = laCls+" ";
-	if ( res.type != null ) { addCSS = res.type; }
+  log("resToHTML"," > "+id );
+  var html = "";
+  var addCSS = laCls+" ";
+  if ( res.type != null ) { addCSS = res.type; }
 
-	if ( layout.decor ) { res.decor = layout.decor; }
-	
-	if ( res.moduleConfig != null) {
-		moduleConfig[ id+'Content' ] = res.moduleConfig;
-	}
+  if ( layout.decor ) { res.decor = layout.decor; }
+  
+  if ( res.moduleConfig != null) {
+    moduleConfig[ id+'Content' ] = res.moduleConfig;
+  }
 
-	if ( res.headerURL != null ) {
-		html += '<div id="'+id+'HeaderContent" class="res-header '+addCSS+'">'+ $.i18n( res.header )+'</div>';
-		resMap.push( [ id+'HeaderContent', res.headerURL, 'inner', {} ] ); 	
-	}
-	if ( res.decor == null ) {
-		if ( res.title != null ) {
-			html += '<div id="'+id+'Title" class="res-title '+laCls+'">'+$.i18n( res.title )+'</div>';
+  if ( res.headerURL != null ) {
+    html += '<div id="'+id+'HeaderContent" class="res-header '+addCSS+'">'+ $.i18n( res.header )+'</div>';
+    resMap.push( [ id+'HeaderContent', res.headerURL, 'inner', {} ] );   
+  }
+  if ( res.decor == null ) {
+    if ( res.title != null ) {
+      html += '<div id="'+id+'Title" class="res-title '+laCls+'">'+$.i18n( res.title )+'</div>';
       res.decor = 'decor'
-		}
+    }
     if ( res.height != null ) { 
       $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
     }
-		html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"></div>';		
-	} else if ( res.decor == 'none' ) {
-		if ( res.title != null ) {
-			html += '<div id="'+id+'Title" class="res-title">'+$.i18n( res.title )+'</div>';
-		}
-		html += '<div id="'+id+'Content" class="'+addCSS+'"></div>';		
-	} else {
+    html += '<div id="'+id+'Content" class="decor-inner '+addCSS+'"></div>';    
+  } else if ( res.decor == 'none' ) {
+    if ( res.title != null ) {
+      html += '<div id="'+id+'Title" class="res-title">'+$.i18n( res.title )+'</div>';
+    }
+    html += '<div id="'+id+'Content" class="'+addCSS+'"></div>';    
+  } else {
     if ( res.height != null ) { 
       $( "#viewSizes" ).append( "#"+id+"Content { height: "+getCorrectedHeight( res.height, res.decor )+"; }" );      
     }
-		html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"></div>'+
-			'<div class="'+res.decor+'-tm">'+(res.title == null ? '' : '<div id="'+id+'Title" class="decor-tm-title">'+ $.i18n( res.title )+'</div>')+'</div>'+
-			'<div class="'+res.decor+'-bm"></div><div class="'+res.decor+'-lm"></div><div class="'+res.decor+'-rm"></div>'+
-			'<div class="'+res.decor+'-tr"></div><div class="'+res.decor+'-tl"></div><div class="'+res.decor+'-br"></div>'+
-			'<div class="'+res.decor+'-bl"></div>'+
-			'<div class="'+res.decor+'-menu">';
-		if ( res.modal != null ) {
-			html +=  '<div class="menuBtn">'+addDlgBtn( id, res ) +"</div>";
-		}
-		if ( res.actions != null ) {
-			html += '<div class="menuBtn">'+addActionBtn( id, res )+"</div>";
-		}
-		// view required action ?
-		var hook = getHookMethod( "addActionBtn", res.type );
-		if ( hook != "" ) {
-			log( 'addActionBtn', id+" "+hook);
-			html += '<div class="menuBtn">'+ eval( hook+"( id, '', res.resourceURL, {} )" ) + '</div>';
-			//dlgMap.push( [ id, "", res.resourceURL, "", {} ] );
-		}
-		html += "</div>";
-		if ( res.modal != null ) {
-			html += addModalDlgHT( id, res );
-		}
-	}
-	if ( res.footerURL != null ) {
-		html += '<div id="'+id+'FooterContent" class="res-footer '+addCSS+'">'+ $.i18n( res.footer )+'</div>';
-		resMap.push( [ id+'FooterContent', res.footerURL, 'inner', {} ] ); 	
-	}
+    html += '<div id="'+id+'Content" class="'+res.decor+' decor-inner '+addCSS+'"></div>'+
+      '<div class="'+res.decor+'-tm">'+(res.title == null ? '' : '<div id="'+id+'Title" class="decor-tm-title">'+ $.i18n( res.title )+'</div>')+'</div>'+
+      '<div class="'+res.decor+'-bm"></div><div class="'+res.decor+'-lm"></div><div class="'+res.decor+'-rm"></div>'+
+      '<div class="'+res.decor+'-tr"></div><div class="'+res.decor+'-tl"></div><div class="'+res.decor+'-br"></div>'+
+      '<div class="'+res.decor+'-bl"></div>'+
+      '<div class="'+res.decor+'-menu">';
+    if ( res.modal != null ) {
+      html +=  '<div class="menuBtn">'+addDlgBtn( id, res ) +"</div>";
+    }
+    if ( res.actions != null ) {
+      html += '<div class="menuBtn">'+addActionBtn( id, res )+"</div>";
+    }
+    // view required action ?
+    var hook = getHookMethod( "addActionBtn", res.type );
+    if ( hook != "" ) {
+      log( 'addActionBtn', id+" "+hook);
+      html += '<div class="menuBtn">'+ eval( hook+"( id, '', res.resourceURL, {} )" ) + '</div>';
+      //dlgMap.push( [ id, "", res.resourceURL, "", {} ] );
+    }
+    html += "</div>";
+    if ( res.modal != null ) {
+      html += addModalDlgHT( id, res );
+    }
+  }
+  if ( res.footerURL != null ) {
+    html += '<div id="'+id+'FooterContent" class="res-footer '+addCSS+'">'+ $.i18n( res.footer )+'</div>';
+    resMap.push( [ id+'FooterContent', res.footerURL, 'inner', {} ] );   
+  }
 
-	return html;
+  return html;
 }
 
 //=====================================================================================================
