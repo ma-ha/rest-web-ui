@@ -32,7 +32,7 @@ body.waiting * {
 
 .htmldiv{
   overflow: auto;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .header-logo-url { float: left; }
