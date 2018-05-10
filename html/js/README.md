@@ -22,7 +22,7 @@ TODO: migreate WIKI to here
     }
 
 _Important:_
-`rotId` and `columnId` must be unique in a page and sould start with a character (no number)!
+`rowId` and `columnId` must be unique in a page and sould start with a character (no number)!
 
 ## Columns in Rows
 
