@@ -7,7 +7,7 @@
 .decor-tm-title { padding-left: 9px; padding-top: 5px; font-weight: bold; }
 .decor-bm { position: absolute; width: 100%; height:  9px; background: url(../img/decor_bm.png); bottom: 0px; left: 0px; }
 .decor-lm { position: absolute; width: 9px;  height: 100%; background: url(../img/decor_lm.png); top: 0px; left: 0px; }
-.decor-rm { position: absolute; width: 9px;  height: 100%; background: url(../img/decor_rm.png); top: 0px; right: 0px; }
+.decor-rm { position: absolute; width: 9px;  height: 100%; background: url(../img/decor_rm.png); top: 0px; right: 0px; opacity: 0.5; }
 .decor-tl { position: absolute; width: 9px;  height: 28px; background: url(../img/decor_tl.png); top: 0px; left: 0px; }
 .decor-tr { position: absolute; width: 9px;  height: 28px; background: url(../img/decor_tr.png); top: 0px; right: 0px; }
 .decor-bl { position: absolute; width: 11px; height:  9px; background: url(../img/decor_bl.png); bottom: 0px; left: 0px; }

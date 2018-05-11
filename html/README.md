@@ -1,7 +1,6 @@
 # Release Notes
 ## Version 1.2.x
-* v1.2.0
-  * Tab Views 
+* Tab Views 
 
 ## Version 1.1.x
 * v1.1.0

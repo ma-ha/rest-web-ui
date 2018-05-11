@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '1.1.6';
+var PONGVER = '1.2.4';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -984,7 +984,7 @@ function rowsToHTML( rowsLayout, w, laCls ) {
       rows.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
     } else {
       rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">empty</div>' );
-      $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
+      $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
     }
   }
   log( 'rowsToHTML', "ROW <<<<<<<<<<<<<<<<<<<<<<<<" );
@@ -1001,30 +1001,36 @@ function tabsToHTML( def, cls ) {
   }
   div.push( '</ul>' );
   for ( var i = 0; i < tabs.length; i++ ) {
-    var addCSS = ""; 
-    if ( tabs[i].type ) { addCSS = tabs[i].type; }
-    div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="'+cls+'">' );
     tabs[i].decor = 'none';
     tabs[i].title = null;
-    div.push( resToHTML( tabs[i].tabId, tabs[i], '', '' ) );
-    div.push( '</div>' );
-    if ( tabs[i].resourceURL ) {
-      resMap.push( [ tabs[i].tabId+"Content", tabs[i].resourceURL, (tabs[i].type != null ? tabs[i].type : 'html'), tabs[i].resourceParam ] );
-      log( 'tabsToHTML',  tabs[i].tabId +"  "+ tabs[i].resourceURL );    
-      if ( tabs[i].callback != null ) {
-        callbackMap.push( tabs[i].callback );          
-      }
-    }
+
     var height = '';
     if ( def.height && endsWith( def.height, 'px' )  ) { // subtract header height  = 44px
       height =  'height: '+ ( parseInt( def.height ) - 44 ) + 'px;' ;
     }
     var width = 'width: 100%;';
-    if ( def.width && endsWith( def.width, 'px' )  ) { // subtract header height  = 44px
+    if ( def.width && endsWith( def.width, 'px' )  ) { 
       width =  'width: '+ def.width;
     }
     $( "#viewSizes" ).append( '#'+tabs[i].tabId+'TabDiv {'+ height + width +' padding: 0px; }' );
-    $( "#viewSizes" ).append( '#'+tabs[i].tabId+'Content { height: 100%; width: 100%; overflow:auto; }' );
+
+    if (  tabs[i].rows  &&   tabs[i].rows.constructor === Array ) {
+      div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="rowdiv '+cls+'">' );
+      div = div.concat( rowsToHTML( tabs[i].rows, tabs[i].width, cls ) );
+      div.push( '</div>' );
+    } else {
+      div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="'+cls+'">' );
+      div.push( resToHTML( tabs[i].tabId, tabs[i], '', '' ) );
+      div.push( '</div>' );
+      $( "#viewSizes" ).append( '#'+tabs[i].tabId+'Content { height: 100%; width: 100%; overflow:auto; }' );
+      if ( tabs[i].resourceURL ) {
+        resMap.push( [ tabs[i].tabId+"Content", tabs[i].resourceURL, (tabs[i].type != null ? tabs[i].type : 'html'), tabs[i].resourceParam ] );
+        log( 'tabsToHTML',  tabs[i].tabId +"  "+ tabs[i].resourceURL );    
+        if ( tabs[i].callback != null ) {
+          callbackMap.push( tabs[i].callback );          
+        }
+      }
+    }
   }
   return div;
 }

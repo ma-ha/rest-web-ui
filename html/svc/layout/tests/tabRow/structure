@@ -13,7 +13,7 @@
       },
       {
         "rowId": "r1",
-        "height": "230px",
+        "height": "500px",
         "decor" : "decor",
         "tabs": [
           {
@@ -72,6 +72,25 @@
                 { "id":"Button", "actionName": "Do It", "actionURL": "svc/test/info", "target": "out1" }
               ]
             }
+          },
+          {
+            "tabId": "out4",
+            "title": "Rows in Tab",
+            "rows": [
+              {
+                "rowId": "out4frm",
+                "title": "This is a Test",
+                "height": "300px",
+                "resourceURL": "svc/test",
+                "type": "pong-form"
+              },
+              {
+                "rowId": "out4tst",
+                "title": "This is a Test",
+                "height": "150px",
+                "decor": "decor"
+              }
+            ]
           }
         ]
       }

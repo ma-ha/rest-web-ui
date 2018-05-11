@@ -8,7 +8,7 @@
         "title": "Home",
         "resourceURL": "svc/info",
         "height": "400px",
-        "decor" : "decor"
+        "decor" : "tedge"
       }
     ],
     "includeFooter":"main"

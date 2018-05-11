@@ -23,8 +23,9 @@
 }
 .aTabRowDiv {
   position: absolute;
- 
+  overflow: auto;
 }
 .aTabColDiv {
   position: absolute;
+  overflow: auto;
 }
