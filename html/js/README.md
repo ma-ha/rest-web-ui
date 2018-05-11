@@ -64,6 +64,18 @@ Also columns can contain rows, instead of views:
       ...
     ]
 
+## Resource Definition
+
+TODO:
+- rowId / columnId 
+- type
+- width / height
+- resourceURL vs moduleConfig
+- decor
+- headerURL / footerURL
+- callback
+- modal
+- actions
 
 ## Array `layout/includeJS`
 

@@ -987,11 +987,20 @@ function tabsToHTML( tabs, cls ) {
   }
   div.push( '</ul>' );
   for ( var i = 0; i < tabs.length; i++ ) {
+    var addCSS = "";
+    if ( tabs[i].type ) { addCSS = tabs[i].type; }
     div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="'+cls+'">' );
     tabs[i].decor = 'none';
     tabs[i].title = null;
     div.push( resToHTML( tabs[i].tabId, tabs[i], '', '' ) );
     div.push( '</div>' );
+    if ( tabs[i].resourceURL ) {
+      resMap.push( [ tabs[i].tabId+"Content", tabs[i].resourceURL, (tabs[i].type != null ? tabs[i].type : 'html'), tabs[i].resourceParam ] );
+      log( 'tabsToHTML',  tabs[i].tabId +"  "+ tabs[i].resourceURL );    
+      if ( tabs[i].callback != null ) {
+        callbackMap.push( tabs[i].callback );          
+      }
+    }
   }
   return div;
 }
