@@ -25,6 +25,53 @@
             "tabId": "out2",
             "title": "Output 2",
             "resourceURL": "svc/cloud/setuplog"
+          },
+          {
+            "tabId": "out3",
+            "title": "Form by moduleConfig",
+            "resourceURL": "svc/cloud/setuplog",
+            "type": "pong-form",
+            "moduleConfig": {
+              "label": "Test Form",
+              "description": "Test Form",
+              "id": "tstFormId", 
+              "fieldGroups":[
+                  {
+                    "columns":[
+                      {
+                        "formFields":[     
+                          { "id":"user", "label":"User ID",  "type":"text" }, 
+                          { "id":"pwd",  "label":"Password", "type":"password", "required":true },
+                          { "id":"pwd",  "label":"Role 1", "type":"text", 
+                            "options": [ 
+                              { "value":"Admin" }, 
+                              { "value":"Super Admin", "disabled":true }, 
+                              { "value":"Myself", "selected":true }, 
+                              { "value":"Author" } 
+                            ]
+                          },
+                          { "id":"pwd",  "label":"Role 2", "type":"select", 
+                            "options": [ 
+                              { "option":"Admin" }, 
+                              { "option":"Super Admin", "disabled":true }, 
+                              { "option":"Myself", "selected":true }, 
+                              { "option":"Author" } 
+                            ]
+                          },
+                          { "id":"f3", "label":"email", "type":"email" },
+                          { "id":"f4", "label":"Disabled", "disabled":"true",  
+                            "type":"text", "defaultVal":"You can't select this."  },
+                          { "id":"comm", "label":"Comment", "type":"text", "rows":"3", 
+                            "readonly":"true", "defaultVal":"Readonly, but you can select this." }
+                        ]
+                      }
+                  ]
+              }
+              ],
+              "actions" : [ 
+                { "id":"Button", "actionName": "Do It", "actionURL": "svc/test/info", "target": "out1" }
+              ]
+            }
           }
         ]
       }
