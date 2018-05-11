@@ -555,80 +555,92 @@ function checkModules() {
 }
 
 function checkModulesRec( l ) {
-	if ( l.rows != null ) {
-		for ( var i = 0; i < l.rows.length; i++ ) {
-			log( 'loadModules', "row: "+ l.rows[i].rowId );
-			if ( l.rows[i].type != null && l.rows[i].type != 'raw' ) {
-				addReqModule( l.rows[i].type );
-			}
-			checkModulesActn( l.rows[i] );
-			if ( l.rows[i].cols != null ) {
-				checkModulesRec( l.rows[i] );
-			}
-		}
-	}	
-	if ( l.cols != null ) {
-		for ( var i = 0; i < l.cols.length; i++ ) {
-			log( 'loadModules', "col: "+ l.cols[i].columnId );
-			if ( l.cols[i].type != null && l.cols[i].type != 'raw' ) {
-				addReqModule( l.cols[i].type );
-			}
-			checkModulesActn( l.cols[i] );
-			if ( l.cols[i].rows != null ){
-				checkModulesRec( l.cols[i] );
-			}
-		}
-	}		
+  if ( l.rows != null ) {
+    for ( var i = 0; i < l.rows.length; i++ ) {
+      log( 'loadModules', "row: "+ l.rows[i].rowId );
+      if ( l.rows[i].type != null && l.rows[i].type != 'raw' ) {
+        addReqModule( l.rows[i].type );
+      }
+      checkModulesActn( l.rows[i] );
+      if ( l.rows[i].cols || l.rows[i].tabs ) {
+        checkModulesRec( l.rows[i] );
+      }
+    }
+  }  
+  if ( l.cols != null ) {
+    for ( var i = 0; i < l.cols.length; i++ ) {
+      log( 'loadModules', "col: "+ l.cols[i].columnId );
+      if ( l.cols[i].type != null && l.cols[i].type != 'raw' ) {
+        addReqModule( l.cols[i].type );
+      }
+      checkModulesActn( l.cols[i] );
+      if ( l.cols[i].rows || l.cols[i].tabs ){
+        checkModulesRec( l.cols[i] );
+      }
+    }
+  }
+  if ( l.tabs ) {
+    for ( var i = 0; i < l.tabs.length; i++ ) {
+      log( 'loadModules', "tabs: "+ l.tabs[i].tabId );
+      if ( l.tabs[i].type  &&  l.tabs[i].type != 'raw' ) {
+        addReqModule( l.tabs[i].type );
+      }
+      checkModulesActn( l.tabs[i] );
+      if ( l.tabs[i].rows ){
+        checkModulesRec( l.tabs[i] );
+      }
+    }
+  }
 }
 
 function checkModulesActn( l ) {
-	if ( l.actions != null ) {
-		for ( var i = 0; i < l.actions.length; i++ ){
-			if ( l.actions[i].type != null ) {
-				addReqModule( l.actions[i].type );
-			}
-		}
-	}
+  if ( l.actions != null ) {
+    for ( var i = 0; i < l.actions.length; i++ ){
+      if ( l.actions[i].type != null ) {
+        addReqModule( l.actions[i].type );
+      }
+    }
+  }
 }
 
 function addReqModule( mType ) {
-	if ( ! reqModules.hasOwnProperty( mType ) ) {
-		log( 'loadModules', "identified required module: "+mType  );
-		reqModules[ mType ] = mType;		
-		if ( ( moduleMap[ mType ] != null ) && ( moduleMap[ mType ].requires != null ) ) {
-			for ( var i = 0; i < moduleMap[ mType ].requires.length; i++ ) {
-				log( 'loadModules', mType+" requires: "+ moduleMap[ mType ].requires[i] );
-				addReqModule( moduleMap[ mType ].requires[i] );
-			}
-		} 
-	}
+  if ( ! reqModules.hasOwnProperty( mType ) ) {
+    log( 'loadModules', "identified required module: "+mType  );
+    reqModules[ mType ] = mType;    
+    if ( ( moduleMap[ mType ] != null ) && ( moduleMap[ mType ].requires != null ) ) {
+      for ( var i = 0; i < moduleMap[ mType ].requires.length; i++ ) {
+        log( 'loadModules', mType+" requires: "+ moduleMap[ mType ].requires[i] );
+        addReqModule( moduleMap[ mType ].requires[i] );
+      }
+    } 
+  }
 }
 
 
 function initModules( lo ) {
-	// header hooks
-	if ( ( lo != null ) && ( lo.header != null ) && ( lo.header.modules != null ) ) {
-		for ( var i = 0; i < lo.header.modules.length; i++ ) {
-			initAModule( lo.header.modules[i] );
-		}
-	}
-	// footer hooks
-	if ( ( lo != null ) && ( lo.footer != null ) && ( lo.footer.modules != null ) ) {
-		for ( var i = 0; i < lo.footer.modules.length; i++ ) {
-			initAModule( lo.footer.modules[i] );
-		}
-	}
-	ajaxOngoing--;
+  // header hooks
+  if ( ( lo != null ) && ( lo.header != null ) && ( lo.header.modules != null ) ) {
+    for ( var i = 0; i < lo.header.modules.length; i++ ) {
+      initAModule( lo.header.modules[i] );
+    }
+  }
+  // footer hooks
+  if ( ( lo != null ) && ( lo.footer != null ) && ( lo.footer.modules != null ) ) {
+    for ( var i = 0; i < lo.footer.modules.length; i++ ) {
+      initAModule( lo.footer.modules[i] );
+    }
+  }
+  ajaxOngoing--;
 }
 
 function initAModule( module ) {
   if ( module ) {
-	log( 'initModules', "initModules "+module.type );
-	var hook = getHookMethod( "init", module.type );
-	if ( hook != "" ) {
-		log( 'initModules CALL', hook+"( ... )");
-		eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
-	}	
+  log( 'initModules', "initModules "+module.type );
+  var hook = getHookMethod( "init", module.type );
+  if ( hook != "" ) {
+    log( 'initModules CALL', hook+"( ... )");
+    eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
+  }  
   }
 }
 
