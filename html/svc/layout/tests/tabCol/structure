@@ -22,12 +22,13 @@
               {
                 "tabId": "tab1",
                 "title": "Output 1",            
-                "resourceURL": "svc/cloud/resinfo"
+                "resourceURL": "svc/info"
               },
               {
                 "tabId": "tab2",
                 "title": "Output 2",
-                "resourceURL": "svc/cloud/setuplog"
+                "resourceURL": "svc/test",
+                "type": "pong-form"
               }
             ]          
           }

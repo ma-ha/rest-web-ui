@@ -923,9 +923,10 @@ function colsToHTML( colsLayout, h, laCls ) {
     } else if ( aCol.tabs != null  &&  aCol.tabs.constructor === Array ) {
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
       cols.push( '<div id="'+id+'" class="tabDiv tabColDiv'+laCls+'">' );
-      cols = cols.concat( tabsToHTML( aCol.tabs, 'aTabRowDiv' ) );
+      cols = cols.concat( tabsToHTML( aCol, 'aTabRowDiv' ) );
       cols.push( "</div>");
-      cols.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
+      cols.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' ); 
+      $( "#viewSizes" ).append( "#"+id+" { border: 0px; }" );
     } else {
       cols.push( '<div id="'+id+'" class="coldiv '+laCls+'">empty</div>' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; height:100%; }" );
@@ -966,7 +967,7 @@ function rowsToHTML( rowsLayout, w, laCls ) {
     } else if ( aRow.tabs != null  &&  aRow.tabs.constructor === Array ) {
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
       rows.push( '<div id="'+id+'" class="tabDiv '+laCls+'">' );
-      rows = rows.concat( tabsToHTML( aRow.tabs, 'aTabRowDiv' ) );
+      rows = rows.concat( tabsToHTML( aRow, 'aTabRowDiv' ) );
       rows.push( "</div>");
       rows.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
     } else {
@@ -979,7 +980,8 @@ function rowsToHTML( rowsLayout, w, laCls ) {
 }
 
 
-function tabsToHTML( tabs, cls ) {
+function tabsToHTML( def, cls ) {
+  var tabs = def.tabs
   var div = [];
   div.push( '<ul>' );
   for ( var i = 0; i < tabs.length; i++ ) {
@@ -987,7 +989,7 @@ function tabsToHTML( tabs, cls ) {
   }
   div.push( '</ul>' );
   for ( var i = 0; i < tabs.length; i++ ) {
-    var addCSS = "";
+    var addCSS = ""; 
     if ( tabs[i].type ) { addCSS = tabs[i].type; }
     div.push( '<div id="'+tabs[i].tabId+'TabDiv" class="'+cls+'">' );
     tabs[i].decor = 'none';
@@ -1001,6 +1003,16 @@ function tabsToHTML( tabs, cls ) {
         callbackMap.push( tabs[i].callback );          
       }
     }
+    var height = '';
+    if ( def.height && endsWith( def.height, 'px' )  ) { // subtract header height  = 44px
+      height =  'height: '+ ( parseInt( def.height ) - 44 ) + 'px;' ;
+    }
+    var width = 'width: 100%;';
+    if ( def.width && endsWith( def.width, 'px' )  ) { // subtract header height  = 44px
+      width =  'width: '+ def.width;
+    }
+    $( "#viewSizes" ).append( '#'+tabs[i].tabId+'TabDiv {'+ height + width +' padding: 0px; }' );
+    $( "#viewSizes" ).append( '#'+tabs[i].tabId+'Content { height: 100%; width: 100%; overflow:auto; }' );
   }
   return div;
 }
