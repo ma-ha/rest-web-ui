@@ -712,7 +712,7 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
               $( fieldId ).html( $.i18n( dta[field.id] ) )
             }
           } else {
-            log( "Pong-Form", "ERROR '"+fieldDd+"': Can't update "+field.type);
+            log( "Pong-Form", "ERROR '"+field.id+"': Can't update "+field.type);
 
           }
 
@@ -771,7 +771,10 @@ function pongFormRenderField( divId, field, col ) {
   } else {
     
     var title      = ""; if ( field.descr != null ) { title = ' title="'+field.descr+'" '; }
-    var defaultVal  = ""; if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }
+    var defaultVal  = ""; 
+    if ( field.defaultVal != null ) { defaultVal = ' value="'+field.defaultVal+'" '; }
+    if ( field.value != null      ) { defaultVal = ' value="'+field.value+'" '; }
+    if ( field.default != null    ) { defaultVal = ' value="'+field.default+'" '; }
 
     var uiRO = ''
     var modifier = '';
