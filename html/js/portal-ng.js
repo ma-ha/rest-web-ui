@@ -1257,50 +1257,52 @@ function loadResourcesHTajax( resHtmlID, serviceHtURL ) {
     params.lang =  getParam('lang')
   }
   $.get( serviceHtURL, params,
-		function( data ) {
-			log( 'loadResourcesHTajax',  "succ "+resHtmlID );
-			$( "#"+resHtmlID ).html( data );
-			log( 'loadResourcesHTajax', "ok "+resHtmlID+"  "+serviceHtURL );
-		}
-	).fail(
-		function() {
-			logErr( 'loadResourcesHTajax', resHtmlID+"  "+serviceHtURL );
-		}
-	).always(
-		function() {
-			log( 'loadResourcesHTajax', "done: "+resHtmlID+"  "+serviceHtURL );
-			ajaxOngoing--;
-		}
-	);
+    function( data ) {
+      log( 'loadResourcesHTajax',  "succ "+resHtmlID );
+      try { // TODO: check IE problem here:
+        $( "#"+resHtmlID ).html( data ); 
+      } catch ( exc ) { logErr( 'loadResourcesHTajax',  exc ); }
+      log( 'loadResourcesHTajax', "ok "+resHtmlID+"  "+serviceHtURL );
+    }
+  ).fail(
+    function() {
+      logErr( 'loadResourcesHTajax', resHtmlID+"  "+serviceHtURL );
+    }
+  ).always(
+    function() {
+      log( 'loadResourcesHTajax', "done: "+resHtmlID+"  "+serviceHtURL );
+      ajaxOngoing--;
+    }
+  );
 }
 
 function loadResourcesJSajax( resHtmlID, serviceJsURL ) {
   ajaxOngoing++;
-	$.getScript( serviceJsURL, 
-		function(){ 
-		log( 'loadResourcesJSajax', "succ "+resHtmlID+"  "+serviceJsURL );
-		}
-	).always(
-		function() {
-			log( 'loadResourcesJSajax', "done: "+resHtmlID+"  "+serviceJsURL );
-			ajaxOngoing--;
-		}
-	);
+  $.getScript( serviceJsURL, 
+    function(){ 
+    log( 'loadResourcesJSajax', "succ "+resHtmlID+"  "+serviceJsURL );
+    }
+  ).always(
+    function() {
+      log( 'loadResourcesJSajax', "done: "+resHtmlID+"  "+serviceJsURL );
+      ajaxOngoing--;
+    }
+  );
 }
 
 function resourceCallbacks() {
-	for( var x=0; x<callbackMap.length; x++ ) {
-		var fn = callbackMap[x];
-		log( 'resourceCallbacks', "call"+fn );
-		eval( fn );
-	}
+  for( var x=0; x<callbackMap.length; x++ ) {
+    var fn = callbackMap[x];
+    log( 'resourceCallbacks', "call"+fn );
+    eval( fn );
+  }
 }
 
 function resourceDialogs() {
-	for( var x = 0; x < dlgMap.length; x++ ) {
-		var dlg = dlgMap[x];
-		creModal( dlg[0], dlg[1], dlg[2], dlg[3], dlg[4] );
-	}
+  for( var x = 0; x < dlgMap.length; x++ ) {
+    var dlg = dlgMap[x];
+    creModal( dlg[0], dlg[1], dlg[2], dlg[3], dlg[4] );
+  }
 }
 
 function creModal( id, modalName, resourceURL, type, param ) {
