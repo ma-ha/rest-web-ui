@@ -1,7 +1,9 @@
 # Release Notes
 ## Version 1.2.x
 * Tab Views 
-
+* 1.2.7
+  * try to fix footerURL for IE
+  
 ## Version 1.1.x
 * v1.1.0
   * header: includeJS array 
