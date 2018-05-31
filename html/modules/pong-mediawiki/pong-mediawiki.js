@@ -94,7 +94,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
 						pMwList[divId][i] = pMwList[divId][i+1];
 					}
 				}
-				pMwList[divId][2] = param.page; 
+				pMwList[divId][2] = startPage; 
 				html.push( '</p><hr/>' );
 				html.push( data['parse']['text']['*'] );
 				html.push( '<script>' );
