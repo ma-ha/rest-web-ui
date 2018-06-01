@@ -92,7 +92,10 @@ function addSecurityHeaderHtml( divId, type , params ) {
 				divHtml.push( '  <input id="useridInput" name="userid" type="text" class="'+cssClass+'/><br/>' );
 				divHtml.push( '  <label for="password">'+$.i18n('Password')+'</label><br/>' );
 				divHtml.push( '  <input id="passwordInput" name="password" type="password" class="'+cssClass+'/><br/>' );
-				divHtml.push( '</form></fieldset><span id="loginResult"></span></div>' );
+				divHtml.push( ' </form></fieldset>' );
+        divHtml.push( ' <span class="loginCookie">'+$.i18n('This will set a session cookie.')+'</span><br>' );
+        divHtml.push( ' <span id="loginResult"></span>' );
+        divHtml.push( '</div>' );
 				divHtml.push( '<script>' );
 				divHtml.push( '$( function() { $( "#pongLoginDialog" ).dialog( { ' );
 				divHtml.push( '  title: $.i18n("Login")+":", autoOpen: false, height: 300, width: 300, modal: true, ' );
