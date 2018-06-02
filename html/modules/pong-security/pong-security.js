@@ -23,129 +23,129 @@ THE SOFTWARE.
  */
 log( "PoNG-Security", "Loading Module");
 
+var pongSecParams = null; 
 
 function initSecurityHeaderHtml( divId, type , params ) {
-	if ( userID == null ) {
-		if ( params != null  && params.loginURL != null ) {
+  pongSecParams = params;
+  if ( userID == null ) {
+    if ( params != null  && params.loginURL != null ) {
 //      if ( params != null  && params.loginURL != null && params.rolesURL != null ) {
-			ajaxOngoing++;
-			$.post( params.loginURL, 
-				function ( data ) {
-					if ( data != "Unauthorized" ) {
-						publishEvent( 'feedback', { text:'Login OK :-)' } )
-						userID = data;	
-						ajaxOngoing--;
-//						$.post( params.rolesURL, 
-//							function ( roles ) {
-//						    publishEvent( 'feedback', { text:'Autorization roles loaded!' } )
-//								pageInfo["userRoles"] = [];
-//								for ( var i = 0; i < roles.length; i++ ) {
-//									//console.log( roles[i] );
-//									pageInfo["userRoles"].push( roles[i] );
-//								}
-//								ajaxOngoing--;
-//							}
-//						);
-//						if ( getParam('role') != null  && getParam('role') != '' ) {
-//							userRole = getParam('role'); 
-//						}
-					} else {
-						log( "PoNG-Security", "Unauthorized...");
-						ajaxOngoing--;
-						publishEvent( 'feedback', { text:'Login failed!!' } );
-						userRole = null;
-					} 
-				} 
-			).fail( function() { ajaxOngoing--; } );
-		}
-	}
+      ajaxOngoing++;
+      $.post( params.loginURL, 
+        function ( data ) {
+          if ( data != "Unauthorized" ) {
+            publishEvent( 'feedback', { text:'Login OK :-)' } )
+            userID = data;  
+            ajaxOngoing--;
+
+            // Check once per min, if session has expired
+            var checkLoginInterval = 60*1000;
+            if ( params.checkLoginInterval  ) {
+              var n = Number.parseInt( params.checkLoginInterval );
+              if ( ! isNaN( n ) ) {
+                checkLoginInterval = params.checkLoginInterval;
+              } else { alert( params.checkLoginInterval+' '+n ); }
+            }
+            //console.log( checkLoginInterval );
+            setInterval( checkLogout, checkLoginInterval );
+
+          } else {
+            log( "PoNG-Security", "Unauthorized...");
+            ajaxOngoing--;
+            publishEvent( 'feedback', { text:'Login failed!!' } );
+            userRole = null;
+          } 
+        } 
+      ).fail( function() { ajaxOngoing--; } );
+    }
+  }
 }
 
 function addSecurityHeaderHtml( divId, type , params ) {
-	log( "PoNG-Security", "start addSecurityHeaderHtml "+divId);
-	
-	var divHtml = [];
-	
-	divHtml.push( '<div id="SecurityHeader">' );
-	//alert( userID );
-	if ( userID == null ) {
-		if ( params != null  ) {
-			var makeLoginForm = false;
-			if ( params.registgerURL != null && params.loginURL != null  ) {
-				divHtml.push( '<a href="'+ params.registgerURL+'">'+ $.i18n('Register') + '</a>&nbsp;&nbsp;<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );
-				makeLoginForm = true;
-			} else if ( params.loginURL != null ) {
-				divHtml.push( '<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );		
-				makeLoginForm = true;
-			}
-			var lang = "";
-			if ( getParam('lang') && getParam('lang') != '' ) {
-				lang = "lang="+getParam('lang');
-			}
-			//alert( lang );
-			
-			if ( makeLoginForm ) {
-				var cssClass = 'class="text ui-widget-content ui-corner-all"';
- 				divHtml.push( '<div id="pongLoginDialog">' );
-				divHtml.push( ' <form id="pongLoginDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
-				divHtml.push( '  <label for="userid">'+$.i18n('User ID')+'</label><br/>' );
-				divHtml.push( '  <input id="useridInput" name="userid" type="text" class="'+cssClass+'/><br/>' );
-				divHtml.push( '  <label for="password">'+$.i18n('Password')+'</label><br/>' );
-				divHtml.push( '  <input id="passwordInput" name="password" type="password" class="'+cssClass+'/><br/>' );
-				divHtml.push( ' </form></fieldset>' );
+  log( "PoNG-Security", "start addSecurityHeaderHtml "+divId);
+  
+  var divHtml = [];
+  
+  divHtml.push( '<div id="SecurityHeader">' );
+  //alert( userID );
+  if ( userID == null ) {
+    if ( params != null  ) {
+      var makeLoginForm = false;
+      if ( params.registgerURL != null && params.loginURL != null  ) {
+        divHtml.push( '<a href="'+ params.registgerURL+'">'+ $.i18n('Register') + '</a>&nbsp;&nbsp;<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );
+        makeLoginForm = true;
+      } else if ( params.loginURL != null ) {
+        divHtml.push( '<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );    
+        makeLoginForm = true;
+      }
+      var lang = "";
+      if ( getParam('lang') && getParam('lang') != '' ) {
+        lang = "lang="+getParam('lang');
+      }
+      //alert( lang );
+      
+      if ( makeLoginForm ) {
+        var cssClass = 'class="text ui-widget-content ui-corner-all"';
+         divHtml.push( '<div id="pongLoginDialog">' );
+        divHtml.push( ' <form id="pongLoginDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
+        divHtml.push( '  <label for="userid">'+$.i18n('User ID')+'</label><br/>' );
+        divHtml.push( '  <input id="useridInput" name="userid" type="text" class="'+cssClass+'/><br/>' );
+        divHtml.push( '  <label for="password">'+$.i18n('Password')+'</label><br/>' );
+        divHtml.push( '  <input id="passwordInput" name="password" type="password" class="'+cssClass+'/><br/>' );
+        divHtml.push( ' </form></fieldset>' );
         divHtml.push( ' <span class="loginCookie">'+$.i18n('This will set a session cookie.')+'</span><br>' );
         divHtml.push( ' <span id="loginResult"></span>' );
         divHtml.push( '</div>' );
-				divHtml.push( '<script>' );
-				divHtml.push( '$( function() { $( "#pongLoginDialog" ).dialog( { ' );
-				divHtml.push( '  title: $.i18n("Login")+":", autoOpen: false, height: 300, width: 300, modal: true, ' );
+        divHtml.push( '<script>' );
+        divHtml.push( '$( function() { $( "#pongLoginDialog" ).dialog( { ' );
+        divHtml.push( '  title: $.i18n("Login")+":", autoOpen: false, height: 300, width: 300, modal: true, ' );
         divHtml.push( '  open: function() { ' );
         divHtml.push( '     $("#pongLoginDialog").keypress( function(e) { ' );
         divHtml.push( '        if (e.keyCode == $.ui.keyCode.ENTER) { ' );
         divHtml.push( '            $(this).parent().find("button:eq(1)").trigger("click"); ' );
         divHtml.push( '     }});' );
         divHtml.push( '  }, ' );
-				divHtml.push( '  buttons: { "'+$.i18n('Login')+'": function() { ' );
-				divHtml.push( '      pongSecLogin( "'+params.loginURL+'", "'+params.loginPage+'", "'+lang+'" ) ');
-				divHtml.push( '      return false;' );
-				divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
-				divHtml.push( '});' );			
-				divHtml.push( '$( ".PongLogin" ).click( ' );
-				divHtml.push( '  function( ) { ' ); 
-				divHtml.push( '         $( "#pongLoginDialog" ).dialog( "open" ); ' ); 
+        divHtml.push( '  buttons: { "'+$.i18n('Login')+'": function() { ' );
+        divHtml.push( '      pongSecLogin( "'+params.loginURL+'", "'+params.loginPage+'", "'+lang+'" ) ');
+        divHtml.push( '      return false;' );
+        divHtml.push( '  }, Cancel: function() { $( this ).dialog( "close" ); } } }); ' );
+        divHtml.push( '});' );      
+        divHtml.push( '$( ".PongLogin" ).click( ' );
+        divHtml.push( '  function( ) { ' ); 
+        divHtml.push( '         $( "#pongLoginDialog" ).dialog( "open" ); ' ); 
         //divHtml.push( '         $(".ui-dialog-buttonpane > button:last").focus();' ); 
         divHtml.push( '         return false; ' );
-				divHtml.push( '  } );' );
-				divHtml.push( '</script>' );
-			}
-		}
-	} else {
-		divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
-		divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
-		divHtml.push( '<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
-		divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span></div>' );
-		divHtml.push( '<div id="SecurityHeaderPullDown">' );
-        		
-		
-		if ( getParam('layout') != null && getParam('layout') != '' ) {
-			divHtml.push( '<input type="hidden" name="layout" value="'+getParam('layout')+'"/>' );			
-		}
-		var lang = "";
-		if ( getParam('lang')  && getParam('lang') != '' ) {
-			divHtml.push( '<input type="hidden" name="lang" value="'+getParam('lang')+'"/>' );
-			lang = "?lang="+getParam('lang');
-		}
+        divHtml.push( '  } );' );
+        divHtml.push( '</script>' );
+      }
+    }
+  } else {
+    divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
+    divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
+    divHtml.push( '<span class="user-id" style="display:inline-flex">'+userID + '&nbsp;' );
+    divHtml.push( '<span id="SecurityHeaderTriangle" class="ui-icon ui-icon-triangle-1-s"></span></span></div>' );
+    divHtml.push( '<div id="SecurityHeaderPullDown">' );
+            
+    
+    if ( getParam('layout') != null && getParam('layout') != '' ) {
+      divHtml.push( '<input type="hidden" name="layout" value="'+getParam('layout')+'"/>' );      
+    }
+    var lang = "";
+    if ( getParam('lang')  && getParam('lang') != '' ) {
+      divHtml.push( '<input type="hidden" name="lang" value="'+getParam('lang')+'"/>' );
+      lang = "?lang="+getParam('lang');
+    }
 
-//		divHtml.push( '<select id="SecurityHeaderRoleSelect" name="role" size="1">' );
-//		var roles = pageInfo["userRoles"];
-//		for ( var i = 0; i < roles.length; i++ ) {
-//			if ( userRole == roles[i].role ) {
-//				divHtml.push( '<option selected>'+ roles[i].role +'</option>' );			
-//			} else {
-//				divHtml.push( '<option>'+ roles[i].role +'</option>' );							
-//			}
-//		}
-//		divHtml.push( '</select>&nbsp;');
+//    divHtml.push( '<select id="SecurityHeaderRoleSelect" name="role" size="1">' );
+//    var roles = pageInfo["userRoles"];
+//    for ( var i = 0; i < roles.length; i++ ) {
+//      if ( userRole == roles[i].role ) {
+//        divHtml.push( '<option selected>'+ roles[i].role +'</option>' );      
+//      } else {
+//        divHtml.push( '<option>'+ roles[i].role +'</option>' );              
+//      }
+//    }
+//    divHtml.push( '</select>&nbsp;');
         divHtml.push( '</form>' );
 
         if ( params.changePasswordURL != null  ) {
@@ -201,46 +201,47 @@ function addSecurityHeaderHtml( divId, type , params ) {
           divHtml.push( '  } );' );
           divHtml.push( '</script>' );
         }
-		divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a></span>' );
-		divHtml.push( '<script>' );
-		divHtml.push( '  $( "#SecurityHeaderRoleSelect" ).change(function() { ');
-		divHtml.push( '     $( "#SecurityHeaderFrom" ).submit();');
-		divHtml.push( '  });');
-		divHtml.push( '$( ".PongLogout" ).click( ' );
-		divHtml.push( '  function( ) { ' ); 
-		divHtml.push( '      $.post( "'+params.logoutURL+'" ) ' ); 
-		divHtml.push( '      .always( function() { ' );
-		if ( params.logoutPage ) { 
-			if ( lang != '' ) { lang = '&'+lang; }
-			divHtml.push( '           window.location.href = "index.html?layout='+params.logoutPage+lang+'"; ' );
-		} else {
-			if ( lang != '' ) { lang = '?'+lang; }
-			divHtml.push( '           window.location.href = "index.html'+lang+'"; ' );
-		}
-		divHtml.push( '      } ); ' ); 
-		divHtml.push( '      return false; ' );
-		divHtml.push( '  } );' );
-		divHtml.push( '      $( "#SecurityHeaderUser" ).click( function() { ' );
-		divHtml.push( '        setTimeout( function(){ $( "#SecurityHeaderPullDown" ).hide( "blind" ); }, 5000 );' );
-		divHtml.push( '        $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
-		divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
-		divHtml.push( '</script>' );
+    divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a></span>' );
+    divHtml.push( '<script>' );
+    divHtml.push( '  $( "#SecurityHeaderRoleSelect" ).change(function() { ');
+    divHtml.push( '     $( "#SecurityHeaderFrom" ).submit();');
+    divHtml.push( '  });');
+    divHtml.push( '$( ".PongLogout" ).click( ' );
+    divHtml.push( '  function( ) { ' ); 
+    divHtml.push( '      userID = null; ' ); 
+    divHtml.push( '      $.post( "'+params.logoutURL+'" ) ' ); 
+    divHtml.push( '      .always( function() { ' );
+    if ( params.logoutPage ) { 
+      if ( lang != '' ) { lang = '&'+lang; }
+      divHtml.push( '           window.location.href = "index.html?layout='+params.logoutPage+lang+'"; ' );
+    } else {
+      if ( lang != '' ) { lang = '?'+lang; }
+      divHtml.push( '           window.location.href = "index.html'+lang+'"; ' );
+    }
+    divHtml.push( '      } ); ' ); 
+    divHtml.push( '      return false; ' );
+    divHtml.push( '  } );' );
+    divHtml.push( '      $( "#SecurityHeaderUser" ).click( function() { ' );
+    divHtml.push( '        setTimeout( function(){ $( "#SecurityHeaderPullDown" ).hide( "blind" ); }, 5000 );' );
+    divHtml.push( '        $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
+    divHtml.push( '      $( "#SecurityHeaderPullDown" ).hide(); ');
+    divHtml.push( '</script>' );
 
-		if ( params.userPages ) {
-		  divHtml.push( '<hr/>' );
-		  for ( label in params.userPages ) {
-	          divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="index.html?layout='+
-	              params.userPages[ label ]
-	              +'" class="PongUserPage">'+$.i18n(label)+'</a></span>' );		    
-		  }
-		}
-		
-		divHtml.push( '</div>' );
+    if ( params.userPages ) {
+      divHtml.push( '<hr/>' );
+      for ( label in params.userPages ) {
+            divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="index.html?layout='+
+                params.userPages[ label ]
+                +'" class="PongUserPage">'+$.i18n(label)+'</a></span>' );        
+      }
+    }
+    
+    divHtml.push( '</div>' );
 
-	}
-	divHtml.push( '</div>' );
-	
-	$( "#"+divId ).html( divHtml.join( "\n" ) );
+  }
+  divHtml.push( '</div>' );
+  
+  $( "#"+divId ).html( divHtml.join( "\n" ) );
 }
 
 function pongSecLogin( loginURL, loginPage, lang ) {
@@ -287,4 +288,28 @@ function checkPwdStrength( pwd, pwd2, min ) {
     $( ':button:contains("Change Password")').prop("disabled", false).removeClass("ui-state-disabled");
   }
   return ( score >= min )
+}
+
+function checkLogout() {
+  if ( userID != null &&  pongSecParams != null  && pongSecParams.loginURL != null ) {
+    $.post( pongSecParams.loginURL, 
+      function ( data ) {
+        // OK, login stil valid
+      }
+    ).fail( function() {
+      alert( $.i18n( 'Login session expired.' ) );
+      userID = null;
+      var lang = '';
+      if ( getParam('lang') && getParam('lang') != '' ) {
+        lang = "lang=" + getParam('lang');
+      }
+      if ( pongSecParams.logoutPage ) { 
+        if ( lang != '' ) { lang = '&'+lang; }
+        window.location.href = 'index.html?layout=' + pongSecParams.logoutPage + lang; 
+      } else {
+        if ( lang != '' ) { lang = '?'+lang; }
+        window.location.href = 'index.html' + lang; 
+      }
+    });
+  }
 }
