@@ -19,7 +19,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ( isset( $_POST['userid'] ) && $_POST['userid'] == 'test1' ) {
 		$_SESSION["userstate"] = 'login done';
     $_SESSION["userid"] = 'test1';
-    $_SESSION["timeout"] = 4;
+    $_SESSION["timeout"] = 3;
 		echo "Login OK";
 		return true;
 	} 

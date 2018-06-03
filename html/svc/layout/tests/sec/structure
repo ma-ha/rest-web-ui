@@ -38,6 +38,7 @@
             "changePasswordURL": "svc/mock/sec/password",
             "changePasswordStrength": "4",
             "logoutPage": "tests/sec",
+            "sessionExpiredAlert": "true",
             "registgerURL": "index.php?layout=tests/sec/register",
             "logoutURL": "svc/mock/sec/logout.php",
             "rolesURL": "svc/mock/sec/usersroles.php",

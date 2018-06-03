@@ -297,7 +297,10 @@ function checkLogout() {
         // OK, login stil valid
       }
     ).fail( function() {
-      alert( $.i18n( 'Login session expired.' ) );
+      if ( pongSecParams && 
+          ( pongSecParams.sessionExpiredAlert == true || pongSecParams.sessionExpiredAlert == 'true' ) ) {
+        alert( $.i18n( 'Login session expired.' ) );
+      }
       userID = null;
       var lang = '';
       if ( getParam('lang') && getParam('lang') != '' ) {
