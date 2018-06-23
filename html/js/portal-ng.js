@@ -38,7 +38,7 @@ var reqModules = {};
 var moduleConfig = new Array();
 
 /** resMap[0] = resId / resMap[1] = resourceURL / resMap[2] = type / resMap[3] = resourceParam */
-var resMap = new Array(); 	
+var resMap = new Array();   
 
 /** */
 var decorConfig = new Array();
@@ -83,94 +83,94 @@ $.support.cors = true;
     we have to wait for all calls to be sinished to load HTML into DIV
     and then we have to wait to do all the callbacks */
 function inits() {
-	log( "init", "step="+step+" ajaxOngoing="+ajaxOngoing );
-	if ( getParam( 'nc' ) == 'true' ) {
-		noCache = "?nc="+ Math.random();
+  log( "init", "step="+step+" ajaxOngoing="+ajaxOngoing );
+  if ( getParam( 'nc' ) == 'true' ) {
+    noCache = "?nc="+ Math.random();
   }
 
-	if ( ajaxOngoing == 0 ) { 
-		if ( step == "load-lang" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load module list...');
-			loadLang();
-			step = "loadmodulemap";
-		} else if ( step == "loadmodulemap" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load module list...');
-			loadModuleList();
-			step = "loaddecor";
-		} else if ( step == "loaddecor" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load decor config...');
-			loadDecorList();
-			step = "loadstructure";
-		} else	if ( step == "loadstructure" ) {
-			ajaxOngoing++;
-			log( 'init', 'Load Structure File ...');
-			loadStructure();
-			step = "loadincludes";
-		} else if ( step == "loadincludes" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load include JS modules ...');
-			checkModules( );
-			loadIncludes();
-			step = "loadmodules";
-		} else if ( step == "loadmodules" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load JS modules ...');
-			loadModules();
-			if ( layout.theme != null ) {
-				loadCSSrelPath( 'css-custom/'+layout.theme+'.css' );
-				//jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/'+layout.theme+'.css" type="text/css" />');				
-			}
-			loadCSSrelPath( "css-custom/custom.css" );
-			if ( pageInfo["layoutMode"] == 'tablet' ) {
-				loadCSSrelPath( "css-custom/custom-t.css" );
-				//jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
-			} else if ( pageInfo["layoutMode"] == 'mobile' ) {
-				loadCSSrelPath( "css-custom/custom-m.css" );
-				//jQuery('head').append('<link rel="st<ylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
-			} 
-			step = "initmodules";
-		} else	if ( step == "initmodules" ) {
-			ajaxOngoing++;
-			log( 'init', 'Load Structure File ...');
-			initModules( layout );
-			step = "buildstructure";
-		} else	if ( step == "buildstructure" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to build HTML ...');
-			buildStructure( layout );
-			step = "loadres-ht";
-		} else	if ( step == "loadres-ht" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load resources HTML ...');
-			loadResourcesHT();
-			step = "call-hooks";
-		} else	if ( step == "call-hooks" ) {
-			log( 'init', 'Call module hooks ...');
-			callHooks();
-			step = "loadres-js";
-		} else	if ( step == "loadres-js" ) {
-			ajaxOngoing++;
-			log( 'init', 'Start to load resources JS ...');
-			loadResourcesJS();
-			step = "callbacks";
-		} else	if ( step == "callbacks" ) {
-			log( 'init', 'Start callback methods for resources...');
-			resourceCallbacks();
-			step = "dialogs";
-		} else	if ( step == "dialogs" ) {
-			log( 'init', 'Start load dialogs for resources...');
-			resourceDialogs();
-			step = "afterInit";
+  if ( ajaxOngoing == 0 ) { 
+    if ( step == "load-lang" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load module list...');
+      loadLang();
+      step = "loadmodulemap";
+    } else if ( step == "loadmodulemap" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load module list...');
+      loadModuleList();
+      step = "loaddecor";
+    } else if ( step == "loaddecor" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load decor config...');
+      loadDecorList();
+      step = "loadstructure";
+    } else  if ( step == "loadstructure" ) {
+      ajaxOngoing++;
+      log( 'init', 'Load Structure File ...');
+      loadStructure();
+      step = "loadincludes";
+    } else if ( step == "loadincludes" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load include JS modules ...');
+      checkModules( );
+      loadIncludes();
+      step = "loadmodules";
+    } else if ( step == "loadmodules" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load JS modules ...');
+      loadModules();
+      if ( layout.theme != null ) {
+        loadCSSrelPath( 'css-custom/'+layout.theme+'.css' );
+        //jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/'+layout.theme+'.css" type="text/css" />');        
+      }
+      loadCSSrelPath( "css-custom/custom.css" );
+      if ( pageInfo["layoutMode"] == 'tablet' ) {
+        loadCSSrelPath( "css-custom/custom-t.css" );
+        //jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="css-custom/custom-t.css" type="text/css" />');        
+      } else if ( pageInfo["layoutMode"] == 'mobile' ) {
+        loadCSSrelPath( "css-custom/custom-m.css" );
+        //jQuery('head').append('<link rel="st<ylesheet" rel="nofollow" href="css-custom/custom-m.css" type="text/css" />');
+      } 
+      step = "initmodules";
+    } else  if ( step == "initmodules" ) {
+      ajaxOngoing++;
+      log( 'init', 'Load Structure File ...');
+      initModules( layout );
+      step = "buildstructure";
+    } else  if ( step == "buildstructure" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to build HTML ...');
+      buildStructure( layout );
+      step = "loadres-ht";
+    } else  if ( step == "loadres-ht" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load resources HTML ...');
+      loadResourcesHT();
+      step = "call-hooks";
+    } else  if ( step == "call-hooks" ) {
+      log( 'init', 'Call module hooks ...');
+      callHooks();
+      step = "loadres-js";
+    } else  if ( step == "loadres-js" ) {
+      ajaxOngoing++;
+      log( 'init', 'Start to load resources JS ...');
+      loadResourcesJS();
+      step = "callbacks";
+    } else  if ( step == "callbacks" ) {
+      log( 'init', 'Start callback methods for resources...');
+      resourceCallbacks();
+      step = "dialogs";
+    } else  if ( step == "dialogs" ) {
+      log( 'init', 'Start load dialogs for resources...');
+      resourceDialogs();
+      step = "afterInit";
     } else  if ( step == "afterInit" ) {
       log( 'init', 'Start load dialogs for resources...');
       startModulesAfterPageLoad( layout );
       clearInterval( initTimerId );
       step = "done";
-		}
-	}	
+    }
+  }  
 }
 
 //=====================================================================================================
@@ -180,69 +180,69 @@ var modulesPath  = 'modules/';
 var themeCssPath = 'css/';
 
 function loadCSSrelPath( cssFileInclPath ) {
-	var cssLnk = document.createElement( 'link' );
-	cssLnk.setAttribute( 'rel', 'stylesheet' );
-	cssLnk.setAttribute( 'type', 'text/css' );
-	cssLnk.setAttribute( 'href', cssFileInclPath + noCache );
-	document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
+  var cssLnk = document.createElement( 'link' );
+  cssLnk.setAttribute( 'rel', 'stylesheet' );
+  cssLnk.setAttribute( 'type', 'text/css' );
+  cssLnk.setAttribute( 'href', cssFileInclPath + noCache );
+  document.getElementsByTagName( 'head' )[0].appendChild( cssLnk );
 }
 
 function loadCSS( cssFile ) {
-	loadCSSrelPath( cssPath+cssFile );
+  loadCSSrelPath( cssPath+cssFile );
 }
 
 function loadThemeCSS( cssFile ) {
-	loadCSSrelPath( themeCssPath+cssFile );
+  loadCSSrelPath( themeCssPath+cssFile );
 }
 
 //=====================================================================================================
 
 
 function loadLang() {
-	var locale = getParam( 'lang' );
-	pageInfo["layout"] = getParam( 'layout' );
-	if ( locale == '' ) { locale = "EN"; }
+  var locale = getParam( 'lang' );
+  pageInfo["layout"] = getParam( 'layout' );
+  if ( locale == '' ) { locale = "EN"; }
 
-	$.i18n( { locale: locale } );
+  $.i18n( { locale: locale } );
 
-	var langMap = 'i18n/'+locale+'.json';
+  var langMap = 'i18n/'+locale+'.json';
     if( mode == "php"  &&  pageInfo["layout"] != '' ) {
-    	langMap = "svc/backend/i18n?locale="+locale+'&layout='+pageInfo["layout"];
-    	$.getJSON( langMap, 
-    			function( langMapDta ) {
-			    	$.i18n().load( 
-			    			langMapDta, 
-			    			locale 
-			    		).done( 
-			    			function(){ ajaxOngoing--; } 
-			    		);
-    			}
-    	);
+      langMap = "svc/backend/i18n?locale="+locale+'&layout='+pageInfo["layout"];
+      $.getJSON( langMap, 
+          function( langMapDta ) {
+            $.i18n().load( 
+                langMapDta, 
+                locale 
+              ).done( 
+                function(){ ajaxOngoing--; } 
+              );
+          }
+      );
     } else {
-    	// do it static
-    	$.i18n().load( 
-    			langMap, 
-    			locale 
-    		).done( 
-    			function(){ ajaxOngoing--; } 
-    		);    	
+      // do it static
+      $.i18n().load( 
+          langMap, 
+          locale 
+        ).done( 
+          function(){ ajaxOngoing--; } 
+        );      
     }
 
     $.extend( $.i18n.parser.emitter, {
-    	// Handle PONGVER keywords
-    	pongver: function () {
-    	  //alert( "version" )
-    		return PONGVER;
-    	}
+      // Handle PONGVER keywords
+      pongver: function () {
+        //alert( "version" )
+        return PONGVER;
+      }
     } );
 
     /* hook vor init call back to define other i18n extends */
     if (typeof initI18n === "function") { 
         // safe to use the function
-    	initI18n();
+      initI18n();
     }
     
-	pageInfo["lang"] = locale;
+  pageInfo["lang"] = locale;
 }
 
 /** build up the HTML structure of nested DIVs*/
@@ -253,10 +253,10 @@ function loadStructure() {
     pPage = "main";
   }
   pageInfo[ 'layout' ] = pPage;
-	var avoidCache = false;
-	if ( getParam( 'nc' ) == 'true' ) {
-		avoidCache = true;
-	}	
+  var avoidCache = false;
+  if ( getParam( 'nc' ) == 'true' ) {
+    avoidCache = true;
+  }  
 
   var structureURLfallback = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   if( mode == "php" ) {
@@ -267,63 +267,63 @@ function loadStructure() {
   
   // mobile detect -- to disable: just remove the script include from the index.html
   if ( typeof MobileDetect == 'function') { 
-  	  var md = new MobileDetect(  navigator.userAgent );
-  	  //console.log( navigator.userAgent );
-  	  if ( md.tablet() ) {
+      var md = new MobileDetect(  navigator.userAgent );
+      //console.log( navigator.userAgent );
+      if ( md.tablet() ) {
         pageInfo["layoutMode"] = 'tablet';
-  	    pPage = pPage +'-t';
-  	  } else if ( md.mobile() ) {
-  	    pageInfo["layoutMode"] = 'mobile';
+        pPage = pPage +'-t';
+      } else if ( md.mobile() ) {
+        pageInfo["layoutMode"] = 'mobile';
         pPage = pPage +'-m';
-  	  }
+      }
   }
   
   var pEdit = '';
   if ( getParam( 'edit' ) == 'true' ) {
-  	pEdit = "&edit=true";
+    pEdit = "&edit=true";
   }
   
   var structureURL = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   if( mode == "php" ) {
-  	structureURL = "svc/layout.php?page="+pPage+pEdit + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
+    structureURL = "svc/layout.php?page="+pPage+pEdit + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
   } else if ( mode == 'direct' ) {
-  	structureURL =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+    structureURL =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   } 
-	
+  
 
   console.log("loadStructure: "+structureURL);
-	$.getJSON( 
-	    structureURL, 
-	    processLayoutResponseJSON
-	).fail(
-		function( jqxhr, textStatus, error ) {
-		  // no layout found -- check the fallback
+  $.getJSON( 
+      structureURL, 
+      processLayoutResponseJSON
+  ).fail(
+    function( jqxhr, textStatus, error ) {
+      // no layout found -- check the fallback
       ajaxOngoing++;
-		  $.getJSON( 
-		      structureURLfallback, 
-		      processLayoutResponseJSON
-		  ).fail(
-		      function( jqxhr, textStatus, error ) {
-		        //TODO: If "main" not found, then generate a static main page!
-      			console.log( 'Request for "'+pPage+'" failed: ' + textStatus + ", " + error );
-      			window.location.href = 'index.html'; 
-		      }
-		  ).always(
-		      function() { ajaxOngoing--;  }
-		  );
-		}
-	).always(
-		function() { ajaxOngoing--; }
-	);
+      $.getJSON( 
+          structureURLfallback, 
+          processLayoutResponseJSON
+      ).fail(
+          function( jqxhr, textStatus, error ) {
+            //TODO: If "main" not found, then generate a static main page!
+            console.log( 'Request for "'+pPage+'" failed: ' + textStatus + ", " + error );
+            window.location.href = 'index.html'; 
+          }
+      ).always(
+          function() { ajaxOngoing--;  }
+      );
+    }
+  ).always(
+    function() { ajaxOngoing--; }
+  );
 }
 
 function processLayoutResponseJSON( d, textStatus, xhr ) {
   layout = d.layout;
   layoutOrig = JSON.parse( JSON.stringify( layout ) ); // backup w/o modification intentions
-	if ( xhr.getResponseHeader("X-Protect") ) { 
-		csrfToken = xhr.getResponseHeader("X-Protect");
-	}
-	$.ajaxSetup( { headers: { "X-Protect": csrfToken } } ) 
+  if ( xhr.getResponseHeader("X-Protect") ) { 
+    csrfToken = xhr.getResponseHeader("X-Protect");
+  }
+  $.ajaxSetup( { headers: { "X-Protect": csrfToken } } ) 
 
   if ( d.layout.includeJS ) {
     for ( var i = 0; i < d.layout.includeJS.length; i++ ) {
@@ -335,7 +335,7 @@ function processLayoutResponseJSON( d, textStatus, xhr ) {
         .done( function( script, textStatus, jqxhr ) { 
           log( 'includeJS', this.url+' '+textStatus ); ajaxOngoing--; } )
         .fail( function( jqxhr, settings, exception ) { 
-          log( 'includeJS', this.url+' '+exception ); ajaxOngoing--; }	);
+          log( 'includeJS', this.url+' '+exception ); ajaxOngoing--; }  );
     }
   }
 
@@ -386,172 +386,172 @@ function processLayoutResponseJSON( d, textStatus, xhr ) {
 
 /** build up the HTML structure of nested DIVs*/
 function buildStructure( d ) {
-	if ( d.header.frameWarning == "true" ) {
-		if( self != top) {
-			alert( 'Security Warning: This page is embedded in a frame, so it may be a "click hijacking" attack.' )
-		}
-	}
+  if ( d.header.frameWarning == "true" ) {
+    if( self != top) {
+      alert( 'Security Warning: This page is embedded in a frame, so it may be a "click hijacking" attack.' )
+    }
+  }
 
-	$( "title" ).html( d.title );
-	// crunch layout into html divs
-	var contentItems = layoutToHTML( d );			
-	var pagename = "";
-	if ( d.page_name != null ) {
-		pagename = " page"+d.page_name.replace( " ","_" );
-	} 
-	var theme = ( d.theme ? " "+d.theme : "" );
-	$( "<div/>", 
-		{ "id": "maindiv", 
-		  "class": "page-width" + pagename + theme, 
-			html: contentItems.join( "" ) } 
-	).appendTo( "body" );
-	loadHeaderFooter( d );
-	if ( d.page_width ) {
-		$( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );		
-	}
-	ajaxOngoing--;
+  $( "title" ).html( d.title );
+  // crunch layout into html divs
+  var contentItems = layoutToHTML( d );      
+  var pagename = "";
+  if ( d.page_name != null ) {
+    pagename = " page"+d.page_name.replace( " ","_" );
+  } 
+  var theme = ( d.theme ? " "+d.theme : "" );
+  $( "<div/>", 
+    { "id": "maindiv", 
+      "class": "page-width" + pagename + theme, 
+      html: contentItems.join( "" ) } 
+  ).appendTo( "body" );
+  loadHeaderFooter( d );
+  if ( d.page_width ) {
+    $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );    
+  }
+  ajaxOngoing--;
 }
 
 //=====================================================================================================
 function loadDecorList() {
-	$.getScript( jsPath+"portal-ng-decor.js" )
-		.done(
-			function( script, textStatus ) {
-				log( 'loadDecorList', textStatus );
-				ajaxOngoing--;
-			}
-		)
-		.fail(
-			function( jqxhr, settings, exception ) {
-				logErr( 'loadDecorList', exception );
-				ajaxOngoing--;
-			}
-		);
+  $.getScript( jsPath+"portal-ng-decor.js" )
+    .done(
+      function( script, textStatus ) {
+        log( 'loadDecorList', textStatus );
+        ajaxOngoing--;
+      }
+    )
+    .fail(
+      function( jqxhr, settings, exception ) {
+        logErr( 'loadDecorList', exception );
+        ajaxOngoing--;
+      }
+    );
 }
 //=====================================================================================================
 // Modules Loading
 
 /* all modules are defined in additional js files: */
 function loadModuleList() {
-	$.getScript( modulesPath+"portal-ng-modules.js" )
-		.done(
-			function( script, textStatus ) {
-				log( 'loadModuleList', textStatus );
-				ajaxOngoing--;
-			}
-		)
-		.fail(
-			function( jqxhr, settings, exception ) {
-				logErr( 'loadModuleList', exception );
-				ajaxOngoing--;
-			}
-		);
+  $.getScript( modulesPath+"portal-ng-modules.js" )
+    .done(
+      function( script, textStatus ) {
+        log( 'loadModuleList', textStatus );
+        ajaxOngoing--;
+      }
+    )
+    .fail(
+      function( jqxhr, settings, exception ) {
+        logErr( 'loadModuleList', exception );
+        ajaxOngoing--;
+      }
+    );
 }
 
 
 // load includes for modules
 function loadIncludes() {
-	for ( var module in reqModules ) {
-		if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+  for ( var module in reqModules ) {
+    if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
 
-			// extra CSS files
-			if ( moduleMap[ module ] ) {
-				if ( moduleMap[ module ].css ) {
-					for ( var i = 0; i < moduleMap[ module ].css.length; i++ ) {
-						log( 'loadModules', module+' add extra CSS: '+modulesPath+module+'/'+moduleMap[ module ].css[i]  );
-						jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+moduleMap[ module ].css[i] +'" type="text/css" />');
-					}
-				}
-			
-				// include files
-				if ( moduleMap[ module ].include ) {
-					for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
-						//for ( var includeJS in moduleMap[ module ].include ) {
-						var includeJS = moduleMap[ module ].include[i];
-						log( 'loadModules', module+' load include: '+modulesPath+module+'/'+includeJS );
-						ajaxOngoing++;
-					    $.getScript( modulesPath+module+'/'+includeJS )
-							.done( function( script, textStatus, jqxhr ) { 
-								log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
-							.fail( function( jqxhr, settings, exception ) { 
-								log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; }	);
-					}
-				}
-			}
-		}
-	}
-	ajaxOngoing--;
+      // extra CSS files
+      if ( moduleMap[ module ] ) {
+        if ( moduleMap[ module ].css ) {
+          for ( var i = 0; i < moduleMap[ module ].css.length; i++ ) {
+            log( 'loadModules', module+' add extra CSS: '+modulesPath+module+'/'+moduleMap[ module ].css[i]  );
+            jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+moduleMap[ module ].css[i] +'" type="text/css" />');
+          }
+        }
+      
+        // include files
+        if ( moduleMap[ module ].include ) {
+          for ( var i = 0; i < moduleMap[ module ].include.length; i++ ) {
+            //for ( var includeJS in moduleMap[ module ].include ) {
+            var includeJS = moduleMap[ module ].include[i];
+            log( 'loadModules', module+' load include: '+modulesPath+module+'/'+includeJS );
+            ajaxOngoing++;
+              $.getScript( modulesPath+module+'/'+includeJS )
+              .done( function( script, textStatus, jqxhr ) { 
+                log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
+              .fail( function( jqxhr, settings, exception ) { 
+                log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; }  );
+          }
+        }
+      }
+    }
+  }
+  ajaxOngoing--;
 }
 
 // load modules
 function loadModules() {
-	for ( var module in reqModules ) {
-		if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
-			log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' ); 		
-			log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
-			jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
-			
-			// load scripts
-			ajaxOngoing++;
-		    $.getScript( modulesPath+module+'/'+module+".js" )
-			.done(
-				function( script, textStatus ) {
-					log( 'loadModules', this.url+' '+textStatus );
-					ajaxOngoing--;
-				}
-			)
-			.fail(
-				function( jqxhr, settings, exception ) {
-					log( 'loadModules', this.url+' '+exception );
-					ajaxOngoing--;
-				}
-			);
-		    // this is to load external CSS or JS, otherwise CSS or JS should be in module dir
-		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
-		    	log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
-		    	//log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length	 );
-  				for ( var i = 0; i < moduleMap[ module ].loadCSS.length; i++ ) {
-  		    		log( 'loadModules', "load CSS file: "+ moduleMap[ module ].loadCSS[i] );
-  					jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+moduleMap[ module ].loadCSS[i]+'" type="text/css" />');		    		
-		    	}
-		    }
-		    if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) ) {
-		    	log( 'loadModules', "loadJS" );
-				for ( var i = 0; i < moduleMap[ module ].loadJS.length; i++ ) {
-		    		log( 'loadModules', "load JS: "+ moduleMap[ module ].loadJS[i] );
-					ajaxOngoing++;
-				    $.getScript( moduleMap[ module ].loadJS[i] )
-						.done( function( script, textStatus ) { log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
-						.fail( function( jqxhr, settings, exception ) { log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; } );
-		    	}
-		    }
+  for ( var module in reqModules ) {
+    if ( module && module != 'pong-tableXX' ) { // just to exclude modules, for debugging it's better to include them hardcoded in index.html
+      log( 'loadModules', modulesPath+module+'/'+module+".js  "+modulesPath+'/'+module+'/'+module+'.css' );     
+      log( 'loadModules', '<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />' );
+      jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+modulesPath+module+'/'+module+'.css" type="text/css" />');
+      
+      // load scripts
+      ajaxOngoing++;
+        $.getScript( modulesPath+module+'/'+module+".js" )
+      .done(
+        function( script, textStatus ) {
+          log( 'loadModules', this.url+' '+textStatus );
+          ajaxOngoing--;
+        }
+      )
+      .fail(
+        function( jqxhr, settings, exception ) {
+          log( 'loadModules', this.url+' '+exception );
+          ajaxOngoing--;
+        }
+      );
+        // this is to load external CSS or JS, otherwise CSS or JS should be in module dir
+        if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadCSS != null ) ) {
+          log( 'loadModules', "loadCCS "+ JSON.stringify( moduleMap[ module ].loadCSS ) );
+          //log( 'loadModules', "loadCCS "+ moduleMap[ module ].loadCSS.length   );
+          for ( var i = 0; i < moduleMap[ module ].loadCSS.length; i++ ) {
+              log( 'loadModules', "load CSS file: "+ moduleMap[ module ].loadCSS[i] );
+            jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="'+moduleMap[ module ].loadCSS[i]+'" type="text/css" />');            
+          }
+        }
+        if ( ( moduleMap[ module ] != null ) && ( moduleMap[ module ].loadJS != null ) ) {
+          log( 'loadModules', "loadJS" );
+        for ( var i = 0; i < moduleMap[ module ].loadJS.length; i++ ) {
+            log( 'loadModules', "load JS: "+ moduleMap[ module ].loadJS[i] );
+          ajaxOngoing++;
+            $.getScript( moduleMap[ module ].loadJS[i] )
+            .done( function( script, textStatus ) { log( 'loadModules', this.url+' '+textStatus ); ajaxOngoing--; } )
+            .fail( function( jqxhr, settings, exception ) { log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; } );
+          }
+        }
 
-		    
-		}
-	}
-	ajaxOngoing--;
+        
+    }
+  }
+  ajaxOngoing--;
 }
 
 
 function checkModules() {
-	log( 'loadModules', 'checkModules' );
-	// allways req modules
-	addReqModule( "i18n" );
-	addReqModule( "pong-security" );
-	// header modules
-	if ( layout != null  && layout.header != null  && layout.header.modules != null )
-	for ( var i=0; i< layout.header.modules.length; i++ ) {
-	  if ( layout.header.modules[i] ) 
-		addReqModule( layout.header.modules[i].type );
-	}
-	// footer modules
-	if ( layout != null  && layout.footer != null  && layout.footer.modules != null )
-	for ( var i=0; i< layout.footer.modules.length; i++ ) {
+  log( 'loadModules', 'checkModules' );
+  // allways req modules
+  addReqModule( "i18n" );
+  addReqModule( "pong-security" );
+  // header modules
+  if ( layout != null  && layout.header != null  && layout.header.modules != null )
+  for ( var i=0; i< layout.header.modules.length; i++ ) {
+    if ( layout.header.modules[i] ) 
+    addReqModule( layout.header.modules[i].type );
+  }
+  // footer modules
+  if ( layout != null  && layout.footer != null  && layout.footer.modules != null )
+  for ( var i=0; i< layout.footer.modules.length; i++ ) {
       if ( layout.footer.modules[i] ) 
-		addReqModule( layout.footer.modules[i].type );
-	}
-	// modules of rows and cols
-	checkModulesRec( layout );	
+    addReqModule( layout.footer.modules[i].type );
+  }
+  // modules of rows and cols
+  checkModulesRec( layout );  
 }
 
 function checkModulesRec( l ) {
@@ -676,68 +676,68 @@ function startModuleAfterPageLoad( module ) {
 //=====================================================================================================
 
 function setModuleData ( resId, paramObj, subPath ) {
-	log( 'setModuleData', resId+"/"+subPath+" => "+JSON.stringify(paramObj) );
-	var data = getSubData( paramObj, subPath );
-	var updHook = getHook( resId, "setData" ); 
-	if ( ( updHook != null ) && ( updHook.resType == "html" ) ) {	
-		// update html type view
-		$( "#"+resId ).html( data );
-		log( 'setModuleData', 'loadResourcesHTajax' );
-	} else if ( ( updHook != null ) && ( updHook.updFunction != null ) && ( updHook.updFunction != "" ) ) {
-		// update module type view
-		var callStr = updHook.updFunction+'( "'+resId+'", '+JSON.stringify( data )+' )';
-		log( 'setModuleData', callStr );
-		eval( callStr );	
-	} else {
-		log( 'setModuleData', "do nothing for "+resId );
-	}
+  log( 'setModuleData', resId+"/"+subPath+" => "+JSON.stringify(paramObj) );
+  var data = getSubData( paramObj, subPath );
+  var updHook = getHook( resId, "setData" ); 
+  if ( ( updHook != null ) && ( updHook.resType == "html" ) ) {  
+    // update html type view
+    $( "#"+resId ).html( data );
+    log( 'setModuleData', 'loadResourcesHTajax' );
+  } else if ( ( updHook != null ) && ( updHook.updFunction != null ) && ( updHook.updFunction != "" ) ) {
+    // update module type view
+    var callStr = updHook.updFunction+'( "'+resId+'", '+JSON.stringify( data )+' )';
+    log( 'setModuleData', callStr );
+    eval( callStr );  
+  } else {
+    log( 'setModuleData', "do nothing for "+resId );
+  }
 }
 
 //=====================================================================================================
 
 function udateModuleData ( resId, paramObj ) {
-	log( 'udateModuleData', resId );
-	var updHook = getHook( resId, "update" ); 
-	if ( ( updHook != null ) && ( updHook.resType == "html" ) ) {	
-		// update html type view
-		loadResourcesHTajax( resId, updHook.resURL+"/html" );
-		log( 'udateModuleData', 'loadResourcesHTajax' );
-	} else if ( ( updHook != null ) && ( updHook.updFunction != null ) && ( updHook.updFunction != "" ) ) {
-		// update module type view
-		var callStr = updHook.updFunction+'( "'+resId+'", '+JSON.stringify( paramObj )+' )';
-		log( 'udateModuleData', callStr );
-		eval( callStr );	
-	} else {
-		log( 'udateModuleData', "do nothing for "+resId );
-	}
+  log( 'udateModuleData', resId );
+  var updHook = getHook( resId, "update" ); 
+  if ( ( updHook != null ) && ( updHook.resType == "html" ) ) {  
+    // update html type view
+    loadResourcesHTajax( resId, updHook.resURL+"/html" );
+    log( 'udateModuleData', 'loadResourcesHTajax' );
+  } else if ( ( updHook != null ) && ( updHook.updFunction != null ) && ( updHook.updFunction != "" ) ) {
+    // update module type view
+    var callStr = updHook.updFunction+'( "'+resId+'", '+JSON.stringify( paramObj )+' )';
+    log( 'udateModuleData', callStr );
+    eval( callStr );  
+  } else {
+    log( 'udateModuleData', "do nothing for "+resId );
+  }
 }
 
 
 function getHook( resId, hookName ) {
-	log( 'getUpdateDataHook', "resId="+resId+" > "+hookName );
-	var hook = {};
-	// resMap.push( [ id, aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] ); 	
-	if ( resId != null ) {
-		for ( var i = 0; i < resMap.length; i++ ) {
-			res = resMap[i];
-			log( 'getUpdateDataHook', ">>"+res[0] );
-			if 	( res[0] == resId ) {
-				log( 'getUpdateDataHook', ">>"+res[0] +" "+ res[2]);
-				hook.resType = res[2];
-				hook.resURL  = res[1];
-				if ( res[2] == "html" ) {
-					log( 'getUpdateDataHook',"resType=html" );					
-				} else if ( res[2] == "raw" ) {
-					log( 'getUpdateDataHook',"resType=html" );									
-				} else {
-					hook.updFunction = getHookMethod( hookName, res[2] ) ;
-					hook.resType = res[2];
-					log( 'getUpdateDataHook',"resType="+res[2]+" updFunction="+hook.updFunction  );					
-				}
-			}
-		}
-	}
-	return hook;	
+  log( 'getUpdateDataHook', "resId="+resId+" > "+hookName );
+  var hook = {};
+  // resMap.push( [ id, aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] );   
+  if ( resId != null ) {
+    for ( var i = 0; i < resMap.length; i++ ) {
+      res = resMap[i];
+      log( 'getUpdateDataHook', ">>"+res[0] );
+      if   ( res[0] == resId ) {
+        log( 'getUpdateDataHook', ">>"+res[0] +" "+ res[2]);
+        hook.resType = res[2];
+        hook.resURL  = res[1];
+        if ( res[2] == "html" ) {
+          log( 'getUpdateDataHook',"resType=html" );          
+        } else if ( res[2] == "raw" ) {
+          log( 'getUpdateDataHook',"resType=html" );                  
+        } else {
+          hook.updFunction = getHookMethod( hookName, res[2] ) ;
+          hook.resType = res[2];
+          log( 'getUpdateDataHook',"resType="+res[2]+" updFunction="+hook.updFunction  );          
+        }
+      }
+    }
+  }
+  return hook;  
 }
 
 //=====================================================================================================
@@ -751,82 +751,82 @@ function layoutToHTML( d ) {
     laCls = ' class="'+d.layoutId+'"'; 
     layoutId = d.layoutId; 
   }
-	content.push( '<div id="header" '+laCls+'></div>' );
-	content = content.concat( rowsToHTML( d.rows, d.page_width, layoutId ) );
-	content.push( '<div id="footer" '+laCls+'></div>' );
-	return content;
+  content.push( '<div id="header" '+laCls+'></div>' );
+  content = content.concat( rowsToHTML( d.rows, d.page_width, layoutId ) );
+  content.push( '<div id="footer" '+laCls+'></div>' );
+  return content;
 }
 
 function loadHeaderFooter( d ) { 
-	headerHTML( d.header ); 
-	footerHTML( d.footer );
+  headerHTML( d.header ); 
+  footerHTML( d.footer );
 }
 
 var hookCalls = [];
 
 
 function headerHTML( header ) {
-	var content = [];
-	content.push( '<div id="header-cnt" class="header-cnt"></div>' );
-	if ( header != null ) {
-	    if ( header.logoURL && header.logoText ) {
+  var content = [];
+  content.push( '<div id="header-cnt" class="header-cnt"></div>' );
+  if ( header != null ) {
+      if ( header.logoURL && header.logoText ) {
           content.push( '<div class="header-logo">' );
           content.push( '<div class="header-logo-url"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
           content.push( '<div class="header-logo-text">' +$.i18n( header.logoText ) +'</div>' );
           content.push( '</div>' );
-	    } else if ( header.logoURL ) {
-	      content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
-		} else if ( header.logoText ) {
-		  content.push( '<div class="header-logo"><h1>' +$.i18n( header.logoText ) +'</h1></div>' );
-		}
-		
-		// header hooks
-		if ( header.modules != null ) {
-			for ( var i = 0; i < header.modules.length; i++ ) {
-			  if ( header.modules[i] ) {
-				var hMod =  header.modules[i];
-				log( 'headerHTML', "addHeaderHtml "+hMod.type );
-				var hook = getHookMethod( "addHeaderHtml", hMod.type );
-				if ( hook != "" ) {
-					log( 'headerHTML', hook+"( ... )");
-					content.push( '<div id="'+hMod.id+'" class="'+hMod.type+'"></div>' );
-					if ( hMod.moduleConfig != null) {
-						moduleConfig[ hMod.id ] = hMod.moduleConfig;
-					}
-					if ( hMod.param == null ) {
-						hMod.param = {};
-					}
-					hMod.param.get = getUrlGETparams();
+      } else if ( header.logoURL ) {
+        content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
+    } else if ( header.logoText ) {
+      content.push( '<div class="header-logo"><h1>' +$.i18n( header.logoText ) +'</h1></div>' );
+    }
+    
+    // header hooks
+    if ( header.modules != null ) {
+      for ( var i = 0; i < header.modules.length; i++ ) {
+        if ( header.modules[i] ) {
+        var hMod =  header.modules[i];
+        log( 'headerHTML', "addHeaderHtml "+hMod.type );
+        var hook = getHookMethod( "addHeaderHtml", hMod.type );
+        if ( hook != "" ) {
+          log( 'headerHTML', hook+"( ... )");
+          content.push( '<div id="'+hMod.id+'" class="'+hMod.type+'"></div>' );
+          if ( hMod.moduleConfig != null) {
+            moduleConfig[ hMod.id ] = hMod.moduleConfig;
+          }
+          if ( hMod.param == null ) {
+            hMod.param = {};
+          }
+          hMod.param.get = getUrlGETparams();
 
-					hookCalls.push( hook+'( "'+hMod.id+'", "'+hMod.type+'", '+JSON.stringify(hMod.param)+' )'  );
-				}
-			  }
-			}
-		}
-		// load links 
-		if ( header.linkList != null ) {
-			content.push( '<div class="header-links">' );
-			for ( var i = 0; i < header.linkList.length; i++ ) {
-			  if ( header.linkList[i] ) {
-				var lnk = header.linkList[i]; 
-				if ( lnk.target != null ) {
-					content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );
-				} else {
-					content.push( '<a href="'+ $.i18n( lnk.url )+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a> 	' );					
-				}
-			  }
-			}
-			content.push( "</div>" );
-		}
-	}
-	$( '#header' ).html( content.join("\n") );
+          hookCalls.push( hook+'( "'+hMod.id+'", "'+hMod.type+'", '+JSON.stringify(hMod.param)+' )'  );
+        }
+        }
+      }
+    }
+    // load links 
+    if ( header.linkList != null ) {
+      content.push( '<div class="header-links">' );
+      for ( var i = 0; i < header.linkList.length; i++ ) {
+        if ( header.linkList[i] ) {
+        var lnk = header.linkList[i]; 
+        if ( lnk.target != null ) {
+          content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a>   ' );
+        } else {
+          content.push( '<a href="'+ $.i18n( lnk.url )+'"  class="transferSessionLink">'+ $.i18n( lnk.text )+'</a>   ' );          
+        }
+        }
+      }
+      content.push( "</div>" );
+    }
+  }
+  $( '#header' ).html( content.join("\n") );
 }
 
 function callHooks() {
-	for ( var i = 0; i < hookCalls.length; i++ ) {
-		log( "callHooks", "call: "+  hookCalls[i]  );
-		eval( hookCalls[i] );		
-	}
+  for ( var i = 0; i < hookCalls.length; i++ ) {
+    log( "callHooks", "call: "+  hookCalls[i]  );
+    eval( hookCalls[i] );    
+  }
 }
 
 //=====================================================================================================
@@ -842,9 +842,9 @@ function footerHTML( footer ) {
         if ( footer.linkList[i] ) {
         var lnk = footer.linkList[i];
         if ( lnk.target != null ) {
-          content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a> 	' );
+          content.push( '<a href="'+ $.i18n( lnk.url )+'" target="'+lnk.target+'">'+ $.i18n( lnk.text )+'</a>   ' );
         } else {
-          content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a> 	' );          
+          content.push( '<a href="'+ $.i18n( lnk.url )+'">'+ $.i18n( lnk.text )+'</a>   ' );          
         }
         }
       }
@@ -1122,132 +1122,132 @@ function resToHTML( id, res, style, laCls ) {
 //=====================================================================================================
 
 function addActionBtn( id, res ) {
-	log( 'addActionBtn', "start");
-	var html = "";
-	for( var x = 0; x < res.actions.length; x++ ) {
-		var action = res.actions[x];
-		var name = "help";
-		var txt = "?";
-		var icon = "ui-iocon-help";
-		var jscall = "help";
-		if ( action.actionName == "fullWidth" ) {
-			name = "fullWidth";
-			txt = "Full width";
-			icon = "ui-icon-arrow-2-e-w";
-			jscall = "resViewFullWidth( \""+id+"\" );";
-			html += "<button id=\""+id+name+"Bt\">"+ $.i18n( txt )+"</button>";
-			html += "<script>  $(function() { $( \"#"+id+name+"Bt\" ).button( { icons:{primary: \""+icon+"\"}, text: false } ).click( "+
-				"function() { "+jscall+" }); }); </script>";		
+  log( 'addActionBtn', "start");
+  var html = "";
+  for( var x = 0; x < res.actions.length; x++ ) {
+    var action = res.actions[x];
+    var name = "help";
+    var txt = "?";
+    var icon = "ui-iocon-help";
+    var jscall = "help";
+    if ( action.actionName == "fullWidth" ) {
+      name = "fullWidth";
+      txt = "Full width";
+      icon = "ui-icon-arrow-2-e-w";
+      jscall = "resViewFullWidth( \""+id+"\" );";
+      html += "<button id=\""+id+name+"Bt\">"+ $.i18n( txt )+"</button>";
+      html += "<script>  $(function() { $( \"#"+id+name+"Bt\" ).button( { icons:{primary: \""+icon+"\"}, text: false } ).click( "+
+        "function() { "+jscall+" }); }); </script>";    
 
-		} else if ( action.actionName == "fullScreen" ) {
-			name = "fullScreen";
-			txt = "Full screen";
-			icon = "ui-icon-arrow-4-diag";
-			jscall = "resViewFullScreen( \""+id+"\" );";
-			html += "<button id=\""+id+name+"Bt\">"+ $.i18n( txt )+"</button>";
-			html += "<script>  $(function() { $( \"#"+id+name+"Bt\" ).button( { icons:{primary: \""+icon+"\"}, text: false } ).click( "+
-				"function() { "+jscall+" }); }); </script>";		
-		} 
+    } else if ( action.actionName == "fullScreen" ) {
+      name = "fullScreen";
+      txt = "Full screen";
+      icon = "ui-icon-arrow-4-diag";
+      jscall = "resViewFullScreen( \""+id+"\" );";
+      html += "<button id=\""+id+name+"Bt\">"+ $.i18n( txt )+"</button>";
+      html += "<script>  $(function() { $( \"#"+id+name+"Bt\" ).button( { icons:{primary: \""+icon+"\"}, text: false } ).click( "+
+        "function() { "+jscall+" }); }); </script>";    
+    } 
 
-		// hook for generating action button code
-		log( 'addActionBtn', "addActionBtn "+action.type );
-		hook = getHookMethod( "addActionBtn", action.type );
-		if ( hook != "" ) {
-			log( 'addActionBtn', hook+"( "+action.actionName+" )");
-			html += eval( hook+"( id, action.actionName, res.resourceURL, action.param )" );
-			dlgMap.push( [ id, action.actionName, res.resourceURL, action.type, action.param ] );
-		}
-	}
-	return html;
+    // hook for generating action button code
+    log( 'addActionBtn', "addActionBtn "+action.type );
+    hook = getHookMethod( "addActionBtn", action.type );
+    if ( hook != "" ) {
+      log( 'addActionBtn', hook+"( "+action.actionName+" )");
+      html += eval( hook+"( id, action.actionName, res.resourceURL, action.param )" );
+      dlgMap.push( [ id, action.actionName, res.resourceURL, action.type, action.param ] );
+    }
+  }
+  return html;
 }
 
 function addDlgBtn( id, res ) {
-	var html = "";
-	for( var x = 0; x < res.modal.length; x++ ) {
-		var modal = res.modal[x];
-		var txt = "";
-		var icon = "";
-		if ( modal.label != null ) {
-			txt = modal.label;
-			if ( modal.icon != null   ) {
-				icon = "{ icons:{primary: \""+modal.icon+"\"} }";
-			} 
-		} else {
-			txt = modal.modalName;
-			if ( modal.icon != null   ) {
-				icon = "{ icons:{primary: \""+modal.icon+"\"}, text: false }";
-			} 
-		}
-		modalName = modal.modalName;
-		html += "<button id=\""+id+modalName+"Bt\">"+  $.i18n( txt ) +"</button>";
-		html += "<script>  $(function() { $( \"#"+id+modalName+"Bt\" ).button( "+icon+" ).click( "+
-			"function() { $( \"#"+id+modalName+"Dialog\" ).dialog( \"open\" ); }); }); </script>";		
-	}
-	return html;
+  var html = "";
+  for( var x = 0; x < res.modal.length; x++ ) {
+    var modal = res.modal[x];
+    var txt = "";
+    var icon = "";
+    if ( modal.label != null ) {
+      txt = modal.label;
+      if ( modal.icon != null   ) {
+        icon = "{ icons:{primary: \""+modal.icon+"\"} }";
+      } 
+    } else {
+      txt = modal.modalName;
+      if ( modal.icon != null   ) {
+        icon = "{ icons:{primary: \""+modal.icon+"\"}, text: false }";
+      } 
+    }
+    modalName = modal.modalName;
+    html += "<button id=\""+id+modalName+"Bt\">"+  $.i18n( txt ) +"</button>";
+    html += "<script>  $(function() { $( \"#"+id+modalName+"Bt\" ).button( "+icon+" ).click( "+
+      "function() { $( \"#"+id+modalName+"Dialog\" ).dialog( \"open\" ); }); }); </script>";    
+  }
+  return html;
 }
 
 function addModalDlgHT( id, res ) {
-	var html = "";
-	// cre modal dialogs custom from resource
-	for( var x = 0; x < res.modal.length; x++ ) {
-		var modal = res.modal[x];
-		var modalName = modal.modalName;
-		var width  = "650"; if ( params!= null && params.width  != null ) { width  = params.widht; }
-		var height = "500"; if ( params!= null && params.height != null ) { height = params.height; }
-		dlgMap.push( [ id, modalName, res.resourceURL, "custom", modal.param ] );
-		if ( modal.width  != null ) { width  = modal.width; }
-		if ( modal.height != null ) { height = modal.height; }
-		html += "<div id=\""+id+modalName+"Dialog\">"+$.i18n( modalName ) +"</div>";
-		html += "<script> $(function() { $(  "+
-			"\"#"+id+modalName+"Dialog\" ).dialog( { autoOpen: false, height: "+height+", width: "+width+" , modal: true, "+ // TODO: Refresh resource
-			" buttons: { \"OK\": function() { "+id+modalName+"FormSubmit(); $( this ).dialog( \"close\" );  },"+
-			" Cancel: function() { $( this ).dialog( \"close\" ); } } }); "+
-			"});</script>";
-	}
-	return html;
+  var html = "";
+  // cre modal dialogs custom from resource
+  for( var x = 0; x < res.modal.length; x++ ) {
+    var modal = res.modal[x];
+    var modalName = modal.modalName;
+    var width  = "650"; if ( params!= null && params.width  != null ) { width  = params.widht; }
+    var height = "500"; if ( params!= null && params.height != null ) { height = params.height; }
+    dlgMap.push( [ id, modalName, res.resourceURL, "custom", modal.param ] );
+    if ( modal.width  != null ) { width  = modal.width; }
+    if ( modal.height != null ) { height = modal.height; }
+    html += "<div id=\""+id+modalName+"Dialog\">"+$.i18n( modalName ) +"</div>";
+    html += "<script> $(function() { $(  "+
+      "\"#"+id+modalName+"Dialog\" ).dialog( { autoOpen: false, height: "+height+", width: "+width+" , modal: true, "+ // TODO: Refresh resource
+      " buttons: { \"OK\": function() { "+id+modalName+"FormSubmit(); $( this ).dialog( \"close\" );  },"+
+      " Cancel: function() { $( this ).dialog( \"close\" ); } } }); "+
+      "});</script>";
+  }
+  return html;
 }
 
 // =====================================================================================================
 
 function loadResourcesHT() {
-	log( 'loadResourcesHT', 'resMap.length='+resMap.length );
-	for( var x=0; x<resMap.length; x++ ) {
-		var res = resMap[x];
-		log( 'loadResourcesHT', res+" (type="+res[2]+")" );
-		var divId = res[0];
-		if ( res[2] == 'html' ) {
+  log( 'loadResourcesHT', 'resMap.length='+resMap.length );
+  for( var x=0; x<resMap.length; x++ ) {
+    var res = resMap[x];
+    log( 'loadResourcesHT', res+" (type="+res[2]+")" );
+    var divId = res[0];
+    if ( res[2] == 'html' ) {
       loadResourcesHTajax( divId, res[1]+"/html" ); 
       $( "#"+divId ).addClass( "htmldiv" );
-		} else if ( res[2] == 'raw' ) {
-			loadResourcesHTajax( divId, res[1] );
-		} else if ( res[2] == 'inner' ) {
-			loadResourcesHTajax( divId, res[1] );
-		} else {
-			hook = getHookMethod( "loadResourcesHtml", res[2] );
-			if ( hook != "" ) {
-				log( 'loadResourcesHT', "hook="+hook );
-				var param = {}; 
-				if ( res[3] != null ) {
-					param = res[3]; 
-				}
-				param.get = getUrlGETparams();
-				hookCalls.push( hook+'( "'+divId+'", "'+res[1]+'", '+JSON.stringify( param )+' )'  );
-				//eval( hook+"( divId, res[1], res[3] )" );
-			}
-		}
-	}
-	ajaxOngoing--;
+    } else if ( res[2] == 'raw' ) {
+      loadResourcesHTajax( divId, res[1] );
+    } else if ( res[2] == 'inner' ) {
+      loadResourcesHTajax( divId, res[1] );
+    } else {
+      hook = getHookMethod( "loadResourcesHtml", res[2] );
+      if ( hook != "" ) {
+        log( 'loadResourcesHT', "hook="+hook );
+        var param = {}; 
+        if ( res[3] != null ) {
+          param = res[3]; 
+        }
+        param.get = getUrlGETparams();
+        hookCalls.push( hook+'( "'+divId+'", "'+res[1]+'", '+JSON.stringify( param )+' )'  );
+        //eval( hook+"( divId, res[1], res[3] )" );
+      }
+    }
+  }
+  ajaxOngoing--;
 }
 
 function loadResourcesJS() {
-	for( var x=0; x < resMap.length; x++ ) {
-		var res = resMap[x];
-		if ( resMap[x][2] == "html" ) { // resource type is "html"
-			log( 'loadResourcesJS', res );
-			loadResourcesJSajax( "#"+res[0], res[1]+"/jscript" );
-		}
-	}
-	ajaxOngoing--;
+  for( var x=0; x < resMap.length; x++ ) {
+    var res = resMap[x];
+    if ( resMap[x][2] == "html" ) { // resource type is "html"
+      log( 'loadResourcesJS', res );
+      loadResourcesJSajax( "#"+res[0], res[1]+"/jscript" );
+    }
+  }
+  ajaxOngoing--;
 }
 
 function loadResourcesHTajax( resHtmlID, serviceHtURL ) { 
@@ -1306,55 +1306,55 @@ function resourceDialogs() {
 }
 
 function creModal( id, modalName, resourceURL, type, param ) {
-	// hook for generating action button code
-	log( 'creModal', "formId "+modalName+ " "+param );
-	hook = getHookMethod( "creModal", type );
-	if ( hook != "" ) {
-		log( 'creModal', hook+"( "+modalName+" ... )");
-		eval( hook+"( id, modalName, resourceURL, param )" );
-	}
+  // hook for generating action button code
+  log( 'creModal', "formId "+modalName+ " "+param );
+  hook = getHookMethod( "creModal", type );
+  if ( hook != "" ) {
+    log( 'creModal', hook+"( "+modalName+" ... )");
+    eval( hook+"( id, modalName, resourceURL, param )" );
+  }
 }
 
 function getValueFromRes( resURL, propName, tagId ) {
-	$.get( resURL, { prop: propName } ).done( 
-		 function( data ) {
-			$( "#"+tagId ).attr( "value", data );
-		}
-	);
+  $.get( resURL, { prop: propName } ).done( 
+     function( data ) {
+      $( "#"+tagId ).attr( "value", data );
+    }
+  );
 }
 
 function getTextFromRes( resURL, propName, tagId ) {
-	$.get( resURL, { prop: propName } ).done( 
-		 function( data ) {
-			$( "#"+tagId ).text( data );
-		}
-	);
+  $.get( resURL, { prop: propName } ).done( 
+     function( data ) {
+      $( "#"+tagId ).text( data );
+    }
+  );
 }
 
 function msDelay(millis) {
-	var date = new Date();
-	var curDate = null;
-	do { 
-		curDate = new Date(); 
-	} while ( curDate-date < millis );
+  var date = new Date();
+  var curDate = null;
+  do { 
+    curDate = new Date(); 
+  } while ( curDate-date < millis );
 } 
 
 
 
 function getHookMethod( hook, type ) {
-	log( 'getHookMethod', "hook="+hook+" type="+type );
-	var fnName = "";
-	if ( ( type != null ) && ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) )
-	for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
-		moduleHook = moduleMap[ type ].hooks[i];
-		//log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
-		if ( moduleHook.hook == hook ) {
-			log( 'getHookMethod', moduleHook.method+"( ... )");
-			fnName = moduleHook.method;
-		}
-	}
-	
-	return fnName;
+  log( 'getHookMethod', "hook="+hook+" type="+type );
+  var fnName = "";
+  if ( ( type != null ) && ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) )
+  for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
+    moduleHook = moduleMap[ type ].hooks[i];
+    //log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
+    if ( moduleHook.hook == hook ) {
+      log( 'getHookMethod', moduleHook.method+"( ... )");
+      fnName = moduleHook.method;
+    }
+  }
+  
+  return fnName;
 }
 
 function getParam( name ) {
@@ -1369,7 +1369,7 @@ function getParam( name ) {
 }
 
 function endsWith( str, suffix ) {
-	if ( str == null ) { return false; }
+  if ( str == null ) { return false; }
     return str.indexOf( suffix, str.length - suffix.length ) !== -1;
 }
 
@@ -1391,23 +1391,23 @@ function getUrlGETparams() {
 // Return array of string values.
 // Thanks to http://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript
 String.prototype.splitCSV = function(sep) {
-	  for (var foo = this.split(sep = sep || ","), x = foo.length - 1, tl; x >= 0; x--) {
-	    if (foo[x].replace(/'\s+$/, "'").charAt(foo[x].length - 1) == "'") {
-	      if ((tl = foo[x].replace(/^\s+'/, "'")).length > 1 && tl.charAt(0) == "'") {
-	        foo[x] = foo[x].replace(/^\s*'|'\s*$/g, '').replace(/''/g, "'");
-	      } else if (x) {
-	        foo.splice(x - 1, 2, [foo[x - 1], foo[x]].join(sep));
-	      } else foo = foo.shift().split(sep).concat(foo);
-	    } else foo[x].replace(/''/g, "'");
-	  } return foo;
+    for (var foo = this.split(sep = sep || ","), x = foo.length - 1, tl; x >= 0; x--) {
+      if (foo[x].replace(/'\s+$/, "'").charAt(foo[x].length - 1) == "'") {
+        if ((tl = foo[x].replace(/^\s+'/, "'")).length > 1 && tl.charAt(0) == "'") {
+          foo[x] = foo[x].replace(/^\s*'|'\s*$/g, '').replace(/''/g, "'");
+        } else if (x) {
+          foo.splice(x - 1, 2, [foo[x - 1], foo[x]].join(sep));
+        } else foo = foo.shift().split(sep).concat(foo);
+      } else foo[x].replace(/''/g, "'");
+    } return foo;
 };
 
 Array.prototype.inArray = function( value ){
-	var i;
-	for( i=0; i < this.length; i++ ) {
-		if( this[i] === value ) return true;
-	}
-	return false;
+  var i;
+  for( i=0; i < this.length; i++ ) {
+    if( this[i] === value ) return true;
+  }
+  return false;
 };
 
 //=====================================================================================================
@@ -1442,29 +1442,29 @@ function findSubJSON( l, rcId, seed ) {
 //=====================================================================================================
 
 function getSubData( data, subPath ) {
-	log( "getSubData",  'start ' );
-	log( "getSubData",  JSON.stringify(data) );
-	var result = data;
-	if ( subPath == null ) {
-		log( "getSubData",  'no subPath' );
-	} else {
-		log( "getSubData",  'tbl.dataDocSubPath='+subPath );
-		var pathToken = subPath.split('.');
-		log( "getSubData",  'pathToken[0] ' + pathToken[0] );
-		var subdata = data[ pathToken[0] ];
-		log( "getSubData", ">>"+JSON.stringify(subdata) );
-		for ( var i = 1; i < pathToken.length; i++ ) {
-			log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
-			if ( subdata != null ) {
-				subdata = subdata[ pathToken[i] ];
-				log( "getSubData", ">>"+JSON.stringify(subdata) );				
-			} else {
-				log( "getSubData", ">> NULL" );				
-			}
-		}
-		result = subdata;
-	}
-	return result;
+  log( "getSubData",  'start ' );
+  log( "getSubData",  JSON.stringify(data) );
+  var result = data;
+  if ( subPath == null ) {
+    log( "getSubData",  'no subPath' );
+  } else {
+    log( "getSubData",  'tbl.dataDocSubPath='+subPath );
+    var pathToken = subPath.split('.');
+    log( "getSubData",  'pathToken[0] ' + pathToken[0] );
+    var subdata = data[ pathToken[0] ];
+    log( "getSubData", ">>"+JSON.stringify(subdata) );
+    for ( var i = 1; i < pathToken.length; i++ ) {
+      log( "getSubData", 'pathToken['+i+'] ' + pathToken[i] );
+      if ( subdata != null ) {
+        subdata = subdata[ pathToken[i] ];
+        log( "getSubData", ">>"+JSON.stringify(subdata) );        
+      } else {
+        log( "getSubData", ">> NULL" );        
+      }
+    }
+    result = subdata;
+  }
+  return result;
 }
 
 //=====================================================================================================
@@ -1489,16 +1489,16 @@ function log( func, msg ){
   if ( loggerEvents ) { 
     var logBroker = getEventBroker('log');
     logBroker.cleanupQueue( 1000 );
-  	logBroker.queueEvent( { text: logline, channel:'log' } );
+    logBroker.queueEvent( { text: logline, channel:'log' } );
   }
-	
+  
 }
 
 function logErr( func, msg ){
-	console.log( "["+func+"] ERROR: "+msg );
-	
+  console.log( "["+func+"] ERROR: "+msg );
+  
   if ( loggerEvents ) { 
-  	var logBroker = getEventBroker('log');
+    var logBroker = getEventBroker('log');
     logBroker.cleanupQueue( 1000 );
     logBroker.queueEvent( { text: '['+func+'] '+msg, channel:'log', severity:'ERROR' } );
   }
