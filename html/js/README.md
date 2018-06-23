@@ -77,10 +77,55 @@ TODO:
 - modal
 - actions
 
+## Header
+
+Example of rich header
+
+    "header": {
+      "logo": {
+        "text": "Logo Test",
+        "img": "img/logo.png",
+        "url" : "index.html"
+      },
+      "linkList": [
+        { "text":"Help", "url": "https://mh-svr.de/mw/index.php/PoNG"}
+      ],
+      "frameWarning":"true",
+      "modules" : [
+        { "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
+        { "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
+        { "id": "PullDownMenu", "type": "pong-pulldown", 
+          "moduleConfig": {
+            "title": "Test Cases",
+            "menuItems" : [
+             { "html":"<b>Regression Tests:</b>" },
+             { "pageLink":"tests/action", "label":"Action Test" },
+             { "pageLink":"tests/easyPgn", "label":"Easy-Form/-Table (Paginator)" },
+          ]   
+          } 
+        },
+        { 
+          "id":"Search", 
+          "type": "pong-search", 
+          "moduleConfig": {
+            "page": "tests/histogram",
+            "label": "Quick Search:",
+            "title": "Quick Search",
+            "update": [ 
+              { "id":"outTbl", "param":"productName"}, 
+              { "id":"r1", "param":"productName" } 
+            ]
+          }  
+        }
+      ]
+    }
+
+See also: ["Header Modules" section](../modules/README.md)
+
 ## Array `layout/includeJS`
 
 The array contains URL strings for additional JS. 
 
 The page will load these JS early, i.e. before all modules are initialized.
 
-Example: see [jeheaderincl](../svc/layout/tests/js-incl/structure)
+Example: see [js-headerincl](../svc/layout/tests/js-incl/structure)

@@ -769,16 +769,31 @@ function headerHTML( header ) {
   var content = [];
   content.push( '<div id="header-cnt" class="header-cnt"></div>' );
   if ( header != null ) {
-      if ( header.logoURL && header.logoText ) {
-          content.push( '<div class="header-logo">' );
-          content.push( '<div class="header-logo-url"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
-          content.push( '<div class="header-logo-text">' +$.i18n( header.logoText ) +'</div>' );
-          content.push( '</div>' );
-      } else if ( header.logoURL ) {
-        content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
+    if ( header.logo && header.logo.text ) {
+      content.push( '<div id="logo" class="header-logo">' );
+      if ( header.logo.img ) {
+        content.push( '<div class="header-logo-img">' );
+        if ( header.logo.url ) content.push( '<a href="'+header.logo.url+'">' );
+        content.push( '<img src="' + $.i18n( header.logo.img ) +'"/>' );
+        if ( header.logo.url ) content.push( '</a>' );
+        content.push( '</div>' );
+      }
+      content.push( '<div class="header-logo-text">' );
+      if ( header.logo.url ) content.push( '<a href="'+header.logo.url+'">' );
+      content.push( $.i18n( header.logo.text ) );
+      if ( header.logo.url ) content.push( '</a>' );
+      content.push( '</div>' );
+      content.push( '</div>' );
+    } else if ( header.logoURL && header.logoText ) { // legacy
+        content.push( '<div class="header-logo">' );
+        content.push( '<div class="header-logo-url"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
+        content.push( '<div class="header-logo-text">' +$.i18n( header.logoText ) +'</div>' );
+        content.push( '</div>' );
+    } else if ( header.logoURL ) {
+      content.push( '<div class="header-logo"><img src="' + $.i18n( header.logoURL ) +'"/></div>' );
     } else if ( header.logoText ) {
       content.push( '<div class="header-logo"><h1>' +$.i18n( header.logoText ) +'</h1></div>' );
-    }
+    }  
     
     // header hooks
     if ( header.modules != null ) {

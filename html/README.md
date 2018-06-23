@@ -1,4 +1,7 @@
 # Release Notes
+## Version1.3.x
+* 1.3.0: header.logo
+
 ## Version 1.2.x
 * Tab Views 
 * 1.2.7

@@ -36,7 +36,15 @@ body.waiting * {
 }
 
 .header-logo-url { float: left; }
-.header-logo-text { font-size: 32pt; }
+.header-logo-img { float: left; }
+.header-logo-text { 
+  font-size: 32pt; 
+  color: #DDD;
+}
+
+#logo a:link {
+  text-decoration: none;
+}
 
 #maindiv { 
 	background-color: white; 
