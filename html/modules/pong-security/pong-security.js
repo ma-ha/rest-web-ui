@@ -71,13 +71,29 @@ function addSecurityHeaderHtml( divId, type , params ) {
   if ( userID == null ) {
     if ( params != null  ) {
       var makeLoginForm = false;
-      if ( params.registgerURL != null && params.loginURL != null  ) {
-        divHtml.push( '<a href="'+ params.registgerURL+'">'+ $.i18n('Register') + '</a>&nbsp;&nbsp;<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );
-        makeLoginForm = true;
-      } else if ( params.loginURL != null ) {
-        divHtml.push( '<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );    
-        makeLoginForm = true;
+      if ( params.divLayout ) {
+        for ( var param in params ) {
+          if ( param == 'loginURL') {
+            divHtml.push( '<div id="SecLoginUrl"><a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a></div>' );    
+            makeLoginForm = true;
+          }
+          if ( param == 'registgerURL') {
+            divHtml.push( '<div id="SecRegistgerURL"><a class="PongRegister" href="'+ params.registgerURL+'">' +$.i18n('Register')+'</a></div>' );    
+          }
+          if ( param == 'resetPasswordURL') {
+            divHtml.push( '<div id="SecResetPwdURL"><a class="PongResetPwd" href="'+ params.resetPasswordURL+'">' +$.i18n('Forgot Password')+'</a></div>' );    
+          }
+        }
+      } else {
+        if ( params.registgerURL != null && params.loginURL != null  ) {
+          divHtml.push( '<a href="'+ params.registgerURL+'">'+ $.i18n('Register') + '</a>&nbsp;&nbsp;<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );
+          makeLoginForm = true;
+        } else if ( params.loginURL != null ) {
+          divHtml.push( '<a class="PongLogin" href="'+ params.loginURL+'">' +$.i18n('Login')+'</a>' );    
+          makeLoginForm = true;
+        }  
       }
+
       var lang = "";
       if ( getParam('lang') && getParam('lang') != '' ) {
         lang = "lang="+getParam('lang');
@@ -86,7 +102,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
       
       if ( makeLoginForm ) {
         var cssClass = 'class="text ui-widget-content ui-corner-all"';
-         divHtml.push( '<div id="pongLoginDialog">' );
+        divHtml.push( '<div id="pongLoginDialog">' );
         divHtml.push( ' <form id="pongLoginDialogForm" action="'+params.loginURL+'" method="post"><fieldset>' );
         divHtml.push( '  <label for="userid">'+$.i18n('User ID')+'</label><br/>' );
         divHtml.push( '  <input id="useridInput" name="userid" type="text" class="'+cssClass+'/><br/>' );
@@ -94,6 +110,9 @@ function addSecurityHeaderHtml( divId, type , params ) {
         divHtml.push( '  <input id="passwordInput" name="password" type="password" class="'+cssClass+'/><br/>' );
         divHtml.push( ' </form></fieldset>' );
         divHtml.push( ' <span class="loginCookie">'+$.i18n('This will set a session cookie.')+'</span><br>' );
+        if ( param == 'resetPasswordURL') {
+          divHtml.push( '<span id="SecResetPwdURL"><a class="PongResetPwd" href="'+ params.resetPasswordURL+'">' +$.i18n('Forgot Password')+'</a></div>' );    
+        }
         divHtml.push( ' <span id="loginResult"></span>' );
         divHtml.push( '</div>' );
         divHtml.push( '<script>' );

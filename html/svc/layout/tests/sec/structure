@@ -4,12 +4,6 @@
     "header": {
       "logoURL": "img/p02w.png",
       "logoText": "Demo",
-      "linkList": [
-        {
-          "text": "Help",
-          "url": "https://mh-svr.de/mw/index.php/PoNG"
-        }
-      ],
       "modules": [
         {
           "id": "LangSel",
@@ -32,7 +26,9 @@
           "id": "Sec",
           "type": "pong-security",
           "param": {
+            "divLayout":"true",
             "loginURL": "svc/mock/sec/login.php",
+            "resetPasswordURL": "svc/mock/sec/password",
             "loginPage": "tests/sec",
             "checkLoginInterval": "10000",
             "changePasswordURL": "svc/mock/sec/password",

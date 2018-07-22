@@ -14,7 +14,7 @@ Clicking _Login_ starts a modal form to request user and password.
 			             "loginURL":"svc/sec/login.php", 
 			             "registgerURL":"index.php?layout=register", 
 			             "logoutURL":"svc/sec/logout.php", 
-			             "rolesURL":"svc/sec/usersroles.php" 
+			             "resetPasswordURL":"index.php?layout=reset-pwd" 
 		           } 
 		        },
 		        ...
