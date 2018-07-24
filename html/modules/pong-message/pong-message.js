@@ -41,10 +41,12 @@ function pongMessageHeaderHTML( divId, type , params ) {
   }
 }
 
-function pongMessageCreModal( divId, dataStr ) {
+function pongMessageCreModal( divId, data ) {
   console.log( 'pongMessageCreModal diVId='+divId  )
-  console.log( 'pongMessageCreModal data='+dataStr  )
-  let dta = JSON.parse( dataStr )
+  console.log( 'pongMessageCreModal data='+data  )
+  let dta = data;
+  // alert(  (typeof data) );
+  if ( typeof data === 'string' ) { dta = JSON.parse( data ); }
   let divHtml = [];
   let dlgTitle  = ( dta.title     ? dta.title  : 'System Message' );
   let dlgHeight = ( dta.height    ? dta.height : '300' );
