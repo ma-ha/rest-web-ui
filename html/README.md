@@ -1,5 +1,8 @@
 # Release Notes
-## Version1.3.x
+## Version 1.4.x
+* 1.4.0: New module: [pong-message](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-message/) 
+
+## Version 1.3.x
 * 1.3.0: header.logo
 
 ## Version 1.2.x

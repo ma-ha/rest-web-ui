@@ -30,43 +30,51 @@ THE SOFTWARE.
 //   loadResourcesHtml (divId,resourceURL)
 
 moduleMap[ "pong-session" ] = {
-	"name": "pong-session",
-	"hooks": [
-	    { hook: "addHeaderHtml", method:"addSessionHeaderHtml" }
-	 ]
+  "name": "pong-session",
+  "hooks": [
+      { hook: "addHeaderHtml", method:"addSessionHeaderHtml" }
+   ]
 };
 
 moduleMap[ "pong-security" ] = {
-	"name": "pong-security",
-	"requires": [ "pong-session" ],
-	"hooks": [
-		{ hook: "init", method:"initSecurityHeaderHtml" },
-	    { hook: "addHeaderHtml", method:"addSecurityHeaderHtml" }
-	 ]
+  "name": "pong-security",
+  "requires": [ "pong-session" ],
+  "hooks": [
+    { hook: "init", method:"initSecurityHeaderHtml" },
+    { hook: "addHeaderHtml", method:"addSecurityHeaderHtml" }
+   ]
+};
+
+moduleMap[ "pong-message" ] = {
+  "name": "pong-message",
+  "hooks": [
+    { hook: "init", method:"pongMessageInit" },
+    { hook: "addHeaderHtml", method:'pongMessageHeaderHTML' }
+   ]
 };
 
 moduleMap[ "pong-oauth" ] = {
-	"name": "pong-oauth",
-	"hooks": [
-		{ hook: "init", method:"initOAuthHeaderHtml" },
-	    { hook: "addHeaderHtml", method:"addOAuthHeaderHtml" }
-	 ]
+  "name": "pong-oauth",
+  "hooks": [
+    { hook: "init", method:"initOAuthHeaderHtml" },
+    { hook: "addHeaderHtml", method:"addOAuthHeaderHtml" }
+   ]
 };
 
 moduleMap[ "i18n" ] = {
-	"name": "i18n",
-	"hooks": [
-	    { hook: "addHeaderHtml", method:"addI18NHeaderHtml" }
-	]
+  "name": "i18n",
+  "hooks": [
+    { hook: "addHeaderHtml", method:"addI18NHeaderHtml" }
+  ]
 };
 
 moduleMap[ "pong-navbar" ] = {
-    "name":  "pong-navbar",
-      "hooks": [
-          { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" }, 
-          { hook: "update", method:"pongNavBarUpdate" }
-      ]
-  };
+  "name":  "pong-navbar",
+  "hooks": [
+    { hook: "addHeaderHtml", method:"addNavBarHeaderHtml" }, 
+    { hook: "update", method:"pongNavBarUpdate" }
+  ]
+};
 
 moduleMap[ "pong-search" ] = {
     "name":  "pong-search",
@@ -77,14 +85,14 @@ moduleMap[ "pong-search" ] = {
   };
 
 moduleMap[ "pong-pulldown" ] = {
-		"name":  "pong-pulldown",
-	    "hooks": [
-	        { hook: "addHeaderHtml", method:"addPullDownHeaderHtml" } 
-	    ]
-	};
+    "name":  "pong-pulldown",
+      "hooks": [
+          { hook: "addHeaderHtml", method:"addPullDownHeaderHtml" } 
+      ]
+  };
 
 moduleMap[ "modal-form" ] = {
-	"name": "modal-form",
+  "name": "modal-form",
     "hooks": [
         { hook: "addActionBtn", method:"modalFormAddActionBtn" },
         { hook: "creModal", method:"modalFormCreModalFromMeta" }
@@ -92,7 +100,7 @@ moduleMap[ "modal-form" ] = {
 };
 
 moduleMap[ "pong-table" ] = {
-	"name": "pong-table",
+  "name": "pong-table",
     "hooks": [
         { hook: "addActionBtn", method:"pongTableAddActionBtn" },
         { hook: "loadResourcesHtml", method:"pongTableDivHTML" },
@@ -103,8 +111,8 @@ moduleMap[ "pong-table" ] = {
 };
 
 moduleMap[ "pong-easytable" ] = {
-	"name": "pong-easytable",
-	"requires": [ "pong-table" ],
+  "name": "pong-easytable",
+  "requires": [ "pong-table" ],
     "hooks": [
         { hook: "addActionBtn", method:"pongTableAddActionBtn" },
         { hook: "loadResourcesHtml", method:"pongEzTableDivHTML" },
@@ -114,8 +122,8 @@ moduleMap[ "pong-easytable" ] = {
 };
 
 moduleMap[ "pong-list" ] = {
-	"name":  "pong-list",
-	"requires": [ "pong-table" ],
+  "name":  "pong-list",
+  "requires": [ "pong-table" ],
     "hooks": [
          { hook: "loadResourcesHtml", method:"pongListDivHTML" },
          { hook: "update", method:"pongListUpdateData" },
@@ -124,7 +132,7 @@ moduleMap[ "pong-list" ] = {
 };
 
 moduleMap[ "pong-form" ] = {
-	"name": "pong-form",
+  "name": "pong-form",
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongFormDivHTML" },
         { hook: "update", method:"pongFormUpdateData" },
@@ -133,35 +141,35 @@ moduleMap[ "pong-form" ] = {
 };
 
 moduleMap[ "pong-easyform" ] = {
-	"name": "pong-eaysyform",
-	"requires": [ "pong-form" ],
+  "name": "pong-eaysyform",
+  "requires": [ "pong-form" ],
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongEasyFormDivHTML" },
         { hook: "update", method:"pongEasyFormUpdateData" },
         { hook: "setData", method:"pongEasyFormSetData" }
     ]
-	};
+  };
 
 moduleMap[ "pong-master-details" ] = {
-	"name": "pong-master-details",
-	"requires": [ "pong-table", "pong-list" ],
+  "name": "pong-master-details",
+  "requires": [ "pong-table", "pong-list" ],
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongMasterDetailsHTML" }
     ]
 };
 
 moduleMap[ "jquery-syntax" ] = {
-	"name": "jquery-syntax",
-	"hooks": [
-		{ hook: "init", method:"initJQuerySyntax" }
-	],
-    "include":[ "syntax/jquery.syntax.js", "syntax/jquery.syntax.cache.js" ]
+  "name": "jquery-syntax",
+  "hooks": [
+    { hook: "init", method:"initJQuerySyntax" }
+  ],
+  "include":[ "syntax/jquery.syntax.js", "syntax/jquery.syntax.cache.js" ]
 };
 
 
 moduleMap[ "pong-help" ] = {
-	"name": "pong-help",
-	"requires": [ "jquery-syntax" ],
+  "name": "pong-help",
+  "requires": [ "jquery-syntax" ],
     "hooks": [
         { hook: "addActionBtn", method:"pongHelpAddActionBtn" },
         { hook: "creModal", method:"pongHelpCreModalFromMeta" }
@@ -169,8 +177,8 @@ moduleMap[ "pong-help" ] = {
 };
 
 moduleMap[ "pong-sourcecode" ] = {
-	"name": "pong-sourcecode",
-	"requires": [ "jquery-syntax" ],
+  "name": "pong-sourcecode",
+  "requires": [ "jquery-syntax" ],
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongSrcCodeDivHTML" },
         { hook: "update", method:"pongSrcCodeUpdateData" },
@@ -180,28 +188,28 @@ moduleMap[ "pong-sourcecode" ] = {
 
 
 moduleMap[ "pong-mediawiki" ] = {
-	"name": "pong-mediawiki",
+  "name": "pong-mediawiki",
     "hooks": [
         { hook: "loadResourcesHtml", method:"pongMediaWikiDivHTML" }
     ]
 };
 
 moduleMap[ "pong-layout-editor" ] = {
-		"name": "pong-layout-editor",
-	    "hooks": [
-	        { hook:"loadResourcesHtml", method:"pongLayoutEditorDivHTML" },
-	        { hook:"update", method:"layoutEditorUpdateData" }
-	    ]
-	};
+    "name": "pong-layout-editor",
+      "hooks": [
+          { hook:"loadResourcesHtml", method:"pongLayoutEditorDivHTML" },
+          { hook:"update", method:"layoutEditorUpdateData" }
+      ]
+  };
 
 moduleMap[ "pong-log" ] = {
-		"name": "pong-log",
-	    "hooks": [
-  	      { hook:"loadResourcesHtml", method:"ponglog_DivHTML" },
+    "name": "pong-log",
+      "hooks": [
+          { hook:"loadResourcesHtml", method:"ponglog_DivHTML" },
           { hook:"addActionBtn", method:"pong_log_AddClearOutputBtn" },
-	        { hook:"log", method:"ponglog_out" }
-	    ]
-	};
+          { hook:"log", method:"ponglog_out" }
+      ]
+  };
 
 moduleMap[ "pong-map" ] = {
   "name": "pong-map",
@@ -219,13 +227,13 @@ moduleMap[ "pong-map" ] = {
   };
 
 moduleMap[ "pong-io" ] = {
-		"name": "pong-io",
-	    "hooks": [
+    "name": "pong-io",
+      "hooks": [
             { hook: "addActionBtn", method:"pongIOcreTimerAction" },
-	        { hook: "loadResourcesHtml", method:"pongIoDivHTML" },
-	        { hook: "update", method:"pongIoUpdateData" }
-	    ]
-	};
+          { hook: "loadResourcesHtml", method:"pongIoDivHTML" },
+          { hook: "update", method:"pongIoUpdateData" }
+      ]
+  };
 
 
 moduleMap[ "pong-on-the-fly" ] = {

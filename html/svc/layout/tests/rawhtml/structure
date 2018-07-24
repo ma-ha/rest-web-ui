@@ -1,7 +1,18 @@
 {
   "layout": {
     "title": "New Portal",
-		"includeHeader":"main",
+    "header": {
+      "logoURL": "img/logo.png",
+      "linkList": [
+      	{ "text":"Help", "url": "https://mh-svr.de/mw/index.php/PoNG"}
+      ],
+      "frameWarning":"true",
+      "modules" : [ 
+      	{ "id": "LangSel", "type": "i18n", "param": { "langList": [ "EN","DE" ] } },
+      	{ "id": "MainNav", "type": "pong-navbar", "param": { "confURL":"nav" } },
+        { "id": "PgMesg", "type": "pong-message", "param": { "resourceURL": "svc/mock/msg"} }
+      ] 
+    },
     "rows": [
       {
         "rowId": "home",

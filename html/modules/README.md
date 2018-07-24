@@ -29,6 +29,7 @@ If you don't specify a <code>type</code>, a HTML page will be loaded from the re
 ## Header Modules  
 * [Base Page Security](pong-security/)
 * [i18n = International language support](i18n/)
+* [Modal Page Message](pong-message/)
 * [Navigation Bar](pong-navbar/)
 * [OAuth](pong-oauth/)
 * [Oull Down Menu](pong-pulldown/)

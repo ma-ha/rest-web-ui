@@ -21,7 +21,7 @@
 			       { "pageLink":"tests/feedback", "label":"Feedback View Test" },
 			       { "pageLink":"tests/formSel", "label":"Form Select Test" },
 			       { "pageLink":"tests/form-js", "label":"Form loads JS" },
-			       { "pageLink":"tests/rawhtml", "label":"HTML" },
+			       { "pageLink":"tests/rawhtml", "label":"HTML + Message" },
 			       { "pageLink":"tests/js-incl", "label":"JS Include: Stripe Payment" },
 			       { "pageLink":"tests/logolink", "label":"Logo Link" },
 			       { "pageLink":"tests/list", "label":"List Test (Paginator)" },
