@@ -29,7 +29,7 @@ function pongMessageInit( divId, type , params ) {
 
 function pongMessageHeaderHTML( divId, type , params ) {
   log( "PoNG-Message", "start pongMessageHTML "+divId);
-  console.log( "start pongMessageHTML "+ params.resourceURL);
+  // console.log( "start pongMessageHTML "+ params.resourceURL);
   if ( params != null  && params.resourceURL != null ) {
     $.get( params.resourceURL, 
       function ( data ) {
@@ -42,8 +42,8 @@ function pongMessageHeaderHTML( divId, type , params ) {
 }
 
 function pongMessageCreModal( divId, dta ) {
-  console.log( 'pongMessageCreModal diVId='+divId  )
-  console.log( 'pongMessageCreModal data='+dta  )
+  // console.log( 'pongMessageCreModal diVId='+divId  )
+  // console.log( 'pongMessageCreModal data='+dta  )
   if ( ! dta && !  dta.html ) return
   let divHtml = [];
   let dlgTitle  = ( dta.title     ? dta.title  : 'System Message' );
