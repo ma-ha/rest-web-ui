@@ -39,7 +39,9 @@
                   "activate":["Chk","comm"], "deactivate":["Info","f3"], "type":"checkbox" }, 
                  { "id":"r1", "name":"usergroup", "value":"User",  "type":"radio", "checked":"true" }, 
                  { "id":"r2", "name":"usergroup", "value":"Admin", "type":"radio" },
-                 { "id":"captcha", "type":"reCAPTCHA", "sitekey": "6LczUUgUAAAAAPAykoKVT7bsX0aWH33cbEJmg9Fw" }
+                 { "id":"captcha", "type":"reCAPTCHA", "sitekey": "6LczUUgUAAAAAPAykoKVT7bsX0aWH33cbEJmg9Fw" },
+                 { "id":"link1", "type":"link", "defaultVal": "index.html?layout=tests/action", 
+                   "label": "This is a link:", "linkText":"Open a 2nd form tab", "target":"_blank" }
                ]
             }
         ]

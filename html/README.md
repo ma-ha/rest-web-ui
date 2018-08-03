@@ -1,6 +1,7 @@
 # Release Notes
 ## Version 1.4.x
 * 1.4.0: New module: [pong-message](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-message/) 
+* 1.4.2: [Form](modules/pong-form): link type 
 
 ## Version 1.3.x
 * 1.3.0: header.logo

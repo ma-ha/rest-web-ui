@@ -711,6 +711,10 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
             if ( dta[field.id] ) {
               $( fieldId ).html( $.i18n( dta[field.id] ) )
             }
+          } else if ( field.type == "link" ) {
+            if ( dta[field.id] ) {
+              $( fieldId ).attr( "href", $.i18n( dta[field.id] ) );
+            }
           } else {
             log( "Pong-Form", "ERROR '"+field.id+"': Can't update "+field.type);
 
@@ -1007,6 +1011,15 @@ function pongFormRenderField( divId, field, col ) {
 
       jQuery('head').append( "<script src='https://www.google.com/recaptcha/api.js'></script>" );
       contentItems.push( '<div id="'+divId+field.id+'" class="g-recaptcha" data-sitekey="'+field.sitekey+'"></div>' );  
+
+    } else if ( field.type == "link" ) {
+
+      if ( field.linkText && field.defaultVal ) {
+        var target = ( field.target ?  'target="'+field.target+'"' : '' );
+        contentItems.push( '<a id="'+divId+field.id+'" href="'+ $.i18n( field.defaultVal )+'" '+target+'>'+ $.i18n( field.linkText )+'</a>' );  
+      } else { 
+        logErr( "Pong-Form", "link type must have a linkText and defaultVal");
+      }
 
     } else { 
 

@@ -223,6 +223,21 @@ with the params:
 * `response` (the value of `g-recaptcha-response`) 
 * `remoteip` IP address of user
 
+### Link
+
+Example:
+
+    "formFields":[
+      ...
+      { "id":"lnk1", 
+        "type":"link", 
+        "defaultVal":"http://my.url.com", 
+        "label": "Link to my URL",
+        "target": "_blank" }, 
+    ]
+
+"target" is optional
+
 ### JS
 
 Sometimes you need special code to run inside your form, typical example is a payment form. 
