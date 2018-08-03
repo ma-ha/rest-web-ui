@@ -564,7 +564,7 @@ function parsePlaceHolders( divId, str ) {
         var col = grp.columns[j];
         for ( var k = 0; k < col.formFields.length; k++ ) {
           var field = col.formFields[k];
-          if ( field.type = 'text' ) {
+          if ( field.type == 'text' ) {
             str = str.replace( '${'+field.id+'}', $( '#'+divId+field.id ).val() );
           }
         }
