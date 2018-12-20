@@ -807,7 +807,9 @@ function pongFormRenderField( divId, field, col ) {
     } else {
       contentItems.push( '<p>' );
       if ( field.label != null && field.label != '' ) {
-        contentItems.push( '<label for="'+divId+field.id+'">'+ $.i18n( field.label ) +'</label>' );        
+        contentItems.push( '<label for="'+divId+field.id+'">'+ $.i18n( field.label ) +'</label>' ); 
+      } else if ( field.type == "radio" ) {       
+        contentItems.push( '<label for="'+divId+field.id+'">'+ $.i18n( field.value ) +'</label>' ); 
       } else {
         contentItems.push( '<label for="'+divId+field.id+'"></label>' );                
       }
@@ -1002,7 +1004,7 @@ function pongFormRenderField( divId, field, col ) {
       if ( field.name && field.value ) {
         var ch = ( field.checked ? 'checked' : '' );
         var lb = ( field.label ? field.label : field.value ); 
-        contentItems.push( '<input type="radio" name="'+field.name+'" value="'+field.value+'" '+ch+modifier+'>'+ $.i18n( lb )+'</input>' );  
+        contentItems.push( '<input type="radio" id="'+divId+field.id+'" name="'+field.name+'" value="'+field.value+'" '+ch+modifier+'>' );  
       } else { 
         logErr( "Pong-Form", "radio input must have a name and value");
       }
