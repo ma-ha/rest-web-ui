@@ -992,7 +992,7 @@ function tblCells( divId ) {
 
 function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblDiv ) {
   log( "Pong-Table", 'tblUpdateCell '+cellId+' cellDef:'+JSON.stringify( cellDef ) );
-  
+
   var dataUrl = '';
   var cellType = cellDef.cellType;
   var cellVal = null;
@@ -1092,7 +1092,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       + '<div id="'+cID+'TT" class="tableCanvasToolTip" style="display:none;"></div>' 
       + '<script>'
       + 'var canvas = document.getElementById( "'+cID+'" );'
-      + 'canvas.addEventListener( "mousemove", function(evt) { pongTblCanvasMouse( "'+cID+'", evt ); });'
+      + 'canvas.addEventListener( "mousemove", function( evt ) { pongTblCanvasMouse( "'+cID+'", "'+divId+'",evt ); });'
       + '</script>'
       );
     var canvas = document.getElementById( cID );
@@ -1604,7 +1604,7 @@ function pongTblRenderGraph( divId, ctx, def, dta, canvasId ) {
       def.layout.yAxis.labels.push( ( yMin + ( yMax-yMin )*i / (lCnt-1) ) + '' );
     }
   }
-  console.log( def.layout.yAxis.labels );
+  //console.log( def.layout.yAxis.labels );
 
   ctx.beginPath();
   ctx.strokeStyle = "#00A";
@@ -1713,7 +1713,7 @@ function pongTblRenderGraph( divId, ctx, def, dta, canvasId ) {
 }
 
 
-function pongTblCanvasMouse( id, evt ) {
+function pongTblCanvasMouse( id, divId, evt ) {
   // console.log( evt );
   var canvas = document.getElementById( id );
   if ( ! canvas ) { return; }
@@ -1721,6 +1721,7 @@ function pongTblCanvasMouse( id, evt ) {
   var rect = canvas.getBoundingClientRect();
   var x = evt.clientX - rect.left;
   var y = evt.clientY - rect.top;
+  var parentDiv = document.getElementById( divId ).getBoundingClientRect();
   var pts = pongTblGraphTT[ id ]
   // console.log( pts );
   if ( ! pts ) { return }
@@ -1733,10 +1734,10 @@ function pongTblCanvasMouse( id, evt ) {
       var ttDiv = document.getElementById( id+'TT' );
       // console.log( ttDiv );
       if ( ttDiv ) {
-        ttDiv.innerHTML = pts[i].x + ' ' + pts[i].y ;
+        ttDiv.innerHTML = pts[i].x + ' / ' + pts[i].y ;
         ttDiv.style.position = 'absolute';
-        ttDiv.style.left = evt.layerX +10+ 'px';
-        ttDiv.style.top  = evt.layerY +10+ 'px';
+        ttDiv.style.left = evt.clientX - parentDiv.left +  5 + 'px';
+        ttDiv.style.top  = evt.clientY - parentDiv.top  - 10 + 'px';
         ttDiv.style.display = 'block';
         // ttDiv.style.border = '2px';
         // ttDiv.style.borderColor = 'black';
