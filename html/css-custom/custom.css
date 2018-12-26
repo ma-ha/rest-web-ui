@@ -235,8 +235,8 @@ body {
 	color: gray;
 }
 .pongListCellUsage {
-	width: 100px;
-	height: 70px;
+	width: 150px;
+	height: 80px;
 }
 
 .r1ContentRowExpand div { float: left; } 
@@ -373,4 +373,8 @@ body {
   #SubNav {
     height: 50px;
   }
+}
+
+.tableCanvasToolTip {
+  font-size: 7pt;
 }

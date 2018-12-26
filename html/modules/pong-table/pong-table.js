@@ -1087,18 +1087,28 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
 
   } else if ( cellType == 'graph' ) {
 
-    $( cellId ).html( '<canvas id="'+cellId+'Canvas" width="auto" height="auto"></canvas>' )
-    var canvas = document.getElementById( cellId+'Canvas' );
+    var cID = cellId.substr(1)+'Canvas';
+    $( cellId ).html( '<canvas id="'+ cID +'" width="auto" height="auto"></canvas>'
+      + '<div id="'+cID+'TT" class="tableCanvasToolTip" style="display:none;"></div>' 
+      + '<script>'
+      + 'var canvas = document.getElementById( "'+cID+'" );'
+      + 'canvas.addEventListener( "mousemove", function(evt) { pongTblCanvasMouse( "'+cID+'", evt ); });'
+      + '</script>'
+      );
+    var canvas = document.getElementById( cID );
     canvas.width  = $( cellId ).innerWidth()
     canvas.height = $( cellId ).innerHeight()
+    // canvas.addEventListener( 'mousemove', function(evt) {
+    //   pongTblCanvasMouse( canvas, evt );
+    // });
     var def    = JSON.parse( JSON.stringify( cellDef ) )
     def.pos    = { x:0, y:0 }
     def.width  = canvas.width
     def.height = canvas.height
     var ctx = canvas.getContext("2d")
     
-    pongTblRenderGraph( divId, ctx, def, cellVal ) 
-    
+    pongTblRenderGraph( divId, ctx, def, cellVal, cID );
+
     
   } else if ( cellType == 'pie' ) {
 
@@ -1545,15 +1555,57 @@ function getRowIdPostParam ( divId, cellDta ) {
 }
 
 //---------------------------------------------------------------------------------
-function pongTblRenderGraph( divId, ctx, def, dta ) {
+var pongTblGraphTT = { }
+
+function pongTblRenderGraph( divId, ctx, def, dta, canvasId ) {
   log( "Pong-Table", "pongIOrenderGraph '"+def.id+"': "+JSON.stringify(def) );
   if ( def.pos  &&  def.pos.x != null  &&  def.pos.y != null  &&  def.width  &&  def.height &&
      def.layout && def.layout.yAxis  &&  def.layout.yAxis.min != null  &&  def.layout.yAxis.max != null ) {} else { 
     log( "Pong-Table", "pongIOrenderGraph: Config not OK! End.");
     return;
   }
-  var x = parseInt(def.pos.x) , y = parseInt(def.pos.y) , w = parseInt(def.width) , h = parseInt(def.height) , 
-    yMin = parseFloat( def.layout.yAxis.min ) , yMax = parseFloat( def.layout.yAxis.max );
+  if ( ! pongTblGraphTT[ canvasId ] ) { pongTblGraphTT[ canvasId ] = []; }
+  var xLbl = 0;
+  if (  def.layout.yAxis.labelCnt || def.layout.yAxis.labels && def.layout.yAxis.labels.length ) {
+    xLbl = 5;
+  }
+  var x = parseInt(def.pos.x)  + xLbl*6,
+      y = parseInt(def.pos.y)  + xLbl,
+      w = parseInt(def.width)  - xLbl*6, 
+      h = parseInt(def.height) - xLbl*2, 
+      yMin = parseFloat( def.layout.yAxis.min ), // avoid: graphs with auto min
+      yMax = ( yMin < 0 ? 1 : yMin+1 );
+  if ( def.layout.yAxis.max == 'auto' ) {
+    // find a scale for y axis
+    var dtaMax = 1;
+    if ( dta  && dta.length ) {
+      for ( var c = 0; c < dta.length; c++ ) {
+        var g = dta[c];
+        if ( g.data && g.data.length ) {
+          for ( var i = 0; i < g.data.length; i++ ) {
+            if ( dtaMax < g.data[i][1] ) { dtaMax = g.data[i][1] }
+          }
+        }
+      }
+    }
+    while ( yMax < dtaMax ) { 
+      yMax = yMax * 2.5; 
+      if ( yMax < dtaMax ) { yMax = yMax * 2;  }
+      if ( yMax < dtaMax ) { yMax = yMax * 2;  }
+    }
+  } else {
+    yMax = parseFloat( def.layout.yAxis.max );
+  }
+
+  if ( def.layout.yAxis.labelCnt ) {
+    var lCnt = parseInt(  def.layout.yAxis.labelCnt );
+    def.layout.yAxis.labels = []
+    for ( var i = 0; i < lCnt; i++ ) {
+      def.layout.yAxis.labels.push( ( yMin + ( yMax-yMin )*i / (lCnt-1) ) + '' );
+    }
+  }
+  console.log( def.layout.yAxis.labels );
+
   ctx.beginPath();
   ctx.strokeStyle = "#00A";
   ctx.fillStyle   = "#DDD";
@@ -1564,13 +1616,6 @@ function pongTblRenderGraph( divId, ctx, def, dta ) {
   ctx.stroke();
   ctx.fill();     
   
-  if ( def.layout.name ) {
-    var xx = x + w/2, yy = y-6;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "bottom";
-    pongTblCnvTxt(  divId, def, ctx, def.layout.name, xx, y, {"font":"10pt Arial"} );   
-  }
-    
   // draw y axis
   var lYmin = yMin , lYmax = yMax , yLogType = false ;
   if ( def.layout.yAxis.axisType && def.layout.yAxis.axisType == "logarithmic" ) {  
@@ -1599,12 +1644,21 @@ function pongTblRenderGraph( divId, ctx, def, dta ) {
         ctx.fillStyle   = "#DDD";
         ctx.lineTo( xx, lyy );
         ctx.stroke();
-        pongTblCnvTxt(  divId, def, ctx, l, xt, lyy, {"font":"8pt Arial"} );
+        pongTblCnvTxt(  divId, def, ctx, l, xt, lyy, {"font":"7pt Arial"} );
       }
     }
   }
-  
+
+  if ( def.layout.name ) {
+    var xx = x + w/2, yy = y-6;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    pongTblCnvTxt(  divId, def, ctx, def.layout.name, xx, y+15, {"font":"8pt Arial"} );   
+  }
+ 
   // draw graphs
+  ctx.rect( x, y, w, h );
+  ctx.clip();
   if ( dta  && dta.length ) {
     for ( var c = 0; c < dta.length; c++ ) {
       var g = dta[c];
@@ -1634,10 +1688,12 @@ function pongTblRenderGraph( divId, ctx, def, dta ) {
             yy = y + h - Math.round( h * ( g.data[i][1] - lYmin ) / ( lYmax - lYmin ) );
           }
           //log( "Pong-Table", " xx = "+xx +"   d="+g.data[i][1]+" / yy = "+yy );
+          drawL = true;
           if ( drawL ) {
             //log( "Pong-Table", " lineto( "+xx+" / "+yy+" )" );
             ctx.lineTo( xx, yy );                       
             ctx.stroke();
+            pongTblGraphTT[ canvasId ].push( { xx:xx, yy:yy, x:g.data[i][0], y:g.data[i][1] } );
           } else {
             //log( "Pong-Table", " moveto( "+xx+" / "+yy+" )" );
             ctx.moveTo( xx, yy );           
@@ -1649,10 +1705,53 @@ function pongTblRenderGraph( divId, ctx, def, dta ) {
       //}
       
     }
-  }
-  
+    // console.log( pongTblGraphTT ); 
+  }   
+
   // TODO IO: implement graph
   log( "Pong-Table", "pongIOrenderGraph end.");
+}
+
+
+function pongTblCanvasMouse( id, evt ) {
+  // console.log( evt );
+  var canvas = document.getElementById( id );
+  if ( ! canvas ) { return; }
+  // console.log( canvas.id );
+  var rect = canvas.getBoundingClientRect();
+  var x = evt.clientX - rect.left;
+  var y = evt.clientY - rect.top;
+  var pts = pongTblGraphTT[ id ]
+  // console.log( pts );
+  if ( ! pts ) { return }
+  var showTT = false;
+  for ( var i = 0; i < pts.length; i++ ) {
+    // console.log( canvas.id + ' '+ x + ' ' +y + ' ' + pts[i].x + ' ' + pts[i].y );
+    if ( x >= pts[i].xx - 5  &&  x <= pts[i].xx + 5 &&
+         y >= pts[i].yy - 5  &&  y <= pts[i].yy + 5 ) {
+      //console.log( canvas.id + ' '+ x + ' ' +y + ' ' + pts[i].x + ' ' + pts[i].y );
+      var ttDiv = document.getElementById( id+'TT' );
+      // console.log( ttDiv );
+      if ( ttDiv ) {
+        ttDiv.innerHTML = pts[i].x + ' ' + pts[i].y ;
+        ttDiv.style.position = 'absolute';
+        ttDiv.style.left = evt.layerX +10+ 'px';
+        ttDiv.style.top  = evt.layerY +10+ 'px';
+        ttDiv.style.display = 'block';
+        // ttDiv.style.border = '2px';
+        // ttDiv.style.borderColor = 'black';
+        // ttDiv.style.borderStyle = 'solid';
+        showTT = true;  
+      }
+    }
+  } 
+  if ( ! showTT ) {
+    var ttDiv = document.getElementById( id+'TT' );
+    if ( ttDiv ) {
+      ttDiv.style.position = 'absolute';
+      ttDiv.style.display = 'none';  
+    }
+  }
 }
 
 //---------------------------------------------------------------------------------------
