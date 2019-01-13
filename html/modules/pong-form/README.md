@@ -477,7 +477,10 @@ To pass parameters you can define a <code>getParams</code> array, example:
     {
       ...
       "actions" : [ 
-         { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy", getParams: [ "name", "id" ] }  
+         { "id": "lnkToEditor", 
+           "link": "Open Editor",
+           "linkURL": "editor.php?mode=easy", 
+           "getParams": [ "name", "id" ] }  
       ]
     }
 
@@ -506,27 +509,27 @@ No button is generated, but a JS to handle changes in the form. The main use cas
 
 Example
 
-   {
+    {
       "label": "Product Configuration",
       ...
       "actions" : [ 
          ...
          { "id":"doSomething", "onChange":"*", "actionURL":"svc/product/calcQuote/", "target":"quote" } 
       ]
-   }
+    }
 
 It is also possible to do an upate after the backend call.
 
 Another option is to sepcify an update only. Example:
 
-   {
+    {
       "label": "Product Configuration",
       ...
       "actions" : [ 
          ...
          { "id":"doSomething", "onChange":"*", "update":[ { "resId":"shipping" } ] } 
       ]
-   }
+    }
 
 
 Improvement TODO: Default delay is 1 sec to wait for an other change before calling the backend, but you can use <code>"onChangeDelay":"3"</code> to set it (to 3 sec in this example).
@@ -537,14 +540,14 @@ To do cascading updated.
 
 Example
 
-   {
+    {
       "label": "Product Configuration",
       ...
       "actions" : [ 
          ...
          { "id":"cascadeUpdate", "afterUpdate":"*", "update": [ { "resId":"anotherView" } ] } 
       ]
-   }
+    }
 
 # CSS
 Each field has a DIV with an ID and classes attached for field-group and field-column.

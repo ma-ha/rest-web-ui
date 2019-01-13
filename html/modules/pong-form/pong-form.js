@@ -695,9 +695,19 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
               $( fieldId ).val( "" );
             }
           } else if ( field.type == "checkbox" ) {
-            //TODO update checkbox value
+            if ( dta[field.id]  ) {
+              $( fieldId ).attr('checked','checked');   
+            } else {
+              $( fieldId ).attr('checked',false);   
+            }
+            //TODO update checkbox value with name
           } else if ( field.type == "checkboxList" ) {
-            //TODO update checkboxList value
+            if ( dta[field.id]  ) {
+              $( fieldId ).attr('checked','checked');   
+            } else {
+              $( fieldId ).attr('checked',false);   
+            }
+            //TODO update checkboxList value with name
           } else if ( field.type == "select" ) {
             log( "Pong-Form",  'pongFormUpdateFieldsData select: '+field.id+' '+dta[field.id] );
             if ( dta[field.id] != null ) {
