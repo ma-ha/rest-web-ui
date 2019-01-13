@@ -376,10 +376,10 @@ To render a button and perform an AJAX request, simply define an action with a <
 Example: 
 
     {
-        ...
-        "actions" : [ 
-          { "id":"btn", "actionName":"Save Data" }  
-        ]
+      ...
+      "actions" : [ 
+        { "id":"btn", "actionName":"Save Data" }  
+      ]
     }
 
 * Action <code>dataEncoding</code> is optional 
@@ -399,25 +399,24 @@ You can add add further actions to you button:
 * update
 * setData
 
-A button doing an update only has to sprecify the "updateButton" array and a "name" for the button, e.g.
+A button doing an update only has to specify the "updateButton" array and a "name" for the button, e.g.
 
     { 
       "fieldGroups":[ 
-        {  "columns":[  
-              { 
-                "formFields":[   
-                      { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
-                ]
-              } 
-          ]  
-        } 
+        { "columns":[  
+          { 
+            "formFields":[   
+                  { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
+            ]
+          } 
+        ] } 
       ], 
       "actions":[
-        {  "id":"Search",
-            "name":"Search",
-        "updateButton":[ 
+        { "id":"Search",
+          "name":"Search",
+          "updateButton":[ 
                 { "resId":"MapView" }
-        ]
+          ]
         }
       ]
     }
