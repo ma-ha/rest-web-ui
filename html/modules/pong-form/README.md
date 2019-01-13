@@ -401,56 +401,57 @@ You can add add further actions to you button:
 
 A button doing an update only has to sprecify the "updateButton" array and a "name" for the button, e.g.
 
-  { 
-    "fieldGroups":[ 
-       {  "columns":[  
-             { 
-               "formFields":[   
-                    { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
-               ]
-            } 
-         ]  
-       } 
-    ], 
-    "actions":[
-       {  "id":"Search",
-          "name":"Search",
-      "updateButton":[ 
-               { "resId":"MapView" }
+    { 
+      "fieldGroups":[ 
+        {  "columns":[  
+              { 
+                "formFields":[   
+                      { "id":"search", "type":"text", "label":"Location", "defaultVal":"Essen, Germany" }
+                ]
+              } 
+          ]  
+        } 
+      ], 
+      "actions":[
+        {  "id":"Search",
+            "name":"Search",
+        "updateButton":[ 
+                { "resId":"MapView" }
+        ]
+        }
       ]
-       }
-    ]
-  }
+    }
 
 
 #### Update 
 Action <code>update</code> parameter in the action is an (optional) array of resource (column/row) ids, where data updates should be triggered. 
 Example: 
 
-  {
+    {
       ...
       "actions" : [ 
          { "id":"OnInit", ..., 
            "update": [ { "resId":"xyz" } ]  
          }
       ]
-  }
+    }
 
 As GET call parameter the id is send to the service.
 
 #### setData 
-Action <code>setResponse</code> parameter in the action is an (optional) array of resource (column/row) ids.
+Action <code>setData</code> parameter in the action is an (optional) array of resource (column/row) ids.
 The response of the actions will be handed over to the named resource to be processed and shown in the view. 
 Example: 
 
-  {
+    {
       ...
       "actions" : [ 
          { "id":"setData", ..., 
            "setData": [ { "resId":"xyz", "dataDocSubPath": "searchResult.dataTbl" } ] } 
          }
       ]
-  }
+    }
+
 A typical use case is a search form and a table to display the response of the GET request. 
 
 Optional the <code>dataDocSubPath</code> can be set to point to the data inside the result.
@@ -460,12 +461,12 @@ If you want to open a new window or tab in the browser you can add a simple link
 
 Example:
  
-  {
+    {
       ...
       "actions" : [ 
          { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy" }  
       ]
-  }
+    }
 
 Action <code>target</code> is optional and has three values:
 * <code>"_blank"</code> (=default) opens a new tab or window. 
@@ -474,12 +475,12 @@ Action <code>target</code> is optional and has three values:
 
 To pass parameters you can define a <code>getParams</code> array, example:
  
-  {
+    {
       ...
       "actions" : [ 
          { "id":"lnkToEditor", "link":"Open Editor", "linkURL":"editor.php?mode=easy", getParams: [ "name", "id" ] }  
       ]
-  }
+    }
 
 ### OnInit 
 Value should be 
@@ -489,7 +490,7 @@ Value should be
 
 Example
 
-  {
+    {
       "label": "Product Configuration",
       ...
       "actions" : [ 
@@ -506,27 +507,27 @@ No button is generated, but a JS to handle changes in the form. The main use cas
 
 Example
 
-  {
+   {
       "label": "Product Configuration",
       ...
       "actions" : [ 
          ...
          { "id":"doSomething", "onChange":"*", "actionURL":"svc/product/calcQuote/", "target":"quote" } 
       ]
-  }
+   }
 
 It is also possible to do an upate after the backend call.
 
 Another option is to sepcify an update only. Example:
 
-  {
+   {
       "label": "Product Configuration",
       ...
       "actions" : [ 
          ...
          { "id":"doSomething", "onChange":"*", "update":[ { "resId":"shipping" } ] } 
       ]
-  }
+   }
 
 
 Improvement TODO: Default delay is 1 sec to wait for an other change before calling the backend, but you can use <code>"onChangeDelay":"3"</code> to set it (to 3 sec in this example).
