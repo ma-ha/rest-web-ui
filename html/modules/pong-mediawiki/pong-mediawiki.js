@@ -62,7 +62,10 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
   if ( param != null && param.page != null  && param.wikiRef != null  ) {
     
     var startPage = "Main_Page";
-    if ( typeof param.page === 'string' ) {
+    if ( fparam && fparam.get && fparam.get.page ) {
+      //console.log(  decodeURIComponent( fparam.get.page )  )
+      startPage = decodeURIComponent( fparam.get.page ); // using jquery
+    } else if ( typeof param.page === 'string' ) {
       startPage = param.page;
       log( "PoNG-MediaWiki",  "string startPage="+startPage);
     } else {

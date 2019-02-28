@@ -30,6 +30,11 @@ You have to provide the fields:
 * <code>wikiRef</code>: WIKI internal href start with this string.
 * <code>wikiImg</code>: WIKI internal image src start with this string.
 
+## "page" Query param
+
+Even if the start page is defined in the `moduleConfig`, you can overide that by using the query parameter `page`, 
+e.g. https://mh-svr.de/pong_dev/index.html?layout=demos/wiki&page=Marcus_(name)
+
 ## i18n Support
 The language is passed in the REST API call as uselang parameter.
 
