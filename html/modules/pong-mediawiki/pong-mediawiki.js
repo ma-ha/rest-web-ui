@@ -27,6 +27,7 @@ var pMwList = [];
 
 function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
   log( "PoNG-MediaWiki",  "divId="+divId+" resourceURL="+wikiURL );
+  //console.log( 'wikiURL: '+wikiURL)
   var url = wikiURL+"api.php?action=parse&format=json&callback=?";
 
   var param = {};
@@ -114,10 +115,12 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
         html.push( '</script>' );
         $( '#'+divId ).html( html.join( "\n" ) );
         $( '#'+divId ).scrollTop( 0 );
-        if ( param.wikiImg ) {        
+       
+        if ( param.wikiImg  &&  param.wikiImg !== 'undefined' ) {
           $( '#'+divId+' img' ).each( 
             function() {
-              var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
+              var imgURL = wikiURL.replace( '${lang}', lang ) + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
+              //console.log( 'loaf IMG '+imgURL )
               $(this).attr( 'src', imgURL );
               $(this).removeAttr( 'srcset' );
             }

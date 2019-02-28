@@ -1,7 +1,7 @@
 {
     "layout": {
         "title": "Wikipedia",
-		"includeHeader":"main",
+        "includeHeader":"main",
         "rows": [
             {
                 "rowId": "WikiDemo",
@@ -18,16 +18,16 @@
                 },
                 "type": "pong-mediawiki",
                 "decor": "decor",
-				"actions":[
-					{
-						"type":"pong-help",
-						"param":{
-							"showConfig":"WikiDemo"
-						}
-					}
-				]
+                "actions":[
+                  {
+                    "type":"pong-help",
+                    "param":{
+                      "showConfig":"WikiDemo"
+                    }
+                  }
+                ]
             }
         ],
-		"includeFooter":"main"
+      "includeFooter":"main"
     }
 }
