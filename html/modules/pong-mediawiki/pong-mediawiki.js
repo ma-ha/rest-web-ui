@@ -26,100 +26,100 @@ var pMwList = [];
 
 
 function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
-	log( "PoNG-MediaWiki",  "divId="+divId+" resourceURL="+wikiURL );
-	var url = wikiURL+"api.php?action=parse&format=json&callback=?";
+  log( "PoNG-MediaWiki",  "divId="+divId+" resourceURL="+wikiURL );
+  var url = wikiURL+"api.php?action=parse&format=json&callback=?";
 
-	var param = {};
-	
-	if ( fparam != null && fparam.page != null  && fparam.wikiRef != null  && fparam.wikiImg != null ) {
-		param = fparam;
-	} else 	if  ( moduleConfig[ divId ] != null ) {
-		if ( moduleConfig[ divId ].page != null ) {
-			param.page = moduleConfig[ divId ].page;
-		} 
-		if ( moduleConfig[ divId ].wikiRef != null ) {
-			param.wikiRef = moduleConfig[ divId ].wikiRef;
-		}
-		if ( moduleConfig[ divId ].wikiImg != null ) {
-			param.wikiImg = moduleConfig[ divId ].wikiImg;			
-		}
-	
-	} 
+  var param = {};
+  
+  if ( fparam != null && fparam.page != null  && fparam.wikiRef != null  && fparam.wikiImg != null ) {
+    param = fparam;
+  } else   if  ( moduleConfig[ divId ] != null ) {
+    if ( moduleConfig[ divId ].page != null ) {
+      param.page = moduleConfig[ divId ].page;
+    } 
+    if ( moduleConfig[ divId ].wikiRef != null ) {
+      param.wikiRef = moduleConfig[ divId ].wikiRef;
+    }
+    if ( moduleConfig[ divId ].wikiImg != null ) {
+      param.wikiImg = moduleConfig[ divId ].wikiImg;      
+    }
+  
+  } 
 
-	if ( pMwList[divId] == null  ) {
-		pMwList[divId] = [];  
-		for ( var i = 0; i < 3; i++ ) { pMwList[divId][i] = ""; } 
-	}
-	var lang = getParam( 'lang' );
-	if ( lang == '' ) {
-		lang = "EN";
-	}
-	
-	url = url.replace( '${lang}', lang );
-	log( "PoNG-MediaWiki",  "url="+url);
+  if ( pMwList[divId] == null  ) {
+    pMwList[divId] = [];  
+    for ( var i = 0; i < 3; i++ ) { pMwList[divId][i] = ""; } 
+  }
+  var lang = getParam( 'lang' );
+  if ( lang == '' ) {
+    lang = "EN";
+  }
+  
+  url = url.replace( '${lang}', lang );
+  log( "PoNG-MediaWiki",  "url="+url);
 
-	
-	if ( param != null && param.page != null  && param.wikiRef != null  ) {
-		
-		var startPage = "Main_Page";
-		if ( typeof param.page === 'string' ) {
-			startPage = param.page;
-			log( "PoNG-MediaWiki",  "string startPage="+startPage);
-		} else {
-			if ( param.page['EN'] != null ) {
-				startPage = param.page['EN'];	
-			}
-			if ( param.page[ lang ] != null ) {
-				startPage = param.page[ lang ];	
-				log( "PoNG-MediaWiki",  "startPage["+lang+"]="+startPage);
-			}
-		}
+  
+  if ( param != null && param.page != null  && param.wikiRef != null  ) {
+    
+    var startPage = "Main_Page";
+    if ( typeof param.page === 'string' ) {
+      startPage = param.page;
+      log( "PoNG-MediaWiki",  "string startPage="+startPage);
+    } else {
+      if ( param.page['EN'] != null ) {
+        startPage = param.page['EN'];  
+      }
+      if ( param.page[ lang ] != null ) {
+        startPage = param.page[ lang ];  
+        log( "PoNG-MediaWiki",  "startPage["+lang+"]="+startPage);
+      }
+    }
 
-		$.getJSON(
-			url, 
-			{ 
-				page: startPage,
-				limit:1,
-				prop:"text|images",
-				uselang: lang.toLowerCase()
-			}, 
-			function(data) {
-				var html = [];
-				html.push( '<p class="wiki-breadcrump" id="'+divId+'Top">' );
-				for ( var i = 0; i < 3; i++ ) { 
-					if ( pMwList[divId][i] != "" ) {
-						html.push( '<a href="'+param.wikiRef+pMwList[divId][i]+'">'+pMwList[divId][i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' );			
-					}
-					if ( i < 2 ) {
-						pMwList[divId][i] = pMwList[divId][i+1];
-					}
-				}
-				pMwList[divId][2] = startPage; 
-				html.push( '</p><hr/>' );
-				html.push( data['parse']['text']['*'] );
-				html.push( '<script>' );
-				html.push( '$( "#'+divId+' a" ).click( ' );
-				html.push( '  function( ) { ' ); 
-				html.push( '     if ( $(this).attr("href").substring( 0, "'+param.wikiRef+'".length ) == "'+param.wikiRef+'" ) {' ); 
-				html.push( '  	     //alert ( $(this).attr("href") + "  "+ $(this).attr("href").substring( "'+param.wikiRef+'".length  ) );' );
-				html.push( '  	     var page = $(this).attr("href").substring( "'+param.wikiRef+'".length  );' );
-				html.push( '         pongMediaWikiDivHTML( "'+divId+'", "'+wikiURL+'", { "page":page, "wikiRef":"'+param.wikiRef+'", "wikiImg":"'+param.wikiImg+'" } );' );
-				html.push( '         return false; ' );
-				html.push( '     }' );
-				html.push( '  } ' );
-				html.push( ');' );
-				html.push( '</script>' );
-				$( '#'+divId ).html( html.join( "\n" ) );
-				$( '#'+divId ).scrollTop( 0 );
-        if ( param.wikiImg ) {        
-  				$( '#'+divId+' img' ).each( 
-  					function() {
-  						var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
-  						$(this).attr( 'src', imgURL );
-  					}
-  				);
+    $.getJSON(
+      url, 
+      { 
+        page: startPage,
+        limit:1,
+        prop:"text|images",
+        uselang: lang.toLowerCase()
+      }, 
+      function(data) {
+        var html = [];
+        html.push( '<p class="wiki-breadcrump" id="'+divId+'Top">' );
+        for ( var i = 0; i < 3; i++ ) { 
+          if ( pMwList[divId][i] != "" ) {
+            html.push( '<a href="'+param.wikiRef+pMwList[divId][i]+'">'+pMwList[divId][i]+'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' );      
+          }
+          if ( i < 2 ) {
+            pMwList[divId][i] = pMwList[divId][i+1];
+          }
         }
-			}
-		);
-	}
-}		
+        pMwList[divId][2] = startPage; 
+        html.push( '</p><hr/>' );
+        html.push( data['parse']['text']['*'] );
+        html.push( '<script>' );
+        html.push( '$( "#'+divId+' a" ).click( ' );
+        html.push( '  function( ) { ' ); 
+        html.push( '     if ( $(this).attr("href").substring( 0, "'+param.wikiRef+'".length ) == "'+param.wikiRef+'" ) {' ); 
+        html.push( '         //alert ( $(this).attr("href") + "  "+ $(this).attr("href").substring( "'+param.wikiRef+'".length  ) );' );
+        html.push( '         var page = $(this).attr("href").substring( "'+param.wikiRef+'".length  );' );
+        html.push( '         pongMediaWikiDivHTML( "'+divId+'", "'+wikiURL+'", { "page":page, "wikiRef":"'+param.wikiRef+'", "wikiImg":"'+param.wikiImg+'" } );' );
+        html.push( '         return false; ' );
+        html.push( '     }' );
+        html.push( '  } ' );
+        html.push( ');' );
+        html.push( '</script>' );
+        $( '#'+divId ).html( html.join( "\n" ) );
+        $( '#'+divId ).scrollTop( 0 );
+        if ( param.wikiImg ) {        
+          $( '#'+divId+' img' ).each( 
+            function() {
+              var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
+              $(this).attr( 'src', imgURL );
+            }
+          );
+        }
+      }
+    );
+  }
+}    
