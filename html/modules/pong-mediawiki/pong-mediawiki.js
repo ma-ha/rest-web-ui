@@ -119,6 +119,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
             function() {
               var imgURL = wikiURL + 'images/' + $(this).attr('src').substring( param.wikiImg.length );
               $(this).attr( 'src', imgURL );
+              $(this).removeAttr( 'srcset' );
             }
           );
         }
