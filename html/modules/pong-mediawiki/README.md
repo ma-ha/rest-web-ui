@@ -6,21 +6,21 @@ Simply add a action to the <code>type</code> array with <code>"type": "pong-medi
 
 Example structure file extract:
 
-	{
-	   "layout": {
-	      ...
-	      "rows": [
-	      {
-	        "rowId": "bla",
-	        "type" : "pong-mediawiki",
-	        "resourceURL": "https://mh-svr.de/mw/",        
-	        "resourceParam": { "page": "PoNG", "wikiRef":"/mw/index.php/", "wikiImg":"/mw/images/" },
-	        ...
-	      },
-	      ...
-	    ],
-	    ...
-	}
+    {
+     "layout": {
+        ...
+        "rows": [
+        {
+          "rowId": "bla",
+          "type" : "pong-mediawiki",
+          "resourceURL": "https://mh-svr.de/mw/",        
+          "resourceParam": { "page": "PoNG", "wikiRef":"/mw/index.php/", "wikiImg":"/mw/images/" },
+          ...
+        },
+        ...
+      ],
+      ...
+    }
 
 Since the REST API of the MediaWiki is used, there is no meta description file to be loaded. 
 
@@ -44,43 +44,52 @@ Since the page can also vary with the language (e.g. "Hauptseite", "Main page", 
 
 ## Full Working Example
                    
-	{
-	    "layout": {
-	        "title": "Wikipedia",
-	        "descr": "Wikipedia Main Page",
-	        "page_width": "990",
-	        "header": {
-	            "logoText": "WIKI Demo",
-	            "modules": [
-	                {
-	                    "type": "i18n",
-	                    "param": {
-	                        "langList": [ "EN", "DE" ]
-	                    }
-	                }
-	            ]
-	        },
-	        "rows": [
-	            {
-	                "rowId": "WikiDemo",
-	                "height": "700px",
-	                "resourceURL": "http://${lang}.wikipedia.org/w/",
-	                "title": "Wikipedia per REST API",
-	                "moduleConfig": {
-	                    "page": {
-	                        "EN": "Main_Page",
-	                        "DE": "Wikipedia:Hauptseite",
-	                        "IT": "Pagina_principale"
-	                    },
-	                    "wikiRef": "/wiki/",
-	                    "wikiImg": "images/"
-	                },
-	                "type": "pong-mediawiki",
-	                "decor": "decor"
-	            }
-	        ],
-	        "footer": {
-	            "copyrightText": "... by PoNG"
-	        }
-	    }
-	}
+    {
+      "layout": {
+          "title": "Wikipedia",
+          "descr": "Wikipedia Main Page",
+          "page_width": "990",
+          "header": {
+              "logoText": "WIKI Demo",
+              "modules": [
+                  {
+                      "type": "i18n",
+                      "param": {
+                          "langList": [ "EN", "DE" ]
+                      }
+                  }
+              ]
+          },
+          "rows": [
+              {
+                  "rowId": "WikiDemo",
+                  "height": "700px",
+                  "resourceURL": "http://${lang}.wikipedia.org/w/",
+                  "title": "Wikipedia per REST API",
+                  "moduleConfig": {
+                      "page": {
+                          "EN": "Main_Page",
+                          "DE": "Wikipedia:Hauptseite",
+                          "IT": "Pagina_principale"
+                      },
+                      "wikiRef": "/wiki/",
+                      "wikiImg": "images/"
+                  },
+                  "type": "pong-mediawiki",
+                  "decor": "decor"
+              }
+          ],
+          "footer": {
+              "copyrightText": "... by PoNG"
+          }
+      }
+    }
+
+# Suppress zoom images on click
+
+To avoid empty pages you can set 
+
+    "moduleConfig": {
+      ...
+      "noImgClick": true
+    }

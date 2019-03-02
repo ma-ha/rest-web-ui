@@ -43,9 +43,11 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
     }
     if ( moduleConfig[ divId ].wikiImg != null ) {
       param.wikiImg = moduleConfig[ divId ].wikiImg;      
-    }
-  
+    }  
   } 
+  if ( moduleConfig[ divId ].noImgClick ) {
+    param.noImgClick = moduleConfig[ divId ].noImgClick;      
+  }
 
   if ( pMwList[divId] == null  ) {
     pMwList[divId] = [];  
@@ -64,10 +66,11 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
     
     var startPage = "Main_Page";
     if ( fparam && fparam.get && fparam.get.page ) {
-      //console.log(  decodeURIComponent( fparam.get.page )  )
+      //console.log( fparam.get.page +' > '+ decodeURIComponent( fparam.get.page )  );
       startPage = decodeURIComponent( fparam.get.page ); // using jquery
     } else if ( typeof param.page === 'string' ) {
-      startPage = param.page;
+      //console.log( param.page +' > '+ decodeURIComponent( param.page )  );
+      startPage = decodeURIComponent( param.page );
       log( "PoNG-MediaWiki",  "string startPage="+startPage);
     } else {
       if ( param.page['EN'] != null ) {
@@ -104,8 +107,22 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
         html.push( '<script>' );
         html.push( '$( "#'+divId+' a" ).click( ' );
         html.push( '  function( ) { ' ); 
+        if ( param.noImgClick ) {
+          html.push( '     if ( $(this).attr("class") == "image" ) {' ); 
+          html.push( '         return false;' ); 
+          html.push( '     } ' ); 
+        } else {
+          html.push( '     if ( $(this).attr("class") == "image" ) {' ); 
+          html.push( '         var page = $(this).find("img").attr("src"); ');
+          html.push( '         if ( page.indexOf("/thumb","") > 0 ) { ');
+          html.push( '           var page = page.replace("/thumb",""); ');
+          html.push( '           var page = page.substr( 0, page.lastIndexOf("/") ); ');
+          html.push( '           }' );
+          html.push( '         window.open( page, "_blank");' ); 
+          html.push( '         console.log(page); return false;  }' );   
+        }
         html.push( '     if ( $(this).attr("href").substring( 0, "'+param.wikiRef+'".length ) == "'+param.wikiRef+'" ) {' ); 
-        html.push( '         //alert ( $(this).attr("href") + "  "+ $(this).attr("href").substring( "'+param.wikiRef+'".length  ) );' );
+        //html.push( '         //alert ( $(this).attr("href") + "  "+ $(this).attr("href").substring( "'+param.wikiRef+'".length  ) );' );
         html.push( '         var page = $(this).attr("href").substring( "'+param.wikiRef+'".length  );' );
         html.push( '         pongMediaWikiDivHTML( "'+divId+'", "'+wikiURL+'", { "page":page, "wikiRef":"'+param.wikiRef+'", "wikiImg":"'+param.wikiImg+'" } );' );
         html.push( '         return false; ' );

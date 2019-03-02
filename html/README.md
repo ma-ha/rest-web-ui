@@ -1,6 +1,7 @@
 # Release Notes
 ## Version 1.5.x
 * 1.5.3/4: MediaWiki: added query param option "page"
+* 1.5.5: MediaWiki: Click to zoom image
 
 ## Version 1.4.x
 * 1.4.0: New module: [pong-message](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-message/) 
