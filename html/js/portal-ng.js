@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '1.5.5';
+var PONGVER = '1.5.7';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -52,6 +52,7 @@ var step = "load-lang";
 // stores content of the structure file
 var layout = null;
 var layoutOrig = null;
+var viewsMap = {}; // key is divId, value is the layout object
 
 pageInfo = new Array();
 
@@ -919,6 +920,7 @@ function colsToHTML( colsLayout, h, laCls ) {
   var cols = [];
   for ( var i = 0; i < colsLayout.length; i++ ) {
     var aCol = colsLayout[i];
+    viewsMap[ aCol.columnId+'Content' ] = aCol;
     var id = "unknown";
     if ( aCol.columnId != null ) {
       id = aCol.columnId;
@@ -968,6 +970,7 @@ function rowsToHTML( rowsLayout, w, laCls ) {
   var rows = [];
   for ( var i = 0; i < rowsLayout.length; i++ ) {
     var aRow = rowsLayout[i];
+    viewsMap[ aRow.rowId+'Content' ] = aRow;
     var id = "unknown";
     if ( aRow.rowId != null ) {
       id = aRow.rowId;

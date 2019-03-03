@@ -81,12 +81,13 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
         log( "PoNG-MediaWiki",  "startPage["+lang+"]="+startPage);
       }
     }
+    pongMediaWikiSetTitle( divId, startPage );
 
     $.getJSON(
       url, 
       { 
         page: startPage,
-        limit:1,
+        //limit:1,
         prop:"text|images",
         uselang: lang.toLowerCase()
       }, 
@@ -102,6 +103,7 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
           }
         }
         pMwList[divId][2] = startPage; 
+        pongMediaWikiSetTitle( divId, data['parse']['title'] );
         html.push( '</p><hr/>' );
         html.push( data['parse']['text']['*'] );
         html.push( '<script>' );
@@ -147,3 +149,15 @@ function pongMediaWikiDivHTML( divId, wikiURL, fparam ) {
     );
   }
 }    
+
+function pongMediaWikiSetTitle( divId, pageName ) {
+  // console.log( viewsMap[ divId ] );
+  let viewTitel = viewsMap[ divId ].title;
+  if ( viewTitel ) {
+    // console.log( 'viewTitel '+pageName );
+    viewTitel = viewTitel.replace( '${page}', pageName ).replace( /_/g , ' ');
+    // console.log( 'viewTitel '+viewTitel );
+    let titleId = '#' + divId.replace( 'Content', '' ) + 'Title';
+    $( titleId ).html( viewTitel )
+  }
+}

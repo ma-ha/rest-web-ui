@@ -85,9 +85,15 @@ Since the page can also vary with the language (e.g. "Hauptseite", "Main page", 
       }
     }
 
+# Page Name In View Title
+
+You can use the `page` placeholder in the title. e.g.
+
+    "title": "Wikipedia: ${page} ",
+
 # Suppress zoom images on click
 
-To avoid empty pages you can set 
+To avoid image zoom option you can set `noImgClick`
 
     "moduleConfig": {
       ...
