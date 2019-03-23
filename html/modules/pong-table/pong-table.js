@@ -1420,8 +1420,8 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     var target = "_parent";
     if ( cellDef.target ) { target = cellDef.target; }
     if ( cellVal && cellVal != '' ) {
-      var text = $( '#'+divId+'R'+i+cellDef.label ).html()
-      $( '#'+divId+'R'+i+cellDef.label ).html( '<a href="'+cellVal+'" id="'+cellId+'" target="'+target+'" class="tbl-link">'+text+'</a>' );
+      var text = $( '#'+divId+'R'+i+cellDef.label ).parent().html()
+      $( '#'+divId+'R'+i+cellDef.label ).parent().html( '<a href="'+cellVal+'" id="'+cellId+'" target="'+target+'" class="tbl-link">'+text+'</a>' );
     }
 
   } else if ( cellType == 'rating'  ) {
@@ -1438,7 +1438,6 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   } else if ( cellType == 'cssClass' ) {
 
     if ( cellVal && ! poTbl[ divId ].pongTableDef.maxRows ) { // only for non paging
-      alert( cellId+': '+JSON.stringify( cellVal) )
       $( cellId ).parent().addClass( cellVal )
     }
     

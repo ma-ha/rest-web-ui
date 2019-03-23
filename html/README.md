@@ -1,7 +1,7 @@
 # Release Notes
 
 ## Version 1.6.x
-* 1.6.0: List/Table: new field types "cssClass" and "linkText"
+* 1.6.1: List/Table: new field types "cssClass" and "linkText"
 
 ## Version 1.5.x
 * 1.5.3/4: MediaWiki: added query param option "page"
