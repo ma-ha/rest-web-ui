@@ -111,6 +111,10 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
         // do noting				
       } else if ( tbl.cols[i].cellType == 'largeimg' ) {
         // do noting
+      } else if ( tbl.cols[i].cellType == 'cssClass' ) {
+        // do noting
+      } else if ( tbl.cols[i].cellType == 'textLink' ) {
+        // do noting
       } else {
         contentItems.push( '<th'+colWidth+'>'+ $.i18n( (tbl.cols[i].label!=0 ? tbl.cols[i].label : '&nbsp;' ) ) +'&nbsp;<span class="'+divId+'TblSort" data-colid="'+tbl.cols[i].id+'" style="cursor: pointer;">^</span></th>'  );
       }
@@ -953,6 +957,8 @@ function tblCells( divId ) {
       for ( var c = 0; c < tbl.cols.length; c ++ ) {
         if ( ( tbl.cols[c].cellType != 'tooltip' ) && 
             ( tbl.cols[c].cellType != 'largeimg' ) && 
+            ( tbl.cols[c].cellType != 'textLink' ) && 
+            ( tbl.cols[c].cellType != 'cssClass' ) && 
             ( tbl.cols[c].cellType != 'linkFor' ) ) {
           contentItems.push( '<td id="'+divId+'R'+r+'C'+c+'" class="'+divId+'C'+c+'">...</td>'  );
         }
@@ -1213,32 +1219,39 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
 
   } else if ( cellType == 'img' ) {
 
-    var tblImg  = cellVal; // TODO impl zoom image
-    var zoomImg = cellVal; // TODO impl zoom image
-    
-//    //search for zoom image def
-    if ( poTbl[ tblDiv ] && poTbl[ tblDiv ].pongTableDef )
-      for ( var cZI = 0; cZI < poTbl[ tblDiv ].pongTableDef.cols.length; cZI++ ) {
-        var cellDefZI = poTbl[ tblDiv ].pongTableDef.cols[ cZI ];
-        if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
-          var cellValZI = getSubData( cellDta, cellDefZI.id );
-          if ( cellValZI != null ) { zoomImg = cellValZI }              
-        }
-        if ( cellDefZI.cellType == 'button' && cellDefZI.expand && 
-            cellDefZI.expand.divs &&  cellDefZI.expand.divs.length > 0 ) {
-          for ( var cZJ = 0; cZJ < cellDefZI.expand.divs.length; cZJ++ ) {
-            var cellDefZj = cellDefZI.expand.divs[ cZJ ];
-            if ( cellDefZj.cellType == 'largeimg' && cellDefZj.forImg && cellDefZj.forImg == cellDef.id ) { // found
-              var cellDefZj = getSubData( cellDta, cellDefZj.id );
-              if ( cellDefZj != null ) { zoomImg = cellDefZj }
-            }              
-          }
-        }
+    if ( cellDef.nozoom  ) {
+      if ( cellVal ) {
+        $( cellId ).html( '<img src="'+cellVal+'" id="'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+' pongtblimg" />'); 
       }
 
-    $( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id=  "'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+'" />'); 
-    $( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
-    
+    } else {
+      var tblImg  = cellVal; // TODO impl zoom image
+      var zoomImg = cellVal; // TODO impl zoom image
+      
+  //    //search for zoom image def
+      if ( poTbl[ tblDiv ] && poTbl[ tblDiv ].pongTableDef )
+        for ( var cZI = 0; cZI < poTbl[ tblDiv ].pongTableDef.cols.length; cZI++ ) {
+          var cellDefZI = poTbl[ tblDiv ].pongTableDef.cols[ cZI ];
+          if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
+            var cellValZI = getSubData( cellDta, cellDefZI.id );
+            if ( cellValZI != null ) { zoomImg = cellValZI }              
+          }
+          if ( cellDefZI.cellType == 'button' && cellDefZI.expand && 
+              cellDefZI.expand.divs &&  cellDefZI.expand.divs.length > 0 ) {
+            for ( var cZJ = 0; cZJ < cellDefZI.expand.divs.length; cZJ++ ) {
+              var cellDefZj = cellDefZI.expand.divs[ cZJ ];
+              if ( cellDefZj.cellType == 'largeimg' && cellDefZj.forImg && cellDefZj.forImg == cellDef.id ) { // found
+                var cellDefZj = getSubData( cellDta, cellDefZj.id );
+                if ( cellDefZj != null ) { zoomImg = cellDefZj }
+              }              
+            }
+          }
+        }
+
+      $( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id="'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+' pongtblzoomimg" />'); 
+      $( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
+    }
+
   }  else if ( cellType == 'button'  ) {
     
     var contentItems = [];
@@ -1402,6 +1415,15 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     if ( cellVal && cellVal != '' ) {
       $( '#'+divId+'R'+i+cellDef.label ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
     }
+  } else if ( cellType == 'textLink'  ) {
+    
+    var target = "_parent";
+    if ( cellDef.target ) { target = cellDef.target; }
+    if ( cellVal && cellVal != '' ) {
+      var text = $( '#'+divId+'R'+i+cellDef.label ).html()
+      $( '#'+divId+'R'+i+cellDef.label ).html( '<a href="'+cellVal+'" id="'+cellId+'" target="'+target+'" class="tbl-link">'+text+'</a>' );
+    }
+
   } else if ( cellType == 'rating'  ) {
     
     ratingType = "5star";
@@ -1412,6 +1434,12 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       $( cellId ).html( '<img class="RatingImg cell'+cellDef.id+'"" src="'+modulesPath+"pong-table/rating/"+ratingType+cellVal+'.png" id="'+divId+'R'+i+cellDef.id+'"/>' );
     } else {
       $( cellId ).html( '' );
+    }
+  } else if ( cellType == 'cssClass' ) {
+
+    if ( cellVal && ! poTbl[ divId ].pongTableDef.maxRows ) { // only for non paging
+      alert( cellId+': '+JSON.stringify( cellVal) )
+      $( cellId ).parent().addClass( cellVal )
     }
     
   } else {
@@ -1771,12 +1799,16 @@ function renderPongListDivHTMLsub( contentItems, divId, divs, r, cx ) {
       }      
       contentItems.push( '</div>'  );
     } else if ( ( divs[c].cellType != 'tooltip' ) && 
-         ( divs[c].cellType != 'largeimg' ) && 
-         ( divs[c].cellType != 'linkFor' ) ) {
+                ( divs[c].cellType != 'largeimg' ) && 
+                ( divs[c].cellType != 'cssClass' ) && 
+                ( divs[c].cellType != 'textLink' ) && 
+                ( divs[c].cellType != 'linkFor' ) ) {
       log( "PoNG-List", 'div-n '+divs[c].id );
       contentItems.push( '<div class="pongListCell pongListValCell pongListCell'+divs[c].id.replace(/\./g,'')
           +'" id="'+divId+'R'+r+'X'+cx+'C'+c+'"></div>'  );
       log( "PoNG-List", 'div end' );
+    } else if (divs[c].cellType == 'cssClass' ) {
+      contentItems.push( '<div id="'+divId+'R'+r+'X'+cx+'C'+c+'" style="display:none;"/>' );
     }
   }
 }

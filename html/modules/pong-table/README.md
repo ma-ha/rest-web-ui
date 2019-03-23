@@ -127,8 +127,9 @@ In case of OData, there are dots in the field name, which must be escaped:
 * number
 * checkbox
 * img
-* link (TODO)
-* linkLink
+* link / linkLink (link wit "label" as text)
+* textLink ("label" defines field "id" to surround with link anchor)
+* linkFor ("label" defines field "id" to append link icon)
 * button
 * tooltip
 * rating
@@ -138,6 +139,7 @@ In case of OData, there are dots in the field name, which must be escaped:
 * date
 * select
 * selector (checkbox to select row)
+* cssClass (for parent, works only for non-paging)
 
 The img type and link type will expect a URL as content.
 
@@ -447,7 +449,7 @@ Example:
            { "id": "name", "label": "Name", "cellType": "text" }, 
            { "id": "link", "label": "Data Sheet", "cellType": "linkLink" }, 
            { "id": "descr", "label": "name", "cellType": "tooltip" },  
-           { "id": "img", "label": "Picture", "cellType": "img" },  
+           { "id": "img", "label": "Picture", "cellType": "img", "nozoom": true },  
            { "id": "rating", "label":"Rating", "cellType":"rating", "ratingType":"3star" },
            { "id": "order", "label": "Add", "cellType": "button" }  
         ],         
