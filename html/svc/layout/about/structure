@@ -1,13 +1,14 @@
 {
   "layout": {
     "title": "PoNG Demo",
+    "version":"2",
     "includeHeader": "main",
     "rows": [
         {
         "rowId": "impress",
         "resourceURL": "svc/info/impress",
         "description": "Impress", 
-        "height": "400px"
+        "height": "725px"
       }
     ],
     "includeFooter": "main"

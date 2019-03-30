@@ -16,6 +16,8 @@ Basic functionality of a Web Portal is provided out of the box:
 
 ![features screen shot](https://mh-svr.de/Pong-Features.png) 
 
+Check out the simple but effective [layout improvements of v2](html/js/README_structure.md). 
+
 ### It Scales: The Browser Does The Crunching
 
 All you need is a modern web browser -- and a web service somewhere.
@@ -27,24 +29,8 @@ But to make life easier there are packaged REST backends available:
 * <a href="https://www.npmjs.com/package/easy-web-app" target="_blank">NodeJS package</a>: `npm install easy-web-app`
 * <a href="https://pypi.python.org/pypi/easy-web-app" target="_blank">Python package</a>: `pip install easy-web-app`
 
-## Click and try examples
-Here are some demos of view type and demo of real world web seb service integration:
-* Content integration via MediaWIKI API:
-<a href="https://mh-svr.de/portal/show.php?layout=MoGiuwzxzh" target="_blank">Example using Wikipedia Web Service API to load some content</a>.
-* Form and table demo: 
-<a href="https://mh-svr.de/portal/show.php?layout=57aqwA687d" target="_blank">EBay search via EBay API</a>.
-* <a href="https://mh-svr.de/portal/show.php?layout=eoDjrkRnv" target="_blank">Map with Mapquest location search (geo-coding API)</a>.
-* <a href="https://mh-svr.de/portal/show.php?layout=nRBs3E9sQp" target="_blank">Docker API Example</a> shows installed containers (requires local Docker installation)
-* <a href="https://mh-svr.de/copy/" target="_blank">Paste-n-Copy Web App</a> implements an easy web application -- I use it all the time for my bookmarks -- PasteBin for single lines ([Source on GitHub](https://github.com/ma-ha/copypaste)).
-* <a href="https://mh-svr.de/portal/" target="_blank">Portal-as-a-Service</a> runs all examples above with a PHP/MySQL web service backend.
-* <a href="https://mh-svr.de/pong_dev/index.html?layout=demos/io2" target="_blank">"Arduino" demo</a> or <a href="https://mh-svr.de/pong_dev/index.html?layout=demos/vacuumlab" target="_blank">"vacuum lab" simulation</a> with LEDs, switches, buttons, displays, graphs ...
-
-These examples are [documented more detailed in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Examples).
-
-### Test It !!
-Most recent GIT checkout of all **[ONLINE DEMOS](https://mh-svr.de/pong_dev)**.
-
-For more realistic demos some of the examples use simple REST services implemented in PHP.
+## Test It Live 
+**[ONLINE DEMOS](https://mh-svr.de/pong_dev)**
 
 ## How does it work
 1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
@@ -83,12 +69,6 @@ The most complex and flexible is the *form* module.
     `git clone https://github.com/ma-ha/rest-web-ui.git`
 2. Open the `html/index.html` in your web browser. <br>You'll be ready to use a Web GUI (without a dynamic backend).
 2. Open the [html/svc/layout/main/structure](https://github.com/ma-ha/rest-web-ui/blob/master/html/svc/layout/main/structure) in an editor and start there to modify the web GUI to your needs.
-
-## 2nd Option Quick Start
-I run a *Portal-as-a-Service* web site, where you can sign in for free and
-create complex Web UIs intuitively: <a href="https://mh-svr.de/portal" target="_blank">https://mh-svr.de/portal</a>.
-
-You can host your portals and views this *Portal-as-a-Service* web site. 
 
 ## You want to know everything 
 You'll find [all the details in the WIKI](https://github.com/ma-ha/rest-web-ui/wiki).

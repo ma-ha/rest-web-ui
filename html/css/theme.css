@@ -6,14 +6,24 @@ body.waiting * {
   cursor: progress;
 }
 .page-width {
-	width: 990px;  	
+  width: 990px;
+  margin: auto; 
+}
+.root-row {
+  width: 990px;
+  margin: auto; 
 }
 #header { 
 	height: 102px;  	
-	background-image: url(../img/logo_bg.png);
+	background-color: gray;
+	/*background-image: url(../img/logo_bg.png);*/
 	background-size: 100%;
 	color:#DDD; 
 }
+#headerdiv {
+	background-color: gray;
+}
+
 .header-logo { padding-top:10px; padding-left: 30px; }
 
 #header a:link{color:#DDD;}
@@ -58,6 +68,10 @@ body.waiting * {
   height: 55px;  	
   background-color: white; 
 }
+#footerdiv {
+	background-color: white; 
+}
+
 
 #footer a:link{color:#AAA;}
 #footer a:visited{color:#AAA;}

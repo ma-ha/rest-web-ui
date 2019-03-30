@@ -1,11 +1,13 @@
 {
     "layout": {
         "title": "Wikipedia",
+        "version":"2",
         "includeHeader":"main",
+        "page_width":"75%",
         "rows": [
             {
                 "rowId": "WikiDemo",
-                "height": "600px",
+                "height": "725px",
                 "resourceURL": "https://${lang}.wikipedia.org/w/",
                 "title": "Wikipedia per REST API: ${page}",
                 "moduleConfig": {

@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '1.6.1';
+var PONGVER = '2.0.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -392,25 +392,77 @@ function buildStructure( d ) {
       alert( 'Security Warning: This page is embedded in a frame, so it may be a "click hijacking" attack.' )
     }
   }
-
-  $( "title" ).html( d.title );
-  // crunch layout into html divs
-  var contentItems = layoutToHTML( d );      
   var pagename = "";
   if ( d.page_name != null ) {
-    pagename = " page"+d.page_name.replace( " ","_" );
-  } 
+    pagename = " page"+d.page_name.replace( " ","-" );
+  } else if ( d.pagename != null ) {
+    pagename = " page"+d.pagename.replace( " ","-" );
+  }
   var theme = ( d.theme ? " "+d.theme : "" );
-  $( "<div/>", 
-    { "id": "maindiv", 
-      "class": "page-width" + pagename + theme, 
-      html: contentItems.join( "" ) } 
-  ).appendTo( "body" );
-  loadHeaderFooter( d );
-  if ( d.page_width ) {
-    $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );    
+  $( "title" ).html( d.title );
+
+  if ( d.version == '2' ) { //--- header / footer not in maindiv---------------
+
+    $( '<div/>', { 
+      id    : 'headerdiv', 
+      class : theme + pagename, 
+      html  : headerDivToHTML( d ) 
+    }).appendTo( 'body' );
+
+    var layoutId = '';
+    if ( d.layoutId && d.layoutId != '' ) { 
+      layoutId = d.layoutId; 
+    }
+    var rows = rowsToHTML( d.rows, d.page_width, layoutId, "v2" ).join( "" );
+    $( "body" ).append( rows );
+
+    $( '<div/>', { 
+      id    : 'footerdiv', 
+      class : theme + pagename, 
+      html  : footerDivToHTML( d ) 
+    }).appendTo( 'body' );
+
+    loadHeaderFooter( d );
+    if ( d.page_width ) {
+      $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );    
+      $( "head" ).append(  "<style>.root-row { width: "+d.page_width+"; }</style>" );    
+    }
+
+  } else { // ---------------- header / footer part of maindiv-----------------
+
+    // crunch layout into html divs
+    var contentItems = layoutToHTML( d );      
+    $( "<div/>", 
+      { "id": "maindiv", 
+        "class": "page-width " + theme + pagename, 
+        html: contentItems.join( "" ) } 
+    ).appendTo( "body" );
+    loadHeaderFooter( d );
+    if ( d.page_width ) {
+      $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );    
+    }
+
   }
   ajaxOngoing--;
+}
+
+
+function headerDivToHTML( d ) {
+  return '<div id="header" '+ getHeFoClass( d ) +'></div>';
+}
+
+function footerDivToHTML( d ) {
+  return '<div id="footer" '+ getHeFoClass( d ) +'></div>';
+}
+
+function getHeFoClass( d ) {
+  var laCls = '';
+  if ( d.layoutId && d.layoutId != '' ) { 
+    laCls = ' class="page-width '+d.layoutId+'"'; 
+  } else {
+    laCls = ' class="page-width"'; 
+  }
+  return laCls;
 }
 
 //=====================================================================================================
@@ -965,7 +1017,7 @@ function colsToHTML( colsLayout, h, laCls ) {
   return cols;
 }
 
-function rowsToHTML( rowsLayout, w, laCls ) {
+function rowsToHTML( rowsLayout, w, laCls, v2 ) {
   log( 'rowsToHTML', "ROW >>>>>>>>>>>>>>>>>>>>>>>>LEN="+rowsLayout.length );
   var rows = [];
   for ( var i = 0; i < rowsLayout.length; i++ ) {
@@ -980,7 +1032,10 @@ function rowsToHTML( rowsLayout, w, laCls ) {
       $( "#viewSizes" ).append( "#"+id+" { height: "+aRow.height+"; }" );
     }
     if ( aRow.resourceURL != null ) {
-      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+' '+(aRow.decor!=null ? 'withDecor': '')+'">' );
+      // it's a "view"
+      var rowCls = laCls;
+      if ( v2 ) { rows.push( '<div id="'+id+'MainRow" class="main-row-div">' ); rowCls += ' root-row '; }
+      rows.push( '<div id="'+id+'" class="rowdiv '+rowCls+' '+(aRow.decor!=null ? 'withDecor': '')+'">' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
       rows.push( resToHTML( id, aRow, '', laCls ) );
       resMap.push( [ id+"Content", aRow.resourceURL, (aRow.type != null ? aRow.type : 'html'), aRow.resourceParam ] );
@@ -989,19 +1044,32 @@ function rowsToHTML( rowsLayout, w, laCls ) {
         callbackMap.push( aRow.callback );
       }
       rows.push( "</div>");
+      if ( v2 ) { rows.push( "</div>"); }
     } else if ( aRow.cols != null ) {
-      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">' );
+      // cols in a row
+      var rowCls = laCls;
+      if ( v2 ) { rows.push( '<div id="'+id+'MainRow" class="main-row-div">' ); rowCls += ' root-row '; }
+      rows.push( '<div id="'+id+'" class="rowdiv '+rowCls+'">' );
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
       rows = rows.concat( colsToHTML( aRow.cols, aRow.height, laCls ) );
       rows.push( "</div>");
+      if ( v2 ) { rows.push( "</div>"); }
     } else if ( aRow.tabs != null  &&  aRow.tabs.constructor === Array ) {
+      // row with view tabs
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
-      rows.push( '<div id="'+id+'" class="tabDiv '+laCls+'">' );
+      var rowCls = laCls;
+      if ( v2 ) { rows.push( '<div id="'+id+'MainRow" class="main-row-div">' ); rowCls += ' root-row '; }
+      rows.push( '<div id="'+id+'" class="tabDiv '+rowCls+'">' );
       rows = rows.concat( tabsToHTML( aRow, 'aTabRowDiv' ) );
       rows.push( "</div>");
       rows.push( '<script>  $(function() { $( "#'+id+'" ).tabs(); }); </script>' );
+      if ( v2 ) { rows.push( "</div>"); }
     } else {
-      rows.push( '<div id="'+id+'" class="rowdiv '+laCls+'">empty</div>' );
+      // empty view
+      var rowCls = laCls;
+      if ( v2 ) { rows.push( '<div id="'+id+'MainRow" class="main-row-div">' ); rowCls += ' root-row '; }
+      rows.push( '<div id="'+id+'" class="rowdiv '+rowCls+'">empty</div>' );
+      if ( v2 ) { rows.push( "</div>"); }
       $( "#viewSizes" ).append( "#"+id+" { position:relative; }" );
     }
   }

@@ -1,6 +1,7 @@
 {
   "layout": {
     "title": "New Portal",
+    "version":"2",
     "header": {
       "logoURL": "img/logo.png",
       "linkList": [
@@ -62,14 +63,14 @@
       {
         "rowId": "ViewTypes",
         "title":"View Types",
-        "height":"300px",
+        "height":"360px",
         "resourceURL":"svc/viewtypes",
         "type":"pong-icons"
       },
       {
         "rowId": "Features",
         "title":"Features",
-        "height":"300px",
+        "height":"360px",
         "resourceURL":"svc/features",
         "type":"pong-icons"
       }
@@ -78,8 +79,9 @@
       "copyrightText": "Powered by <a href=\"https://github.com/ma-ha/rest-web-ui\">'Portal NG' {{PONGVER}}</a>, &copy; 2018, MH.",
       "linkList": [
       	{ "text":"About", "url": "index.html?layout=about"},
-      	{ "text":"Portal-as-a-Service", "url": "https://mh-svr.de/portal"},
-      	{ "text":"Wiki", "url": "https://mh-svr.de/mw/index.php/Portal_as_a_Service"}
+      	{ "text":"GitHub", "url": "https://github.com/ma-ha/rest-web-ui"},
+      	{ "text":"NPM", "url": "https://www.npmjs.com/package/easy-web-app"},
+      	{ "text":"Wiki", "url": "https://mh-svr.de/mw/index.php/PoNG"}
       ],
       "modules" : [ 
   		{ "id": "feedbackView", "type": "pong-feedback", "param": { } }
