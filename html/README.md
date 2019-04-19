@@ -1,6 +1,9 @@
 # Release Notes
 
 ## Version 2.0.x
+* Table: Filter supports checkbox, see [table docu](modules/pong-table)
+
+## Version 2.0.x
 * [New Layout Version 2](https://github.com/ma-ha/rest-web-ui/tree/master/html/js/README_structure.md)
 
 ## Version 1.6.x

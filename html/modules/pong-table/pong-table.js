@@ -821,8 +821,8 @@ function parseRowPlaceHolders( row, str ) {
 function pongTableUpdateData( divId, doFilter ) {
   log( "Pong-Table",  'update '+divId );
   var tblDef = poTbl[ divId ].pongTableDef;
-  var paramsObj = 0;
-  if ( doFilter ) {
+  var paramsObj = null;
+  if ( doFilter && tblDef.filter) {
     var fPar = {};
     for( var y = 0; y < tblDef.filter.dataReqParams.length; y++ ) {
       prop = tblDef.filter.dataReqParams[y];
