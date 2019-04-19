@@ -110,7 +110,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
       } else	if ( tbl.cols[i].cellType == 'tooltip' ) {
         // do noting				
       } else if ( tbl.cols[i].cellType == 'largeimg' ) {
-        // do noting
+        // do noting  
       } else if ( tbl.cols[i].cellType == 'cssClass' ) {
         // do noting
       } else if ( tbl.cols[i].cellType == 'textLink' ) {
@@ -221,11 +221,11 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
        var pollHTML = [];
       pollHTML.push( '<script>' );
       pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
-      pollHTML.push( '      	if ( poTbl[ "'+divId+'" ].polling ) { ' );
+      pollHTML.push( '       if ( poTbl[ "'+divId+'" ].polling ) { ' );
       if ( tbl  && tbl.filter ) {
-        pollHTML.push( '      		pongTableUpdateData( "'+divId+'", { dataFilter: { '+poTbl[ divId ].pongTableFilter+' } } ); ');
+        pollHTML.push( '        pongTableUpdateData( "'+divId+'", true  ); ' );
       } else {
-        pollHTML.push( '      		pongTableUpdateData( "'+divId+'", null ); ' );
+        pollHTML.push( '        pongTableUpdateData( "'+divId+'", false ); ' );
       }
       pollHTML.push( '        }' );
       pollHTML.push( '  }' );
@@ -250,14 +250,9 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   if ( tbl.dataURL != null ) { 
     // load table data on page load only if dataURL is set
     if ( tbl  && tbl.filter ) {
-      var fPar = {};
-      for( var y = 0; y < tbl.filter.dataReqParams.length; y++ ) {
-        prop = tbl.filter.dataReqParams[y];
-        fPar[ prop.id] = $( '#'+divId+prop.id+'filter' ).val();
-      } 
-      pongTableUpdateData( divId, fPar );
+      pongTableUpdateData( divId, true );
     } else {
-      pongTableUpdateData( divId, null );	  
+      pongTableUpdateData( divId, false );	  
     } 
   }
 }
@@ -339,6 +334,17 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
           }
           contentItems.push( '</select></p>' );
 
+        } else if ( prop.type && prop.type == 'checkbox'  ) {
+
+          var cbValue = 'value="'+prop.id+'" ';
+          var modifier = '';
+          if ( prop.defaultVal != null && 
+             ( prop.defaultVal === true || prop.defaultVal == 'true' ) ) { 
+              modifier += ' checked'; 
+          }
+          contentItems.push( '<input type="checkbox" '+ cbValue + nameAndClass  + modifier +'/>' );
+          
+  
         } else { // default type => text 
           var val = '';
           if ( prop.defaultVal ) { val = prop.defaultVal }
@@ -812,9 +818,23 @@ function parseRowPlaceHolders( row, str ) {
 
 
 /** update data call back hook */
-function pongTableUpdateData( divId, paramsObj ) {
+function pongTableUpdateData( divId, doFilter ) {
   log( "Pong-Table",  'update '+divId );
   var tblDef = poTbl[ divId ].pongTableDef;
+  var paramsObj = 0;
+  if ( doFilter ) {
+    var fPar = {};
+    for( var y = 0; y < tblDef.filter.dataReqParams.length; y++ ) {
+      prop = tblDef.filter.dataReqParams[y];
+      if ( prop.type != 'checkbox' ) {
+        fPar[ prop.id] = encodeURI( $( '#'+divId+prop.id+'filter' ).val() );
+      } else {
+        fPar[ prop.id] = $( '#'+divId+prop.id+'filter' ).is(':checked');
+      }
+    } 
+    paramsObj =  { dataFilter: fPar }
+  }
+
   if ( poTbl[ divId ].resourceURL != '-' ) {
     
     var callParams = {} // merge paramsObj and GET-params:
@@ -998,7 +1018,7 @@ function tblCells( divId ) {
 
 function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblDiv ) {
   log( "Pong-Table", 'tblUpdateCell '+cellId+' cellDef:'+JSON.stringify( cellDef ) );
-
+  
   var dataUrl = '';
   var cellType = cellDef.cellType;
   var cellVal = null;
@@ -1114,7 +1134,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     var ctx = canvas.getContext("2d")
     
     pongTblRenderGraph( divId, ctx, def, cellVal, cID );
-
+    
     
   } else if ( cellType == 'pie' ) {
 
@@ -1228,30 +1248,30 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       var tblImg  = cellVal; // TODO impl zoom image
       var zoomImg = cellVal; // TODO impl zoom image
       
-  //    //search for zoom image def
-      if ( poTbl[ tblDiv ] && poTbl[ tblDiv ].pongTableDef )
-        for ( var cZI = 0; cZI < poTbl[ tblDiv ].pongTableDef.cols.length; cZI++ ) {
-          var cellDefZI = poTbl[ tblDiv ].pongTableDef.cols[ cZI ];
-          if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
-            var cellValZI = getSubData( cellDta, cellDefZI.id );
-            if ( cellValZI != null ) { zoomImg = cellValZI }              
-          }
-          if ( cellDefZI.cellType == 'button' && cellDefZI.expand && 
-              cellDefZI.expand.divs &&  cellDefZI.expand.divs.length > 0 ) {
-            for ( var cZJ = 0; cZJ < cellDefZI.expand.divs.length; cZJ++ ) {
-              var cellDefZj = cellDefZI.expand.divs[ cZJ ];
-              if ( cellDefZj.cellType == 'largeimg' && cellDefZj.forImg && cellDefZj.forImg == cellDef.id ) { // found
-                var cellDefZj = getSubData( cellDta, cellDefZj.id );
-                if ( cellDefZj != null ) { zoomImg = cellDefZj }
-              }              
-            }
+//    //search for zoom image def
+    if ( poTbl[ tblDiv ] && poTbl[ tblDiv ].pongTableDef )
+      for ( var cZI = 0; cZI < poTbl[ tblDiv ].pongTableDef.cols.length; cZI++ ) {
+        var cellDefZI = poTbl[ tblDiv ].pongTableDef.cols[ cZI ];
+        if ( cellDefZI.cellType == 'largeimg' && cellDefZI.forImg && cellDefZI.forImg == cellDef.id ) { // found
+          var cellValZI = getSubData( cellDta, cellDefZI.id );
+          if ( cellValZI != null ) { zoomImg = cellValZI }              
+        }
+        if ( cellDefZI.cellType == 'button' && cellDefZI.expand && 
+            cellDefZI.expand.divs &&  cellDefZI.expand.divs.length > 0 ) {
+          for ( var cZJ = 0; cZJ < cellDefZI.expand.divs.length; cZJ++ ) {
+            var cellDefZj = cellDefZI.expand.divs[ cZJ ];
+            if ( cellDefZj.cellType == 'largeimg' && cellDefZj.forImg && cellDefZj.forImg == cellDef.id ) { // found
+              var cellDefZj = getSubData( cellDta, cellDefZj.id );
+              if ( cellDefZj != null ) { zoomImg = cellDefZj }
+            }              
           }
         }
+      }
 
       $( cellId ).html( '<img src="'+tblImg+'" data-zoom-image="'+zoomImg+'" id="'+divId+'R'+i+cellDef.id+'" class="img'+divId+'C'+c+' pongtblzoomimg" />'); 
       $( cellId ).append( '<script> $(function() {  $( "#'+divId+'R'+i+cellDef.id+'" ).elevateZoom(); } ); </script>' );
     }
-
+    
   }  else if ( cellType == 'button'  ) {
     
     var contentItems = [];
@@ -1414,18 +1434,18 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     if ( cellDef.target ) { target = cellDef.target; }
     if ( cellVal && cellVal != '' ) {
       $( '#'+divId+'R'+i+cellDef.label ).append( '<span id="'+cellId+'" data-link="'+cellVal+'" data-target="'+target+'" class="ui-icon ui-icon-extlink tbl-link-icon"/>' );
-    }
+    }  
   } else if ( cellType == 'textLink'  ) {
     
-    var target = "_parent";
-    if ( cellDef.target ) { target = cellDef.target; }
-    if ( cellVal && cellVal != '' ) {
-      var text = $( '#'+divId+'R'+i+cellDef.label ).parent().html()
-      $( '#'+divId+'R'+i+cellDef.label ).parent().html( '<a href="'+cellVal+'" id="'+cellId+'" target="'+target+'" class="tbl-link">'+text+'</a>' );
-    }
-
+      var target = "_parent";
+      if ( cellDef.target ) { target = cellDef.target; }
+      if ( cellVal && cellVal != '' ) {
+        var text = $( '#'+divId+'R'+i+cellDef.label ).parent().html()
+        $( '#'+divId+'R'+i+cellDef.label ).parent().html( '<a href="'+cellVal+'" id="'+cellId+'" target="'+target+'" class="tbl-link">'+text+'</a>' );
+      }
+  
   } else if ( cellType == 'rating'  ) {
-    
+      
     ratingType = "5star";
     if ( cellDef.ratingType != null ) {
       ratingType = cellDef.ratingType;
