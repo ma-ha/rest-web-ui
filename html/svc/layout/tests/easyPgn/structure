@@ -76,6 +76,7 @@
 					"filter":{
 						"dataReqParams": [ 
 							{"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"},
+							{"id":"status", "label":"Status", "type":"checkbox", "defaultVal":true },
 							{"id":"rating", "type":"select", "label":"Rating", "options": [ { "value":"0", "option":"doesn't matter" },{ "value":"1", "option":"top rated" } ] }, 
 							{"id":"dateMin", "label":"Newer than", "description":"Yes - this should really filer the data!", "type":"date"} 
 						],

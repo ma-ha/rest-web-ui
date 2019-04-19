@@ -49,7 +49,8 @@ The `"filter":{...}` is optional and adds parameters to the dataURL GET request.
 The `dataReqParams` must have an `id` and `label` defined. 
 Also supported:
 * `"type":"date"` 
-* `"type":"select" "options": [ { "value":"1", "option":"ABC" }, ...]`
+* `"type":"select", "options": [ { "value":"1", "option":"ABC" }, ...]`
+* `"type":"checkbox", "defaultVal":true`
 * `"defaultVal":"...."`
 
 In the example the table is the top level object in the content. It may happen, that the table is somewhere in the object tree of the JSON result. 
