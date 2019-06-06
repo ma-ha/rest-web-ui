@@ -833,6 +833,8 @@ function pongTableUpdateData( divId, doFilter ) {
       }
     } 
     paramsObj =  { dataFilter: fPar }
+  } else if ( doFilter ) {
+    paramsObj = doFilter;
   }
 
   if ( poTbl[ divId ].resourceURL != '-' ) {

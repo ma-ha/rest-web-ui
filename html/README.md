@@ -1,4 +1,6 @@
 # Release Notes
+## Version 2.1.2
+* Fix param handover in `pong-table` update
 
 ## Version 2.0.x
 * Table: Filter supports checkbox, see [table docu](modules/pong-table)
