@@ -1,17 +1,37 @@
 {
-    "icons":[
-       { "id":"Form", "layout":"tests/formSel", "label":"Form", "img":"modules/pong-form/icon.svg" },
-       { "id":"histogram", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg" },
-       { "id":"IconMenu", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
-       { "id":"HTML", "layout":"tests/html", "label":"Plain HTML", "img":"img/icon-html.svg" },
-       { "id":"IO", "layout":"demos/io2", "label":"I/O", "img":"modules/pong-io/icon.svg" },
-       { "id":"List", "layout":"tests/list2", "label":"List", "img":"modules/pong-list/icon.svg" },
-       { "id":"Map", "layout":"demos/crm-map", "label":"Map", "img":"modules/pong-map/icon.svg" },
-       { "id":"Source", "layout":"tests/sourcecode", "label":"Sourcecode", "img":"modules/pong-sourcecode/icon.svg" },
-       { "id":"RSS", "layout":"tests/rss", "label":"RSS Feeds", "img":"modules/pong-rss/icon.svg" },
-       { "id":"Table", "layout":"tests/table", "label":"Table", "img":"modules/pong-table/icon.svg" },
-       { "id":"Tree", "layout":"tests/tree", "label":"Tree", "img":"modules/pong-tree/icon.svg" },
-       { "id":"Wiki", "layout":"demos/wiki", "label":"Wiki", "img":"modules/pong-mediawiki/icon.svg" }
+  "iconRow":[
+    [
+      { "id":"Form", "layout":"tests/formSel", "label":"Form", "img":"modules/pong-form/icon.svg",
+         "subIcons":[
+            { "id":"histogramX", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg" },
+            { "id":"IconMenuX", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
+            { "id":"HTMLX", "layout":"tests/html", "label":"Plain HTML", "img":"img/icon-html.svg" },
+            { "id":"IOX", "layout":"demos/io2", "label":"I/O", "img":"modules/pong-io/icon.svg" }
+         ]
+      },
+      { "id":"histogram", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg",
+         "subIcons":[
+            { "id":"histogramY1", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg" },
+            { "id":"IconMenuY1", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
+            { "id":"HTMLY1", "layout":"tests/html", "label":"Plain HTML", "img":"img/icon-html.svg" },
+            { "id":"histogramY", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg" },
+            { "id":"IconMenuY", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
+            { "id":"HTMLY", "layout":"tests/html", "label":"...more", "img":"img/icon-html.svg" }  
+         ] 
+      },
+      { "id":"IconMenu", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
+      { "id":"HTML", "layout":"tests/html", "label":"Plain HTML", "img":"img/icon-html.svg" },
+      { "id":"IO", "layout":"demos/io2", "label":"I/O", "img":"modules/pong-io/icon.svg" },
+      { "id":"List", "layout":"tests/list2", "label":"List", "img":"modules/pong-list/icon.svg" }
     ],
-    "update":"300"
+    [
+      { "id":"Map", "layout":"demos/crm-map", "label":"Map", "img":"modules/pong-map/icon.svg" },
+      { "id":"Source", "layout":"tests/sourcecode", "label":"Sourcecode", "img":"modules/pong-sourcecode/icon.svg" },
+      { "id":"RSS", "layout":"tests/rss", "label":"RSS Feeds", "img":"modules/pong-rss/icon.svg" },
+      { "id":"Table", "layout":"tests/table", "label":"Table", "img":"modules/pong-table/icon.svg" },
+      { "id":"Tree", "layout":"tests/tree", "label":"Tree", "img":"modules/pong-tree/icon.svg" },
+      { "id":"Wiki", "layout":"demos/wiki", "label":"Wiki", "img":"modules/pong-mediawiki/icon.svg" }
+    ]
+  ],
+  "update":"300"
 }

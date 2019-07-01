@@ -279,11 +279,19 @@ moduleMap[ "pong-rss" ] = {
 };
 
 moduleMap[ "pong-icons" ] = {
-    "name": "pong-icons",
-    "hooks": [
-        { hook: "loadResourcesHtml", method:"pongIcons_DivHTML" },
-        { hook: "update", method:"pongIconsUpdate" }
-    ]
+  "name": "pong-icons",
+  "hooks": [
+      { hook: "loadResourcesHtml", method:"pongIcons_DivHTML" },
+      { hook: "update", method:"pongIconsUpdate" }
+  ]
+};
+
+moduleMap[ "pong-iconrows" ] = {
+  "name": "pong-iconrows",
+  "hooks": [
+      { hook: "loadResourcesHtml", method:"pongIconRows_DivHTML" },
+      { hook: "update", method:"pongIconRowsUpdate" }
+  ]
 };
 
 moduleMap[ "pong-nav-embed" ] = {

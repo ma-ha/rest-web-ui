@@ -28,29 +28,28 @@ log( "pongIcons", "load module"); // print this on console, when module is loade
 
 // ======= Code for "loadResourcesHtml" hook ================================================
 function pongIcons_DivHTML( divId, resourceURL, paramObj ) {
-	log( "pongIcons",  "Start divId="+divId+" resourceURL="+resourceURL );
-	if ( moduleConfig[ divId ] != null ) {
-		pongIcons_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  );
-        if ( moduleConfig[ divId ].update && parseInt( moduleConfig[ divId ].update ) != NaN ) {
-          update = parseInt( moduleConfig[ divId ].update ) * 1000
+  log( "pongIcons",  "Start divId="+divId+" resourceURL="+resourceURL );
+  if ( moduleConfig[ divId ] != null ) {
+    pongIcons_RenderHTML( divId, resourceURL, paramObj, moduleConfig[ divId ]  );
+    if ( moduleConfig[ divId ].update && parseInt( moduleConfig[ divId ].update ) != NaN ) {
+      var update = parseInt( moduleConfig[ divId ].update ) * 1000;
+      log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
+      setInterval( "pongIconsUpdateTimer"+divId+"()", update );
+      }
+  } else {
+    $.getJSON( 
+      resourceURL, 
+      function( pmd ) {
+        moduleConfig[ divId ] = pmd;
+        pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd );
+        if ( pmd.update && parseInt( pmd.update ) != NaN ) {
+          var update = parseInt( pmd.update ) * 1000;
+          log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
+          setInterval( "pongIconsUpdateTimer"+divId+"()", update );
         }
-        log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
-        setInterval( "pongIconsUpdateTimer"+divId+"()", update );
-	} else {
-		$.getJSON( 
-			resourceURL, 
-			function( pmd ) {
-			  moduleConfig[ divId ] = pmd;
-			  pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd );
-              var update = 60000 // default once per min
-              if ( pmd.update && parseInt( pmd.update ) != NaN ) {
-                update = parseInt( pmd.update ) * 1000
-              }
-              log( "pongIcons", ">>>>> start pongIconsUpdateTimer"+divId+"() every "+update+" ms" );
-              setInterval( "pongIconsUpdateTimer"+divId+"()", update );
-			}
-		);					
-	}	
+      }
+    );          
+  }  
     log( "pongIcons",  "End divId="+divId );
 }
 var pongIcons = new Array();
@@ -87,7 +86,7 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
             + $.i18n( pmd.icons[i].label ) + '</div>' );
       }
       contentItems.push( '</div>' );    
-    }	  
+    }    
   }
   contentItems.push( '</div>' );
   contentItems.push( '<script>' );
@@ -99,7 +98,7 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
   contentItems.push( '  }' );
   contentItems.push( '</script>' ); 
   // output
-  $( "#"+divId ).html( contentItems.join( "\n" ) );	
+  $( "#"+divId ).html( contentItems.join( "\n" ) );  
   log( "pongIcons", "RenderHTML end.");
 }
 

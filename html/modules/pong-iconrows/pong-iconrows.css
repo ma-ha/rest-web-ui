@@ -1,0 +1,52 @@
+.pongIconRowsDiv {
+	height:100%;
+  overflow: auto;
+}
+
+.pongIconRowsCatDiv {
+  width:100%;
+  height: 140px;
+  background-color: #CCC;
+}
+
+.pongIconRow {
+	cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 140px;
+}
+.pongIconSubRow {
+  width:100;
+}
+.pongIconRowItem,
+.pongIconRowCatItem,
+.pongIconSubRowItem {
+  width:150px;
+  float: left;
+}
+
+.pongIconRowInfo {
+	position: absolute;
+	top: 0px;
+	background-color: rgba(255, 255, 79, 0.8);
+	color: black;
+	font-size: 0.7em;
+}
+
+.pongIconRowImg, 
+.pongSubIconImg {
+	width: 100px;
+	height: 100px;
+  margin-top: 5px;
+	margin-left: 25px;
+}
+.pongIconRowLabel {
+  width:100%;
+  text-align: center;
+}
+.pongIconRowsPtr {
+  width: 50px;
+  height: 10px;
+  background-color: #CCC;
+  margin: auto;
+}
