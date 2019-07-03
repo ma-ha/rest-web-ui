@@ -63,7 +63,6 @@
       {
         "rowId": "ViewTypes",
         "title":"View Types",
-        "height":"360px",
         "resourceURL":"svc/viewtypes",
         "type":"pong-iconrows"
       },

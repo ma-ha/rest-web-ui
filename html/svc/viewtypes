@@ -1,9 +1,9 @@
 {
   "iconRow":[
     [
-      { "id":"Form", "layout":"tests/formSel", "label":"Form", "img":"modules/pong-form/icon.svg",
+      { "id":"FormS", "layout":"tests/formSel", "label":"Form", "img":"modules/pong-form/icon.svg",
          "subIcons":[
-            { "id":"histogramX", "layout":"tests/histogram2", "label":"Histogram", "img":"modules/pong-histogram/icon.svg" },
+            { "id":"Form", "layout":"tests/formSel", "label":"Form", "img":"modules/pong-form/icon.svg" },
             { "id":"IconMenuX", "layout":"IconMenu", "label":"Icon Menu", "img":"modules/pong-icons/icon.svg" },
             { "id":"HTMLX", "layout":"tests/html", "label":"Plain HTML", "img":"img/icon-html.svg" },
             { "id":"IOX", "layout":"demos/io2", "label":"I/O", "img":"modules/pong-io/icon.svg" }

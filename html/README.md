@@ -1,6 +1,7 @@
 # Release Notes
 
-## Version 2.2.0
+
+## Version 2.2.1
 * [Icon row module](modules/pong-iconrow)
 
 ## Version 2.1.2

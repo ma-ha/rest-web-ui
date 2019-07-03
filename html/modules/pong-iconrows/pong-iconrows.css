@@ -21,7 +21,7 @@
 .pongIconRowItem,
 .pongIconRowCatItem,
 .pongIconSubRowItem {
-  width:150px;
+  width:130px;
   float: left;
 }
 
@@ -38,15 +38,21 @@
 	width: 100px;
 	height: 100px;
   margin-top: 5px;
-	margin-left: 25px;
+	margin-left: 15px;
 }
 .pongIconRowLabel {
   width:100%;
   text-align: center;
 }
 .pongIconRowsPtr {
-  width: 50px;
-  height: 10px;
-  background-color: #CCC;
+ /*  width: 50px;
+  height: 13px;
+  background-color: #CCC; */
   margin: auto;
+
+  width: 0; 
+  height: 0; 
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 13px solid #CCC;
 }
