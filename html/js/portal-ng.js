@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.2.1';
+var PONGVER = '2.3.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -278,17 +278,22 @@ function loadStructure() {
         pPage = pPage +'-m';
       }
   }
-  
-  var pEdit = '';
-  if ( getParam( 'edit' ) == 'true' ) {
-    pEdit = "&edit=true";
+  let urlParams = '';
+  if ( getParam( 'id' ) ) {
+    urlParams = '?id='+getParam( 'id' ) + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
+  } else {
+    urlParams = ( avoidCache ?  nc = '?nc='+Math.random(): '' );
   }
-  
-  var structureURL = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+
+  var structureURL = "svc/layout/"+pPage+"/structure" + urlParams;
   if( mode == "php" ) {
+    var pEdit = '';
+    if ( getParam( 'edit' ) == 'true' ) {
+      pEdit = "&edit=true";
+    }
     structureURL = "svc/layout.php?page="+pPage+pEdit + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
   } else if ( mode == 'direct' ) {
-    structureURL =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+    structureURL =  "svc/layout/"+directPage+"/structure" + urlParams;
   } 
   
 

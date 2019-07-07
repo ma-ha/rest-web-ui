@@ -1,5 +1,7 @@
 # Release Notes
 
+## Version 2.3.0
+* Pass "id" parameter to "structure" request
 
 ## Version 2.2.1
 * [Icon row module](modules/pong-iconrow)
