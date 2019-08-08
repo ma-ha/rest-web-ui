@@ -24,7 +24,7 @@ THE SOFTWARE.
 log( "PoNG-I18N", "Loading Module");
 
 function addI18NHeaderHtml( divId, type , params ) {
-	log( "PoNG-I18N", "start addNavBarHeaderHtml "+divId);
+  log( "PoNG-I18N", "start addNavBarHeaderHtml "+divId);
 	var layout = '';
 	if ( getParam( 'layout' ) != '' ) {
 		layout = "&layout=" + getParam( 'layout' );	
@@ -53,7 +53,16 @@ function addI18NHeaderHtml( divId, type , params ) {
 							+' alt="'+lang+'" title="'+ $.i18n( 'Switch to' ) +' '+lang+'" border="0"></a>' );
 				}
 			} else {
-				divHtml.push( '<a href="index.html?lang='+lang+layout+role+'" class="transferSessionLink">'+
+        var otherParams = "";
+        if ( params && params.get )
+        for ( var p in params.get ) {
+          if ( p != 'lang' ) {
+            otherParams += '&' + p + '=' + params.get[p];
+          }
+        }
+        log( "PoNG-I18N", "otherParams: "+otherParams );
+      
+				divHtml.push( '<a href="index.html?lang='+lang+otherParams+'" class="transferSessionLink">'+
 						'<img src="'+modulesPath+'i18n/flag-icons/png/'+lang.toLowerCase()+'.png"'
 						+' alt="'+lang+'" title="'+ $.i18n( 'Switch to' ) +' '+lang+'" border="0"></a>' );				
 			}

@@ -108,7 +108,7 @@ function pongHelpCreModalFromMeta( id, modalName, resourceURL ) {
   } else if ( sessionInfo[ id+"Help" ].show == "JSON-moduleConfig" && sessionInfo[ id+"Help" ].resID ) {
 
     var rId =  sessionInfo[ id+"Help" ].resID + 'Content'
-    console.log( moduleConfig[ rId ] );
+    //console.log( moduleConfig[ rId ] );
     jQuerySyntaxInsertCode( 
       id+modalName+"Dialog", 
       JSON.stringify( moduleConfig[ rId ], null, "  " ),
