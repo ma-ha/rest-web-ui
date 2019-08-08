@@ -1,0 +1,28 @@
+{
+  "layout": {
+    "title": "Markdown",
+    "version":"2",
+    "includeHeader":"main",
+    "page_width":"75%",
+    "rows": [
+      {
+        "rowId": "MdDemo",
+        "type": "pong-markdown",
+        "resourceURL": "svc/test/markdown/",
+        "title": "Markdown WIKI",
+        "moduleConfig": {
+            "page": {
+                "EN": "EN/main.md",
+                "DE": "DE/main.md"
+            }
+        },
+        "height": "725px",
+        "decor": "decor",
+        "actions":[
+          { "type":"pong-help", "param":{ "showConfig":"MdDemo" } }
+        ]
+      }
+    ],
+  "includeFooter":"main"
+  }
+}

@@ -186,6 +186,16 @@ moduleMap[ "pong-sourcecode" ] = {
     ]
 };
 
+moduleMap[ "pong-markdown" ] = {
+  "name": "pong-markdown",
+  "hooks": [
+    { hook: "loadResourcesHtml", method:"pongMarkdownDivHTML" }
+  ],
+  "include":[ 
+    "showdown.js"
+  ]
+};
+
 
 moduleMap[ "pong-mediawiki" ] = {
   "name": "pong-mediawiki",
