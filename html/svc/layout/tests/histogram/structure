@@ -37,6 +37,9 @@
 				"height":"300px",
 				"decor":"decor",
 				"type":"pong-table",
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showConfig":"outTbl" } }
+        ],
 				"moduleConfig":{
 					"rowId":"id",
 					"dataURL":"",

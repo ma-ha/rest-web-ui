@@ -9,6 +9,13 @@
            { "layout":"demos/io2", "label":"Adruino"  },
            { "layout":"demos/vacuumlab", "label":"Vacuum&nbsp;Lab", "info":"2"  }
         ]  
+      },
+      { "label":"Forms", 
+        "menuItems" : [
+           { "layout":"tests/action", "label":"Lot Form Elements"  },
+           { "layout":"tests/formSel", "label":"Dependent Selects"  },
+           { "layout":"tests/js-incl", "label":"Stripe Payment Form"  }
+        ]  
       }
    ]
 }

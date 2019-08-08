@@ -19,6 +19,9 @@
         "title": "Home",
         "resourceURL": "svc/info",
         "height": "400px",
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showConfig":"home" } }
+        ],
         "decor" : "tedge"
       }
     ],

@@ -10,7 +10,9 @@
         "resourceURL": "svc/test",
         "type": "pong-form",
         "decor" : "decor",
-        "actions" : [ { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } ], 
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showModuleConfig":"instform" } }
+        ], 
         "moduleConfig":{
           "id": "myFormDef",
           "description": "shows first form",

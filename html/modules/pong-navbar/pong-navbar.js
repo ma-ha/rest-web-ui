@@ -121,7 +121,12 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 				}
 				html.push( '</div>' );        
 				html.push( '<script>' );        
-				html.push( '$( "#navItem'+i+'" ).click( function(){ $( "#navSubMenu'+i+'" ).toggle() } );' );        
+				html.push( '$( "#navItem'+i+'" ).click( function(){' );        
+        for ( var j=0; j < nb.navigations.length; j++ ) {
+          if ( i != j ) { html.push( '   $( "#navSubMenu'+j+'" ).hide();' ); }
+        }
+        html.push( '   $( "#navSubMenu'+i+'" ).toggle();' ); 
+				html.push( ' });' );        
 				html.push( '</script>' );        
 
 			}

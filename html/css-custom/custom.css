@@ -12,6 +12,9 @@ body {
 #MainNav {
   left: 5px;
 }
+.pongNavBarItem {
+  width: 95px;
+}
 #ViewTypesContentpongIconRows_Div,
 #ViewTypesContentpongIcons_Div {
 	width: 800px;

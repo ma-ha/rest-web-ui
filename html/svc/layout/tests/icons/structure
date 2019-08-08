@@ -10,16 +10,22 @@
             {
               "columnId":"Icons",
               "title":"",
-              "width":"7%",
+              "width":"10%",
               "resourceURL":"svc/test/pongIcons",
-              "type":"pong-icons"
+              "type":"pong-icons",
+              "actions" : [ 
+                { "type":"pong-help", "param":{ "showModuleConfig":"Icons" } }
+              ]
             },
             {
               "columnId":"out",
               "title":"Someting Else",
               "width":"93%",
               "decor":"decor",
-              "resourceURL":"svc/cloud/setuplog"
+              "resourceURL":"svc/cloud/setuplog",
+              "actions" : [ 
+                { "type":"pong-help", "param":{ "showConfig":"Icons" } }
+              ]
             }
           ]
         }

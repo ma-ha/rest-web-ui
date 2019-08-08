@@ -13,6 +13,9 @@
         "resourceURL": "svc/test",
         "type": "pong-form",
         "decor" : "decor",
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showModuleConfig":"instform" } }
+        ],
         "moduleConfig": {
             "label": "Sim Payment Form",
             "id": "tstFormId", 

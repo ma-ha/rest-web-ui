@@ -9,7 +9,10 @@
         "height": "400px",
         "resourceURL": "svc/test",
         "type": "pong-form",
-        "decor" : "decor"
+        "decor" : "decor",
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showModuleConfig":"instform" } }
+        ]
       },
       {
         "rowId": "r1",
