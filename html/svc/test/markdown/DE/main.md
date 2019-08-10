@@ -11,3 +11,5 @@ function code() {
 * eins
 * zwei
 * drei
+
+"Wiki Link": [[page2.md|Seite 2]]

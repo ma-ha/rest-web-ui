@@ -1,4 +1,6 @@
 # Release Notes
+## 2.4.x
+* [Markdown Wiki module](modules/pong-markdown)  
 
 ## Version 2.3.0
 * Pass "id" parameter to "structure" request

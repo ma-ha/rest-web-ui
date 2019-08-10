@@ -11,10 +11,8 @@
         "resourceURL": "svc/test/markdown/",
         "title": "Markdown WIKI",
         "moduleConfig": {
-            "page": {
-                "EN": "EN/main.md",
-                "DE": "DE/main.md"
-            }
+            "page" : "${lang}/${page}",
+            "start": "main.md"
         },
         "height": "725px",
         "decor": "decor",

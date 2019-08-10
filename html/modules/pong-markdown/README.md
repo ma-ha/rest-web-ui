@@ -16,11 +16,8 @@ Example structure file extract:
           "type" : "pong-markdown",
           "resourceURL": "https://mh-svr.de/content/",
           "moduleConfig": {
-            "page": {
-                "EN": "main.md",
-                "DE": "main.md?lang=DE",
-                "IT": "main-it.md"
-            },
+            "page" : "${lang}/${page}",
+            "start": "main.md",
             "options": {
               "key": "value"
             }
@@ -37,7 +34,7 @@ You have to provide the fields:
 
 IMPORTANT: `resourceURL` should end always with '/"
 
-By this, the module will load https://mh-svr.de/content/main.md 
+By this, the module will load e.g. https://mh-svr.de/content/EN/main.md 
 and also post to this URL in edit mode.
 
 For `options`, see https://github.com/showdownjs/showdown#valid-options
@@ -59,3 +56,13 @@ You can enable the edit button in the config:
     }
 
 To jump direclty into the edit mode, you can add the URL param `mdedit=true`
+
+
+## WIKI Mode
+
+If you have more than one page, you can add "Wiki style" links to let the user navigate from one page to another page.
+
+Link examples:
+* `[[page.md]]`
+* `[[page.md|Link Text]]`
+

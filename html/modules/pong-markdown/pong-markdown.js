@@ -22,42 +22,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. 
  */
 log( "PoNG-Markdown", "load module");
-
+var mdCfg = {}
 
 function pongMarkdownDivHTML( divId, contentURL, fparam ) {
   log( "PoNG-Markdown",  "divId="+divId+" resourceURL="+contentURL );
   //console.log( 'contentURL: '+contentURL)
   var url = contentURL;
 
-  var param = {};
-  
-  if ( fparam != null && fparam.page != null ) {
-    param = fparam;
-  } else   if  ( moduleConfig[ divId ] != null ) {
-    if ( moduleConfig[ divId ].page != null ) {
-      param.page = moduleConfig[ divId ].page;
-    } 
-  }
-
-  var pg = moduleConfig[ divId ].page
   var lang = getParam( 'lang' );
   if ( lang == '' ) {
     lang = "EN";
   }
-  
-  if ( pg[ lang ] ) {
-    url += pg[ lang ]
-  } else {
-    for( var alang in pg) {
-      url += pg[ alang ]
-      break // get the 1st one 
-    }
-  }
-  log( "PoNG-Markdown",  "url="+url);
 
-  console.log( 'MD URL: ' + url)
+  var param = {};
   
-    
+  if  ( moduleConfig[ divId ] != null ) {
+    if ( moduleConfig[ divId ].page != null ) {
+      param.page = moduleConfig[ divId ].page;
+      url += moduleConfig[ divId ].page;
+    } 
+    if ( moduleConfig[ divId ].start != null ) {
+      param.start = moduleConfig[ divId ].start;
+    } 
+  }
+
+  if ( fparam && fparam.get && fparam.get.page ) {
+    param.start = fparam.get.page;    
+  } 
+
+  mdCfg[ divId ] = {
+    url   : contentURL,
+    page  : param.page,
+    start : param.start
+  }
+
+  url = url.replace( '${lang}', lang  );
+  if ( param.start != null ) {
+    url = url.replace( '${page}', param.start  );
+  }
+
+  log( "PoNG-Markdown",  "url="+url);
+  //console.log( 'MD URL: ' + url)
+
+  pongMarkdownLoad ( url, divId, param.start, fparam ); 
+
+}
+
+
+function pongMarkdownLoad ( url, divId, mPage, fparam ) {
+  //console.log( 'pongMarkdownLoad: url='+url+' page='+mPage )
   $.get( url, function(data) {
     var html = [];
 
@@ -100,11 +113,12 @@ function pongMarkdownDivHTML( divId, contentURL, fparam ) {
 
       // add edit link
       if ( moduleConfig[ divId ].edit ) {
-        var idxParams = '?mdedit=true'
+        var idxParams = '?mdedit=true&page='+mPage;
         if ( fparam && fparam.get ) {
           for ( var p in fparam.get ) {
-            
-            idxParams += '&' + p + '=' +fparam.get[ p ];
+            if ( p != 'page' ) {
+              idxParams += '&' + p + '=' +fparam.get[ p ];
+            }
           }
         }
         html.push( '<div class="markdownEditLink">' );
@@ -112,9 +126,52 @@ function pongMarkdownDivHTML( divId, contentURL, fparam ) {
         html.push( '</div>' );
       }
 
-      // TODO replace WIKI links
+      // ==== replace WIKI links ==============================================
+      var hasLinks = false;
+      while ( data.indexOf('[[') >= 0 && data.indexOf(']]') > data.indexOf('[[') ) {
+        var lnk = data.slice( data.indexOf('[[')+2, data.indexOf(']]') );
+        var page = lnk
+        var lnkTxt = lnk;
+        if ( lnk.indexOf('|') >= 0 ) {
+          page = lnk.substring( 0,  lnk.indexOf('|') );
+          lnkTxt = lnk.substring( lnk.indexOf('|')+1 );
+        }
+        //console.log( '>>>>>>>>>>> '+ page );
+        //console.log( '>>>>>>>>>>> '+ lnkTxt );
 
-      // add the markdown as HTML
+        var aUrl = mdCfg[ divId ].url+mdCfg[ divId ].page;
+        
+        var lang = getParam( 'lang' );
+        if ( lang == '' ) { lang = "EN"; }
+        aUrl = aUrl.replace( '${lang}', lang );
+        aUrl = aUrl.replace( '${page}', page );
+        
+        var anchor = '<a href="'+aUrl+'" data-pg="'+page+'" class="mdLink '+divId+'mdLink">'+lnkTxt+'</a>';
+        //console.log( '>>>>>>>>>>> '+ anchor );
+
+        data = data.replace( '[['+lnk+']]', anchor );
+        hasLinks = true;
+      }
+
+      // need to add eventhandler for links
+      if ( hasLinks ) {
+        html.push( '<script>' );
+        html.push( ' $( ".'+divId+'mdLink" ).click( function() { ' ); 
+        //$( this ).data( "i" )
+        html.push( '   var pgUrl  = $( this ).attr( "href" ); ' );
+        html.push( '   var pgName = $( this ).data( "pg" ); ' );
+        if ( fparam ) {
+          html.push( '   var aParam = '+ JSON.stringify( fparam ) +';' );
+        } else {
+          html.push( '   var aParam = {};' );
+        }
+        html.push( '   pongMarkdownLoad ( pgUrl, "'+divId+'", pgName, aParam );' );
+        html.push( '   return false;' );
+        html.push( ' }) ' );
+        html.push( '</script>' );
+      }
+
+      // ==== add the markdown as HTML ========================================
       var converter = new showdown.Converter();
 
       if ( moduleConfig[ divId ].options ) {
@@ -131,6 +188,5 @@ function pongMarkdownDivHTML( divId, contentURL, fparam ) {
     $( '#'+divId ).html( html.join( "\n" ) );
     $( '#'+divId ).scrollTop( 0 );
 
-  });
-
+  }).error( function(err){ alert(  $.i18n('Page not found') ) } );
 }
