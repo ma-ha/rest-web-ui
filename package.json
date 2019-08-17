@@ -1,6 +1,6 @@
 {
 	"name":"rest-web-gui",
-  "version":"2.4.1",
+  "version":"2.4.2",
 	"description":"A framework to create web portals w/o coding and w/o application servers.",
 	"author":"ma-ha",
 	"license":"MIT",

@@ -1032,7 +1032,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   var editable = '';  
   log( "Pong-Table", 'ID:"'+cellId+ '"  val:'+ cellVal );
   if ( cellType == 'text' ) {
-    
+    cellVal += '';
     if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
       var lnkIco = "";
       if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 || cellVal.indexOf('sftp://') == 0 ) {
