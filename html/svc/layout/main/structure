@@ -30,6 +30,8 @@
 			       { "pageLink":"tests/histogram", "label":"Histogram Active" },
 			       { "pageLink":"tests/histogram2", "label":"Histogram Passive" },
 			       { "pageLink":"tests/icons", "label":"Icon Navigation View" },
+			       { "pageLink":"tests/markdown", "label":"Markdown" },
+			       { "pageLink":"tests/markdown-edit", "label":"Markdown Edit" },
 			       { "pageLink":"tests/navbar", "label":"Navbar" },
 			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },

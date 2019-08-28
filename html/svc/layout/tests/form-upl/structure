@@ -1,0 +1,36 @@
+{
+  "layout": {
+    "title": "New Portal: JS Include Test",
+    "includeHeader": "main",
+    "rows": [
+      {
+        "rowId": "instform",
+        "title": "This is an Upload Test",
+        "height": "360px",
+        "resourceURL": "svc/test",
+        "type": "pong-form",
+        "decor" : "decor",
+        "moduleConfig": {
+            "label": "Sim Payment Form",
+            "id": "tstFormId", 
+            "fieldGroups":[
+                {
+                  "columns":[
+                    {
+                      "formFields":[     
+                        { "id":"user", "type":"text", "label":"Name" }, 
+                        { "id":"user", "type":"file", "label":"File Upload" }
+                      ]
+                    }
+                ]
+            }
+            ],
+            "actions" : [ 
+              { "id":"Upload", "actionName": "Upload", "actionURL": "svc/test/info" }
+            ]
+        }
+      }
+    ],
+    "includeFooter": "main"
+  }
+}

@@ -11,3 +11,5 @@ Test
 * three
 
 "Wiki link": [[page2.md|Page 2]]
+
+[[page3.md]]

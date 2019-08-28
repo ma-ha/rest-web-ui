@@ -53,7 +53,10 @@ function pongMarkdownDivHTML( divId, contentURL, fparam ) {
   mdCfg[ divId ] = {
     url   : contentURL,
     page  : param.page,
-    start : param.start
+    start : param.start,
+    // back  : null,
+    curr  : null,
+    backs : [ null, null, null, null, null, null, null, null, null , null ]
   }
 
   url = url.replace( '${lang}', lang  );
@@ -70,6 +73,18 @@ function pongMarkdownDivHTML( divId, contentURL, fparam ) {
 
 
 function pongMarkdownLoad ( url, divId, mPage, fparam ) {
+  if ( mPage == mdCfg[ divId ].backs[0] ) { // nav back
+    console.log( 'Nav back!!' )
+    for ( var i =  0; i < 9; i++ ) { mdCfg[ divId ].backs[i] = mdCfg[ divId ].backs[i+1]; }
+  } else { // nav to new page
+    console.log( 'Nav forward!!' )
+    for ( var i = 9; i > 0; i-- ) { mdCfg[ divId ].backs[i] = mdCfg[ divId ].backs[i-1]; }
+    mdCfg[ divId ].backs[0] = mdCfg[ divId ].curr
+  }
+  //mdCfg[ divId ].back = mdCfg[ divId ].curr
+  mdCfg[ divId ].curr = mPage
+  console.log( mdCfg[ divId ].backs )
+
   //console.log( 'pongMarkdownLoad: url='+url+' page='+mPage )
   $.get( url, function(data) {
     var html = [];
@@ -110,6 +125,17 @@ function pongMarkdownLoad ( url, divId, mPage, fparam ) {
     
 
     } else { // Display Markdown page
+      var aUrl = mdCfg[ divId ].url+mdCfg[ divId ].page;
+      var lang = getParam( 'lang' );
+      if ( lang == '' ) { lang = "EN"; }
+      aUrl = aUrl.replace( '${lang}', lang );
+      
+      html.push( '<div class="markdownNav">' );
+      html.push( '<a href="'+aUrl.replace( '${page}', mdCfg[ divId ].start )+'" data-pg="'+ mdCfg[ divId ].start+'" class="mdLink '+divId+'mdLink">' + $.i18n('Start') + '</a>' );
+      if ( mdCfg[ divId ].backs[0] ) {
+        html.push( '<a href="'+aUrl.replace( '${page}', mdCfg[ divId ].backs[0] )+'" data-pg="'+ mdCfg[ divId ].backs[0]+'" class="mdLink '+divId+'mdLink">' + $.i18n('Back') + '</a>' );
+      }
+      html.push( '</div>' );
 
       // add edit link
       if ( moduleConfig[ divId ].edit ) {
@@ -140,7 +166,6 @@ function pongMarkdownLoad ( url, divId, mPage, fparam ) {
         //console.log( '>>>>>>>>>>> '+ lnkTxt );
 
         var aUrl = mdCfg[ divId ].url+mdCfg[ divId ].page;
-        
         var lang = getParam( 'lang' );
         if ( lang == '' ) { lang = "EN"; }
         aUrl = aUrl.replace( '${lang}', lang );
@@ -150,11 +175,10 @@ function pongMarkdownLoad ( url, divId, mPage, fparam ) {
         //console.log( '>>>>>>>>>>> '+ anchor );
 
         data = data.replace( '[['+lnk+']]', anchor );
-        hasLinks = true;
       }
 
       // need to add eventhandler for links
-      if ( hasLinks ) {
+      // if ( hasLinks ) {
         html.push( '<script>' );
         html.push( ' $( ".'+divId+'mdLink" ).click( function() { ' ); 
         //$( this ).data( "i" )
@@ -166,10 +190,11 @@ function pongMarkdownLoad ( url, divId, mPage, fparam ) {
           html.push( '   var aParam = {};' );
         }
         html.push( '   pongMarkdownLoad ( pgUrl, "'+divId+'", pgName, aParam );' );
+        html.push( '   $( "#'+divId+'" ).scrollTop( 0 );' );
         html.push( '   return false;' );
         html.push( ' }) ' );
         html.push( '</script>' );
-      }
+      // }
 
       // ==== add the markdown as HTML ========================================
       var converter = new showdown.Converter();
