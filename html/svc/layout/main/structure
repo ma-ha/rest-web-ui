@@ -42,6 +42,7 @@
 			       { "pageLink":"tests/table", "label":"Table Test" },
 			       { "pageLink":"tests/theme", "label":"Theme Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
+			       { "pageLink":"tests/form-upl", "label":"Upload File Test" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 
