@@ -67,6 +67,13 @@ function pongUploadFile( divId, url, params ) {
       formData.append( inp.id, $( '#'+inp.id ).val() )
     }
   }
+  var getParams = getUrlGETparams();
+  alert( getParams )
+  for ( var param in getParams ) {
+    if ( param != 'layout' && param != 'lang' ) {
+      formData.append( param, getParams[ param ]  )
+    }
+  }
   formData.append( "file", toUpload )
 
 
