@@ -14,7 +14,11 @@ Example:
             "type" : "pong-upload",
             "resourceURL": "https://mh-svr.de/content/",
             "moduleConfig": {
-              "update" : [ "fileTable" ]
+              "update" : [ "fileTable" ],
+              "input": [
+                { "id":"name", "label":"Name" },
+                { "id":"id", "label":"ID" }
+              ]
             }
           }
           ...
@@ -22,3 +26,5 @@ Example:
       ...
      }
   }
+
+The configs for `input` and `update` are optional.

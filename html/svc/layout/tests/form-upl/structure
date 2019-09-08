@@ -11,7 +11,11 @@
         "type": "pong-upload",
         "decor" : "decor",
         "moduleConfig": {
-          "update": [ "fileTable" ]
+          "update": [ "fileTable" ],
+          "input": [
+            { "id":"name", "label":"Name" },
+            { "id":"id", "label":"ID" }
+          ]
         }
       }
     ],

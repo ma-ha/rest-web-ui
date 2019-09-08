@@ -29,6 +29,14 @@ function pongUploadDivHTML( divId, uploadURL, fparam ) {
 
   var html = [];
   html.push( '<form class="UploadForm">' );
+  if ( moduleConfig[ divId ] && moduleConfig[ divId ].input ) {
+    for ( var inp of moduleConfig[ divId ].input ) {
+      html.push( '<div id="'+divId+inp.id+'" class="pongFormField">' );
+      html.push( '<label for="'+inp.id+'" class="uploadFromLabel">'+ $.i18n( inp.label )+'</label>' );
+      html.push( '<input id="'+inp.id+'" name="'+inp.name+'" class="text ui-widget-content ui-corner-all UploadFileInput uploadFormIput" required="required">' );
+      html.push( '</div>' );
+    }
+  }
   html.push( '<input id="'+divId+'File" name="'+divId+'File" class="UploadFile" type="file">' );
   html.push( '<button id="'+divId+'UploadBtn">'+$.i18n('Upload File')+'</button>' );
   html.push( '</form>' );
@@ -45,11 +53,22 @@ function pongUploadDivHTML( divId, uploadURL, fparam ) {
 function pongUploadFile( divId, url, params ) {
   var toUpload = document.getElementById( divId+'File' ).files[0];
   if ( ! toUpload ) {
-    alert( 'Oups' );
+    alert( $.i18n( 'No file specified.' ) );
+    return
   }
 
   let formData = new FormData();
+  if ( moduleConfig[ divId ] && moduleConfig[ divId ].input ) {
+    for ( var inp of moduleConfig[ divId ].input ) {
+      if ( !  $( '#'+inp.id ).val() ||  $( '#'+inp.id ).val() == '' ) {
+        alert( $.i18n( 'Please fill out all form fields.' ) );
+        return
+      }
+      formData.append( inp.id, $( '#'+inp.id ).val() )
+    }
+  }
   formData.append( "file", toUpload )
+
 
   fetch( url, {
     method: 'POST',
