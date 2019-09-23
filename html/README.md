@@ -2,6 +2,9 @@
 ## 2.6.x
 * [Upload file module](modules/pong-upload)  
 
+### 2.6.4 
+* fix .page-with and .root-row 
+
 ## 2.4.x
 * [Markdown Wiki module](modules/pong-markdown)  
 
