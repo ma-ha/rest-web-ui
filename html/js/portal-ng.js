@@ -429,8 +429,8 @@ function buildStructure( d ) {
 
     loadHeaderFooter( d );
     if ( d.page_width ) {
-      $( "#viewSizes" ).append( '.page-width { width: '+d.page_width+';' );
-      $( "#viewSizes" ).append( 'root-row { width: '+d.page_width+';' );
+      $( "#viewSizes" ).append( '.page-width { width: '+d.page_width+'; }' );
+      $( "#viewSizes" ).append( 'root-row { width: '+d.page_width+'; }' );
       // $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );
       // $( "head" ).append(  "<style>.root-row { width: "+d.page_width+"; }</style>" );
     }
@@ -446,7 +446,7 @@ function buildStructure( d ) {
     ).appendTo( "body" );
     loadHeaderFooter( d );
     if ( d.page_width ) {
-      $( "#viewSizes" ).append( '.page-width { width: '+d.page_width+';' );
+      $( "#viewSizes" ).append( '.page-width { width: '+d.page_width+'; }' );
       // $( "head" ).append(  "<style>.page-width { width: "+d.page_width+"; }</style>" );
     }
 
