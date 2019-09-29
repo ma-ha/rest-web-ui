@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.6.4';
+var PONGVER = '2.6.5';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -259,11 +259,21 @@ function loadStructure() {
     avoidCache = true;
   }  
 
-  var structureURLfallback = "svc/layout/"+pPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+  let urlParams = '';
+  if ( getParam( 'id' ) ) {
+    urlParams = '?id='+getParam( 'id' ) + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
+  } else {
+    urlParams = ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+  }
+
+  var structureURLfallback =  "svc/layout/"+pPage+"/structure" + urlParams;
   if( mode == "php" ) {
     structureURLfallback = "svc/layout.php?page="+pPage+pEdit+ ( avoidCache ?  nc = '&nc='+Math.random(): '' );
+    if ( getParam( 'id' ) ) { 
+      structureURLfallback += '&id='+getParam( 'id' );
+    }
   } else if ( mode == 'direct' ) {
-    structureURLfallback =  "svc/layout/"+directPage+"/structure" + ( avoidCache ?  nc = '?nc='+Math.random(): '' );
+    structureURLfallback =  "svc/layout/"+directPage+"/structure" + urlParams;
   }
   
   // mobile detect -- to disable: just remove the script include from the index.html
@@ -278,12 +288,6 @@ function loadStructure() {
         pPage = pPage +'-m';
       }
   }
-  let urlParams = '';
-  if ( getParam( 'id' ) ) {
-    urlParams = '?id='+getParam( 'id' ) + ( avoidCache ?  nc = '&nc='+Math.random(): '' );
-  } else {
-    urlParams = ( avoidCache ?  nc = '?nc='+Math.random(): '' );
-  }
 
   var structureURL = "svc/layout/"+pPage+"/structure" + urlParams;
   if( mode == "php" ) {
@@ -297,7 +301,7 @@ function loadStructure() {
   } 
   
 
-  console.log("loadStructure: "+structureURL);
+  log( "loadStructure", structureURL );
   $.getJSON( 
       structureURL, 
       processLayoutResponseJSON

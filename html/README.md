@@ -1,6 +1,7 @@
 # Release Notes
 ## 2.6.x
-* [Upload file module](modules/pong-upload)  
+* [Upload file mondule](modules/pong-upload)  
+* 2.6.5: fix for id param in case of mobile redirect
 
 ### 2.6.4 
 * fix .page-with and .root-row 
