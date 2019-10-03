@@ -2,6 +2,7 @@
 ## 2.6.x
 * [Upload file mondule](modules/pong-upload)  
 * 2.6.5: fix for id param in case of mobile redirect
+* 2.6.6: `pong-icons` and `pong-iconrows` pass GET-parameters to the resource load request
 
 ### 2.6.4 
 * fix .page-with and .root-row 

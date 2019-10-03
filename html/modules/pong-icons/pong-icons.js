@@ -37,8 +37,12 @@ function pongIcons_DivHTML( divId, resourceURL, paramObj ) {
       setInterval( "pongIconsUpdateTimer"+divId+"()", update );
       }
   } else {
+    let resParams = {}
+    if ( paramObj && paramObj.get ) {
+      resParams = paramObj.get
+    }
     $.getJSON( 
-      resourceURL, 
+      resourceURL, resParams,
       function( pmd ) {
         moduleConfig[ divId ] = pmd;
         pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd );
