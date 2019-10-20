@@ -1,0 +1,66 @@
+{
+  "layout": {
+    "title": "Portal: Test 'Easy' Features",
+    "header": {
+      "logoURL": "img/p02w.png",
+      "logoText": "Demo",
+      "modules": [
+        {
+          "id": "MainNav",
+          "type": "pong-navbar",
+          "param": {
+            "confURL": "nav"
+          }
+        },
+        {
+          "id": "Sec2",
+          "type": "pong-security2",
+          "param": {
+            "requireJS": [ "https://cdn.auth0.com/js/auth0/9.11/auth0.min.js" ],
+            "moduleJS": "svc/test/sec2/sec2auth0.js",
+            "authDomain": "dev-ie96lzx0.eu.auth0.com",
+            "checkLoginInterval": "10000",
+            "loginRedirect": "http://localhost/mh/ws/rest-web-ui/html/index.html?layout=tests/sec2&",
+            
+            "resetPasswordURL": "svc/mock/sec/password",
+            "changePasswordURL": "svc/mock/sec/password",
+            "registgerURL": "index.php?layout=tests/sec/register",
+            "logoutURL": "https://dev-ie96lzx0.eu.auth0.com/logout",
+            
+            "domain": "dev-ie96lzx0.eu.auth0.com",
+            "clientId": "kG40JK0KKb9YXWyjnio1Djh1hPaJ6FAa",
+            
+            "userPages": {
+              "User Profile": "https://dev-ie96lzx0.eu.auth0.com/user"
+            }
+          }
+        }
+      ]
+    },
+    "rows": [
+      {
+        "rowId": "instform",
+        "height": "175px",
+        "cols": [
+          {
+            "columnId": "ezFrm",
+            "title": "HINT:",
+            "width": "100%",
+            "resourceURL": "svc/test",
+            "type": "pong-easyform",
+            "decor": "decor",
+            "moduleConfig": {
+              "id": "tstFormId",
+              "easyFormFields": [
+                "id",
+                "c1|Login~with~userid~test1~or~test2~or~test3~and~no~password|label",
+                "c1|The~login~should~expire~within~30~sec.|label"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "includeFooter": "main"
+  }
+}

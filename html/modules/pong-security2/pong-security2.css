@@ -1,0 +1,62 @@
+.pong-security2 {
+	position : absolute;
+	top: 5px;
+	right: 10px;
+	font-size: 10pt;
+	z-index: 10000;
+}
+.user-id {
+	color: #FFF;
+}
+#header .header-links {
+    position: absolute;
+    top: 24px;
+}
+
+#SecurityHeaderFrom {
+	display: inline;
+	align-content: right;
+}
+
+#SecurityHeaderPullDown {
+	display: block;
+	background-color: #A0A0A0;
+	padding: 6px;
+	position: absolute;
+	top: 20px;
+	width: -moz-max-content;
+	right: 0px;
+}
+
+.SecurityHeaderPullDownItem {
+	display: block;
+}
+
+#newPasswordStength {
+	height: 20px;
+}
+#PwdScore {
+	height: 20px;
+	float: left;
+	padding-right: 5px;
+}
+.goodPwdScore {
+	width: 20px;
+	height: 15px;
+	background-color: green;
+	margin-right: 1px;
+	margin-top: 3px;
+	float: left;
+}
+.badPwdScore {
+	width: 20px;
+	height: 15px;
+	background-color: red;
+	margin-right: 1px;
+	margin-top: 3px;
+	float: left;
+}
+
+.loginCookie {
+  font-size: 0.8em;
+}
