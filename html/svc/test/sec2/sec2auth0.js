@@ -50,6 +50,7 @@ function mSec_isAuthenticated( params, callback ) {
   webAuth.client.userInfo( accessToken, function( err, user ) {
     if ( err ) {
       // alert( 'ERR: '+err );
+      alert( err )
       callback( null );
     } else {
       // alert( JSON.stringify( user ) )
@@ -71,11 +72,65 @@ function mSec_getAccessToken() {
   }
 }
 
+function mSec_getUserId( userInfo ) {
+  //console.log( userInfo );
+  if ( userInfo && userInfo.name ) {
+    return userInfo.name;
+  } else {
+    return '?';
+  }
+}
 
 function mSec_Logout( params ) { 
   // https://auth0.com/docs/api/authentication#logout
   var loginURL = 'https://'+params.authDomain+'/v2/logout'
     + '?client_id=' + params.clientId
-    + '&returnTo=' + params.loginRedirect
+    + '&returnTo=' + params.logoutRedirect
   window.location.href = loginURL
+}
+
+
+function mSec_ChangePassword( params ) {
+  new Auth0ChangePassword({
+    container:         "SecurityChangePasswordDiv",                   // required
+    email:             "{{email | escape}}",                          // DO NOT CHANGE THIS
+    csrf_token:        "{{csrf_token}}",                              // DO NOT CHANGE THIS
+    ticket:            "{{ticket}}",                                  // DO NOT CHANGE THIS
+    password_policy:   "{{password_policy}}",                         // DO NOT CHANGE THIS
+    password_complexity_options: '{{password_complexity_options}}',   // DO NOT CHANGE THIS
+    theme: {
+      icon: "{{tenant.picture_url | default: '//cdn.auth0.com/styleguide/1.0.0/img/badge.png'}}",
+      primaryColor: "{{tenant.colors.primary | default: '#ea5323'}}"
+    },
+    dict: {
+      // passwordPlaceholder: "your new password",
+      // passwordConfirmationPlaceholder: "confirm your new password",
+      // passwordConfirmationMatchError: "Please ensure the password and the confirmation are the same.",
+      // passwordStrength: {
+      //   containsAtLeast: "Contain at least %d of the following %d types of characters:",
+      //   identicalChars: "No more than %d identical characters in a row (e.g., "%s" not allowed)",
+      //   nonEmpty: "Non-empty password required",
+      //   numbers: "Numbers (i.e. 0-9)",
+      //   lengthAtLeast: "At least %d characters in length",
+      //   lowerCase: "Lower case letters (a-z)",
+      //   shouldContain: "Should contain:",
+      //   specialCharacters: "Special characters (e.g. !@#$%^&*)",
+      //   upperCase: "Upper case letters (A-Z)"
+      // },
+      // successMessage: "Your password has been reset successfully.",
+      // configurationError: "An error ocurred. There appears to be a misconfiguration in the form.",
+      // networkError: "The server cannot be reached, there is a problem with the network.",
+      // timeoutError: "The server cannot be reached, please try again.",
+      // serverError: "There was an error processing the password reset.",
+      // headerText: "Enter a new password for<br />{email}",
+      // title: "Change Password",
+      // weakPasswordError: "Password is too weak."
+      // passwordHistoryError: "Password has previously been used."
+    }
+  });
+
+  // close form after 30 sec
+  setTimeout( ()=> {
+    $( "#SecurityChangePasswordDiv" ).toggle( "blind" ); 
+  }, 30000 );
 }

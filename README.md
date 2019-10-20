@@ -14,6 +14,7 @@ Basic functionality of a Web Portal is provided out of the box:
 * i18n: switch languages easily -- just provide a translation map (or web service for that)
 * User sessions (transfer data between views and pages) and a build in pub-sub event broker
 * OAauth2 security for web services
+* OpenId Connect support (e.g. Auth0)
 
 ![features screen shot](https://mh-svr.de/Pong-Features.png) 
 

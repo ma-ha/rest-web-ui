@@ -1,4 +1,8 @@
 # Release Notes
+## 2.7.0
+* New [pong-security2 module](modules/pong-security2) provides OpenId Connect 
+  login flow and Auth0 implementation exampe.
+
 ## 2.6.x
 * [Upload file mondule](modules/pong-upload)  
 * 2.6.5: fix for id param in case of mobile redirect

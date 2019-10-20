@@ -36,6 +36,7 @@
 			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },
+			       { "pageLink":"tests/sec2", "label":"Sec: OpenId Connect Test" },
 			       { "pageLink":"tests/sourcecode", "label":"Source Code View Test" },
 			       { "pageLink":"tests/tabRow", "label":"Tab in Row" },
 			       { "pageLink":"tests/tabCol", "label":"Tab in Column" },

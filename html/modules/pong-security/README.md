@@ -3,28 +3,28 @@ Clicking _Login_ starts a modal form to request user and password.
 
 ## Usage:
 
-	{
-		"layout": {
-			...
-		    "header": {
-		      ...
-		      "modules" : [ 
-		         { "id": "Sec", "type": "pong-security", 
-		           "param": { 
-			             "loginURL":"svc/sec/login.php", 
-			             "registgerURL":"index.php?layout=register", 
-			             "logoutURL":"svc/sec/logout.php", 
-			             "resetPasswordURL":"index.php?layout=reset-pwd" 
-		           } 
-		        },
-		        ...
-		      ] 
-		    },
-  			...
-		}
-	}
+  {
+    "layout": {
+      ...
+        "header": {
+          ...
+          "modules" : [ 
+             { "id": "Sec", "type": "pong-security", 
+               "param": { 
+                   "loginURL":"svc/sec/login.php", 
+                   "registgerURL":"index.php?layout=register", 
+                   "logoutURL":"svc/sec/logout.php", 
+                   "resetPasswordURL":"index.php?layout=reset-pwd" 
+               } 
+            },
+            ...
+          ] 
+        },
+        ...
+    }
+  }
 
-The params are option, e.g. `registgerURL` shows the _Register_ link.
+The `registgerURL` param is optional to show the _Register_ link.
 
 If you define a `"loginPage"` (=layout name) in the param this page will bw shown after successful login.
 
@@ -54,12 +54,12 @@ name in the GUI.
 Example
 
     "modules" : [ 
-	     { "id": "Sec", "type": "pong-security", 
-	       "param": { 
-               ...
-               "userPages": {
-	            	"User Profile":"uaser/profile",
-	            	"Preferences":"user/setting",
-	            }	
-	       } 
+      { "id": "Sec", "type": "pong-security", 
+        "param": { 
+          ...
+          "userPages": {
+            "User Profile":"user/profile",
+            "Preferences":"user/setting",
+          }  
+         } 
       },
