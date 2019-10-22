@@ -57,6 +57,8 @@ Parameter:
 * `changePasswordURL`: param is optional to show the _Change Password_ link
 * `resetPasswordURL`: param is optional to show the _Reset_ link
 * `registgerURL` param is optional to show the _Register_ link.
+* `loginType` param is optional for Auth0: The name of a social identity provider 
+  configured to your application, for example `google-oauth2` or `facebook`. 
 
-`loginType` = The name of a social identity provider configured to your application, for example `google-oauth2` or `facebook`. 
-
+You can implement your own `moduleJS`, 
+however there is an [example JS for Auth0](../../svc/test/sec2/sec2auth0.js) 

@@ -1,5 +1,5 @@
 # Release Notes
-## 2.7.0
+## 2.7.x
 * New [pong-security2 module](modules/pong-security2) provides OpenId Connect 
   login flow and Auth0 implementation exampe.
 
