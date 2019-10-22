@@ -47,7 +47,6 @@ moduleMap[ "pong-security" ] = {
 
 moduleMap[ "pong-security2" ] = {
   "name": "pong-security2",
-  "requires": [ "pong-session" ],
   "hooks": [
     { hook: "init", method:"initSecurityHeaderHtml" },
     { hook: "addHeaderHtml", method:"addSecurityHeaderHtml" }

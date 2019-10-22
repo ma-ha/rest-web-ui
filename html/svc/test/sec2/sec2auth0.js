@@ -38,8 +38,7 @@ function mSec_Login( params ) {
   window.location.href = loginURL
 }
 
-function mSec_isAuthenticated( params, callback ) {
-  var accessToken = mSec_getAccessToken(); // TODO make that reliable
+function mSec_isAuthenticated( params, accessToken, callback ) {
   if ( ! accessToken ) { return callback( null ); }
   // init the Auth0 lib
   var webAuth = new auth0.WebAuth({
@@ -50,22 +49,25 @@ function mSec_isAuthenticated( params, callback ) {
   webAuth.client.userInfo( accessToken, function( err, user ) {
     if ( err ) {
       // alert( 'ERR: '+err );
-      alert( err )
-      callback( null );
+      //alert( JSON.stringify( err ) )
+      console.log( err )
+      callback( null, err );
     } else {
-      // alert( JSON.stringify( user ) )
-      callback( user )
+      //alert( JSON.stringify( user ) )
+      // console.log( user );
+      callback( user, null )
     }
   });
 }
 
-function mSec_getAccessToken() {
+function mSec_getAccessTokenFrmURL() {
   var idx = window.location.href.indexOf( 'access_token' )
   if (  idx > 0 ) {
     var tokenStr = window.location.href.substring( idx + 13 ) 
     if ( tokenStr.indexOf('&') > 0 ) { 
       tokenStr = tokenStr.substring( 0, tokenStr.indexOf('&') )
     }
+    //console.log('tokenStr '+tokenStr)
     return tokenStr
   } else {
     return false

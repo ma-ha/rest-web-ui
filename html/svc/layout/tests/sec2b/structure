@@ -3,7 +3,7 @@
     "title": "Portal: Test 'Easy' Features",
     "header": {
       "logoURL": "img/p02w.png",
-      "logoText": "Demo Page A",
+      "logoText": "Demo Page B",
       "modules": [
         {
           "id": "MainNav",
@@ -62,7 +62,7 @@
               "easyFormFields": [
                 "id",
                 "c1|This is OpenID Connect login flow, wit redirect to Auth0|label",
-                "c1|<a href='index.html?layout=tests/sec2b'>test session</a>|label"
+                "c1|<a href='index.html?layout=tests/sec2'>test session</a>|label"
               ]
             }
           }

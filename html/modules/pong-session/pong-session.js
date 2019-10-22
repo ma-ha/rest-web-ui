@@ -23,8 +23,9 @@ THE SOFTWARE.
  */
 log( "PoNG-Session", "Loading Module");
 
-
 function addSessionHeaderHtml( divId, type , params ) {
+  //alert( params );
+  // console.log( "PoNG-Session.." )
 	log( "PoNG-Session", "addOAuthHeaderHtml ");
 	var divHtml = [];	
 	divHtml.push( '<div id="Session">' );
@@ -42,7 +43,7 @@ function addSessionHeaderHtml( divId, type , params ) {
 
 
 function followLinkWithSessionTransfer( target ) {
-	//alert( JSON.stringify( target.attr('href') ) );
+  //alert( JSON.stringify( target.attr('href') ) );
 	if ( target.hasClass( "transferSessionLink" ) ) {
 		$( '#SessionTransferForm' ).html( '<input type="hidden" name="sessionInfo" value=\''+ JSON.stringify( sessionInfo ) +'\' > ' );
 		$( '#SessionTransferForm' ).attr( 'action', target.attr('href') );

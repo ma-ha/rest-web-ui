@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 log( "PoNG-Security", "Loading Module");
 
+const COOKIE = 'pongSec2Tkn';
 var pongSec2Params  = null; 
 
 function initSecurityHeaderHtml( divId, type, params ) {
@@ -49,10 +50,12 @@ function addSecurityHeaderHtml( divId, type , params ) {
   if ( ! params ) { return }
   var divHtml = [];
   if ( mSec_isAuthenticated ) {
-    mSec_isAuthenticated( params, (user) => {
+    var accessToken = getToken(); 
+    mSec_isAuthenticated( params, accessToken, (user) => {
       //console.log( user )
       divHtml.push( '<div id="SecurityHeader">' );
-      if ( user ) { // auth OK 
+      if ( user ) {
+        handleSession( user );
         // Show User Id an pull down with logout, change password etc.
         divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
         divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
@@ -160,14 +163,22 @@ function sec2ChangePassword() {
 }
 
 function sec2Logout() {
+  if ( sessionInfo && sessionInfo["OAuth"] ) {
+    sessionInfo["OAuth"] = null
+  }
+  writeCookie( COOKIE, '', -1 );
   mSec_Logout( pongSec2Params );
 }
 
 function checkLogout() {
   if ( mSec_isAuthenticated ) {
-    mSec_isAuthenticated( pongSec2Params, (user) => { 
-      //console.log( user )
-      if ( ! user ) { // login expired
+    mSec_isAuthenticated( pongSec2Params, (user, err) => { 
+      //console.log( err )
+      if ( ! user && err && err.tatusText == 'Unauthorized' ) { // login expired 
+        if ( sessionInfo && sessionInfo["OAuth"] ) {
+          sessionInfo["OAuth"] = null
+        }
+        writeCookie( COOKIE, '', -1 );
         var lang = '';
         if ( getParam('lang') && getParam('lang') != '' ) {
           lang = "?lang=" + getParam('lang');
@@ -178,4 +189,108 @@ function checkLogout() {
       }
     })
   }
+}
+
+/*
+exampleErr = {
+  "original": {
+    "original": null,
+    "response": {
+      "req": {
+        "method": "GET",
+        "url": "https://dev-ie96lzx0.eu.auth0.com/userinfo", 
+        "headers": {
+           "content-type": "application/json", 
+           "auth0-client": "eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS4xMS4zIn0=", 
+           "authorization": "Bearer LWUuUL9Bawc4ZBX_UCNTFY2fjCAvsOJo" }
+      }, 
+      "xhr": {}, 
+      "text": "Unauthorized",
+       "statusText": "Unauthorized", 
+       "statusCode": 401, "status": 401, 
+       "statusType": 4, "info": false, "ok": false, 
+       "redirect": false, "clientError": true, 
+       "serverError": false, 
+       "error": { 
+         "status": 401, "method": "GET", 
+         "url": "https://dev-ie96lzx0.eu.auth0.com/userinfo" }, 
+         "created": false, "accepted": false,
+         "noContent": false, 
+         "badRequest": false, 
+         "unauthorized": true, 
+         "notAcceptable": false, "forbidden": false, 
+         "notFound": false, "unprocessableEntity": false, 
+         "headers": { 
+           "cache-control": "private, no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-transform", "content-type": null }, 
+           "header": { "cache-control": "private, no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-transform", "content-type": null }, "type": "", "links": {}, "body": null
+    }, 
+    "status": 401
+  }, 
+  "statusCode": 401, 
+  "statusText": "Unauthorized", 
+  "code": 401, 
+  "description": null, 
+  "name": "Error"
+}
+*/
+
+// ============================================================================
+
+function handleSession( user ) {
+  // check for old login
+  if ( mSec_getUserId( user ) == '?' ) {
+    sec2Logout(); // hard terminate this login
+  }
+}
+
+function getToken() {
+  // ... ok, check if we have already an access_token
+  var tokenFrmCookie = readCookie( COOKIE );
+  if ( tokenFrmCookie ) {
+    sessionInfo.OAuth = {
+      access_token : tokenFrmCookie,
+      token_type   : 'Bearer'
+    }
+    return tokenFrmCookie;
+  } else if ( mSec_getAccessTokenFrmURL ) {
+    var access_token = mSec_getAccessTokenFrmURL();
+    if ( access_token !== false ) {
+      writeCookie( COOKIE, access_token, 2 );
+      sessionInfo.OAuth = {
+        access_token : access_token,
+        token_type   : 'Bearer'
+      }
+      return access_token
+    }
+  }
+  return null;
+}
+
+// ----------------------------------------------------------------------------
+// helper
+function writeCookie( name, value, expireHrs ) {
+  var expires = "";
+  if ( expireHrs ) {
+    var date = new Date();
+    date.setTime( date.getTime() + ( expireHrs *60*60*1000 ) );
+    expires = "; expires=" + date.toGMTString();
+  }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+
+function readCookie( name ) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for ( var i = 0; i < ca.length; i++ ) {
+    var c = ca[i];
+    //console.log( 'Cookie '+c )
+    while ( c.charAt(0) == ' ' ) {
+      c = c.substring( 1, c.length );
+    }
+    if ( c.indexOf( nameEQ ) == 0 ) {
+      return c.substring( nameEQ.length, c.length );
+    }
+  }
+  return null;
 }

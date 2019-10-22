@@ -27,7 +27,9 @@ A special one is no real module:
 If you don't specify a <code>type</code>, a HTML page will be loaded from the resource with <code>GET <resourceURL>/html</code>. This can also be used for HTML output from other modules, e.g. the "Form View" module uses this pattern to display the action results.
 
 ## Header Modules  
-* [Base Page Security](pong-security/)
+* Security
+  * [Base Page Security](pong-security/)
+  * [OpenID Connect Security](pong-security2/)
 * [i18n = International language support](i18n/)
 * [Modal Page Message](pong-message/)
 * [Navigation Bar](pong-navbar/)
