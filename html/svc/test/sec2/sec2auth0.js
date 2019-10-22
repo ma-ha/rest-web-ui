@@ -38,15 +38,15 @@ function mSec_Login( params ) {
   window.location.href = loginURL
 }
 
-function mSec_isAuthenticated( params, accessToken, callback ) {
-  if ( ! accessToken ) { return callback( null ); }
+function mSec_isAuthenticated( params, token, callback ) {
+  if ( ! token ) { return callback( null ); }
   // init the Auth0 lib
   var webAuth = new auth0.WebAuth({
     domain   : params.authDomain,
     clientID : params.clientId
   });
   // get user profile
-  webAuth.client.userInfo( accessToken, function( err, user ) {
+  webAuth.client.userInfo( token, function( err, user ) {
     if ( err ) {
       // alert( 'ERR: '+err );
       //alert( JSON.stringify( err ) )

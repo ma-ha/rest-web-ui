@@ -172,7 +172,8 @@ function sec2Logout() {
 
 function checkLogout() {
   if ( mSec_isAuthenticated ) {
-    mSec_isAuthenticated( pongSec2Params, (user, err) => { 
+    var accessToken = getToken(); 
+    mSec_isAuthenticated( pongSec2Params, accessToken, (user, err) => { 
       //console.log( err )
       if ( ! user && err && err.tatusText == 'Unauthorized' ) { // login expired 
         if ( sessionInfo && sessionInfo["OAuth"] ) {
