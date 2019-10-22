@@ -92,10 +92,11 @@ function mSec_Logout( params ) {
 }
 
 
-function mSec_ChangePassword( params ) {
+function mSec_ChangePassword( params, userEmail ) {
   new Auth0ChangePassword({
     container:         "SecurityChangePasswordDiv",                   // required
-    email:             "{{email | escape}}",                          // DO NOT CHANGE THIS
+//    email:             "{{email | escape}}",                          // DO NOT CHANGE THIS
+    email:             userEmail,
     csrf_token:        "{{csrf_token}}",                              // DO NOT CHANGE THIS
     ticket:            "{{ticket}}",                                  // DO NOT CHANGE THIS
     password_policy:   "{{password_policy}}",                         // DO NOT CHANGE THIS

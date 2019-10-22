@@ -26,8 +26,9 @@ log( "PoNG-Security", "Loading Module");
 const COOKIE = 'pongSec2Tkn';
 var pongSec2Params  = null; 
 
-function initSecurityHeaderHtml( divId, type, params ) {
+function initSec2SecurityHeaderHtml( divId, type, params ) {
   pongSec2Params  = params;
+  sec2ChkCookie();
   // load external libs, if requried
   if ( pongSec2Params.requireJS  && pongSec2Params.requireJS instanceof Array) {
     for ( var i = 0; i < pongSec2Params.requireJS.length; i++ ) {
@@ -45,17 +46,17 @@ function initSecurityHeaderHtml( divId, type, params ) {
 }
 
 
-function addSecurityHeaderHtml( divId, type , params ) {
+function addSec2SecurityHeaderHtml( divId, type , params ) {
   log( "PoNG-Security", "start addSecurityHeaderHtml "+divId);
   if ( ! params ) { return }
   var divHtml = [];
   if ( mSec_isAuthenticated ) {
-    var accessToken = getToken(); 
+    var accessToken = sec2GetToken(); 
     mSec_isAuthenticated( params, accessToken, (user) => {
       //console.log( user )
       divHtml.push( '<div id="SecurityHeader">' );
       if ( user ) {
-        handleSession( user );
+        sec2handleSession( user );
         // Show User Id an pull down with logout, change password etc.
         divHtml.push( '<form id="SecurityHeaderFrom" action="index.html">' );
         divHtml.push( '<div id="SecurityHeaderUser">'+$.i18n('User')+':&nbsp;' );
@@ -86,6 +87,8 @@ function addSecurityHeaderHtml( divId, type , params ) {
               + '" class="PongUserPage">'+$.i18n(label)+'</a></span>' );        
           }
         }
+        // divHtml.push( '<span class="SecurityHeaderPullDownItem">'
+        // + '<a href="https://' + params.authDomain + '/#/account">'+$.i18n('Auth0 Account')+'</a></span>' );   
 
         divHtml.push( '<script>' );
         divHtml.push( '$( function() {' );
@@ -93,7 +96,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
         divHtml.push( '    setTimeout( function(){ $( "#SecurityHeaderPullDown" ).hide( "blind" ); }, 5000 );' );
         divHtml.push( '    $( "#SecurityHeaderPullDown" ).toggle( "blind" ); } ); ' );
         divHtml.push( '  $( "#SecurityHeaderPullDown" ).hide(); ');
-        divHtml.push( '  $( ".PongChPwd" ).click(  function() { sec2ChangePassword(); return false; } );' );
+        divHtml.push( '  $( ".PongChPwd" ).click(  function() { sec2ChangePassword("'+user.email+'"); return false; } );' );
         divHtml.push( '  $( ".PongLogout" ).click( function() { sec2Logout(); return false; } );' );
         divHtml.push( '});' );
         divHtml.push( '</script>' );
@@ -108,7 +111,7 @@ function addSecurityHeaderHtml( divId, type , params ) {
             checkLoginInterval = params.checkLoginInterval;
           }
         }
-        setInterval( checkLogout, checkLoginInterval );
+        setInterval( sec2checkLogout, checkLoginInterval );
 
       } else { // unauthenticated
         for ( var param in params ) {
@@ -158,28 +161,23 @@ function sec2Login() {
   mSec_Login( pongSec2Params );
 }
 
-function sec2ChangePassword() {
-  mSec_ChangePassword( pongSec2Params );
+function sec2ChangePassword( userEmail ) {
+  mSec_ChangePassword( pongSec2Params, userEmail );
 }
 
 function sec2Logout() {
-  if ( sessionInfo && sessionInfo["OAuth"] ) {
-    sessionInfo["OAuth"] = null
-  }
-  writeCookie( COOKIE, '', -1 );
+  sec2writeCookie( COOKIE, '', -1 );
   mSec_Logout( pongSec2Params );
 }
 
-function checkLogout() {
+function sec2checkLogout() {
   if ( mSec_isAuthenticated ) {
-    var accessToken = getToken(); 
+    var accessToken = sec2GetToken(); 
     mSec_isAuthenticated( pongSec2Params, accessToken, (user, err) => { 
       //console.log( err )
       if ( ! user && err && err.tatusText == 'Unauthorized' ) { // login expired 
-        if ( sessionInfo && sessionInfo["OAuth"] ) {
-          sessionInfo["OAuth"] = null
-        }
-        writeCookie( COOKIE, '', -1 );
+        sec2writeCookie( COOKIE, '', -1 );
+        delete headers.Authorization;
         var lang = '';
         if ( getParam('lang') && getParam('lang') != '' ) {
           lang = "?lang=" + getParam('lang');
@@ -237,30 +235,35 @@ exampleErr = {
 
 // ============================================================================
 
-function handleSession( user ) {
+function sec2handleSession( user ) {
   // check for old login
   if ( mSec_getUserId( user ) == '?' ) {
     sec2Logout(); // hard terminate this login
   }
 }
 
-function getToken() {
+var sec2token = null;
+function sec2ChkCookie() {
   // ... ok, check if we have already an access_token
-  var tokenFrmCookie = readCookie( COOKIE );
+  var tokenFrmCookie = sec2readCookie( COOKIE );
   if ( tokenFrmCookie ) {
-    sessionInfo.OAuth = {
-      access_token : tokenFrmCookie,
-      token_type   : 'Bearer'
-    }
-    return tokenFrmCookie;
+    headers['Authorization'] = "Bearer " + tokenFrmCookie; 
+    $.ajaxSetup({ headers: headers });
+    sec2token = tokenFrmCookie;
+  }
+}
+
+function sec2GetToken() {
+  // check if we have an access_token in the URL
+  if ( sec2token ) {
+    return sec2token;
   } else if ( mSec_getAccessTokenFrmURL ) {
     var access_token = mSec_getAccessTokenFrmURL();
     if ( access_token !== false ) {
-      writeCookie( COOKIE, access_token, 2 );
-      sessionInfo.OAuth = {
-        access_token : access_token,
-        token_type   : 'Bearer'
-      }
+      sec2writeCookie( COOKIE, access_token, 2 );
+      headers['Authorization'] = "Bearer " + access_token; 
+      $.ajaxSetup({ headers: headers });
+      sec2token = access_token;
       return access_token
     }
   }
@@ -269,7 +272,7 @@ function getToken() {
 
 // ----------------------------------------------------------------------------
 // helper
-function writeCookie( name, value, expireHrs ) {
+function sec2writeCookie( name, value, expireHrs ) {
   var expires = "";
   if ( expireHrs ) {
     var date = new Date();
@@ -279,8 +282,7 @@ function writeCookie( name, value, expireHrs ) {
   document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-
-function readCookie( name ) {
+function sec2readCookie( name ) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
   for ( var i = 0; i < ca.length; i++ ) {

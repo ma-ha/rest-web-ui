@@ -767,7 +767,7 @@ function pongFormRenderField( divId, field, col ) {
   } else if ( field.type == "js" && field.jsURL ) {
 
     $.getScript( field.jsURL );
-    // $.ajaxSetup({'async': false});
+    // $.ajaxSetup({'async': false, headers: headers });
     // $.get( 
     //     field.jsURL, 
     //     getUrlGETparams(),
@@ -780,7 +780,7 @@ function pongFormRenderField( divId, field, col ) {
     //       contentItems.push( '</script>' ); 
     //     }
     //   );
-    // $.ajaxSetup({'async': true});
+    // $.ajaxSetup({'async': true, headers: headers });
 
   } else {
     
@@ -853,7 +853,7 @@ function pongFormRenderField( divId, field, col ) {
             contentItems.push( '</datalist>' );
           } else if ( field.optionsResource != null ) {
             contentItems.push( '<datalist id="'+field.id+'DataList">' );
-            $.ajaxSetup({'async': false});
+            $.ajaxSetup({ 'async': false, headers: headers });
             $.getJSON( 
                 field.optionsResource.resourceURL, 
                 getUrlGETparams(),
@@ -866,7 +866,7 @@ function pongFormRenderField( divId, field, col ) {
                   }
                 }
               );          
-            $.ajaxSetup({'async': true});        
+            $.ajaxSetup({ 'async': true, headers: headers });        
             contentItems.push( '</datalist>' );
           }
 
@@ -929,7 +929,7 @@ function pongFormRenderField( divId, field, col ) {
       
     } else if ( field.type == "checkboxList" ) {
 
-      $.ajaxSetup({'async': false});
+      $.ajaxSetup({ 'async': false, headers: headers });
       $.getJSON( 
           field.resourceURL, 
           getUrlGETparams(),
@@ -944,7 +944,7 @@ function pongFormRenderField( divId, field, col ) {
             }
           }
         );          
-      $.ajaxSetup({'async': true});        
+      $.ajaxSetup({ 'async': true, headers: headers });        
 
     } else if ( field.type == "select" ) {
       
@@ -987,7 +987,7 @@ function pongFormRenderField( divId, field, col ) {
 
         } else {
 
-          // $.ajaxSetup({'async': false});
+          // $.ajaxSetup({'async': false, headers: headers });
           // $.getJSON( 
           //     field.optionsResource.resourceURL, 
           //     getUrlGETparams(),
@@ -998,7 +998,7 @@ function pongFormRenderField( divId, field, col ) {
           //       }
           //     }
           //   );          
-          // $.ajaxSetup({'async': true});        
+          // $.ajaxSetup({'async': true, headers: headers });        
           contentItems.push( '</select>' );
           contentItems.push( '<script>' )
           contentItems.push( ' $( function() { ' )

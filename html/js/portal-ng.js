@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.7.1';
+var PONGVER = '2.7.2';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -75,6 +75,8 @@ logInfo = false
 logInfoStr = ''
 
 csrfToken = 'default'
+// AJAX headers
+headers = {};
 var noCache = "";
 
 // fix "transport undefined" problem in mocha :
@@ -333,7 +335,8 @@ function processLayoutResponseJSON( d, textStatus, xhr ) {
   if ( xhr.getResponseHeader("X-Protect") ) { 
     csrfToken = xhr.getResponseHeader("X-Protect");
   }
-  $.ajaxSetup( { headers: { "X-Protect": csrfToken } } ) 
+  headers = { "X-Protect": csrfToken }
+  $.ajaxSetup( { headers: headers } ) 
 
   if ( d.layout.includeJS ) {
     for ( var i = 0; i < d.layout.includeJS.length; i++ ) {

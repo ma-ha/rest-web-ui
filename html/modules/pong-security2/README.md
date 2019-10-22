@@ -3,6 +3,8 @@ This module generates a Login Button, which redirects to a login page (openID co
 
 A JS example for Auht0 as provider with some functions is provided.
 
+IMPORTANT: Using this module, after user login, it will send BEARER token within all following AJAX calls!
+
 ## Usage:
 
   {
@@ -47,7 +49,7 @@ Parameter:
 * `moduleJS`: URL of the security implementation module, needs to implement:
   * `mSec_Login( params )` perform a login redirect
   * `mSec_isAuthenticated( params, callback )` will `callback(user)` or `callbacl(null)`
-  * `mSec_getAccessToken()` return token
+  * `mSec_getAccessTokenFrmURL()` return token
   * `mSec_getUserId( userInfo )` return user name or ?
   * `mSec_Logout( params )` perform a logout redirect
   * `mSec_ChangePassword( params )` show a change password dialog
@@ -62,3 +64,7 @@ Parameter:
 
 You can implement your own `moduleJS`, 
 however there is an [example JS for Auth0](../../svc/test/sec2/sec2auth0.js) 
+
+## TODOs
+
+* Change password dialog is not working.

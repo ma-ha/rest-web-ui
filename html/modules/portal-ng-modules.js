@@ -48,8 +48,8 @@ moduleMap[ "pong-security" ] = {
 moduleMap[ "pong-security2" ] = {
   "name": "pong-security2",
   "hooks": [
-    { hook: "init", method:"initSecurityHeaderHtml" },
-    { hook: "addHeaderHtml", method:"addSecurityHeaderHtml" }
+    { hook: "init", method:"initSec2SecurityHeaderHtml" },
+    { hook: "addHeaderHtml", method:"addSec2SecurityHeaderHtml" }
    ]
 };
 
