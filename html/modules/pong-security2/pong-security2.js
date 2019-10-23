@@ -174,8 +174,8 @@ function sec2checkLogout() {
   if ( mSec_isAuthenticated ) {
     var accessToken = sec2GetToken(); 
     mSec_isAuthenticated( pongSec2Params, accessToken, (user, err) => { 
-      //console.log( err )
-      if ( ! user && err && err.tatusText == 'Unauthorized' ) { // login expired 
+      console.log( err )
+      if ( ! user && err && err.statusText == 'Unauthorized' ) { // login expired 
         sec2writeCookie( COOKIE, '', -1 );
         delete headers.Authorization;
         var lang = '';
