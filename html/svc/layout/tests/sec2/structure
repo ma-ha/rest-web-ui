@@ -23,7 +23,7 @@
           "param": {
             "requireJS": [ 
               "https://cdn.auth0.com/js/auth0/9.11/auth0.min.js",
-              "https://cdn.auth0.com/js/change-password-1.5.1.min.js" 
+              "https://cdn.auth0.com/js/change-password-1.5.1.min.js"
             ],
             "moduleJS": "svc/test/sec2/sec2auth0.js",
             "authDomain": "dev-ie96lzx0.eu.auth0.com",
@@ -37,6 +37,7 @@
             
             "domain": "dev-ie96lzx0.eu.auth0.com",
             "clientId": "kG40JK0KKb9YXWyjnio1Djh1hPaJ6FAa",
+            "audience": "http://localhost:8111/security2demo/",
             
             "userPages": {
               "User Profile": "https://dev-ie96lzx0.eu.auth0.com/user"

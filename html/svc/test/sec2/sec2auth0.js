@@ -26,16 +26,20 @@ THE SOFTWARE.
 
 
 function mSec_Login( params ) { 
-  // https://auth0.com/docs/api/authentication#login
-  var loginURL = 'https://'+params.authDomain+'/authorize'
-    + '?response_type=token'  // code|token&
-    + '&client_id=' + params.clientId
-    + '&redirect_uri=' + encodeURIComponent( params.loginRedirect )
-    + '&state=234564678909890';
-  if ( params.loginType ) {
-    loginURL += '&connection=' + params.loginType
+  var webAuth = new auth0.WebAuth({
+    domain   : params.authDomain,
+    clientID : params.clientId
+  });
+  var authParam = {
+    responseType : 'token id_token',
+    clientID     : params.clientId,
+    redirectUri  : params.loginRedirect,
+    state        : 234564678909890   // TODO
   }
-  window.location.href = loginURL
+  // if ( params.audience ) {
+  //   authParam.audience = params.audience
+  // }
+  webAuth.authorize( authParam );
 }
 
 function mSec_isAuthenticated( params, token, callback ) {
@@ -48,16 +52,25 @@ function mSec_isAuthenticated( params, token, callback ) {
   // get user profile
   webAuth.client.userInfo( token, function( err, user ) {
     if ( err ) {
-      // alert( 'ERR: '+err );
-      //alert( JSON.stringify( err ) )
       console.log( err )
       callback( null, err );
     } else {
-      //alert( JSON.stringify( user ) )
-      // console.log( user );
       callback( user, null )
     }
   });
+}
+
+function mSec_getJWTfromURL() {
+  var idx = window.location.href.indexOf( 'id_token' )
+  if (  idx > 0 ) {
+    var tokenStr = window.location.href.substring( idx + 8 ) 
+    if ( tokenStr.indexOf('&') > 0 ) { 
+      tokenStr = tokenStr.substring( 0, tokenStr.indexOf('&') )
+    }
+    return tokenStr
+  } else {
+    return false
+  }
 }
 
 function mSec_getAccessTokenFrmURL() {
@@ -67,7 +80,6 @@ function mSec_getAccessTokenFrmURL() {
     if ( tokenStr.indexOf('&') > 0 ) { 
       tokenStr = tokenStr.substring( 0, tokenStr.indexOf('&') )
     }
-    //console.log('tokenStr '+tokenStr)
     return tokenStr
   } else {
     return false
