@@ -216,6 +216,7 @@ function sec2ChkCookie() {
   }
   if ( sec2token.accessToken ) {
     headers[ 'Authorization' ] = "Bearer " + sec2token.accessToken; 
+    headers[ 'id-jwt' ] = sec2token.idToken; 
     $.ajaxSetup({ headers: headers });
   } else {
     sec2token = null;
@@ -241,6 +242,7 @@ function sec2GetToken() {
     if ( sec2token.accessToken !== false ) { // this is for APIs
       sec2writeCookie( COOKIE_ACCESS_TKN, sec2token.accessToken, 2 );
       headers[ 'Authorization' ] = "Bearer " + sec2token.accessToken; 
+      headers[ 'id-jwt' ] = sec2token.idToken; 
       $.ajaxSetup({ headers: headers });
     }
     return sec2token;
