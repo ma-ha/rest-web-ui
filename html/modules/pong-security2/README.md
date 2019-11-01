@@ -1,5 +1,6 @@
 # Module "pong-security2" (preview)
-This module generates a Login Button, which redirects to a login page (openID connect). 
+This module generates a Login Button, which redirects to a login page 
+(OAuth 2.0 / OpenID Connect provider). 
 
 A JS example for Auht0 as provider with some functions is provided.
 

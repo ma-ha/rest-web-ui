@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.7.3';
+var PONGVER = '2.7.4';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -72,7 +72,7 @@ var directPage = 'main';
 
 loggerEvents = true;
 logInfo = false
-logInfoStr = ''
+logInfoStr = 'init sec'
 
 csrfToken = 'default'
 // AJAX headers
@@ -1671,12 +1671,12 @@ function getEventBroker (id) {
     }
 
     function addSubscription ( channel, callback) {
-      //sconsole.log( 'subscribe '+channel )
+      //console.log( 'subscribe '+channel )
       if (typeof subscriptions[channel] === 'undefined') {
           subscriptions[channel] = [];
       }
       subscriptions[channel].push(callback);
-      console.log( 'subscribed: '+channel )
+      log( 'subscribe', channel )
     }
 
     function unsubscribe (args) {

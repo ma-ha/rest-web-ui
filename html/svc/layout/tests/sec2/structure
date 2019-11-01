@@ -26,7 +26,6 @@
               "https://cdn.auth0.com/js/change-password-1.5.1.min.js"
             ],
             "moduleJS": "svc/test/sec2/sec2auth0.js",
-            "authDomain": "dev-ie96lzx0.eu.auth0.com",
             "checkLoginInterval": "60000",
             "loginRedirect": "http://localhost/mh/ws/rest-web-ui/html/index.html?layout=tests/sec2&",
             "logoutRedirect": "http://localhost/mh/ws/rest-web-ui/html/index.html?layout=tests/sec2&",
@@ -35,7 +34,7 @@
             "changePasswordURL": "svc/mock/sec/password",
             "registgerURL": "index.php?layout=tests/sec/register",
             
-            "domain": "dev-ie96lzx0.eu.auth0.com",
+            "authDomain": "dev-ie96lzx0.eu.auth0.com",
             "clientId": "kG40JK0KKb9YXWyjnio1Djh1hPaJ6FAa",
             "audience": "http://localhost:8111/security2demo/",
             

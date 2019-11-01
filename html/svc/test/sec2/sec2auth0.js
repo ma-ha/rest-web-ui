@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 
 function mSec_Login( params ) { 
+  // https://auth0.com/docs/libraries/auth0js/v9
   var webAuth = new auth0.WebAuth({
     domain   : params.authDomain,
     clientID : params.clientId
@@ -34,11 +35,12 @@ function mSec_Login( params ) {
     responseType : 'token id_token',
     clientID     : params.clientId,
     redirectUri  : params.loginRedirect,
-    state        : 234564678909890   // TODO
+    state        : 234564678909890,   // TODO
+    // scope        : 'read:all'
   }
-  // if ( params.audience ) {
-  //   authParam.audience = params.audience
-  // }
+  if ( params.audience ) {
+    authParam.audience = params.audience
+  }
   webAuth.authorize( authParam );
 }
 
@@ -60,10 +62,10 @@ function mSec_isAuthenticated( params, token, callback ) {
   });
 }
 
-function mSec_getJWTfromURL() {
+function mSec_getIdTokenfromURL() {
   var idx = window.location.href.indexOf( 'id_token' )
   if (  idx > 0 ) {
-    var tokenStr = window.location.href.substring( idx + 8 ) 
+    var tokenStr = window.location.href.substring( idx + 9 ) 
     if ( tokenStr.indexOf('&') > 0 ) { 
       tokenStr = tokenStr.substring( 0, tokenStr.indexOf('&') )
     }
@@ -105,47 +107,13 @@ function mSec_Logout( params ) {
 
 
 function mSec_ChangePassword( params, userEmail ) {
-  new Auth0ChangePassword({
-    container:         "SecurityChangePasswordDiv",                   // required
-//    email:             "{{email | escape}}",                          // DO NOT CHANGE THIS
-    email:             userEmail,
-    csrf_token:        "{{csrf_token}}",                              // DO NOT CHANGE THIS
-    ticket:            "{{ticket}}",                                  // DO NOT CHANGE THIS
-    password_policy:   "{{password_policy}}",                         // DO NOT CHANGE THIS
-    password_complexity_options: '{{password_complexity_options}}',   // DO NOT CHANGE THIS
-    theme: {
-      icon: "{{tenant.picture_url | default: '//cdn.auth0.com/styleguide/1.0.0/img/badge.png'}}",
-      primaryColor: "{{tenant.colors.primary | default: '#ea5323'}}"
-    },
-    dict: {
-      // passwordPlaceholder: "your new password",
-      // passwordConfirmationPlaceholder: "confirm your new password",
-      // passwordConfirmationMatchError: "Please ensure the password and the confirmation are the same.",
-      // passwordStrength: {
-      //   containsAtLeast: "Contain at least %d of the following %d types of characters:",
-      //   identicalChars: "No more than %d identical characters in a row (e.g., "%s" not allowed)",
-      //   nonEmpty: "Non-empty password required",
-      //   numbers: "Numbers (i.e. 0-9)",
-      //   lengthAtLeast: "At least %d characters in length",
-      //   lowerCase: "Lower case letters (a-z)",
-      //   shouldContain: "Should contain:",
-      //   specialCharacters: "Special characters (e.g. !@#$%^&*)",
-      //   upperCase: "Upper case letters (A-Z)"
-      // },
-      // successMessage: "Your password has been reset successfully.",
-      // configurationError: "An error ocurred. There appears to be a misconfiguration in the form.",
-      // networkError: "The server cannot be reached, there is a problem with the network.",
-      // timeoutError: "The server cannot be reached, please try again.",
-      // serverError: "There was an error processing the password reset.",
-      // headerText: "Enter a new password for<br />{email}",
-      // title: "Change Password",
-      // weakPasswordError: "Password is too weak."
-      // passwordHistoryError: "Password has previously been used."
-    }
+  var webAuth = new auth0.WebAuth({
+    domain   : params.authDomain,
+    clientID : params.clientId
   });
-
-  // close form after 30 sec
-  setTimeout( ()=> {
-    $( "#SecurityChangePasswordDiv" ).toggle( "blind" ); 
-  }, 30000 );
+  webAuth.changePassword({
+    email      : userEmail,
+    connection : 'Auth0'
+  })
+  alert( 'Auth0 will send you a link to change your password.\nPlease check your Emails!' )
 }

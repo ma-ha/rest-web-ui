@@ -23,11 +23,12 @@ THE SOFTWARE.
 */
 log( "PoNG-Security", "Loading Module");
 
-const COOKIE_TKN = 'pongSec2Tkn';
-const COOKIE_JWT = 'pongSec2JWT';
+const COOKIE_ACCESS_TKN = 'pongSec2XsTkn';
+const COOKIE_ID_TKN     = 'pongSec2IdTkn';
 var pongSec2Params  = null; 
 
 function initSec2SecurityHeaderHtml( divId, type, params ) {
+  log( 'sec', 'initSec2SecurityHeaderHtml' )
   pongSec2Params  = params;
   sec2ChkCookie();
   // load external libs, if requried
@@ -42,13 +43,16 @@ function initSec2SecurityHeaderHtml( divId, type, params ) {
   // load the implementation module
   ajaxOngoing++;
     $.getScript( pongSec2Params.moduleJS )
-      .done( function( script, textStatus ) { ajaxOngoing--; } )
+      .done( function( script, textStatus ) { 
+        sec2GetToken(); // must do this here, before other modules (i.e. nav-bar) are started
+        ajaxOngoing--; 
+      } )
       .fail( function( jqxhr, settings, exception ) { ajaxOngoing--; } );
 }
 
 
 function addSec2SecurityHeaderHtml( divId, type , params ) {
-  log( "PoNG-Security", "start addSecurityHeaderHtml "+divId);
+  log( "sec", "start addSecurityHeaderHtml "+divId);
   if ( ! params ) { return }
   var divHtml = [];
   if ( mSec_isAuthenticated ) {
@@ -138,10 +142,12 @@ function addSec2SecurityHeaderHtml( divId, type , params ) {
             divHtml.push( '<script>' );
             divHtml.push( '$( function() {' );
             divHtml.push( '  $( ".PongResetPwd" ).click( function() { sec2Login(); return false; } );' );
+            //divHtml.push( '  $( ".PongLogout" ).click( function() { sec2Logout(); return false; } );' );
             divHtml.push( '});' );
             divHtml.push( '</script>' );
           }
         }
+        // divHtml.push( '<span class="SecurityHeaderPullDownItem"><a href="logout.htm" class="PongLogout">'+$.i18n('Logout')+'</a></span>' );
       }
       divHtml.push( '<div id="SecurityChangePasswordDiv"></div>' );
       divHtml.push( '</div>' );
@@ -166,8 +172,8 @@ function sec2ChangePassword( userEmail ) {
 }
 
 function sec2Logout() {
-  sec2writeCookie( COOKIE_TKN, '', -1 );
-  sec2writeCookie( COOKIE_JWT, '', -1 );
+  sec2writeCookie( COOKIE_ACCESS_TKN, '', -1 );
+  sec2writeCookie( COOKIE_ID_TKN, '', -1 );
   mSec_Logout( pongSec2Params );
 }
 
@@ -177,8 +183,8 @@ function sec2checkLogout() {
     mSec_isAuthenticated( pongSec2Params, tkn.accessToken, (user, err) => { 
       if ( err ) console.log( err )
       if ( ! user && err && err.statusText == 'Unauthorized' ) { // login expired 
-        sec2writeCookie( COOKIE_TKN, '', -1 );
-        sec2writeCookie( COOKIE_JWT, '', -1 );
+        sec2writeCookie( COOKIE_ACCESS_TKN, '', -1 );
+        sec2writeCookie( COOKIE_ID_TKN, '', -1 );
         delete headers.Authorization;
         var lang = '';
         if ( getParam('lang') && getParam('lang') != '' ) {
@@ -205,11 +211,11 @@ var sec2token = null;
 function sec2ChkCookie() {
   // ... ok, check if we have already an access_token
   sec2token = {
-    accessToken : sec2readCookie( COOKIE_TKN ),
-    jwtToken    : sec2readCookie( COOKIE_JWT )
+    accessToken : sec2readCookie( COOKIE_ACCESS_TKN ),
+    idToken     : sec2readCookie( COOKIE_ID_TKN )
   }
-  if ( sec2token.jwtToken ) {
-    headers[ 'Authorization' ] = "Bearer " + sec2token.jwtToken; 
+  if ( sec2token.accessToken ) {
+    headers[ 'Authorization' ] = "Bearer " + sec2token.accessToken; 
     $.ajaxSetup({ headers: headers });
   } else {
     sec2token = null;
@@ -219,20 +225,23 @@ function sec2ChkCookie() {
 
 function sec2GetToken() {
   // check if we have an access_token in the URL
+  log( 'sec',  'sec2GetToken ...' )
   if ( sec2token ) {
+    log( 'sec',  'sec2GetToken already set' )
     return sec2token;
   } else if ( mSec_getAccessTokenFrmURL ) {
+    log( 'sec',  'sec2GetToken get from URL' )
     sec2token = {
       accessToken : mSec_getAccessTokenFrmURL(),
-      jwtToken    : mSec_getJWTfromURL()
+      idToken     : mSec_getIdTokenfromURL()
     }
-    if ( sec2token.jwtToken !== false ) {
-      sec2writeCookie( COOKIE_JWT, sec2token.jwtToken, 2 );
-      headers[ 'Authorization' ] = "Bearer " + sec2token.jwtToken; 
+    if ( sec2token.idToken !== false ) { // this is for GUI
+      sec2writeCookie( COOKIE_ID_TKN, sec2token.idToken, 2 );
+    }
+    if ( sec2token.accessToken !== false ) { // this is for APIs
+      sec2writeCookie( COOKIE_ACCESS_TKN, sec2token.accessToken, 2 );
+      headers[ 'Authorization' ] = "Bearer " + sec2token.accessToken; 
       $.ajaxSetup({ headers: headers });
-    }
-    if ( sec2token.accessToken !== false ) {
-      sec2writeCookie( COOKIE_TKN, sec2token.accessToken, 2 );
     }
     return sec2token;
   }
@@ -242,6 +251,7 @@ function sec2GetToken() {
 // ----------------------------------------------------------------------------
 // helper
 function sec2writeCookie( name, value, expireHrs ) {
+  log( 'sec', 'sec2writeCookie ' + name )
   var expires = "";
   if ( expireHrs ) {
     var date = new Date();
@@ -256,7 +266,7 @@ function sec2readCookie( name ) {
   var ca = document.cookie.split(';');
   for ( var i = 0; i < ca.length; i++ ) {
     var c = ca[i];
-    //console.log( 'Cookie '+c )
+    // console.log( 'Cookie '+c )
     while ( c.charAt(0) == ' ' ) {
       c = c.substring( 1, c.length );
     }
