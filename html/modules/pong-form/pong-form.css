@@ -18,3 +18,9 @@
 .ui-disabled { 
     opacity: 0.3 !important;
 } 
+
+.pongFormActionsClose,
+.pongFormInputGrpClose {
+  clear: both;
+  line-height: 0;
+}

@@ -187,6 +187,9 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
       if ( grp.fieldset != null ) {
         contentItems.push( '</fieldset>' );
       }
+      if ( ! pmd.heigth ) { // otherwise div will have no height:
+        contentItems.push( '<div class="pongFormInputGrp'+i+'Close pongFormInputGrpClose">&nbsp;</div>' );
+      }
       contentItems.push( '</div>' ); //pongFormInputGrp
     }
   } else {
@@ -233,8 +236,12 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
       }
     }    
   }
-  contentItems.push( '<div class="pongFormFrmField">' );
+  // contentItems.push( '<div class="pongFormFrmField">' );
   
+  contentItems.push( '</div>' );
+  if ( ! pmd.heigth ) { // otherwise div will have no height:
+    contentItems.push( '<div class="pongFormActionsClose">&nbsp;</div>' );
+  }
   contentItems.push( '</form>' );
   if ( pmd.label != null ) {        
     contentItems.push( '</fieldset>' );
