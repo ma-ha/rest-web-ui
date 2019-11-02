@@ -6,6 +6,7 @@
       {
         "rowId": "instform",
         "title": "This is a Test",
+        "height": "auto",
         "resourceURL": "svc/test",
         "type": "pong-form",
         "decor" : "decor",
