@@ -9,7 +9,7 @@
                "formFields":[     
                  { "id":"user", "label":"User ID",  "type":"text" }, 
                  { "id":"pwd",  "label":"Password", "type":"password", "required":true },
-                 { "id":"pwd",  "label":"Role (txt with options)", "type":"text", 
+                 { "id":"role",  "label":"Role (txt with options)", "type":"text", 
                    "options": [ 
                     { "value":"Admin" }, 
                     { "value":"Super Admin", "disabled":true }, 
@@ -17,7 +17,15 @@
                     { "value":"Author" } 
                    ]
                  },
-                 { "id":"pwd",  "label":"Role", "type":"select", 
+                 { "id":"role2",  "label":"Role", "type":"select", 
+                   "options": [ 
+                    { "option":"Admin" }, 
+                    { "option":"Super Admin", "disabled":true }, 
+                    { "option":"Myself", "selected":true }, 
+                    { "option":"Author" } 
+                   ]
+                 },
+                 { "id":"role3",  "label":"Role", "type":"select", "multiple": true,
                    "options": [ 
                     { "option":"Admin" }, 
                     { "option":"Super Admin", "disabled":true }, 

@@ -954,8 +954,9 @@ function pongFormRenderField( divId, field, col ) {
       $.ajaxSetup({ 'async': true, headers: headers });        
 
     } else if ( field.type == "select" ) {
-      
-      contentItems.push( '<select ' + nameAndClass  + title + modifier+ '>' );
+      var multi = '';
+      if ( field.multiple ) { multi = ' multiple'; }
+      contentItems.push( '<select ' + nameAndClass  + title + modifier+ multi+'>' );
       if ( field.options != null ) {
         for ( var i = 0; i < field.options.length; i++ ) {
           var optValue = '';

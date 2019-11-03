@@ -3,6 +3,7 @@
 * New [pong-security2 module](modules/pong-security2) provides OpenId Connect 
   login flow and Auth0 implementation exampe.
 * 2.7.6: fix for forms with auto-height (no height set)
+* 2.7.7: pong-form: select supports `"multiple":true`
 
 ## 2.6.x
 * [Upload file mondule](modules/pong-upload)  
