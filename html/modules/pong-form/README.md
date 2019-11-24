@@ -366,6 +366,15 @@ This will initiate CORS request, so your browser will start with an OPTIONS call
 But be aware of possible security issues.
 
 ## Form Actions 
+Actions can be:
+* Simple action with `actionName`
+* Simple action with `actionName` + `modalQuestion`
+* `onChange`
+  * with `actionURL` and/or with `update`
+* an `updateButton`
+* an `afterUpdate` (is TODO)
+* a `link`
+
 ### Simple Action 
 To render a button and perform an AJAX request, simply define an action with a <code>actionName</code>
 
@@ -392,6 +401,9 @@ Example:
     If you specify `"taget"="modal"`, you can add `"navto"="<url>"`, to load this page if the user has closed the dialog.
   * <code>target</code> is optional, you can also ignore the response.
 * Action buttons can be disabled by default using`"enabled":"false"`. This can be toggled by a checkboxes.
+
+If you define `modalQuestion`, e.g. `"modalQuestion":"Do you want to save"` a modal dialog with the question
+will open and the action button will be repeated in the dialog, along with a cancel button.
 
 ''Warning: If you set <code>"method":"GET"</code>, you may get problems with the length of the URL.''
 

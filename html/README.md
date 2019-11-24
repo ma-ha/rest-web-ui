@@ -1,4 +1,7 @@
 # Release Notes
+## 2.8.0:
+* pong-form: action with "modalQuestion", see [form docu](modules/pong-form)
+
 ## 2.7.x
 * New [pong-security2 module](modules/pong-security2) provides OpenId Connect 
   login flow and Auth0 implementation exampe.

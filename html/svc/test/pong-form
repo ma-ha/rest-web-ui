@@ -59,6 +59,8 @@
       { "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }, 
       { "id":"Chk", "actionName": "Check", "actionURL": "svc/test/check", 
         "enabled":"false", "dataEncoding":"GETstyle", "target": "out2" },
+      { "id":"Chk2", "actionName": "Do Check", "target": "modal", "actionURL": "svc/test/info",
+        "modalQuestion":"Do you really want to check the values?" },
       { "id":"ModBtn", "actionName": "Post+Modal+Nav", "actionURL": "svc/test/info", "target": "modal", "navto":"index.html?layout=tests/js-incl" }
     ]
 }
