@@ -533,9 +533,10 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   contentItems.push( '           "'+dataUrl+'", postParam , function(response) {  }, "json"' );
   contentItems.push( '        ).done( ' );
   contentItems.push( '           function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' );
-  contentItems.push( '        ).fail( ' );
-  contentItems.push( '           function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } ' );
-  contentItems.push( '        );');
+  contentItems.push( '        ).fail( function( e ) { ' );
+  contentItems.push( '           if ( e && e.status != 200 ) { alert("Error:\\n"+e.responseText )}');
+  contentItems.push( '           publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) ' );
+  contentItems.push( '        });');
   //contentItems.push( '        alert( "Post Data Error: { '+tbl.rowId+': "+rowIdVal+", "+colId+": "+colVal+" }   (r="+tbl.data("r") + "/c="+tbl.data("c")+") not stored!!"  ); ' );
   contentItems.push( '     }' );
   contentItems.push( '     return tbl;' );

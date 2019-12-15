@@ -1,7 +1,12 @@
 <?php
 header('Content-type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	echo json_encode( array() );
+  if ( isset( $_POST['ID'] ) && $_POST['ID']  == 'yyy1' ) {
+    http_response_code( 400 );
+    echo 'This is a Test-Error';  
+  } else {
+    echo json_encode( array() );
+  }
 } else {
 	$d = time();
 	$rows = 

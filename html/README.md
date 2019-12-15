@@ -1,5 +1,8 @@
 # Release Notes
 ## 2.8.0:
+* table: editable field shows alert, if response code is not 200
+
+## 2.8.0:
 * pong-form: action with "modalQuestion", see [form docu](modules/pong-form)
 
 ## 2.7.x

@@ -175,11 +175,11 @@ will generate a column:
 Adds a link to the "label" text field. 
 
 By default the link opens a new browser tab/window. Other options are 
-* "target":"modal"
-* "target":"_parent"
+* `"target": "modal"`
+* `"target": "_parent`
 
 ### Button 
-The button will do an asynchronous call to `svc/<resourceURL>/<id of button>?rowId=<rowId>' 
+The button will do an asynchronous call to `svc/<resourceURL>/<id of button>?rowId=<rowId>`
 In the example above this will be posted (productId of the row may be 1234): <code>svc/Products/addToOrder?rowId=1234</code>
 
 You can set the <code>URL</code> parameter to any other AJAX target.
@@ -322,6 +322,8 @@ where id is a table column
 If you specify <code>"editable":"true"</code> for a column, you can click into the cell and edit. When you leave the focus of the cell, the cell data and the "rowId" and its ID value are JSON encoded and POSTed back to the resource, to store them modified. Example HTTP request to save the modified cell data of cell column "name": 
 
 	POST /svc/Products/webdata { "productId": "03", "name": "Hello" }
+
+If the repsponse code is not 200, an alert box with the response text is shown as error. 
 
 Currently this feature is only available for text and checkbox columns.
 
