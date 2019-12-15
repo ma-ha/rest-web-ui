@@ -414,9 +414,10 @@ function pongTablePostSelectChange( divId, dataUrl, tbl, val ) {
     "json"
   ).done( 
     function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } 
-  ).fail( 
-    function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) }
-  );
+  ).fail( function( e ){ 
+    if ( e && e.status != 200 ) { alert("Error:\\n"+e.responseText ) }
+    publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) 
+  });
 }
 
 // ============================================================================
@@ -483,9 +484,10 @@ function pongTableAjaxCommits( divId, resourceURL, params, tbl ) {
   contentItems.push( '               "'+dataUrl+'", postParam, function( response ) { }, "json"' );
   contentItems.push( '               ).done( ' );
   contentItems.push( '                  function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' );
-  contentItems.push( '               ).fail( ' );
-  contentItems.push( '                  function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } ' );
-  contentItems.push( '               );');
+  contentItems.push( '               ).fail( function( e ) { ' );
+  contentItems.push( '                 if ( e && e.status != 200 ) { alert("Error:\\n"+e.responseText ) }');
+  contentItems.push( '                 publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) ' );
+  contentItems.push( '               });');
   contentItems.push( '            event.preventDefault(); return false; ' );
   contentItems.push( '         }' );
   contentItems.push( '  );' );
@@ -1096,7 +1098,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
           +'function(d){ var dtv=new Date(d).valueOf();'
           +'$.post( "'+poTbl[ tblDiv ].dataURL+'", { '+poTbl[ tblDiv ].pongTableDef.rowId+':"'+rowIdVal+'", '+cellDef.id+':dtv }, function(response) { }, "json"'
           +' ).done( function(){ publishEvent( "feedback", {"text":"Row saved sucessfully"} ) } ' 
-          +' ).fail( function(){ publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
+          +' ).fail( function(e){ if ( e && e.status != 200 ) { alert("Error:\\n"+e.responseText ) } publishEvent( "feedback", {"text":"ERROR: Could not save row!"} ) } );' 
           // known: wrong data still in poTbl[ tblDiv ].pongTableData -- but who cares
           +'$( "#'+cID+'" ).html( moment( new Date( d ) ).format( "'+fmt+'" ) ); '
           +'} )} ); '
