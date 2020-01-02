@@ -1,4 +1,7 @@
 # Release Notes
+## 2.8.2
+* page width fix
+
 ## 2.8.0:
 * table: editable field shows alert, if response code is not 200
 
