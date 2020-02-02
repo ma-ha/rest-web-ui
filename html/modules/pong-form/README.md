@@ -68,6 +68,7 @@ The HTML id is build as `<form-id>Content<field-id>`
 Supported field-types:
 * checkbox
 * checkboxList
+* color
 * date
 * email
 * radio

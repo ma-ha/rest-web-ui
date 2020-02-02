@@ -808,7 +808,8 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
         for ( var k = 0; k < col.formFields.length; k++ ) {
           var field = col.formFields[k];
           var fieldId = '#'+divId+field.id; 
-          if ( ( field.type == "text" ) || ( field.type == "email" ) || ( field.type == "password" ) ) {
+          if ( ( field.type == "text" )  || ( field.type == "password" ) || 
+               ( field.type == "email" ) || ( field.type == "color" ) ) {
             log( "Pong-Form",  'pongFormUpdateFieldsData text: '+field.id+' '+dta[field.id] );
             if ( dta[field.id] != null ) {
               $( fieldId ).val( dta[field.id] );              
@@ -1157,9 +1158,13 @@ function pongFormRenderField( divId, field, col ) {
         logErr( "Pong-Form", "link type must have a linkText and defaultVal");
       }
 
+    } else if ( field.type == "color" ) {
+
+      contentItems.push( '<input type="color" '+ nameAndClass  + title + defaultVal +modifier+'/>' );
+
     } else { 
 
-      contentItems.push( '<input type="text" '+ nameAndClass  + title + defaultVal +modifier+'/>' );      
+      contentItems.push( '<input type="text" '+ nameAndClass  + title + defaultVal +modifier+'/>' );
 
     }
     // TODO: support other form input types 

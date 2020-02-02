@@ -1,4 +1,7 @@
 # Release Notes
+## 2.8.3
+* form field type "color"
+
 ## 2.8.2
 * page width fix
 
