@@ -1144,8 +1144,10 @@ function initTabs() {
   var params = getUrlGETparams();
   for ( var p in params ) {
     if ( $( '#'+p ).hasClass( 'tabDiv' ) ) {
-      log( "init"," Select Tab "+p );
-      $('a[href="#'+params[p]+'TabDiv"]').click();
+      if ( p.indexOf( 'http') == -1 ) {
+        log( "init"," Select Tab "+p );
+        $('a[href="#'+params[p]+'TabDiv"]').click();
+      }
     }
   }
 }
