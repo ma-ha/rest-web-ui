@@ -1,4 +1,7 @@
 # Release Notes
+## 2.9.0
+* tabs can be pre-selected by URL parameter: rowId/ColId=tabId
+
 ## 2.8.3
 * form field type "color"
 

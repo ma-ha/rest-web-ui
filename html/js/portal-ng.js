@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.8.3';
+var PONGVER = '2.9.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -71,7 +71,7 @@ var directPage = 'main';
 
 
 loggerEvents = true;
-logInfo = false
+logInfo = false;
 logInfoStr = 'init sec'
 
 csrfToken = 'default'
@@ -168,8 +168,12 @@ function inits() {
       resourceDialogs();
       step = "afterInit";
     } else  if ( step == "afterInit" ) {
-      log( 'init', 'Start load dialogs for resources...');
+      log( 'init', 'Start modules after page load...');
       startModulesAfterPageLoad( layout );
+      step = "selTab";
+    } else  if ( step == "selTab" ) {
+      log( 'init', 'Check to select tab by param...');
+      initTabs();
       clearInterval( initTimerId );
       step = "done";
     }
@@ -727,7 +731,7 @@ function startModulesAfterPageLoad( lo ) {
       startModuleAfterPageLoad( lo.footer.modules[i] );
     }
   }
-  ajaxOngoing--;
+  //ajaxOngoing--;
 }
 
 function startModuleAfterPageLoad( module ) {
@@ -1136,6 +1140,15 @@ function tabsToHTML( def, cls ) {
   return div;
 }
 
+function initTabs() {
+  var params = getUrlGETparams();
+  for ( var p in params ) {
+    if ( $( '#'+p ).hasClass( 'tabDiv' ) ) {
+      log( "init"," Select Tab "+p );
+      $('a[href="#'+params[p]+'TabDiv"]').click();
+    }
+  }
+}
 
 function getCorrectedHeight( height, decor ) {
   var heightCorr = height
