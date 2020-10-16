@@ -1,0 +1,129 @@
+{
+ "layout":{
+  "title":"Portal: Test 'Easy' Features",
+  "includeHeader":"main",
+  "rows":[
+   {
+    "rowId":"r1",
+    "height":"auto",
+    "type":"pong-table",
+    "resourceURL":"svc/tbl-data",
+    "title":"Easy Table",
+    "moduleConfig":{
+     "dataURL":"",
+     "rowId":"ID",
+     "filter":{
+      "dataReqParams": [ 
+       {"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"},
+       {"id":"rating", "type":"select", "label":"Rating", "options": [ { "value":"0", "option":"doesn't matter" },{ "value":"1", "option":"top rated" } ] }, 
+       {"id":"dateMin", "label":"Newer than", "description":"Yes - this should really filer the data!", "type":"date"} 
+      ],
+      "dataReqParamsSrc": "Form"
+     },
+     "cols": [
+      {
+       "width": "5%",
+       "id": "Det1",
+       "label": "Details",
+       "cellType": "button",
+       "method":"expand",
+       "expand": {
+          "heightMin":"100px",
+          "divs" : [ 
+              { "id" : "ID", "cellType" : "text" }, 
+              { "id": "Picture", "label": "Picture", "cellType": "img" },
+              { "id": "ZoomImg", "label": "ZoomImg_zooms_Picture",
+                "cellType": "largeimg", "forImg": "Picture" },
+              { "id" : "XCust", "cellType" : "div",
+                "divs" : [ 
+                  { "id" : "CustomerCountLb", "cellType" : "label", "label" : "Customers" }, 
+                  { "id" : "CustomerCount", "cellType" : "text" },
+                  { "id" : "RatingLb", "cellType" : "label", "label" : "Rating" }, 
+                  { "id" : "Rating",   "cellType" : "rating", "ratingType" : "3star" }         
+                ]
+              },
+              { "id": "SelC", "cellType":"select",
+                "options": [
+                  {"option":"One"},
+                  {"option":"Two"},
+                  {"option":"Three"},
+                  {"option":"Four"},
+                  {"option":"Five"}
+                ]
+              }
+          ]
+        }
+      },
+      {
+       "width": "5%",
+       "id": "ID",
+       "label": "ID",
+       "cellType": "text"
+      },
+      {
+       "id": "Name.0",
+       "label": "Name",
+       "cellType": "text",
+       "editable": "true"
+      },
+      {
+       "id": "Status",
+       "label": "Status",
+       "cellType": "checkbox",
+       "editable": "true"
+      },
+      {
+       "id": "Rating",
+       "label": "Rating",
+       "cellType": "rating",
+       "ratingType": "3star"
+      },
+      {
+       "id": "Rating",
+       "label": "Rating No",
+       "cellType": "number",
+       "digits": "2"
+      },
+      {
+       "id": "Description",
+       "label": "Description",
+       "cellType": "text",
+       "editable": "true"
+      },
+      {
+       "id": "Created",
+       "label": "Created",
+       "cellType": "date",
+       "editable": "true"
+      },
+      {
+       "id": "ProductPage",
+       "label": "Product Page",
+       "cellType": "link"
+      },
+      {
+       "id": "ProductPage",
+       "label": "Created",
+       "cellType": "linkFor"
+      },
+      {
+       "id": "act",
+       "cellType": "button"
+      }
+     ]
+    },
+    "type_id":"5",
+    "decor":"decor",
+    "actions":[
+     {
+      "type":"pong-help",
+      "param":{
+       "showConfig":"r1"
+      }
+     }
+    ]
+   }
+  ],
+  "includeFooter":"main"
+ }
+}

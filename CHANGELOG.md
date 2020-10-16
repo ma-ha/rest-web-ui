@@ -1,4 +1,7 @@
 # Release Notes
+## 2.9.1
+* Table with "auto" height
+
 ## 2.9.0
 * tabs can be pre-selected by URL parameter: rowId/ColId=tabId
 

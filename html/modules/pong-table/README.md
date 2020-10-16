@@ -76,7 +76,7 @@ Remark: The rowId must not be in the cols array, it must only be in the result o
 
 **IMPORTANT WARNING:** For editable cells, please test the configuration carefully! I.e. if you detect POST requests with "redirect" (HTTP status 301), nothing will be saved!! You need to configure the URL correctly!
 
-## Paginators vs Scrollbar
+## Paginators vs Scrollbar vs "auto"
 The attribute <code>maxRows</code> is optional. 
 
 If it's defined the <code>maxRows</code> number, the rows count is limited to the value and a paginator is added. 
@@ -90,6 +90,8 @@ Sometimes you also have no space for this extra paginator line on your page.
 If <code>maxRows</code> is not specified, the table will be scrollable (overflow:true). 
 But be aware that all values are rendered in HTML rows. This makes the page slow if the table becomes huge.
 On touch devices you also may get a problem to scroll the page, if a scroll-table is shown.
+
+If you set `"height":"auto"`, the table will match in the view or will be resized to its result length.
 
 ### Continuous data loading (Planed TODO)
 

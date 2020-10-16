@@ -171,16 +171,18 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   $( "#"+divId ).append( ajacCommitsJS.join("\n") );
   $( "#"+divId ).append( actionsJS.join("\n") );
   
-  var tHeight = $( "#"+divId ).height();
-  if ( $( '#'+divId+'SrchFrmDiv' ).height() ) {
-    tHeight -= $( '#'+divId+'SrchFrmDiv' ).height();
-  } 
-  if ( $( '#'+divId+'Pagin' ).height() ) {
-    tHeight -= $( '#'+divId+'Pagin' ).height();
-  } 
-  //alert( $( "#"+divId ).height() +' - '+ $( '#'+divId+'SrchFrmDiv' ).height() );
-  $( "#"+divId+'PongTableDiv' ).height( tHeight );
-  
+  if ( ! $( '#'+divId ).hasClass( 'autoheight' ) ) { // floating length
+    var tHeight = $( "#"+divId ).height();
+    if ( $( '#'+divId+'SrchFrmDiv' ).height() ) {
+      tHeight -= $( '#'+divId+'SrchFrmDiv' ).height();
+    } 
+    if ( $( '#'+divId+'Pagin' ).height() ) {
+      tHeight -= $( '#'+divId+'Pagin' ).height();
+    } 
+    //alert( $( "#"+divId ).height() +' - '+ $( '#'+divId+'SrchFrmDiv' ).height() );
+    $( "#"+divId+'PongTableDiv' ).height( tHeight );
+  }
+
   // if there is no paginator:
   if ( ! tbl.maxRows ) {
     $( '#'+divId+'PongTableDiv' ).css( 'overflow', 'auto' );
