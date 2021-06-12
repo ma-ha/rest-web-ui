@@ -50,3 +50,27 @@ You can create your own module using the PoNG hooks. Please refer to the [module
 ## Special modules:
 * [Layout Editor](pong-layout-editor/)
 * [Log View](pong-log/)
+
+# "Local" Extension Modules
+
+You can build your own modules and serve them from the folder `ext-module`.
+Just choose a name, which is not used already for built in module list.
+
+Example: If we want to name our module `mymodule` we must provide:
+1. a CSS file with the URL `ext-module/mymodule/mymodule.css` (relative to the main page)
+2. a JS script file with the URL `ext-module/mymodule/mymodule.js` (you guessed it: relative to the main page)
+
+The JS must(!!) then implement the folowing methods:
+- <module-name>_init( divId, type , params ) 
+- <module-name>_loadResourcesHtml( divId, resourceURL, paramObj )
+- <module-name>_addActionBtn( divId, modalName, resourceURL )
+- <module-name>_afterPageLoad( divId, modalName, paramObj )
+- <module-name>_creModal( divId, dta )
+- <module-name>_update( divId, paramsObj )
+- <module-name>_setData( divId, modalName, resourceURL, paramObj )
+
+If you use it in the header:
+- <module-name>_addHeaderHtml( divId, type , params )
+
+If you use it in the footer:
+- <module-name>_addFooterHtml( divId, type , params )

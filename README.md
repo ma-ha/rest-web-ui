@@ -47,7 +47,7 @@ The User can now interact with the page, work with the data, modify it in AJAX m
 ### Plug-In Architecture
 The **framework** (= [portal-ng.js](html/js/)) implements the page life-cycle and contains only some core functions.
  
-All the views, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directory](html/modules/)). 
+All the view types, the session functionality, security, i18n is implemented as **plug-ins** (= [subfolders in the "modules" directory](html/modules/)). 
 An open plug-in interface and predefined hooks make it easy to add or modify functionality -- if you're really unhappy and a JS programmer
 (see: *Add or extend Plug-Ins*).
 

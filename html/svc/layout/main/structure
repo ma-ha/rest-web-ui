@@ -45,6 +45,7 @@
 			       { "pageLink":"tests/theme", "label":"Theme Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },
 			       { "pageLink":"tests/form-upl", "label":"Upload File Test" },
+			       { "pageLink":"tests/extension", "label":"Local Extension Modules" },
 			       { "html":"... greetings, ${tstUser} ;-)" }
 			    ]   
       		} 

@@ -30,11 +30,12 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.9.1';
+var PONGVER = '2.9.2';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
 var reqModules = {};
+var reqExtModules = {}; // external modules
 var moduleConfig = new Array();
 
 /** resMap[0] = resId / resMap[1] = resourceURL / resMap[2] = type / resMap[3] = resourceParam */
@@ -565,7 +566,7 @@ function loadModules() {
       
       // load scripts
       ajaxOngoing++;
-        $.getScript( modulesPath+module+'/'+module+".js" )
+      $.getScript( modulesPath+module+'/'+module+".js" )
       .done(
         function( script, textStatus ) {
           log( 'loadModules', this.url+' '+textStatus );
@@ -597,9 +598,24 @@ function loadModules() {
             .fail( function( jqxhr, settings, exception ) { log( 'loadModules', this.url+' '+exception ); ajaxOngoing--; } );
           }
         }
-
-        
     }
+  }
+  // now load external/custom modules 
+  for ( var module in reqExtModules ) {
+    console.log( 'loadModules: "ext-module/'+module+'/'+module+'.js"' );
+    jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="ext-module/'+module+'/'+module+'.css" type="text/css" />');
+
+    console.log( 'loadModules: "ext-module/'+module+'/'+module+'.css"' );
+    ajaxOngoing++;
+    $.getScript( 'ext-module/'+module+'/'+module+".js" )
+    .done( function( script, textStatus ) {
+        log( 'loadModules', this.url+' '+textStatus );
+        ajaxOngoing--;
+    })
+    .fail( function( jqxhr, settings, exception ) {
+        log( 'loadModules', this.url+' '+exception );
+        ajaxOngoing--;
+    });
   }
   ajaxOngoing--;
 }
@@ -678,12 +694,16 @@ function checkModulesActn( l ) {
 function addReqModule( mType ) {
   if ( ! reqModules.hasOwnProperty( mType ) ) {
     log( 'loadModules', "identified required module: "+mType  );
-    reqModules[ mType ] = mType;    
-    if ( ( moduleMap[ mType ] != null ) && ( moduleMap[ mType ].requires != null ) ) {
-      for ( var i = 0; i < moduleMap[ mType ].requires.length; i++ ) {
-        log( 'loadModules', mType+" requires: "+ moduleMap[ mType ].requires[i] );
-        addReqModule( moduleMap[ mType ].requires[i] );
+    if ( moduleMap[ mType ] != null ) { // built in module
+      reqModules[ mType ] = mType;    
+      if ( ( moduleMap[ mType ] != null ) && ( moduleMap[ mType ].requires != null ) ) {
+        for ( var i = 0; i < moduleMap[ mType ].requires.length; i++ ) {
+          log( 'loadModules', mType+" requires: "+ moduleMap[ mType ].requires[i] );
+          addReqModule( moduleMap[ mType ].requires[i] );
+        }
       }
+    } else { //external module
+      reqExtModules[ mType ] = mType;    
     } 
   }
 }
@@ -707,12 +727,12 @@ function initModules( lo ) {
 
 function initAModule( module ) {
   if ( module ) {
-  log( 'initModules', "initModules "+module.type );
-  var hook = getHookMethod( "init", module.type );
-  if ( hook != "" ) {
-    log( 'initModules CALL', hook+"( ... )");
-    eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
-  }  
+    log( 'initModules', "initModules "+module.type );
+    var hook = getHookMethod( "init", module.type );
+    if ( hook != "" ) {
+      log( 'initModules CALL', hook+"( ... )");
+      eval( hook+'( "'+module.id+'", "'+module.type+'", '+JSON.stringify( module.param )+' )'  );
+    }  
   }
 }
 
@@ -1461,16 +1481,20 @@ function msDelay(millis) {
 function getHookMethod( hook, type ) {
   log( 'getHookMethod', "hook="+hook+" type="+type );
   var fnName = "";
-  if ( ( type != null ) && ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) )
-  for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
-    moduleHook = moduleMap[ type ].hooks[i];
-    //log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
-    if ( moduleHook.hook == hook ) {
-      log( 'getHookMethod', moduleHook.method+"( ... )");
-      fnName = moduleHook.method;
+  if (  type == null ) { return fnName; }
+  if ( ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) ) {
+    for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
+      moduleHook = moduleMap[ type ].hooks[i];
+      //log( 'getHookMethod', "moduleHook.hook="+moduleHook.hook );
+      if ( moduleHook.hook == hook ) {
+        log( 'getHookMethod', moduleHook.method+"( ... )");
+        fnName = moduleHook.method;
+      }
     }
+  } else {
+    fnName = type +'_' + hook;
+    console.log('Custom Hook: '+fnName+'()')
   }
-  
   return fnName;
 }
 

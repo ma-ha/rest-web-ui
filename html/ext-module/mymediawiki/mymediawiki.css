@@ -1,0 +1,12 @@
+
+.pong-mediawiki {
+	overflow: auto;
+}
+
+.wiki-breadcrump {
+	font-size: 0.8em;
+}
+
+.pong-mediawiki .mw-editsection {
+  display: none;
+}
