@@ -54,8 +54,8 @@ Parameter:
   * `mSec_getUserId( userInfo )` return user name or ?
   * `mSec_Logout( params )` perform a logout redirect
   * `mSec_ChangePassword( params )` show a change password dialog
-* `authDomain`: 
-* `checkLoginInterval`: milliseconds to check if sessio has not been expired
+* `authDomain`:  DN
+* `checkLoginInterval`: milliseconds to check if session has not been expired (default=60s)
 * `loginRedirect`: page to show after login
 * `changePasswordURL`: param is optional to show the _Change Password_ link
 * `resetPasswordURL`: param is optional to show the _Reset_ link
@@ -65,6 +65,11 @@ Parameter:
 
 You can implement your own `moduleJS`, 
 however there is an [example JS for Auth0](../../svc/test/sec2/sec2auth0.js) 
+
+Minimum required parameter set:
+* `moduleJS`: URL of the security implementation module, needs to implement:
+* `authDomain`: DN
+* `loginRedirect`: page to show after login
 
 ## TODOs
 
