@@ -57,7 +57,7 @@ function addSec2SecurityHeaderHtml( divId, type , params ) {
   var divHtml = [];
   if ( mSec_isAuthenticated ) {
     var tkn = sec2GetToken(); 
-    mSec_isAuthenticated( params, tkn.accessToken, (user) => {
+    mSec_isAuthenticated( params, tkn, (user) => {
       //console.log( user )
       divHtml.push( '<div id="SecurityHeader">' );
       if ( user ) {
@@ -180,7 +180,7 @@ function sec2Logout() {
 function sec2checkLogout() {
   if ( mSec_isAuthenticated ) {
     var tkn = sec2GetToken(); 
-    mSec_isAuthenticated( pongSec2Params, tkn.accessToken, (user, err) => { 
+    mSec_isAuthenticated( pongSec2Params, tkn, (user, err) => { 
       if ( err ) console.log( err )
       if ( ! user && err && err.statusText == 'Unauthorized' ) { // login expired 
         sec2writeCookie( COOKIE_ACCESS_TKN, '', -1 );

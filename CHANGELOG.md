@@ -1,4 +1,10 @@
 # Release Notes
+## 2.9.3
+* IMPORTANT: Fixed [pong-security2 module](html/modules/pong-security2) mSec_isAuthenticated( ... token ... ) -> token param is now `{ accessToken: STRING, idToken: STRING }`  (in prior versions, it was only access token string)
+
+## 2.9.2
+* you can inject your own private view-types or modules, see [local modules support](html/modules)
+
 ## 2.9.1
 * Table with "auto" height
 
@@ -15,16 +21,16 @@
 * table: editable field shows alert, if response code is not 200
 
 ## 2.8.0:
-* pong-form: action with "modalQuestion", see [form docu](modules/pong-form)
+* pong-form: action with "modalQuestion", see [form docu](html/modules/pong-form)
 
 ## 2.7.x
-* New [pong-security2 module](modules/pong-security2) provides OpenId Connect 
+* New [pong-security2 module](html/modules/pong-security2) provides OpenId Connect 
   login flow and Auth0 implementation exampe.
 * 2.7.6: fix for forms with auto-height (no height set)
 * 2.7.7: pong-form: select supports `"multiple":true`
 
 ## 2.6.x
-* [Upload file mondule](modules/pong-upload)  
+* [Upload file mondule](html/modules/pong-upload)  
 * 2.6.5: fix for id param in case of mobile redirect
 * 2.6.6: `pong-icons` and `pong-iconrows` pass GET-parameters to the resource load request
 
@@ -32,19 +38,19 @@
 * fix .page-with and .root-row 
 
 ## 2.4.x
-* [Markdown Wiki module](modules/pong-markdown)  
+* [Markdown Wiki module](html/modules/pong-markdown)  
 
 ## Version 2.3.0
 * Pass "id" parameter to "structure" request
 
 ## Version 2.2.1
-* [Icon row module](modules/pong-iconrow)
+* [Icon row module](html/modules/pong-iconrow)
 
 ## Version 2.1.2
 * Fix param handover in `pong-table` update
 
 ## Version 2.0.x
-* Table: Filter supports checkbox, see [table docu](modules/pong-table)
+* Table: Filter supports checkbox, see [table docu](html/modules/pong-table)
 
 ## Version 2.0.x
 * [New Layout Version 2](https://github.com/ma-ha/rest-web-ui/tree/master/html/js/README_structure.md)
@@ -58,7 +64,7 @@
 
 ## Version 1.4.x
 * 1.4.0: New module: [pong-message](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-message/) 
-* 1.4.2: [Form](modules/pong-form): link type 
+* 1.4.2: [Form](html/modules/pong-form): link type 
 
 ## Version 1.3.x
 * 1.3.0: header.logo
@@ -95,13 +101,13 @@
   * inline styles all moved to `#viewSizes`, so all height and width can changed in `custom.css`
   * Form: Supports readonly and disabled
 * v1.0.2
-  * Form: [reCAPTCHA](modules/pong-form/) as field 
+  * Form: [reCAPTCHA](html/modules/pong-form/) as field 
   * Form field option "required"=true
   * Form with old "2-column" layout removed from docu
 
 ## Version 0.9.x
 * Code clean up
-* [Login dialog](modules/pong-security/) with "enter" submit
+* [Login dialog](html/modules/pong-security/) with "enter" submit
 * Fixes:
 	* Icons view: i18n (lang pram) fix
 	* Tree view i18n fix
@@ -112,15 +118,15 @@
 * Icons with Info and refresh
 * added "info=<pkg>" in URL to get console logs
 * date column (editable)
-* [IO](modules/pong-io): graph with grid
-* [IO](modules/pong-io): graph with time x-Axis
-* 0.9.8: [IO](modules/pong-io): graph y-Axis scaling option (mouse drag)
-* 0.9.9: [IO](modules/pong-io): graph scaling: touch screen support
-* 0.9.13: [Table](modules/pong-table): enhanced date formatting 
-* 0.9.15: [IO](modules/pong-io) pollOptions
+* [IO](html/modules/pong-io): graph with grid
+* [IO](html/modules/pong-io): graph with time x-Axis
+* 0.9.8: [IO](html/modules/pong-io): graph y-Axis scaling option (mouse drag)
+* 0.9.9: [IO](html/modules/pong-io): graph scaling: touch screen support
+* 0.9.13: [Table](html/modules/pong-table): enhanced date formatting 
+* 0.9.15: [IO](html/modules/pong-io) pollOptions
 * 0.9.17/18: IO graph x-scaling
-* 0.9.19: date picker in [table](modules/pong-table) filter and filter default value
-* 0.9.20: select in [table](modules/pong-table) filter, jump to 1st page if required, calculate optimal fitting height
+* 0.9.19: date picker in [table](html/modules/pong-table) filter and filter default value
+* 0.9.20: select in [table](html/modules/pong-table) filter, jump to 1st page if required, calculate optimal fitting height
 * 0.9.21: CSRF token passsed from layout responst header to AJAX reqest headers
 * 0.9.22: Warning if embedded in frame to prevent click hijacking attack
 * 0.9.23: Input with [datalist](https://github.com/ma-ha/rest-web-ui/tree/master/html/modules/pong-form#text)
@@ -142,31 +148,31 @@
 
 ## Version 0.8.x
 * added `afterPageLoad(...)` hook
-* [Search header module](modules/pong-search) 
-* [RSS Module](modules/pong-rss)
-* [Lists](modules/pong-list) with hierarchically embedded DIVs
+* [Search header module](html/modules/pong-search) 
+* [RSS Module](html/modules/pong-rss)
+* [Lists](html/modules/pong-list) with hierarchically embedded DIVs
 * List/table with 
 	* icons and labels
 	* pie charts
 	* graphs
 * List w/o maxRows generate scrollbar
-* [Icon Navigation View](modules/pong-icons/)
+* [Icon Navigation View](html/modules/pong-icons/)
 
 ## Version 0.7.x 
-* [Navigation tabs](modules/pong-navbar) with pull down sub menus
-* [I/O switches action](modules/pong-io) rendered directly
-* ["On-the-fly" configuration](modules/pong-on-the-fly) for views
-* [Log Event Queue](modules/pong-log) (catches also logs from early page life cycle)  
+* [Navigation tabs](html/modules/pong-navbar) with pull down sub menus
+* [I/O switches action](html/modules/pong-io) rendered directly
+* ["On-the-fly" configuration](html/modules/pong-on-the-fly) for views
+* [Log Event Queue](html/modules/pong-log) (catches also logs from early page life cycle)  
 * Base framework now with "pub-sub event broker"
-* [Feedback view](modules/feedback) with feedback for GUI user now from forms, tables, maps, ...
+* [Feedback view](html/modules/feedback) with feedback for GUI user now from forms, tables, maps, ...
 * [Mobile/Tablet detection](js/ext) load &lt;layout&gt;, &lt;layout&gt;-m or &lt;layout&gt;-t files
 and
 * [Node.JS support](https://www.npmjs.com/package/easy-web-app)
 * [Python pypi package](https://pypi.python.org/pypi?:action=display&name=easy-web-app)
-* [Tree view](modules/pong-tree)
+* [Tree view](html/modules/pong-tree)
 * Support logo text and img combination
-* [Histogram view](modules/pong-histogram)
-* [Table: setData action](modules/pong-table)
+* [Histogram view](html/modules/pong-histogram)
+* [Table: setData action](html/modules/pong-table)
 * Security: Change password
 * Table: second click reverse sort order
 * Security: Pull down menu with user page links
@@ -174,37 +180,37 @@ and
 * Security: Force change password dialog after login
 
 ## Version 0.7
-* Header: [Pull down menu](modules/pong-pulldown/) (new)
-* [List view](modules/pong-list/) rewritten: reuse table functions
-* [Table](modules/pong-table/)/[list](modules/pong-list/) view: 
+* Header: [Pull down menu](html/modules/pong-pulldown/) (new)
+* [List view](html/modules/pong-list/) rewritten: reuse table functions
+* [Table](html/modules/pong-table/)/[list](html/modules/pong-list/) view: 
 	* with select fields and actions
 	* with clickable Image 
 	* support more field types
 	* paginator with page info
 	* poling reload 
-* [Form view](modules/pong-form/) support more field types
-* [Help View](modules/pong-help/): Option to show JSON config
-* [Source Code View]](modules/pong-sourcecode/)
+* [Form view](html/modules/pong-form/) support more field types
+* [Help View](html/modules/pong-help/): Option to show JSON config
+* [Source Code View]](html/modules/pong-sourcecode/)
 * Programming Plug-Ins: [Include machanism for 3rd party JS libraries](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming) 
 
 ## Version 0.6
 Modules Improvement:
-* [Easy Form Mdule](modules/pong-easyform/) (new) 
-* [Easy Table Module](modules/pong-easytable/) (new)
+* [Easy Form Mdule](html/modules/pong-easyform/) (new) 
+* [Easy Table Module](html/modules/pong-easytable/) (new)
 * TODO: improved table paginator
 
 ## Version 0.6
 Modules Improvement:
-* [I/O Module](modules/pong-io/) 
+* [I/O Module](html/modules/pong-io/) 
 
 ## Version 0.5 
 General Improvements
 * [Client side session handling](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming#Client_Side_Session)
 Modules Improvement:
-* [OAuth Module](modules/pong-oauth/)
-* [Map: Display Map View](modules/pong-map/) 
-* [Table: column sorting](modules/pong-table/)
-* [Form: AJAX error handling](modules/pong-form/) 
+* [OAuth Module](html/modules/pong-oauth/)
+* [Map: Display Map View](html/modules/pong-map/) 
+* [Table: column sorting](html/modules/pong-table/)
+* [Form: AJAX error handling](html/modules/pong-form/) 
 * several minor improvements
 
 ## Version 0.4 
@@ -233,10 +239,10 @@ General:
 * Allow links in Copyright
 * Basic auth mechnism
 Modules:
-* [MediaWiki View](modules/pong-mediawiki/)
+* [MediaWiki View](html/modules/pong-mediawiki/)
 * Security Header 
-* [Master-Detail-Tables View](modules/master-details-view/)
-* [I18N Internationalization](modules/i18n/)
+* [Master-Detail-Tables View](html/modules/master-details-view/)
+* [I18N Internationalization](html/modules/i18n/)
 
 ## Version 0.1 
 Features:

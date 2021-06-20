@@ -52,7 +52,7 @@ function mSec_isAuthenticated( params, token, callback ) {
     clientID : params.clientId
   });
   // get user profile
-  webAuth.client.userInfo( token, function( err, user ) {
+  webAuth.client.userInfo( token.idToken, function( err, user ) {
     if ( err ) {
       console.log( err )
       callback( null, err );

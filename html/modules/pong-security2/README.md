@@ -49,7 +49,7 @@ Parameter:
 * `requireJS`: Array of external JS to load (URLs)
 * `moduleJS`: URL of the security implementation module, needs to implement:
   * `mSec_Login( params )` perform a login redirect
-  * `mSec_isAuthenticated( params, callback )` will `callback(user)` or `callbacl(null)`
+  * `mSec_isAuthenticated( params, token, callback )` will `callback(user)` or `callbacl(null)`
   * `mSec_getAccessTokenFrmURL()` return token
   * `mSec_getUserId( userInfo )` return user name or ?
   * `mSec_Logout( params )` perform a logout redirect
