@@ -45,14 +45,16 @@ function mSec_Login( params ) {
 }
 
 function mSec_isAuthenticated( params, token, callback ) {
-  if ( ! token ) { return callback( null ); }
+  console.log( token )
+  if ( ! token || ! token.idToken ) { return callback( null ); }
   // init the Auth0 lib
   var webAuth = new auth0.WebAuth({
     domain   : params.authDomain,
     clientID : params.clientId
   });
   // get user profile
-  webAuth.client.userInfo( token.idToken, function( err, user ) {
+  webAuth.client.userInfo( token.accessToken, function( err, user ) {
+    console.log(' webAuth.client.userInfo',err, user)
     if ( err ) {
       console.log( err )
       callback( null, err );
