@@ -1,4 +1,7 @@
 # Release Notes
+## 2.9.4
+* [pong-security2 module](html/modules/pong-security2): remove tokens from URL after login
+
 ## 2.9.3
 * IMPORTANT: Fixed [pong-security2 module](html/modules/pong-security2) mSec_isAuthenticated( ... token ... ) -> token param is now `{ accessToken: STRING, idToken: STRING }`  (in prior versions, it was only access token string)
 

@@ -232,18 +232,28 @@ function sec2GetToken() {
     return sec2token;
   } else if ( mSec_getAccessTokenFrmURL ) {
     log( 'sec',  'sec2GetToken get from URL' )
+    let reload = false;
     sec2token = {
       accessToken : mSec_getAccessTokenFrmURL(),
       idToken     : mSec_getIdTokenfromURL()
     }
     if ( sec2token.idToken !== false ) { // this is for GUI
       sec2writeCookie( COOKIE_ID_TKN, sec2token.idToken, 2 );
+      reload = true;
     }
     if ( sec2token.accessToken !== false ) { // this is for APIs
       sec2writeCookie( COOKIE_ACCESS_TKN, sec2token.accessToken, 2 );
       headers[ 'Authorization' ] = "Bearer " + sec2token.accessToken; 
       headers[ 'id-jwt' ] = sec2token.idToken; 
       $.ajaxSetup({ headers: headers });
+      reload = true;
+    }
+    if ( reload && pongSec2Params.loginRedirect ) {
+      var lang = '';
+      if ( getParam('lang') && getParam('lang') != '' ) {
+        lang = "?lang=" + getParam('lang');
+      }
+      window.location.href = pongSec2Params.loginRedirect + lang; 
     }
     return sec2token;
   }
