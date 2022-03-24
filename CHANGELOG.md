@@ -1,4 +1,7 @@
 # Release Notes
+## 2.9.5
+- [Table](html/modules/pong-table) links passes "id" as parm name additionally
+
 ## 2.9.4
 * [pong-security2 module](html/modules/pong-security2): remove tokens from URL after login
 

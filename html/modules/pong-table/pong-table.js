@@ -1575,18 +1575,20 @@ function getPostParam ( params, divId, cellDta ) {
 function addRowIdGetParam ( divId, url, cellDta ) {
   var rid = poTbl[ divId ].pongTableDef.rowId;
   if ( typeof rid === 'string' ) {
-    if ( url.indexOf("?") > -1 ) {	url += '&';	} else { url += '?'; }
-    url += rid+'='+cellDta[ rid ];													
+    if ( url.indexOf("?") > -1 ) { url += '&'; } else { url += '?'; }
+    url += rid+'='+cellDta[ rid ];
+    if ( rid != 'id' ) { 
+      url += '&id='+cellDta[ rid ]; 
+    }
   } else if ( Array.isArray( rid ) ) {
     var first = true;
     for ( var x = 0; x < rid.length; x++ ) {
-      if ( url.indexOf("?") > -1 ) {	url += '&';	} else { url += '?'; }
-      url += rid[x]+'='+cellDta[ rid[x] ];								
+      if ( url.indexOf("?") > -1 ) { url += '&'; } else { url += '?'; }
+      url += rid[x]+'='+cellDta[ rid[x] ];
     }
   } else {
-    if ( url.indexOf("?") > -1 ) {	url += '&';	} else { url += '?'; }
+    if ( url.indexOf("?") > -1 ) { url += '&'; } else { url += '?'; }
     url += rid+'='+cellDta[ rid ];
-
   }
   return url;
 }
