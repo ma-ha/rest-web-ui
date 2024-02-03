@@ -1,4 +1,7 @@
 # Release Notes
+## 2.9.6
+- [Form](html/modules/pong-form) fix "setData" for checkbox
+
 ## 2.9.5
 - [Table](html/modules/pong-table) links passes "id" as parm name additionally
 
