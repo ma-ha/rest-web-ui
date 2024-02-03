@@ -34,6 +34,11 @@ But to make life easier there are packaged REST backends available:
 ## Test It Live 
 **[ONLINE DEMOS](https://mh-svr.de/pong_dev)**
 
+## Real World App Example
+Check out what it's capable to do in my [Low Code Data App](https://github.com/ma-ha/lowcode-data-app/).
+
+This includes OpenId connect authentication flow, an "Entity Diagram" extension, dynamic form and table generation, lot CSS hacks and more.
+
 ## How does it work
 1. Portal pages are defined via a plain JSON file / by a REST/JSON web service. 
 2. An empty `index.html` contains only JS calls this framework initialized with a dedicated JSON page description.
