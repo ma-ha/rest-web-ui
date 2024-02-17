@@ -1038,7 +1038,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
   log( "Pong-Table", 'ID:"'+cellId+ '"  val:'+ cellVal );
   if ( cellType == 'text' ) {
     cellVal += '';
-    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+    if ( ( cellDef.editable != null ) && ( ( cellDef.editable == "true" ) || ( cellDef.editable === true)) ) { 
       var lnkIco = "";
       if ( cellVal.indexOf('http://') == 0 || cellVal.indexOf('https://') == 0 || cellVal.indexOf('sftp://') == 0 ) {
         lnkIco = '<a href="'+cellVal.trim()+'" class="ui-icon  ui-icon-extlink linkicon" target="_blank"></a>&nbsp;';
@@ -1068,7 +1068,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
         }
       }
     }
-    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) { 
+    if ( ( cellDef.editable != null ) && ( ( cellDef.editable == "true" ) || ( cellDef.editable === true)) ) { 
       editable = 'contenteditable="true" class="editableTblCell" data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'"'; 
       $( cellId ).html( '<div style="position:relative" class="editable cell'+cellDef.id.replace(/\./g,'')+'""><span id="'+divId+'R'+i+cellDef.id+'" '+editable+'>'+noStr + '</span><div class="ui-icon ui-icon-pencil editmarker"></div></div>' );
     } else { 
@@ -1088,7 +1088,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     // new
     var datrStr = '-';
     if ( ! isNaN( unixDt ) ) { datrStr = moment( theDate ).format( fmt ); }
-    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" && poTbl[ tblDiv ] && poTbl[ tblDiv ].dataURL) ) {
+    if ( ( cellDef.editable != null ) && ( ( ( ( cellDef.editable == "true" ) || ( cellDef.editable === true)) )  && poTbl[ tblDiv ] && poTbl[ tblDiv ].dataURL) ) {
       editable = ' data-r="'+r+'" data-c="'+c+'"  data-cid="'+cellDef.id+'"';
       var cID = divId+'R'+i+cellDef.id;
       //poTbl[ tblDiv ].pongTableDef.rowId;
@@ -1193,7 +1193,7 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     
   } else if ( cellType == 'checkbox' ) {
     
-    if ( ( cellDef.editable != null ) && ( cellDef.editable == "true" ) ) {
+    if ( ( cellDef.editable != null ) && ( ( cellDef.editable == "true" ) || ( cellDef.editable === true)) ) { 
       editable = 'class="postchange"  data-r="'+r+'" data-c="'+c+'" data-cid="'+cellDef.id+'""';
     } else { editable = 'disabled' };
     if ( cellVal == "true" || cellVal==true ) {

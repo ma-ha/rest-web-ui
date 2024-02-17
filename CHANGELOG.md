@@ -1,4 +1,7 @@
 # Release Notes
+## 2.10.0
+- [Table](html/modules/pong-table) editable accepts boolean
+
 ## 2.9.6
 - [Form](html/modules/pong-form) fix "setData" for checkbox
 
