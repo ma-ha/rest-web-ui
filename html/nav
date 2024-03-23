@@ -14,6 +14,7 @@
         "menuItems" : [
            { "layout":"tests/action", "label":"Lot Form Elements"  },
            { "layout":"tests/formSel", "label":"Dependent Selects"  },
+           { "layout":"tests/scan", "label":"Scan QR or Bar Code"  },
            { "layout":"tests/js-incl", "label":"Stripe Payment Form"  }
         ]  
       }

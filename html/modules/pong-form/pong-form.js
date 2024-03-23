@@ -924,7 +924,9 @@ function pongFormRenderField( divId, field, col ) {
       uiRO     =  ' ui-disabled ';
       modifier += ' readonly '; 
     }
-    var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+uiRO+ divId+'PongFormField"'; 
+    let qr = '';
+    if ( field.qr ) { qr = ' qr ' }
+    var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+uiRO+qr+divId+'PongFormField"'; 
     if ( field.type == "checkbox"  && field.name != null ) {
       nameAndClass = 'name="'+field.name+'" ' + nameAndClass; 
     } else {
@@ -993,7 +995,41 @@ function pongFormRenderField( divId, field, col ) {
             $.ajaxSetup({ 'async': true, headers: headers });        
             contentItems.push( '</datalist>' );
           }
+        if ( field.qr ) {
+          let qID = divId + field.id
+          contentItems.push( '<button id="'+qID+'QrBtn"><img src="modules/pong-form/barcode.png" class="barcodeImg"></button>' )
+          contentItems.push(  modalBarCode( qID ) )
+        }
 
+        function modalBarCode( qID ) {
+          let qrDivs = []
+          qrDivs.push( '<div class="modal'+qID+' modalQr qrHidden"><h2>Scan QR or Barcode</h2>' )
+          qrDivs.push( '<button class="scanModal'+qID+'" onclick="scanQr();">Scan</button>' )
+          qrDivs.push( '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button>' )
+          qrDivs.push( '<div id="qr-reader" style="width:500px"></div>' )
+          qrDivs.push( '<div id="qr-reader-results"></div>' )
+          qrDivs.push( '<script src="modules/pong-form/html5-qrcode.min.js"></script>' )
+          
+          qrDivs.push( '<p>TODO: Transfer results !!' )
+          
+          qrDivs.push( '</div>' )
+          qrDivs.push( '<div class="overlay'+qID+' modalQrOverlay qrHidden"></div>' )
+          $( "body" ).append( qrDivs.join('\n') ); 
+
+          let c = '<script>';
+          c += '  $( function(){';
+          c += '    $( "#'+qID+'QrBtn" ).click( function(e) { toggleModal'+qID+'(); return false; } ); ' ;
+          c +=  '  }); ' ;
+          c +=  '  function toggleModal'+qID+'() {' ;
+          c +=  '    let modal = document.querySelector( ".modal'+qID+'" );' ;
+          c +=  '    modal.classList.toggle( "qrHidden" );' ;
+          c +=  '    let overlay = document.querySelector( ".overlay'+qID+'" );' ;
+          c +=  '    overlay.classList.toggle( "qrHidden" );' ;
+          c +=  '    return false;' ;
+          c +=  '  };' ;
+          c +=  '</script>' ;
+          return c;
+        }
 
 
       }
@@ -1220,4 +1256,22 @@ function pongFormCbActivate( divId, cbId, activateArr, deactivateArr ) {
     }
     // alert( "disabled #"+divId+deactivateArr[i]+ +'  '+ (cbValue) )
   }
+}
+
+
+function scanQr( qID ) {
+  var resultContainer = document.getElementById('qr-reader-results');
+  var lastResult, countResults = 0;
+
+  function onScanSuccess(decodedText, decodedResult) {
+    if (decodedText !== lastResult) {
+      ++countResults;
+      lastResult = decodedText;
+      // Handle on success condition with the decoded message.
+      console.log(`Scan result ${decodedText}`, decodedResult);
+    }
+  }
+
+  var html5QrcodeScanner = new Html5QrcodeScanner( "qr-reader", { fps: 10, qrbox: 250 } );
+  html5QrcodeScanner.render( onScanSuccess );
 }

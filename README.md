@@ -114,3 +114,14 @@ The framework is modular. Some elementary modules are already in the modules sub
 You'll find a module template there, to start a new module.
 
 You'll find a how-to in my [WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming).
+
+# Credits
+
+- [cldrpluralparser](https://github.com/santhoshtr/CLDRPluralRuleParser)  (MIT license)
+- [elevatezoom](https://github.com/elevateweb/elevatezoom) (GPL and MIT licenses)
+- [html5-qrcode](https://github.com/mebjas/html5-qrcode) (Apache-2.0 license )
+- [jquery](https://github.com/jquery/jquery) (MIT license)
+- [jquery-syntax](https://github.com/ioquatix/jquery-syntax) (MIT license)
+- [/mobile-detect.js](https://github.com/hgoebl/mobile-detect.js) (MIT license)
+- [moment](https://github.com/moment/moment)  (MIT license)
+- [showdown](https://github.com/showdownjs/showdown) (MIT license)

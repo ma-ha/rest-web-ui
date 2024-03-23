@@ -1,4 +1,7 @@
 # Release Notes
+## 2.11.0
+- [Form](html/modules/pong-form) add QR scanner for text input
+
 ## 2.10.0
 - [Table](html/modules/pong-table) editable accepts boolean
 

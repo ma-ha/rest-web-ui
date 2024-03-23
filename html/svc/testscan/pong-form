@@ -1,0 +1,19 @@
+{
+    "label": "Test Form",
+    "description": "Test Form",
+    "id": "tstFormId", 
+    "fieldGroups":[
+        {
+          "columns":[
+            {
+              "formFields":[     
+                { "id":"scan", "label":"Scan QR Code", "type":"text", "qr": true }
+              ]
+            }
+        ]
+     }
+    ],
+    "actions" : [ 
+      { "id":"Info", "actionName": "Info ", "actionURL": "svc/test/info", "target": "out1" }
+    ]
+}

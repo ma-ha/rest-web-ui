@@ -1,0 +1,43 @@
+{
+  "layout": {
+    "title": "New Portal: Test",
+    "includeHeader": "main",
+    "rows": [
+      {
+        "rowId": "instform",
+        "title": "This is a Test",
+        "height": "auto",
+        "resourceURL": "svc/testscan",
+        "type": "pong-form",
+        "decor" : "decor",
+        "actions" : [ 
+          { "type":"pong-help", "param":{ "showModuleConfig":"instform" } }
+        ]
+      },
+      {
+        "rowId": "r1",
+        "height": "230px",
+        "cols": [
+          {
+            "columnId": "out1",
+            "title": "Output 1",
+            "width": "40%",
+            "resourceURL": "svc/cloud/resinfo",
+            "decor" : "decor",
+            "actions" : [ 
+              { "actionName": "Help", "type": "pong-help", "param": { "width":"400", "height":"300" } } 
+            ] 
+          },
+          {
+            "columnId": "out2",
+            "title": "Output 2",
+            "width": "60%",
+            "decor" : "decor",
+            "resourceURL": "svc/cloud/setuplog"
+          }
+        ]
+      }
+    ],
+    "includeFooter": "main"
+  }
+}
