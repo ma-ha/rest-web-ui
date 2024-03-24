@@ -123,6 +123,7 @@ Support for static `datafield`: Use <code>options</code> array, e.g.
 
 Dynamic `datafield` options: <code>optionsResource</code>, e.g.  <code>"optionsResource": { "resourceURL":"myObjType", "optionValue":"name" } </code>
 
+Text fields support a QR or barcode scanner. Enable this feature with `"qr": true`
 
 ### EMail 
 
