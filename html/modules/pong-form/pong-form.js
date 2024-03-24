@@ -997,7 +997,7 @@ function pongFormRenderField( divId, field, col ) {
           }
         if ( field.qr ) {
           let qID = divId + field.id
-          contentItems.push( '<button id="'+qID+'QrBtn"><img src="modules/pong-form/barcode.png" class="barcodeImg"></button>' )
+          contentItems.push( '<button id="'+qID+'QrBtn" class="qrBtn"><img src="modules/pong-form/barcode.png" class="barcodeImg"></button>' )
           contentItems.push(  modalBarCode( qID ) )
         }
       }

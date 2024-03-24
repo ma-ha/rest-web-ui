@@ -1,5 +1,5 @@
 # Release Notes
-## 2.11.0
+## 2.11.0/1
 - [Form](html/modules/pong-form) add QR scanner for text input
 
 ## 2.10.0
