@@ -1000,38 +1000,6 @@ function pongFormRenderField( divId, field, col ) {
           contentItems.push( '<button id="'+qID+'QrBtn"><img src="modules/pong-form/barcode.png" class="barcodeImg"></button>' )
           contentItems.push(  modalBarCode( qID ) )
         }
-
-        function modalBarCode( qID ) {
-          let qrDivs = []
-          qrDivs.push( '<div class="modal'+qID+' modalQr qrHidden"><h2>Scan QR or Barcode</h2>' )
-          qrDivs.push( '<button class="scanModal'+qID+'" onclick="scanQr();">Scan</button>' )
-          qrDivs.push( '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button>' )
-          qrDivs.push( '<div id="qr-reader" style="width:500px"></div>' )
-          qrDivs.push( '<div id="qr-reader-results"></div>' )
-          qrDivs.push( '<script src="modules/pong-form/html5-qrcode.min.js"></script>' )
-          
-          qrDivs.push( '<p>TODO: Transfer results !!' )
-          
-          qrDivs.push( '</div>' )
-          qrDivs.push( '<div class="overlay'+qID+' modalQrOverlay qrHidden"></div>' )
-          $( "body" ).append( qrDivs.join('\n') ); 
-
-          let c = '<script>';
-          c += '  $( function(){';
-          c += '    $( "#'+qID+'QrBtn" ).click( function(e) { toggleModal'+qID+'(); return false; } ); ' ;
-          c +=  '  }); ' ;
-          c +=  '  function toggleModal'+qID+'() {' ;
-          c +=  '    let modal = document.querySelector( ".modal'+qID+'" );' ;
-          c +=  '    modal.classList.toggle( "qrHidden" );' ;
-          c +=  '    let overlay = document.querySelector( ".overlay'+qID+'" );' ;
-          c +=  '    overlay.classList.toggle( "qrHidden" );' ;
-          c +=  '    return false;' ;
-          c +=  '  };' ;
-          c +=  '</script>' ;
-          return c;
-        }
-
-
       }
      
     } else if ( field.type == "email" ) {
@@ -1259,19 +1227,60 @@ function pongFormCbActivate( divId, cbId, activateArr, deactivateArr ) {
 }
 
 
+// QR CODE Scan
+
+function modalBarCode( qID ) {
+  let qrDivs = []
+  qrDivs.push( '<div class="modal'+qID+' modalQr qrHidden"><h2>Scan QR or Barcode</h2>' )
+  qrDivs.push( ' <div id="qrReader'+qID+'" style="width:500px"></div>' )
+  qrDivs.push( ' <div id="qrResult'+qID+'" class="qrResult"></div>' )
+  qrDivs.push( ' <script src="modules/pong-form/html5-qrcode.min.js"></script>' )
+  qrDivs.push( '</div>' )
+  qrDivs.push( '<div class="overlay'+qID+' modalQrOverlay qrHidden"></div>' )
+  $( "body" ).append( qrDivs.join('\n') ); 
+
+  let c = '<script>';
+  c += '  $( function(){';
+  c += '    $( "#'+qID+'QrBtn" ).click( function(e) { toggleModal'+qID+'(); return false; } ); ' ;
+  c +=  '  }); ' ;
+  c +=  '  function scanQr'+qID+'() { scanQr("'+qID+'"); };' ;
+  c +=  '  function toggleModal'+qID+'() {' ;
+  c +=  '    let modal = document.querySelector( ".modal'+qID+'" );' ;
+  c +=  '    modal.classList.toggle( "qrHidden" );' ;
+  c +=  '    let overlay = document.querySelector( ".overlay'+qID+'" );' ;
+  c +=  '    overlay.classList.toggle( "qrHidden" );' ;
+  c +=  '    if ( ! modal.classList.contains("qrHidden") ) { scanQr("'+qID+'"); };'
+  c +=  '    return false;' ;
+  c +=  '  };' ;
+  c +=  '</script>' ;
+  return c;
+}
+
 function scanQr( qID ) {
-  var resultContainer = document.getElementById('qr-reader-results');
   var lastResult, countResults = 0;
+  $( '#qrResult'+qID ).html( '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button></div>' );
 
   function onScanSuccess(decodedText, decodedResult) {
     if (decodedText !== lastResult) {
       ++countResults;
       lastResult = decodedText;
-      // Handle on success condition with the decoded message.
-      console.log(`Scan result ${decodedText}`, decodedResult);
+
+      let qrHTML = '<h3>Scan Result:</h3>' +
+        '<input id="qrResultTxt'+qID+'" value="'+decodedText+'"/>'+
+        '<p><button onclick="qrOk();">Use Scan Result</button>'+
+        '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button></div>'+
+        '<script>function qrOk(){ qrResultTransfer( "'+qID+'", "'+decodedText+'" )} </script>'
+      $( '#qrResult'+qID ).html( qrHTML )
     }
   }
 
-  var html5QrcodeScanner = new Html5QrcodeScanner( "qr-reader", { fps: 10, qrbox: 250 } );
-  html5QrcodeScanner.render( onScanSuccess );
+  var scanQrCode = new Html5QrcodeScanner( "qrReader"+qID, { fps: 10, qrbox: 250 } );
+  scanQrCode.render( onScanSuccess );
+}
+
+function qrResultTransfer( qID, scanTxt ) {
+  $( '#'+qID ).val( scanTxt )
+  // alert( qID+' '+scanTxt )
+  var closeScan = window[ 'toggleModal'+qID ];
+  closeScan();
 }

@@ -59,3 +59,12 @@
 .qrHidden {
   display: none;
 }
+
+.qrResult input {
+  width: 100%
+}
+
+.qrResult button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
