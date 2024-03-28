@@ -16,7 +16,7 @@
       "dataReqParams": [ 
        {"id":"name", "label":"Name", "description":"Search does noting :-(", "defaultVal":"*"},
        {"id":"rating", "type":"select", "label":"Rating", "options": [ { "value":"0", "option":"doesn't matter" },{ "value":"1", "option":"top rated" } ] }, 
-       {"id":"dateMin", "label":"Newer than", "description":"Yes - this should really filer the data!", "type":"date"} 
+       {"id":"date-min", "label":"Newer than", "description":"Yes - this should really filer the data!", "type":"date"} 
       ],
       "dataReqParamsSrc": "Form"
      },

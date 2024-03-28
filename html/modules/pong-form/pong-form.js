@@ -1230,6 +1230,7 @@ function pongFormCbActivate( divId, cbId, activateArr, deactivateArr ) {
 // QR CODE Scan
 
 function modalBarCode( qID ) {
+  let qIDx =  qID.replaceAll('-','')
   let qrDivs = []
   qrDivs.push( '<div class="modal'+qID+' modalQr qrHidden"><h2>Scan QR or Barcode</h2>' )
   qrDivs.push( ' <div id="qrReader'+qID+'" style="width:500px"></div>' )
@@ -1241,10 +1242,10 @@ function modalBarCode( qID ) {
 
   let c = '<script>';
   c += '  $( function(){';
-  c += '    $( "#'+qID+'QrBtn" ).click( function(e) { toggleModal'+qID+'(); return false; } ); ' ;
+  c += '    $( "#'+qID+'QrBtn" ).click( function(e) { toggleModal'+qIDx+'(); return false; } ); ' ;
   c +=  '  }); ' ;
-  c +=  '  function scanQr'+qID+'() { scanQr("'+qID+'"); };' ;
-  c +=  '  function toggleModal'+qID+'() {' ;
+  // c +=  '  function scanQr'+qIDx+'() { scanQr("'+qID+'"); };' ;
+  c +=  '  function toggleModal'+qIDx+'() {' ;
   c +=  '    let modal = document.querySelector( ".modal'+qID+'" );' ;
   c +=  '    modal.classList.toggle( "qrHidden" );' ;
   c +=  '    let overlay = document.querySelector( ".overlay'+qID+'" );' ;
@@ -1257,8 +1258,9 @@ function modalBarCode( qID ) {
 }
 
 function scanQr( qID ) {
+  let qIDx =  qID.replaceAll('-','')
   var lastResult, countResults = 0;
-  $( '#qrResult'+qID ).html( '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button></div>' );
+  $( '#qrResult'+qID ).html( '<button class="closeModal'+qID+'" onclick="toggleModal'+qIDx+'();">Close</button></div>' );
 
   function onScanSuccess(decodedText, decodedResult) {
     if (decodedText !== lastResult) {
@@ -1268,7 +1270,7 @@ function scanQr( qID ) {
       let qrHTML = '<h3>Scan Result:</h3>' +
         '<input id="qrResultTxt'+qID+'" value="'+decodedText+'"/>'+
         '<p><button onclick="qrOk();">Use Scan Result</button>'+
-        '<button class="closeModal'+qID+'" onclick="toggleModal'+qID+'();">Close</button></div>'+
+        '<button class="closeModal'+qIDx+'" onclick="toggleModal'+qIDx+'();">Close</button></div>'+
         '<script>function qrOk(){ qrResultTransfer( "'+qID+'", "'+decodedText+'" )} </script>'
       $( '#qrResult'+qID ).html( qrHTML )
     }
@@ -1279,8 +1281,9 @@ function scanQr( qID ) {
 }
 
 function qrResultTransfer( qID, scanTxt ) {
+  let qIDx =  qID.replaceAll('-','')
   $( '#'+qID ).val( scanTxt )
   // alert( qID+' '+scanTxt )
-  var closeScan = window[ 'toggleModal'+qID ];
+  var closeScan = window[ 'toggleModal'+qIDx ];
   closeScan();
 }

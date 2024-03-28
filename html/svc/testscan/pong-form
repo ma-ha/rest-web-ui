@@ -7,7 +7,7 @@
           "columns":[
             {
               "formFields":[     
-                { "id":"scan", "label":"Scan QR Code", "type":"text", "qr": true }
+                { "id":"scan-1", "label":"Scan QR Code", "type":"text", "qr": true }
               ]
             }
         ]

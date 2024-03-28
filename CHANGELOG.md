@@ -1,4 +1,10 @@
 # Release Notes
+
+## 2.11.2
+- fix bux with "-" in field names:
+  - table filter 
+  - QR scan
+
 ## 2.11.0/1
 - [Form](html/modules/pong-form) add QR scanner for text input
 

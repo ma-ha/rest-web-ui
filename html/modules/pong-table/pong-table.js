@@ -307,7 +307,7 @@ function pongTableRenderFilterHTML( divId, resourceURL, params, tbl ) {
         contentItems.push( '<p><label for="'+divId+prop.id+'filter">'+ $.i18n( prop.label ) +'</label>' );
         var nameAndClass = 'name="'+prop.id+'" id="'+divId+prop.id+'filter" class="text ui-widget-content ui-corner-all"';
         if ( prop.description ) { nameAndClass += ' title="'+prop.description+'"'} 
-        postLst.push( prop.id+": $( '#"+divId+prop.id+"filter' ).val()" );
+        postLst.push( '"'+prop.id+'"'+": $( '#"+divId+prop.id+"filter' ).val()" );
 
         if ( prop.type && prop.type == 'date' ) {
 
