@@ -18,7 +18,8 @@ Example:
               "input": [
                 { "id":"name", "label":"Name" },
                 { "id":"id", "label":"ID" }
-              ]
+              ], 
+              "accept": ".txt,.log,image/*"
             }
           }
           ...
@@ -27,4 +28,4 @@ Example:
      }
   }
 
-The configs for `input` and `update` are optional.
+The configs for `input`, `accept` and `update` are optional.

@@ -1,5 +1,10 @@
 # Release Notes
 
+## 2.12.0
+- [Upload](html/modules/pong-upload)
+  - file type accept to filter files in folder
+  - input default value
+
 ## 2.11.2
 - fix bux with "-" in field names:
   - table filter 

@@ -31,13 +31,19 @@ function pongUploadDivHTML( divId, uploadURL, fparam ) {
   html.push( '<form class="UploadForm">' );
   if ( moduleConfig[ divId ] && moduleConfig[ divId ].input ) {
     for ( var inp of moduleConfig[ divId ].input ) {
+      let val = ( inp.value ? '  value="'+inp.value+'" ' : '' )
       html.push( '<div id="'+divId+inp.id+'" class="pongFormField">' );
       html.push( '<label for="'+inp.id+'" class="uploadFromLabel">'+ $.i18n( inp.label )+'</label>' );
-      html.push( '<input id="'+inp.id+'" name="'+inp.name+'" class="text ui-widget-content ui-corner-all UploadFileInput uploadFormIput" required="required">' );
+      html.push( '<input id="'+inp.id+'" name="'+inp.name+'" '+val );
+      html.push( '  class="text ui-widget-content ui-corner-all UploadFileInput uploadFormInput" required="required">' );
       html.push( '</div>' );
     }
   }
-  html.push( '<input id="'+divId+'File" name="'+divId+'File" class="UploadFile" type="file">' );
+  let accept = ''
+  if (  moduleConfig[ divId ].accept ) { 
+    accept = ' accept="'+ moduleConfig[ divId ].accept +'" ' 
+  }
+  html.push( '<input id="'+divId+'File" name="'+divId+'File" class="UploadFile" type="file" '+accept+' >' );
   html.push( '<button id="'+divId+'UploadBtn">'+$.i18n('Upload File')+'</button>' );
   html.push( '</form>' );
   html.push( '<script>' );

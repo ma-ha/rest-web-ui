@@ -14,8 +14,9 @@
           "update": [ "fileTable" ],
           "input": [
             { "id":"name", "label":"Name" },
-            { "id":"id", "label":"ID" }
-          ]
+            { "id":"id", "label":"ID", "value":"1234" }
+          ],
+          "accept": ".txt,.log,image/*"
         }
       }
     ],
