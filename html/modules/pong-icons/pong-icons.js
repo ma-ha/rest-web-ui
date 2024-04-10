@@ -80,9 +80,13 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
       } else if ( pmd.icons[i].layout ) {
         id = pmd.icons[i].layout.replace(/\//g, '');
       } else { id = i }
-
+      let descr = '';
+      if ( pmd.icons[i].descr ) { 
+        let t =  pmd.icons[i].descr +'';
+        descr = 'title="' + t.replaceAll('"','&#147') + '"'; 
+      }
       contentItems.push( '<div id="icon'+divId+id+'" class="pongIcon pongIcon'+divId+'" data-i="'+pmd.icons[i].layout+'">' );
-      contentItems.push( '<img id="icon'+divId+id+'Img" class="pongIconImg" src="'+pmd.icons[i].img+'">' );
+      contentItems.push( '<img id="icon'+divId+id+'Img" class="pongIconImg" src="'+pmd.icons[i].img+'" '+descr+'>' );
       contentItems.push( '<div id="icon'+divId+id+'Info" class="pongIconInfo">'+ (pmd.icons[i].info ? $.i18n( pmd.icons[i].info )  : '' ) +'</div>' ); 
 
       if ( pmd.icons[i].label ) { 

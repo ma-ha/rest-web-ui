@@ -1,7 +1,7 @@
 {
     "icons":[
-       { "id":"Header", "layout":"main", "label":"Header+Footer", "img":"img/icon-headerfooter.svg" },
-       { "id":"ViewLayout", "layout":"demos/crm-map", "label":"Arrage Views", "img":"img/icon-layout.svg" },
+       { "id":"Header", "layout":"main", "label":"Header+Footer", "descr":"Rich page layout", "img":"img/icon-headerfooter.svg" },
+       { "id":"ViewLayout", "layout":"demos/crm-map", "descr":"Layout \"test\"","label":"Arrage Views", "img":"img/icon-layout.svg" },
        { "id":"Menu", "layout":"main", "label":"Menu", "img":"modules/pong-navbar/icon.svg" },
        { "id":"PullDownMenu", "layout":"main", "label":"Pull Down Menu", "img":"modules/pong-pulldown/icon.svg" },
        { "id":"ViewTabs", "layout":"tests/tabRow", "label":"View Tabs", "img":"modules/pong-navbar/icon.svg" },

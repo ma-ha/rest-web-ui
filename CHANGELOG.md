@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.12.1
+- Icon with "descr"
+
 ## 2.12.0
 - [Upload](html/modules/pong-upload)
   - file type accept to filter files in folder
