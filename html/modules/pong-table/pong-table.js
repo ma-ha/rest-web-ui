@@ -220,9 +220,10 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
     var t = parseInt( tbl.pollDataSec );
     if  ( ! isNaN( t ) ) {	
       poTbl[ divId ].polling = true;
-       var pollHTML = [];
+      var pollHTML = [];
+      let dId = divId.replaceAll('-','_')
       pollHTML.push( '<script>' );
-      pollHTML.push( '  function pongTableUpdateTimer'+divId+'() { ' );
+      pollHTML.push( '  function pongTableUpdateTimer'+dId+'() { ' );
       pollHTML.push( '       if ( poTbl[ "'+divId+'" ].polling ) { ' );
       if ( tbl  && tbl.filter ) {
         pollHTML.push( '        pongTableUpdateData( "'+divId+'", true  ); ' );
@@ -234,7 +235,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
       pollHTML.push( '</script>' );
       $( "#"+divId ).append( pollHTML.join("\n") );
       log( "PoNG-Table", ">>>>> create pongTableUpdateTimer t="+t );
-      poolDataTimerId = setInterval( "pongTableUpdateTimer"+divId+"()", t*1000 );
+      poolDataTimerId = setInterval( "pongTableUpdateTimer"+dId+"()", t*1000 );
       log( "Pong-Table", ">>>>> startet pongTableUpdateTimer"+divId+"()" );
 
       // toggle pulling action button

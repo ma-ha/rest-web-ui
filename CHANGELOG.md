@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.12.2
+- fix table poll with "-" in name
+
 ## 2.12.1
 - Icon with "descr"
 
