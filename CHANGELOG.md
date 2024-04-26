@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.12.3
+- fix table button with empty text
+
 ## 2.12.2
 - fix table poll with "-" in name
 

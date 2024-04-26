@@ -1334,7 +1334,10 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellDef.label+'</button>' );
     } else if ( cellVal != '' ) {
       contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn">'+cellVal+'</button>' );
+    } else {
+      contentItems.push( '<button id="'+divId+'R'+i+cellDef.id+'" class="pong-table-btn"></button>' );
     }
+    
     contentItems.push( '<script>' );
     contentItems.push( '  $( function() { ' );
     if ( icon.lenght != 0 ) {
