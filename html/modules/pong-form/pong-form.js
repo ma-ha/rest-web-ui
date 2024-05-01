@@ -852,10 +852,11 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
           } else if ( field.type == "date" ) {
             if ( dta[field.id] != null ) {
               $( fieldId ).datepicker( 'setDate', new Date( dta[field.id] ) );
+            } else {
+              $( fieldId ).datepicker( 'setDate', '' );
             }
           } else {
             log( "Pong-Form", "ERROR '"+field.id+"': Can't update "+field.type);
-
           }
 
           //alert("trigger change: "+fieldId );
