@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.12.4
+- support setData for date
+
 ## 2.12.3
 - fix table button with empty text
 

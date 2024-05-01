@@ -849,6 +849,10 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
             if ( dta[field.id] ) {
               $( fieldId ).attr( "href", $.i18n( dta[field.id] ) );
             }
+          } else if ( field.type == "date" ) {
+            if ( dta[field.id] != null ) {
+              $( fieldId ).datepicker( 'setDate', new Date( dta[field.id] ) );
+            }
           } else {
             log( "Pong-Form", "ERROR '"+field.id+"': Can't update "+field.type);
 
