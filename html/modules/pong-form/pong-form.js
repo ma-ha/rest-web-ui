@@ -942,6 +942,9 @@ function pongFormRenderField( divId, field, col ) {
     if (  field.required != null && ( field.required === true  || field.required == 'true' ) ) { 
       modifier += ' required="required"' 
     }
+    if ( field.regExp ) {
+      modifier += ' pattern="'+field.regExp +'"'
+    }
 
     if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
       //nameAndClass += ''; 

@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.12.6
+- Form: regExp support
+
 ## 2.12.5
 - support setData for date
 

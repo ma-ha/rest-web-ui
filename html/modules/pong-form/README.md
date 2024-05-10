@@ -102,6 +102,7 @@ For all fields following options are supported:
 * required
   * `"required": true `
   * `"required": false `  ''(default)'' 
+* "regExp" for a regular expression pattern 
 
 or in combination.
  
