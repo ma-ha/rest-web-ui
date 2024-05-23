@@ -400,9 +400,11 @@ Example:
 * Action <code>target</code> has three options:
   * give the resource id of the module, where the output has to go to 
   * or <code>"_parent"</code>, if the whole page should be replaced. The result should be an URL.
-  * special value "modal", to display an alert box with the result. 
+  * special value <code>"modal"</code>, to display an alert box with the result. 
     If you specify `"taget"="modal"`, you can add `"navto"="<url>"`, to load this page if the user has closed the dialog.
-  * <code>target</code> is optional, you can also ignore the response.
+  * <code>"modalstatus"</code>, same as "modal", but is shows e.g. "success" in an alert box, 
+    instead of the response body which may be unreadable JSON
+* <code>target</code> is optional, you can also ignore the response.
 * Action buttons can be disabled by default using`"enabled":"false"`. This can be toggled by a checkboxes.
 
 If you define `modalQuestion`, e.g. `"modalQuestion":"Do you want to save"` a modal dialog with the question

@@ -602,7 +602,7 @@ function pongFrmActionBtn( divId, method, theData, action, postLst, headerLst, b
     },
     data: theData
     // ,xhr: function() {return new window.XMLHttpRequest({mozSystem: true});}, beforeSend: function(xhr){  xhr.withCredentials = true; } 
-  }).done( function( dta ) {
+  }).done( function( dta, status ) {
     $("body").removeClass("waiting");  
     publishEvent( "feedback", { text:"Form data send"} );
     if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  
@@ -614,9 +614,19 @@ function pongFrmActionBtn( divId, method, theData, action, postLst, headerLst, b
       } else if ( action.target == '_blank' ) {
         window.open( dta );
       } else if ( action.target == 'modal' ) {
-        alert( $.i18n( dta ) );  
+        if ( typeof variable === 'string' ) {
+          alert( $.i18n( dta ) );
+        } else {
+          let dtaStr = JSON.stringify( dta )
+          alert( dtaStr );  
+        }
         if ( action.navto ) {
-          window.location.replace( action.navto ); 
+          window.location.replace( action.navto );
+        }
+      } else if ( action.target == 'modalstatus' ) {
+        alert( $.i18n( status ) );  
+        if ( action.navto ) {
+          window.location.replace( action.navto );
         }
       } else {
         $( '#'+action.target+'Content' ).html( dta );  
