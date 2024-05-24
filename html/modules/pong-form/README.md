@@ -81,7 +81,9 @@ Special types
 * separator
 * js
 
+Field `id` must be alphanumeric and can contain `-` and `_`. 
 
+Field `id` may contain dots (e.g. `"id":"authz.role"`), which will generate structured objects for a POST request.
 
 For all fields following options are supported:
 * hide fields with hidden attribute
@@ -367,6 +369,27 @@ Interesting option is to replace the URL by an form field.
 
 This will initiate CORS request, so your browser will start with an OPTIONS call.
 But be aware of possible security issues.
+
+Or make it a ReSTful path
+    { 
+      "id": "cloudFormId", 
+      "fieldGroups":[ 
+        {  "columns":[  
+              {  "formFields":[   
+                    { "id":"descr", "type":"text", "label":"Description" },
+                    { "id":"grpId", "type":"text", "label":"Group Id" },
+                ] 
+              } 
+          ]  
+        } 
+      ], 
+      "actions" : [  
+          { "id":"chgBtn", 
+            "actionName": "Save", 
+            "actionURL": "/group/${grpId}" 
+          }
+      ] 
+    }
 
 ## Form Actions 
 Actions can be:

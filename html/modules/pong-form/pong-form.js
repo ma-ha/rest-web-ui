@@ -174,7 +174,7 @@ function pongFormRenderHTML( divId, resourceURL, params, pmd ) {
               }
             // no: normal form field, add to post list
             } else {              
-              postLst.push( '"'+field.id+'"'+": $( '#"+divId+field.id+"' ).val()" );  
+              postLst.push( '"'+field.id.replaceAll('.','*') +'"'+": $( '#"+divId+field.id.replaceAll('.','')+"' ).val()" );  
               getLst.push( field.id + '=" + $( "#'+divId+field.id+'" ).val() +"' );  
             }
           } 
@@ -278,6 +278,28 @@ function checkboxVal( name ) {
   return result;
 }
 
+
+function pongFormPostDta( dataFlat ) {
+  let data = {};
+  for ( let key in dataFlat ) {
+    pongFormSetKey( data, key, dataFlat[ key ] )
+  }
+  return data;
+}
+
+function pongFormSetKey( data, key, val ) {
+  if ( key.indexOf('*') == -1 ) {
+    data[ key ] = val;
+  } else {
+    let hiera = key.split('*');
+    let key0 = hiera.shift()
+    if ( ! data[ key0 ] ) { data[ key0 ] = {}; }
+    let hiera1 = hiera.join('*')
+    pongFormSetKey( data[ key0 ], hiera1, val );
+  }
+}
+
+
 function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicAuth ) {
   log( "Pong-Form", "action '"+action.actionName+"'");
   // console.log( 'postLst' );
@@ -317,7 +339,8 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
       contentItems.push( '       $( "' +onChngSelector+ '" ).change(' );
       contentItems.push( '          function() { ' );
       contentItems.push( '              $("body").addClass("waiting"); ' ); 
-      contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' );
+      contentItems.push( '              var postData = pongFormPostDta( { '+ postLst +' } );' );
+      contentItems.push( '              var actionUrl = parsePlaceHolders( "'+divId+'", "'+action.actionURL+'" );' ); // TODO check docu
       contentItems.push( '              $.ajax( ' );
       contentItems.push( '                 { url: actionUrl, type: "'+method+'", dataType: "json", ' );
       //alert ('headerLst.length '+headerLst.length );
@@ -332,7 +355,7 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
         }
       }
       contentItems.push( '                   },');
-      contentItems.push( '                   data: { '+ postLst +' } ' );
+      contentItems.push( '                   data: postData' );
       contentItems.push( '              } ).done(  ' );
       contentItems.push( '                 function( dta ) { ' );
       if ( action.target != null ) {
@@ -570,10 +593,11 @@ function pongFormRenderAction( divId, action, postLst, getLst, headerLst, basicA
   return contentItems;
 }
 
-function pongFrmActionBtn( divId, method, theData, action, postLst, headerLst, basicAuth ) {
+function pongFrmActionBtn( divId, method, theDataFlat, action, postLst, headerLst, basicAuth ) {
   // console.log( divId )
   // console.log( method )
-  // console.log( theData )
+  var theData = pongFormPostDta( theDataFlat );
+  // console.log( '>>theData>>>>>>',theData )
   // console.log( action )
   // console.log( postLst )
   // console.log( headerLst )
@@ -941,7 +965,7 @@ function pongFormRenderField( divId, field, col ) {
     }
     let qr = '';
     if ( field.qr ) { qr = ' qr ' }
-    var nameAndClass = 'id="'+divId+field.id+'" class="text ui-widget-content ui-corner-all '+uiRO+qr+divId+'PongFormField"'; 
+    var nameAndClass = 'id="'+divId+field.id.replaceAll('.','')+'" class="text ui-widget-content ui-corner-all '+uiRO+qr+divId+'PongFormField"'; 
     if ( field.type == "checkbox"  && field.name != null ) {
       nameAndClass = 'name="'+field.name+'" ' + nameAndClass; 
     } else {
