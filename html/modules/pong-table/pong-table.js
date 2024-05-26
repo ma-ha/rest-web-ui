@@ -42,14 +42,21 @@ function pongTableInit( divId, type ) {
   poTbl[ divId ].divId = divId;
 }
 
-function pongTableDivHTML( divId, resourceURL, params ) {
+function pongTableDivHTML( divId, resourceURL, params, theModuleConfig ) {
   log( "Pong-Table",  "pongTableDivHTML: divId="+divId+" resourceURL="+resourceURL );
+
+  console.log( "Pong-Table",  "pongTableDivHTML: divId="+divId+" resourceURL="+resourceURL+"params=",params," theModuleConfig=", theModuleConfig );
   pongTableInit( divId, "PongTable" );
-  
+
+
   if  ( moduleConfig[ divId ] != null ) {
     
     pongTableDivRenderHTML( divId, resourceURL, params, moduleConfig[ divId ] );
     
+  } else if ( theModuleConfig ) {
+
+    pongTableDivRenderHTML( divId, resourceURL, params, theModuleConfig );
+
   } else {
     
     var metaURL =  resourceURL+"/pong-table";
@@ -76,7 +83,7 @@ function pongTableDivHTML( divId, resourceURL, params ) {
 
 function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   log( "Pong-Table", "cre table" );
-  
+  if ( ! tbl ) { return alert('ERROR: Table config missing!') }
   var dataUrl = resourceURL;
   if ( tbl.dataURL != null ) {
     dataUrl = dataUrl+"/"+tbl.dataURL;
@@ -171,6 +178,9 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   $( "#"+divId ).append( ajacCommitsJS.join("\n") );
   $( "#"+divId ).append( actionsJS.join("\n") );
   
+  if ( tbl.height ) {
+    $( "#"+divId+'PongTableDiv' ).height(  tbl.height );
+  } else 
   if ( ! $( '#'+divId ).hasClass( 'autoheight' ) ) { // floating length
     var tHeight = $( "#"+divId ).height();
     if ( $( '#'+divId+'SrchFrmDiv' ).height() ) {
@@ -252,8 +262,10 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   
   if ( tbl.dataURL != null ) { 
     // load table data on page load only if dataURL is set
-    if ( tbl  && tbl.filter ) {
+    if ( tbl.filter ) {
       pongTableUpdateData( divId, true );
+    } else if ( params.subTableQry ) {
+      pongTableUpdateData( divId, params.subTableQry );
     } else {
       pongTableUpdateData( divId, false );	  
     } 
@@ -825,7 +837,7 @@ function parseRowPlaceHolders( row, str ) {
 
 /** update data call back hook */
 function pongTableUpdateData( divId, doFilter ) {
-  log( "Pong-Table",  'update '+divId );
+ console.log( "Pong-Table",  'update '+divId, doFilter );
   var tblDef = poTbl[ divId ].pongTableDef;
   var paramsObj = null;
   if ( doFilter && tblDef.filter) {
@@ -842,6 +854,7 @@ function pongTableUpdateData( divId, doFilter ) {
   } else if ( doFilter ) {
     paramsObj = doFilter;
   }
+  console.log( "Pong-Table",  'update paramsObj= ',paramsObj );
 
   if ( poTbl[ divId ].resourceURL != '-' ) {
     
@@ -849,12 +862,14 @@ function pongTableUpdateData( divId, doFilter ) {
     if ( paramsObj == null) {
       callParams = poTbl[ divId ].params.get;
     } else {
-      callParams = JSON.parse( JSON.stringify ( poTbl[ divId ].params.get ) );
-      for ( var attr in paramsObj ) { 
-        callParams[ attr ] = paramsObj[ attr ]; 
-      }		
+      if ( poTbl[ divId ].params.get ) {
+        callParams = JSON.parse( JSON.stringify ( poTbl[ divId ].params.get ) );
+        for ( var attr in paramsObj ) { 
+          callParams[ attr ] = paramsObj[ attr ]; 
+        }  
+      }
     }
-    log( "Pong-Table",  'update parma= '+JSON.stringify( callParams ) );			
+    console.log( "Pong-Table",  'update parma= ',callParams );
 
     $.getJSON( tblDef.dataUrlFull, paramsObj ,
       function( data ) { 	
@@ -872,7 +887,8 @@ function pongTableUpdateData( divId, doFilter ) {
 
 /** hook and used by update hook */
 function pongTableSetData( divId, data, dataDocSubPath ) {
-  log( "Pong-Table",  'set data hook: '+divId+ " "+dataDocSubPath );
+  console.log( "Pong-Table",  'set data hook: '+divId+ " "+dataDocSubPath );
+  console.log( "Pong-Table", data );  
   if ( dataDocSubPath != null ) {
     poTbl[ divId ].pongTableData = getSubData( data, tblDef.dataDocSubPath );	
   } else {
@@ -894,7 +910,7 @@ function pongTableSetData( divId, data, dataDocSubPath ) {
   }
 }
 function pongTableResize( divId ) {
-// TODO get resize wirking
+// TODO get resize working
   
 //  var tbl = poTbl[ divId ].pongTableDef;
 //  var divType = poTbl[ divId ].type;
@@ -941,12 +957,14 @@ function pongTableCmpFields( a, b ) {
 
 /** render table cells */
 function tblCells( divId ) {
-  log( "Pong-Table", 'tblCells( '+divId +' )' );  
+  log( "Pong-Table", 'tblCells( '+divId +' )' ); 
+  
+  console.log( "Pong-Table", poTbl[ divId ].pongTableDef );
   var dtaArr = poTbl[ divId ].pongTableData;
   var rowSt  = 0;
   var rowEn  = dtaArr.length;
   var i = 0;
-  
+  console.log( "tblCells rowEn", rowEn )
   if ( poTbl[ divId ].sortCol != '' ) {
     pongTable_sc      = poTbl[ divId ].sortCol;
     pongTable_sort_up = poTbl[ divId ].sortUp;
@@ -1293,6 +1311,9 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
       } else if ( cellDef.method == 'expand' ) {
         icon = 'ui-icon-triangle-1-s';
         ajaxType = 'expand';
+      } else if ( cellDef.method == 'subTable' ) {
+        icon = 'ui-icon-triangle-1-s';
+        ajaxType = 'subTable';
       } else {
         ajaxType = cellDef.method;
         if ( ajaxType == 'DELETE' ) {
@@ -1343,11 +1364,11 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
     if ( icon.lenght != 0 ) {
       contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).button( { icons: { primary: "'+icon+'" } } )' );            
     } 
-    if ( ajaxType == 'expand'  ) {
+    if ( ajaxType == 'expand' ||  ajaxType == 'subTable') {
         contentItems.push( '       $( "#' +divId+'R'+i+cellDef.id+ '" ).click(' );
         contentItems.push( '         function() {  ' );
-        contentItems.push( '           pongTableExpand( "'+divId+'", ' +
-           '"#'+divId+'R'+i+cellDef.id+'", '+r+', '+JSON.stringify(cellDef.expand.divs)+');' );
+        contentItems.push( '           pongTableExpand( "'+ajaxType+'", "'+divId+'", ' +
+           '"#'+divId+'R'+i+cellDef.id+'", '+r+', '+JSON.stringify(cellDef)+');' );
         contentItems.push( '           return false;');
         contentItems.push( '         }');
         contentItems.push( '       ); ' );
@@ -1479,35 +1500,68 @@ function tblUpdateCell( divId, cellDef, r, c, i, cellDta, cellId, rowIdVal, tblD
 }
 
 // ----------------------------------------------------------------------------
-/** expand row to show additionla data */
-function pongTableExpand( divId, id, r, divs ) {
-  if ( poTbl[ divId ].expand[ 'row' + r ] === id ) { // request to colapse extra data
+/** expand row to show additional data */
+function pongTableExpand( mode, divId, id, r, cellDef ) {
+  if ( poTbl[ divId ].expand[ 'row' + r ] === id ) { // request to collapse extra data
     pongTableUnExpand( divId, id, r );
     return;
   }
   if ( poTbl[ divId ].expand[ 'row' + r ] ) {
-    // row is expanded, but other data is reauested (other button in row)
+    // row is expanded, but other data is requested (other button in row)
     pongTableUnExpand( divId, id, r );
   }
-  log( "Pong-Table",  'Expand divid=' + divId + ' id='+id+' row=' + r );
+  log( "Pong-Table",  'Expand divId=' + divId + ' id='+id+' row=' + r );
 
-  // render empty structure:  
+  // render empty structure:
   var expandDivId = divId+'R'+r+'E';
   var contentItems = [];
-  contentItems.push( '<div id="'+expandDivId+'">' );
-  renderPongListDivHTMLsub( contentItems, expandDivId, divs, r, 0 );
-  contentItems.push( '</div>' );
-  
-  $( '#'+divId+'R'+r ).after( 
-    '<tr id="'+divId+'R'+r+'ExpRow" class="'+divId+'RowExpand tableExpandRow">' +
-    '<td colspan="100%">' +
-    contentItems.join( '\n' ) +
-    '</td></tr>' );
 
-  // fill data into structure
-  var rowDta = poTbl[ divId ].pongTableData[r];
-  log( "Pong-Table",  '  rowDta=' +JSON.stringify( rowDta ) );
-  pongListUpdateRow( expandDivId, divs, rowDta, r, 0, r, divId );
+  if ( mode == 'subTable' ) {
+
+    let subTbl = cellDef.subTable;
+    let expClass = divId+'RowExpand tableSubTableRow';
+    $( '#'+divId+'R'+r ).after( 
+      '<tr id="'+divId+'R'+r+'ExpRow" class="'+expClass+'">' +
+      '<td colspan="100%">' +
+      '<div id="'+expandDivId+'" class="subTableDiv"></div>' +
+      '</td></tr>' 
+    );
+    // fill data into structure
+    let rowDta = poTbl[ divId ].pongTableData[r];
+    let params = {};
+    if ( subTbl.queryId ) {
+      let qry = {};
+      for ( let colId of subTbl.queryId ) {
+        qry[ colId ] = rowDta [ colId ];
+      }
+      params = {
+        subTableQry : qry
+      }
+    } else {
+      alert('Sub-Table "queryId" missing in config!')
+      return
+    }
+    
+    pongTableDivHTML( expandDivId, subTbl.resourceURL, params, subTbl.moduleConfig );
+
+  } else {
+
+  let divs = cellDef.expand.divs;
+    contentItems.push( '<div id="'+expandDivId+'">' );
+    renderPongListDivHTMLsub( contentItems, expandDivId, divs, r, 0 );
+    contentItems.push( '</div>' );
+    let expClass = divId+'RowExpand tableExpandRow';
+    $( '#'+divId+'R'+r ).after( 
+      '<tr id="'+divId+'R'+r+'ExpRow" class="'+expClass+'">' +
+      '<td colspan="100%">' +
+      contentItems.join( '\n' ) +
+      '</td></tr>' 
+    );
+    // fill data into structure
+    var rowDta = poTbl[ divId ].pongTableData[r];
+    log( "Pong-Table",  '  rowDta=' +JSON.stringify( rowDta ) );
+    pongListUpdateRow( expandDivId, divs, rowDta, r, 0, r, divId );
+  }
 
   // remember what which button and row was expanded
   $( id ).button( { icons: { primary: 'ui-icon-circle-triangle-n' } })

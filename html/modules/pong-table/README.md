@@ -521,6 +521,40 @@ Example:
 
 See [DEMO](mh-svr.de/pong_dev/index.html?layout=tests/table)
 
+## Sub Table (Expand)
+
+You can show a table by click for every tata row. 
+
+This is useful if the sub-table dataset is not too huge.
+
+Essentially you define a nested table as `subTable` attribute for a button with method `subTable`. To filter the sub-table data you must specify a `queryId` array of fields (of the main table).
+
+  ...
+    "cols": [
+      {
+       "id": "SubTblBtn", "width": "5%", "cellType": "button", "method":"subTable",
+       "subTable":{
+          "queryId": [ "recId" ],
+          "resourceURL" : "subdata",
+          "moduleConfig": {
+            "dataURL": "",
+            "rowId": "subdataId",
+            "cols" : [
+              { "id": "order", "label": "Add",  "width": "10%", "cellType": "button" },
+              { "id": "name",  "label": "Name", "width": "10%", "cellType": "text" },
+              { "id": "descr", "label": "name", "width": "80%", "cellType": "text" }
+            ],         
+            "maxRows":"5"
+          }
+       }
+      },
+      { "id": "recId", "label": "ID", "width": "10%", "cellType": "text" },
+    ...
+
+The `"moduleConfig": { ... }` is optional. If it's not provided, the config will be 
+load from `$(resourceURL)/pong-table`.
+
+
 ## Table CSS 
 You can use the following CCS elements to define thy style of the table:
 * Table ID: #<resId>ContentPongTable

@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.13.0
+- [Table](html/modules/pong-table) expand "Sub-Tables"
+
 ## 2.12.8
 - Form: support dot in id to POST hierarchical objects
 

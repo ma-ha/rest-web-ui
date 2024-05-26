@@ -41,6 +41,7 @@
 			       { "pageLink":"tests/tabRow", "label":"Tab in Row" },
 			       { "pageLink":"tests/tabCol", "label":"Tab in Column" },
 			       { "pageLink":"tests/table", "label":"Table Test Fixed Height" },
+			       { "pageLink":"tests/table-sub", "label":"Table with Sub-Table Expand" },
 			       { "pageLink":"tests/tableauto", "label":"Table Auto Height" },
 			       { "pageLink":"tests/theme", "label":"Theme Test" },
 			       { "pageLink":"tests/tree", "label":"Tree Test" },

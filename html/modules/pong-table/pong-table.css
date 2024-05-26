@@ -63,3 +63,12 @@ div.editable {
 	background-color: #EEE; 
 	float:left;
 }
+
+.tableSubTableRow {
+  height: auto;
+}
+
+.subTableDiv,
+.subTableDiv .pongTableDiv {
+  width: 100%;
+}

@@ -1,0 +1,106 @@
+{
+ "layout":{
+  "title":"Portal: Test 'Easy' Features",
+  "includeHeader":"main",
+  "rows":[
+   {
+    "rowId":"r1",
+    "height":"500px",
+    "type":"pong-table",
+    "resourceURL":"svc/tbl-data",
+    "title":"Easy Table",
+    "moduleConfig":{
+      "dataURL":"",
+      "rowId":"ID",
+      "cols": [
+          {
+            "width": "10%",
+            "id": "Det1",
+            "label": "Sub Products",
+            "cellType": "button",
+            "method":"subTable",
+            "subTable": {
+              "resourceURL":"svc/tbl-data",
+              "queryId":["ID"],
+              "moduleConfig":{
+                "dataURL":"",
+                "rowId":"recId",
+                "height":"150px",
+                "cols": [
+                  {
+                    "id": "Created",
+                    "label": "Created",
+                    "width": "20%",
+                    "cellType": "date"
+                  },
+                  {
+                    "id": "ProductPage",
+                    "label": "Product Page",
+                    "width": "20%",
+                    "cellType": "link"
+                  },
+                  {
+                    "id": "ProductPage",
+                    "label": "Created",
+                    "width": "20%",
+                    "cellType": "linkFor"
+                  },
+                  {
+                    "id": "Status",
+                    "label": "Status",
+                    "cellType": "checkbox",
+                    "width": "20%",
+                    "editable": "true"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "ID",
+            "width": "10%",
+            "label": "ID",
+            "cellType": "text"
+          },
+          {
+            "id": "Name.0",
+            "width": "10%",
+            "label": "Name",
+            "cellType": "text"
+          },
+          {
+            "id": "Status",
+            "width": "10%",
+            "label": "Status",
+            "cellType": "checkbox"
+          },
+          {
+            "id": "Rating",
+            "width": "10%",
+            "label": "Rating",
+            "cellType": "rating",
+            "ratingType": "3star"
+          },
+          {
+            "id": "Description",
+            "label": "Description",
+            "cellType": "text",
+            "width": "10%"
+          }
+      ]
+    },
+    "type_id":"5",
+    "decor":"decor",
+    "actions":[
+     {
+      "type":"pong-help",
+      "param":{
+       "showConfig":"r1"
+      }
+     }
+    ]
+   }
+  ],
+  "includeFooter":"main"
+ }
+}
