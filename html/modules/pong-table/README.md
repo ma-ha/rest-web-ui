@@ -529,7 +529,7 @@ This is useful if the sub-table dataset is not too huge.
 
 Essentially you define a nested table as `subTable` attribute for a button with method `subTable`. To filter the sub-table data you must specify a `queryId` array of fields (of the main table).
 
-  ...
+    ...
     "cols": [
       {
        "id": "SubTblBtn", "width": "5%", "cellType": "button", "method":"subTable",
