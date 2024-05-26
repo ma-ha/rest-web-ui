@@ -537,6 +537,7 @@ Essentially you define a nested table as `subTable` attribute for a button with 
           "queryId": [ "recId" ],
           "resourceURL" : "subdata",
           "moduleConfig": {
+            "height":"150px",
             "dataURL": "",
             "rowId": "subdataId",
             "cols" : [
@@ -549,10 +550,11 @@ Essentially you define a nested table as `subTable` attribute for a button with 
        }
       },
       { "id": "recId", "label": "ID", "width": "10%", "cellType": "text" },
-    ...
+    ... 
 
-The `"moduleConfig": { ... }` is optional. If it's not provided, the config will be 
-load from `$(resourceURL)/pong-table`.
+*Caution*: The `height` is in the `moduleConfig`, other than in the top level table module.
+
+The `"moduleConfig": { ... }` is optional. If it's not provided, the config will be load from `$(resourceURL)/pong-table`.
 
 
 ## Table CSS 
