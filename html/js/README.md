@@ -11,12 +11,12 @@ TODO: migreate WIKI to here
           ... header def ...
         },
         "rows": [
-          { "rowId": "...",
-           ... row view def ... },
+          { "rowId": "R1",  ...  },
+          { "rowId": "R2", "type":"...", "resourceURL": "...", "height": "500px", ...  },
           { ... another row view def ... }
         ]
         "footer": {
-          ... header def ...
+          ... footer def ...
         }
       }
     }
@@ -24,9 +24,14 @@ TODO: migreate WIKI to here
 _Important:_
 `rowId` and `columnId` must be unique in a page and sould start with a character (no number)!
 
+The `type` can be one of the  [built in module types](../modules/README.md)  or you can build your own custom module plug in (see [WIKI](https://github.com/ma-ha/rest-web-ui/wiki/Module-Programming) and [example](../ext-module/)).
+
+The `resourceURL` is the endpoint to load data and/or configuration of the respective module. The module configuration can also be embedded as `moduleConfig` object. The configuration is different for all types.
+
+
 ## Columns in Rows
 
-A row def can contain columns, instead of views:
+To enable complex page layouts, rows def can contain columns, instead of views:
 
     "rows": [
       ...
@@ -46,7 +51,7 @@ A row def can contain columns, instead of views:
 
 ## Rows in Columns
 
-Also columns can contain rows, instead of views:
+Also columns can contain rows, instead of views, to make the page layout even more complex:
 
     "cols": [
       ...
@@ -70,7 +75,6 @@ TODO:
 - rowId / columnId 
 - type
 - width / height
-- resourceURL vs moduleConfig
 - decor
 - headerURL / footerURL
 - callback
