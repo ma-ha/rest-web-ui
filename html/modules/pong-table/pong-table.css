@@ -72,3 +72,20 @@ div.editable {
 .subTableDiv .pongTableDiv {
   width: 100%;
 }
+
+
+.pongTableDiv {
+  overflow: unset !important;
+}
+.pongTable thead th  { 
+  position: sticky; top: 0; 
+  z-index: 10;
+  background-color: #f9f9f9;
+}
+
+.pongTable tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.pongTable tr:nth-child(even) {
+  background-color: white;
+}

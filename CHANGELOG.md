@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.13.1
+- [Table](html/modules/pong-table) sticky table head
+
 ## 2.13.0
 - [Table](html/modules/pong-table) expand "Sub-Tables"
 

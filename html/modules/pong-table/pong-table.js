@@ -106,7 +106,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   contentItems.push( '<div id="'+divId+'PongTableDiv"  class="pongTableDiv">' );
   contentItems.push( '<table id="'+divId+'PongTable" class="pongTable">' );
   // create table head
-  contentItems.push( '<tr class="'+divId+'HeaderRow">' );
+  contentItems.push( '<thead><tr class="'+divId+'HeaderRow HeaderRow">' );
   if ( tbl.cols != null ) {
     for ( var i = 0; i < tbl.cols.length; i ++ ) {
       var colWidth = ''; if ( tbl.cols[i].width != null ) { colWidth = ' width="'+tbl.cols[i].width+'" '; }
@@ -141,7 +141,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
   contentItems.push( '     tblCells( "'+divId+'" ); ' );
   contentItems.push( ' } ); } ); ' );
   contentItems.push( '</script> ' );
-  contentItems.push( "</tr>" );
+  contentItems.push( "</tr></thead><tbody>" );
   if ( tbl.maxRows ) {
     for ( var r = 0; r < tbl.maxRows; r ++ ) {
       contentItems.push( '<tr id="'+divId+'R'+r+'" class="'+divId+'Row">' );
@@ -155,7 +155,7 @@ function pongTableDivRenderHTML( divId, resourceURL, params, tbl ) {
       contentItems.push( "</tr></div>" );
     }	  
   }
-  contentItems.push( "</table>" );
+  contentItems.push( "</tbody></table>" );
   log( "Pong-Table", "cre table 3" );
 
   // paginator buttons:
