@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.13.2
+- [Nav Bar](html/modules/pong-navbar) with HTML injection
+ 
 ## 2.13.1
 - [Table](html/modules/pong-table) sticky table head
 
