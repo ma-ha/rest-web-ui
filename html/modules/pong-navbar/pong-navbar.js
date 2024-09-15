@@ -47,7 +47,8 @@ function addNavBarHeaderHtml( divId, type , params ) {
 }
 
 function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
-  console.log( "PoNG-NavBar", "add content " + JSON.stringify(nb) );
+  console.log( "PoNG-NavBar", "add content "  );
+  console.log( nb );
   let html = [];
   let lang = '';
   if ( getParam( 'lang' ) != '' ) {
@@ -61,10 +62,13 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
     let showNav = true;
     let id = null
     if ( nb.navigations[i].id ) {
-      id = nb.navigations[i].id
+      id = nb.navigations[i].id;
     } else if ( nb.navigations[i].layout ) {
-      id = nb.navigations[i].layout.replace(/\//g, '');
-    } else { id = i }
+      id = nb.navigations[i].layout;
+      
+    } else { 
+      id = ''+i 
+    }
     if ( nb.navigations[i].userRoles != null ) {
       showNav = false;
       for ( let r = 0; r < nb.navigations[i].userRoles.length; r++ ) {
@@ -73,8 +77,11 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
         }
       }
     }
+    console.log( "PoNG-NavBar", "id "+id );
+    id = id.replace(/[\W_]+/g, '')
+    nb.navigations[i].id = id
     if ( showNav ) {
-      log( "PoNG-NavBar", "add "+i );
+      console.log( "PoNG-NavBar", "add "+id );
       
       // normal navigation tab
       let actClass = '';
@@ -103,7 +110,7 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
         html.push( '</a>' );
       } 
       else {
-        html.push( '<div class="pongNavBarPullDown" id="navItem'+i+'">' );
+        html.push( '<div class="pongNavBarPullDown" id="navItem'+id+'">' );
         html.push(  $.i18n( nb.navigations[i].label ) );
         html.push( '</div>' );
       }
@@ -111,18 +118,19 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
       
       // submenu
       if ( nb.navigations[i].menuItems && nb.navigations[i].menuItems.length > 0) {
-        log( "PoNG-NavBar", " submenu "+i );
+        log( "PoNG-NavBar", " submenu "+id );
         let subMenu = nb.navigations[i].menuItems;
-        html.push( '<div id="navSubMenu'+i+'" class="pongNavBarPullDownMenu">' );
+        html.push( '<div id="navSubMenu'+id+'" class="pongNavBarPullDownMenu">' );
         for ( let j = 0; j < subMenu.length; j++ ) {
-          let idS = null
+          let idS = i+'-'+j 
           if ( subMenu[j].id ) {
             idS = subMenu[j].id
           } else if ( subMenu[j].layout ) {
-            idS = subMenu[j].layout.replace(/\//g, '');
-          } else { idS = i+'-'+j }
+            idS = subMenu[j].layout.replace(/[\W_]+/g,'');
+          }
+          subMenu[j].id = idS
           
-          html.push( '<div class="pongNavBarPullDownItem">' )
+          html.push( '<div  id="navTab'+idS+'" class="pongNavBarPullDownItem">' )
           
           html.push( '<div id="navTab'+idS+'Info" class="pongNavBarItemInfo">' ); 
           html.push(   ( subMenu[j].info ? $.i18n( subMenu[j].info ):'') ); 
@@ -141,7 +149,7 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
             html.push(  $.i18n( subMenu[j].label )  );
             html.push( '</a><br>' );
           } else {
-            html.push( '<span class="pongNavBarPullItem" id="navItem'+i+'">' );
+            html.push( '<span class="pongNavBarPullItem" id="navItem'+idS+'">' );
             html.push(  $.i18n( subMenu[j].label ) );
             html.push( '</span>' );
           }
@@ -149,13 +157,13 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
         }
         html.push( '</div>' );
         html.push( '<script>' );
-        html.push( ' $( "#navItem'+i+'" ).click( function() { ' );
-        html.push( '   pongNavBarToggleSubMenu( "'+divId+'", '+i+' );' );
+        html.push( ' $( "#navItem'+id+'" ).click( function() { ' );
+        html.push( '   pongNavBarToggleSubMenu( "'+divId+'", "'+id+'" );' );
         html.push( ' });' );
 
         if ( nb.subMenuConfiguration?.indexOf( 'onMouseEnter') >= 0 ) {
-          html.push( ' $( "#navItem'+i+'" ).on( "mouseenter", function() { ' );
-          html.push( '   pongNavBarShowSubMenu( "'+divId+'", '+i+' );' );
+          html.push( ' $( "#navItem'+id+'" ).on( "mouseenter", function() { ' );
+          html.push( '   pongNavBarShowSubMenu( "'+divId+'", "'+id+'" );' );
           html.push( ' });' );
         }
 
@@ -183,30 +191,33 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 function pongNavBarHideSubMenus( divId ) {
   let nb = moduleConfig[ divId ] 
   for ( let j = 0; j < nb.navigations.length; j++ ) {
-    $( "#navSubMenu"+j ).hide();
+    let idJ = nb.navigations[j].id
+    $( "#navSubMenu"+idJ ).hide();
   }
 }
 
-function pongNavBarShowSubMenu( divId, nr ) {
-  console.log( 'toggle sun menu', divId, nr )
+function pongNavBarShowSubMenu( divId, id ) {
+  console.log( 'toggle sun menu', divId, id )
   let nb = moduleConfig[ divId ] 
   for ( let j = 0; j < nb.navigations.length; j++ ) {
-    if ( nr != j ) {
-      $( "#navSubMenu"+j ).hide();
+    let idJ = nb.navigations[j].id
+    if ( id != idJ ) {
+      $( "#navSubMenu"+idJ ).hide();
     }
   }
-  $( "#navSubMenu"+nr ).show();
+  $( "#navSubMenu"+id ).show();
 }
 
-function pongNavBarToggleSubMenu( divId, nr ) {
-  console.log( 'toggle sun menu', divId, nr )
+function pongNavBarToggleSubMenu( divId, id ) {
+  console.log( 'toggle sun menu', divId, id )
   let nb = moduleConfig[ divId ] 
   for ( let j = 0; j < nb.navigations.length; j++ ) {
-    if ( nr != j ) {
-      $( "#navSubMenu"+j ).hide();
+    let idJ = nb.navigations[j].id
+    if ( id != idJ ) {
+      $( "#navSubMenu"+idJ ).hide();
     }
   }
-  $( "#navSubMenu"+nr ).toggle();
+  $( "#navSubMenu"+id ).toggle();
 }
 
 
