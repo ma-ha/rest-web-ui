@@ -107,6 +107,7 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
         html.push(  $.i18n( nb.navigations[i].label ) );
         html.push( '</div>' );
       }
+
       
       // submenu
       if ( nb.navigations[i].menuItems && nb.navigations[i].menuItems.length > 0) {
@@ -148,14 +149,24 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
         }
         html.push( '</div>' );
         html.push( '<script>' );
-        html.push( '$( "#navItem'+i+'" ).click( function(){' );        
-        for ( let j=0; j < nb.navigations.length; j++ ) {
-          if ( i != j ) { html.push( '   $( "#navSubMenu'+j+'" ).hide();' ); }
-        }
-        html.push( '   $( "#navSubMenu'+i+'" ).toggle();' ); 
+        html.push( ' $( "#navItem'+i+'" ).click( function() { ' );
+        html.push( '   pongNavBarToggleSubMenu( "'+divId+'", '+i+' );' );
         html.push( ' });' );
+
+        if ( nb.subMenuConfiguration?.indexOf( 'onMouseEnter') >= 0 ) {
+          html.push( ' $( "#navItem'+i+'" ).on( "mouseenter", function() { ' );
+          html.push( '   pongNavBarShowSubMenu( "'+divId+'", '+i+' );' );
+          html.push( ' });' );
+        }
+
         html.push( '</script>' );
 
+      } else {
+        html.push( '<script>' );
+        html.push( ' $( "#navTab'+id+'" ).on( "mouseenter", function() { ' );
+        html.push( '   pongNavBarHideSubMenus( "'+divId+'" );' );
+        html.push( ' });' );
+        html.push( '</script>' );  
       }
       html.push( '</div>' );
     }
@@ -168,6 +179,36 @@ function addNavBarHeaderRenderHtml( divId, type , params, nb ) {
 
   $( "#"+divId ).html( html.join( "\n" ) );
 }
+
+function pongNavBarHideSubMenus( divId ) {
+  let nb = moduleConfig[ divId ] 
+  for ( let j = 0; j < nb.navigations.length; j++ ) {
+    $( "#navSubMenu"+j ).hide();
+  }
+}
+
+function pongNavBarShowSubMenu( divId, nr ) {
+  console.log( 'toggle sun menu', divId, nr )
+  let nb = moduleConfig[ divId ] 
+  for ( let j = 0; j < nb.navigations.length; j++ ) {
+    if ( nr != j ) {
+      $( "#navSubMenu"+j ).hide();
+    }
+  }
+  $( "#navSubMenu"+nr ).show();
+}
+
+function pongNavBarToggleSubMenu( divId, nr ) {
+  console.log( 'toggle sun menu', divId, nr )
+  let nb = moduleConfig[ divId ] 
+  for ( let j = 0; j < nb.navigations.length; j++ ) {
+    if ( nr != j ) {
+      $( "#navSubMenu"+j ).hide();
+    }
+  }
+  $( "#navSubMenu"+nr ).toggle();
+}
+
 
 function pongNavBarUpdate( divId, params ) {
   log( "PoNG-NavBar", "Update info "+JSON.stringify(params) )

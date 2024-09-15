@@ -18,5 +18,6 @@
            { "layout":"tests/js-incl", "label":"Stripe Payment Form"  }
         ]  
       }
-   ]
+   ],
+   "subMenuConfiguration" : [ "onMouseEnter" ]
 }

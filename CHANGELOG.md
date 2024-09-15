@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.13.3
+- [Nav Bar](html/modules/pong-navbar) subMenuConfiguration onMouseEnter
+
 ## 2.13.2
 - [Nav Bar](html/modules/pong-navbar) with HTML injection
  

@@ -32,14 +32,22 @@ The <code>confURL</code> should be like this example:
            { "layout":"crm", "label":"CRM"  },
            { "id":"xy", "layout":"xy", "label":"Xy" }
            { "id":"xz", "layout":"xz", "label":"abc", "html":"This is <a href="index.html?layout=abc">ABC</a>" }
-        }
+        ]
     }
 
 You can use <code>page_name</code> alternatively to identify pages for tabs -- if page_mode is set to php.
 
-If the `id` is defined, then it will be used in the `HTML DIV ID`.
+If the `navigations[x].id` is defined, then it will be used in the `HTML DIV ID`.
 
-If the `html` is set, then it will be used instead of the generated link.
+If the `navigations[x].html` is set, then it will be used instead of the generated link.
+
+You cn configure submenus to show on mousenter, instad on click, by adding `"navSubMenu` config:
+
+    {
+      "navigations" : [...],
+      "subMenuConfiguration" : [ "onMouseEnter" ]
+    }
+    
 
 Optional `"info":"text"` can be given for each navigation.
 
