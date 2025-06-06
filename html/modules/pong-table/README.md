@@ -139,6 +139,7 @@ In case of OData, there are dots in the field name, which must be escaped:
 * label
 * icon ([ref icons names](http://api.jqueryui.com/theming/icons/))
 * pie
+* graph
 * date
 * select
 * selector (checkbox to select row)
@@ -564,3 +565,61 @@ You can use the following CCS elements to define thy style of the table:
 * optional Form DIV ID: #<resId>ContentPongTableFrm
 * optional From DIV class: pongTableFrm
 * cells have class _cell<ID>_
+
+## Graph and Pie
+
+These types are more for lists.
+
+Graph config:
+
+    { id : 'Metric', cellType: 'graph',
+      layout:{
+        name: 'API requests 1d [req / min]',
+        graphType: 'timeLog',
+        colors: { 
+          GET: '75A5', POST: '#5A7', DELETE: '#3A9', PUT: '#1A8'
+        },
+        yAxis: {
+          axisType : 'linear',
+          min      : '0',
+          max      : 'auto',
+          labelCnt : 3
+        }
+      } 
+    }
+
+Expected data for this graphs
+
+    [
+      {
+        "name": "My Awesome API",
+        "Metric": [
+          {
+            "name": "GET",
+            "data": [
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                0
+              ],
+              [
+                -2,
+                0
+              ],
+              [
+                -3,
+                0
+              ],
+              [
+                -4,
+                0
+              ],
+              ...
+            ]
+          }
+      }
+      ...
+    ]

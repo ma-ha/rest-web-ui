@@ -1807,7 +1807,7 @@ function pongTblRenderGraph( divId, ctx, def, dta, canvasId ) {
             //log( "Pong-Table", " lineto( "+xx+" / "+yy+" )" );
             ctx.lineTo( xx, yy );                       
             ctx.stroke();
-            pongTblGraphTT[ canvasId ].push( { xx:xx, yy:yy, x:g.data[i][0], y:g.data[i][1] } );
+            pongTblGraphTT[ canvasId ].push({ name: g.name, xx:xx, yy:yy, x:g.data[i][0], y:g.data[i][1] });
           } else {
             //log( "Pong-Table", " moveto( "+xx+" / "+yy+" )" );
             ctx.moveTo( xx, yy );           
@@ -1848,7 +1848,7 @@ function pongTblCanvasMouse( id, divId, evt ) {
       var ttDiv = document.getElementById( id+'TT' );
       // console.log( ttDiv );
       if ( ttDiv ) {
-        ttDiv.innerHTML = pts[i].x + ' / ' + pts[i].y ;
+        ttDiv.innerHTML = pts[i].name +': ' + pts[i].y ;
         ttDiv.style.position = 'absolute';
         ttDiv.style.left = evt.clientX - parentDiv.left +  5 + 'px';
         ttDiv.style.top  = evt.clientY - parentDiv.top  - 10 + 'px';
