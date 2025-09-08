@@ -75,6 +75,8 @@ Supported field-types:
 * reCAPTCHA
 * select
 * text (=default)
+* password
+* secret (= password with button to reveal it)
 
 Special types
 * label
@@ -140,6 +142,12 @@ Text fields support a QR or barcode scanner. Enable this feature with `"qr": tru
 Optional attribute: 
 * <code>"basicAuth":"password"</code> used to create a HTTP basic-auth header field, ref. also text field
 * <code>"basicAuth":"password+field"</code> used to create a HTTP basic-auth header field and send also as POST field, ref. also text field
+
+### Secret 
+
+<code>"type:"secret"</code>
+
+Like "password", but with icon to reveal the input.
 
 ### Date
 <code>"type:"date"</code>

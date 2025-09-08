@@ -842,7 +842,7 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
         for ( var k = 0; k < col.formFields.length; k++ ) {
           var field = col.formFields[k];
           var fieldId = '#'+divId+field.id; 
-          if ( ( field.type == "text" )  || ( field.type == "password" ) || 
+          if ( ( field.type == "text" )  || ( field.type == "password" ) || ( field.type == "secret" ) || 
                ( field.type == "email" ) || ( field.type == "color" ) ) {
             log( "Pong-Form",  'pongFormUpdateFieldsData text: '+field.id+' '+dta[field.id] );
             if ( dta[field.id] != null ) {
@@ -968,6 +968,8 @@ function pongFormRenderField( divId, field, col ) {
     var nameAndClass = 'id="'+divId+field.id.replaceAll('.','')+'" class="text ui-widget-content ui-corner-all '+uiRO+qr+divId+'PongFormField"'; 
     if ( field.type == "checkbox"  && field.name != null ) {
       nameAndClass = 'name="'+field.name+'" ' + nameAndClass; 
+    } if ( field.type == "secret" ) {
+      nameAndClass = 'name="'+field.name+'" ' + nameAndClass.replace('class="text', 'class="text secret'); 
     } else {
       nameAndClass = 'name="'+field.id+'" ' + nameAndClass;       
     }
@@ -1052,6 +1054,17 @@ function pongFormRenderField( divId, field, col ) {
       
       contentItems.push( '<input type="password" '+nameAndClass + title + modifier +'/>' );
               
+    } else if ( field.type == "secret" ) {
+      
+      contentItems.push( '<input type="password" '+nameAndClass + title + modifier +'/>' );
+      contentItems.push( '<span class="ui-icon ui-icon-unlocked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
+      contentItems.push( '<script>' );
+      contentItems.push( ' $(function(){ ');
+      contentItems.push( '   $( "#'+divId+field.id+'SecretReveal" ).click( ');
+      contentItems.push( '     function(e){  pongFormRevealSecret( "'+divId+field.id+'" ); return false; });' ); 
+      contentItems.push( ' });' );
+      contentItems.push( '</script>' );
+
     } else  if ( field.type == "date" ) {
 
       var modifier = '';
@@ -1218,6 +1231,15 @@ function pongFormRenderField( divId, field, col ) {
   }    
   contentItems.push( '</div>' );  
   return contentItems;
+}
+
+function pongFormRevealSecret( id ) {
+  alert( id );
+  let input = document.getElementById( id ); 
+  let ico   = document.getElementById( id + 'SecretReveal' );
+  if ( input.type === "password") { input.type = "text"; } else { input.type = "password"; } 
+  ico.classList.toggle("ui-icon-unlocked"); 
+  ico.classList.toggle("ui-icon-locked"); 
 }
 
 

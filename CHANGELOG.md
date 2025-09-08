@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.14.0
+- [Form](html/modules/pong-form) secret input type with reveal button
+
 ## 2.13.3/4
 - [Nav Bar](html/modules/pong-navbar) subMenuConfiguration onMouseEnter
 

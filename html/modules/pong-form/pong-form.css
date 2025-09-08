@@ -75,3 +75,14 @@ select:invalid {
   border: none;
   outline: 2px solid red;
 }
+
+.secret {
+  width: 300px,
+}
+.secret-reveal {
+  right: -303px;
+  top: -18px;
+  float: left;
+  cursor: pointer;
+}
+
