@@ -1234,7 +1234,6 @@ function pongFormRenderField( divId, field, col ) {
 }
 
 function pongFormRevealSecret( id ) {
-  alert( id );
   let input = document.getElementById( id ); 
   let ico   = document.getElementById( id + 'SecretReveal' );
   if ( input.type === "password") { input.type = "text"; } else { input.type = "password"; } 

@@ -9,6 +9,7 @@
                "formFields":[     
                  { "id":"user", "label":"User ID",  "type":"text" }, 
                  { "id":"pwd",  "label":"Password", "type":"password", "required":true },
+                 { "id":"pwd1",  "label":"Secret", "type":"secret" },
                  { "id":"user-data.authz.main_role",  "label":"Role (txt with options)", "type":"text", 
                    "options": [ 
                     { "value":"Admin" }, 
