@@ -1056,10 +1056,8 @@ function pongFormRenderField( divId, field, col ) {
               
     } else if ( field.type == "secret" ) {
       
-      // contentItems.push( '<div id="'+divId+field.id.replaceAll('.','')+'Div">' );
       contentItems.push( '  <input type="password" '+nameAndClass + title + modifier +'/>' );
-      contentItems.push( '  <span class="ui-icon ui-icon-unlocked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
-      // contentItems.push( '</div>' );
+      contentItems.push( '  <span class="ui-icon ui-icon-locked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
       contentItems.push( '<script>' );
       contentItems.push( ' $(function(){ ');
       contentItems.push( '   $( "#'+divId+field.id+'SecretReveal" ).click( ');
@@ -1243,8 +1241,8 @@ function pongFormRevealSecret( id ) {
   let input = document.getElementById( id ); 
   let ico   = document.getElementById( id + 'SecretReveal' );
   if ( input.type === "password") { input.type = "text"; } else { input.type = "password"; } 
-  ico.classList.toggle("ui-icon-unlocked"); 
   ico.classList.toggle("ui-icon-locked"); 
+  ico.classList.toggle("ui-icon-unlocked"); 
 }
 
 
