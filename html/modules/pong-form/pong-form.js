@@ -1056,7 +1056,7 @@ function pongFormRenderField( divId, field, col ) {
               
     } else if ( field.type == "secret" ) {
       
-      contentItems.push( '  <input type="password" '+nameAndClass + title + modifier +'/>' );
+      contentItems.push( '  <input type="password" '+nameAndClass + title + defaultVal + modifier +'/>' );
       contentItems.push( '  <span class="ui-icon ui-icon-locked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
       contentItems.push( '<script>' );
       contentItems.push( ' $(function(){ ');

@@ -1,6 +1,6 @@
 # Release Notes
 
-## 2.14.0
+## 2.14.1
 - [Form](html/modules/pong-form) secret input type with reveal button
 
 ## 2.13.3/4
