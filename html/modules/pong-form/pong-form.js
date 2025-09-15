@@ -1056,8 +1056,10 @@ function pongFormRenderField( divId, field, col ) {
               
     } else if ( field.type == "secret" ) {
       
-      contentItems.push( '<input type="password" '+nameAndClass + title + modifier +'/>' );
-      contentItems.push( '<span class="ui-icon ui-icon-unlocked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
+      // contentItems.push( '<div id="'+divId+field.id.replaceAll('.','')+'Div">' );
+      contentItems.push( '  <input type="password" '+nameAndClass + title + modifier +'/>' );
+      contentItems.push( '  <span class="ui-icon ui-icon-unlocked secret-reveal" id="'+divId+field.id+'SecretReveal"></span>' );
+      // contentItems.push( '</div>' );
       contentItems.push( '<script>' );
       contentItems.push( ' $(function(){ ');
       contentItems.push( '   $( "#'+divId+field.id+'SecretReveal" ).click( ');
@@ -1227,7 +1229,11 @@ function pongFormRenderField( divId, field, col ) {
 
     }
     // TODO: support other form input types 
-    contentItems.push( '</p>' );    
+    if (  field.hidden != null  && ( field.hidden === true  || field.hidden == 'true' ) ) { 
+      //nameAndClass += ''; 
+    } else {
+      contentItems.push( '</p>' );
+    }
   }    
   contentItems.push( '</div>' );  
   return contentItems;
