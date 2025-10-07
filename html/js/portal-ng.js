@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.15.0';
+var PONGVER = '2.15.1';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -1242,11 +1242,11 @@ function resToHTML( id, res, style, laCls ) {
     }
     // view required action ?
     var hook = getHookMethod( "addActionBtn", res.type );
-    if ( hook != "" ) {
-      log( 'addActionBtn', id+" "+hook);
+    if ( hook != "" ) try {
+      console.log( 'addActionBtn', id+" "+hook, res );
       html += '<div class="menuBtn">'+ eval( hook+"( id, '', res.resourceURL, {} )" ) + '</div>';
       //dlgMap.push( [ id, "", res.resourceURL, "", {} ] );
-    }
+    } catch ( exc ) { console.error( 'addActionBtn', res.type, id+" "+hook, exc.message ) }
     html += "</div>";
     if ( res.modal != null ) {
       html += addModalDlgHT( id, res );
@@ -1485,7 +1485,7 @@ function msDelay(millis) {
 function getHookMethod( hook, type ) {
   log( 'getHookMethod', "hook="+hook+" type="+type );
   var fnName = "";
-  if (  type == null ) { return fnName; }
+  if (  type == null || type == 'html') { return fnName; }
   if ( ( moduleMap[ type ] != null ) && ( moduleMap[ type ].hooks != null ) ) {
     for ( var i = 0; i < moduleMap[ type ].hooks.length; i++ ) {
       moduleHook = moduleMap[ type ].hooks[i];
