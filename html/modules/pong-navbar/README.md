@@ -23,8 +23,16 @@ Example [[PoNG Structure Specification|structure file]] extract:
           ...
     }
 
-## Configuration 
-The <code>confURL</code> should be like this example:
+## Menu Style
+
+I.e. on mobile devices a menu can't be shown. The menu is accessible via a "burger" icon (the stacked horizontal lines).
+
+To convert your menu into a "burger" add `"burger": ["mobile","tablet","desktop"]` to "param".
+
+Of course you can have burger menu only on mobile phones: `"burger": ["mobile"]`
+
+## Menu Item Configuration
+The `GET confURL` should return a JSON like this example:
 
     {
         "navigations" : [
@@ -47,7 +55,6 @@ You cn configure submenus to show on mousenter, instad on click, by adding `"nav
       "navigations" : [...],
       "subMenuConfiguration" : [ "onMouseEnter" ]
     }
-    
 
 Optional `"info":"text"` can be given for each navigation.
 

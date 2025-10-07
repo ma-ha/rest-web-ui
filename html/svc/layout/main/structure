@@ -33,6 +33,7 @@
 			       { "pageLink":"tests/markdown", "label":"Markdown" },
 			       { "pageLink":"tests/markdown-edit", "label":"Markdown Edit" },
 			       { "pageLink":"tests/navbar", "label":"Navbar" },
+			       { "pageLink":"tests/navbar-burger", "label":"Navbar: Burger Menu" },
 			       { "pageLink":"tests/onthefly", "label":"On-The-Fly Config Test" },
 			       { "pageLink":"tests/rss", "label":"RSS Demo" },
 			       { "pageLink":"tests/sec", "label":"Login/Logut Test" },

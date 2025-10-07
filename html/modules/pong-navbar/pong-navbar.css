@@ -4,6 +4,7 @@
 	left: 50px;
 	width:80%;	
 	font-size: 12pt;
+  z-index: 200;
 }
 #header .pong-navbar a:link{color:#FFF;}
 #header .pong-navbar a:visited{color:#FFF;}
@@ -35,13 +36,16 @@
 	z-index: 100000;
 	display: none;
 }
+.pongNavBurgerSubMenu{
+	background-color: #AAA;
+	display: none;
+}
 
 .pongNavBarItemActive {
 	font-size: 14pt;
 	font-weight: bold;
 	background-color: #ddd;
 	color: #fff;
-	
 }
 
 .pongNavBarItemInfo {
@@ -52,4 +56,31 @@
 
 .pongNavBarPullDownItem {
 	width:100%
+}
+
+.pongNavBarBurger {
+  width: 32px;
+  height: 32px;
+}
+
+.navTabBurgerBtnBar1,
+.navTabBurgerBtnBar2,
+.navTabBurgerBtnBar3 {
+  background-color: white;
+  width: 32px;
+  height: 4px;
+  position: absolute;
+}
+.navTabBurgerBtnBar1 {
+  top: 1px;  
+}
+.navTabBurgerBtnBar2 {
+  top: 13px;  
+}
+.navTabBurgerBtnBar3 {
+  top: 25px;
+}
+
+.pongNavBarBurgerMenu {
+  display: none;
 }
