@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.15.1';
+var PONGVER = '2.15.2';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
@@ -602,6 +602,7 @@ function loadModules() {
   }
   // now load external/custom modules 
   for ( var module in reqExtModules ) {
+    if ( module == 'html' ) { continue }
     console.log( 'loadModules: "ext-module/'+module+'/'+module+'.js"' );
     jQuery('head').append('<link rel="stylesheet" rel="nofollow" href="ext-module/'+module+'/'+module+'.css" type="text/css" />');
 

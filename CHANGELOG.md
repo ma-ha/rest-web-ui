@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.15.2
+- fix "html" detected as not ext-module
+
 ## 2.15.0
 - [Nav Bar](html/modules/pong-navbar) "Burger Menu"
 
