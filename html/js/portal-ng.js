@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2018 Markus Harms, ma@mh-svr.de
+Copyright (c) 2025 Markus Harms, ma@mh-svr.de
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ THE SOFTWARE.
  former: Portal-NG (PoNG) https://mh-svr.de/mw/index.php/PoNG
 */
 var labeldefs = new Array();
-var PONGVER = '2.14.0';
+var PONGVER = '2.15.0';
 labeldefs['PONGVER'] = PONGVER;
 
 var moduleMap = {};
