@@ -203,7 +203,9 @@ For POST; GET, DELETE methods the rowId(s) are used as params to identify the ro
 
 You can use the `"label"` property to define a static text. 
 If the `"label"` property is undefined, the table data field `id` is used, 
-if it's `null` the button is not shown.
+if it's `null` the label is not shown.
+
+Tho hide the button in one table row, the field value should be `false`.
 
 #### Update a resource
 <code>"method":"UPDATE"</code> must be set. The update is specified by <code>"update"</code> array.

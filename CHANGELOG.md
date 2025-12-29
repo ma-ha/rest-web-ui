@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.16.0
+
+- [Table](html/modules/pong-table) hide buttons if value is `false`
+
 ## 2.15.2
 - fix "html" detected as not ext-module
 
