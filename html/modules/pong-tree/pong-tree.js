@@ -20,20 +20,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. 
- */
-
-// copy this block to portal-ng-modules.js -- delete the hooks you don't need (don't forget to set comma correctly)
-/*
-moduleMap[ "pong-tree" ] = {
-	"name": "pong-tree",
-    "hooks": [
-        { hook: "loadResourcesHtml", method:"pongTree_DivHTML" },
-        { hook: "addActionBtn", method:"pongTree_pAddActionBtn" },
-        { hook: "creModal", method:"pongTree_CreModalFromMeta" },
-        { hook: "updateData", method:"pongTree_UpdateData" }
-    ]
-};
 */
+
 
 log( "pongTree", "load module"); // print this on console, when module is loaded
 
@@ -51,36 +39,46 @@ function pongTree_DivHTML( divId, resourceURL, paramObj ) {
         function( pmd ) {
           pongTree_RenderHTML( divId, resourceURL, paramObj, pmd );
         }
-    );					
-  }	
+    );
+  }
 }
 
 function pongTree_RenderHTML( divId, resourceURL, paramObj, pmd ) {
-	log( "pongTree", "start '"+resourceURL+"'");
-	if ( ! pmd.maxDeepth ) pmd.maxDeepth = 3;
-	    
+  log( "pongTree", "start '"+resourceURL+"'");
+  if ( ! pmd.maxDeepth ) pmd.maxDeepth = 3;
+      
   poTree[divId] = { "config":pmd };
-	var contentItems = [];
-	contentItems.push( '<div id="'+divId+'pongTreeDiv" class="pongTree"></div>' );
+  let contentItems = [];
+  contentItems.push( '<div id="'+divId+'pongTreeDiv" class="pongTree"></div>' );
   contentItems.push( '<script>' );
-	contentItems.push( '  $( "#'+divId+'pongTreeDiv" ).on( "click", ".treeLink", function() { ' );
+  contentItems.push( '  $( "#'+divId+'pongTreeDiv" ).on( "click", ".treeLink", function() { ' );
   contentItems.push( '       pongTree_clickUpdates( $(this).data("treeid"), $(this).data("id") ); return false;   ' );
   contentItems.push( '  } );' );
+
+  if ( pmd.pollDataSec ) {
+    let pollDataSec = parseInt( pmd.pollDataSec+'' );
+    if  ( ! isNaN( pollDataSec ) ) {
+      contentItems.push( '  function  pongTree_UpdateTimer'+divId+'() { ' );
+      contentItems.push( '    pongTree_UpdateData( "'+divId+'", '+ JSON.stringify(paramObj) +' );' );
+      contentItems.push( '  }' );
+      poolDataTimerId = setInterval( " pongTree_UpdateTimer"+divId+"()", pollDataSec*1000 );
+    }
+  }
+
   contentItems.push( '</script>' );
   $( "#"+divId ).html( contentItems.join( "\n" ) );
-	
+  
   pongTree_UpdateData( divId, paramObj );
-    
-	log( "pongTree", "end.");
+  log( "pongTree", "end.");
 }
 
 function pongTree_clickUpdates( divId, objId ) {
   log( "pongTree", "clickUpdates: divId="+divId+" objId="+objId );
   if ( objId && poTree[ divId ] && poTree[ divId ].config && poTree[ divId ].config.idField  && poTree[ divId ].config.update ) {
-    var pmd = poTree[ divId ].config;
-    var param = {};
+    let pmd = poTree[ divId ].config;
+    let param = {};
     param[ pmd.idField ] = objId;
-    for ( var i=0; i < pmd.update.length; i++ ) {
+    for ( let i=0; i < pmd.update.length; i++ ) {
       log( "pongTree", 'update: '+pmd.update[i]+'Content   '+JSON.stringify( param ) );
       udateModuleData( pmd.update[i]+'Content', param );
     }
@@ -90,10 +88,10 @@ function pongTree_clickUpdates( divId, objId ) {
 
 function pongTree_getTree( divId, pmd, objArr, deepth ) {
   log( "pongTree", "getTree "+deepth+"..." );
-  var contentItems = [];
-  for ( var i = 0; i < objArr.length; i++ ) {
+  let contentItems = [];
+  for ( let i = 0; i < objArr.length; i++ ) {
     log( "pongTree", "getTree "+deepth+"/"+i );
-    var t = objArr[ i ];
+    let t = objArr[ i ];
     if ( t && t[ pmd.labelField ] ) {
       if ( t[ pmd.idField ] ) {
         contentItems.push( '<div class="treeItem treeDepth'+deepth+'">' +
@@ -113,19 +111,17 @@ function pongTree_getTree( divId, pmd, objArr, deepth ) {
 } 
 
 
-
-
 /** update data call back hook */
 function pongTree_UpdateData( divId, paramObj ) {
-	log( "pongTree", "udateData "+divId );
-	var pmd = poTree[ divId ].config;
+  log( "pongTree", "udateData "+divId );
+  let pmd = poTree[ divId ].config;
     if ( pmd.dataURL ) {
       log( "pongTree", 'calling '+pmd.dataURL);
       $.getJSON( 
         pmd.dataURL, 
         paramObj,
         function( treeDta ) {
-          var treeHtml = "";
+          let treeHtml = "";
           if ( pmd.treeArray && treeDta[ pmd.treeArray ] ) {
             if ( pmd.titleField && treeDta[ pmd.titleField ] ) {
               treeHtml += '<div class="treeInfo">'+treeDta[ pmd.titleField ]+'</div>';
@@ -138,48 +134,5 @@ function pongTree_UpdateData( divId, paramObj ) {
         }
       );                  
     }   
-	log( "pongTree", "end.");
+  log( "pongTree", "end.");
 }
-
-
-//======= Code for "addActionBtn" hook ================================================
-//function pongTree_AddActionBtn( id, modalName, resourceURL, paramObj ) {
-//	log( "pongTree", "modalFormAddActionBtn "+id);
-//	//var action = res.actions[x];
-//	var html = "";
-//	log( "pongTree", "Std Config Dlg:  " + modalName );
-//	var icon = "ui-icon-help"; // TODO change
-//	var jscall = '$( "#'+id+modalName+'Dialog" ).dialog( "open" );';
-//	var width  = "650"; if ( paramObj!= null && paramObj.width  != null ) { width  = paramObj.widht; }
-//	var height = "500"; if ( paramObj!= null && paramObj.height != null ) { height = paramObj.height; }
-//	html += '<div id="'+id+modalName+'Dialog">'+ resourceURL +" "+ modalName+"</div>";
-//	html += "<script> $(function() { $(  "+
-//		"\"#"+id+modalName+"Dialog\" ).dialog( { autoOpen: false, height: "+height+", width: "+width+" , modal: true, "+ // TODO: Refresh resource
-//		" buttons: { \"OK\": function() {  $( this ).dialog( \"close\" );  } } }); "+
-//		"});</script>";			
-//	html += '<button id="'+id+modalName+'Bt">'+modalName+'</button>';
-//	html += '<script>  $(function() { $( "#'+id+modalName+'Bt" ).button( { icons:{primary: "'+icon+'"}, text: false } ).click( '+
-//		"function() { "+jscall+" }); }); </script>";		
-//	return html;
-//}
-
-//======= Code for "creModal" hook, requires "addActionBtn"  ================================================
-//function pongTree_CreModalFromMeta( id, modalName, resourceURL, paramObj  ) {
-//	log( "PoNG-Help", "Get help: '"+resourceURL+"/help'");
-//	var lang = getParam( 'lang' );
-//	if ( lang == '' ) {
-//		lang = "EN";
-//	}	
-//	var resourceSub = ""; // e.g. "/help"
-//	$.get( resourceURL+resourceSub, 
-//		{ lang: lang }, // other params required?
-//		function( divHtml ) {
-//			$(  "#"+id+modalName+"Dialog" ).html( '<div class"pongTreemodal">'+divHtml+'</div>' );
-//			log( "pongTree", "loaded" );
-//		}
-//	).fail(
-//		function() {
-//			logErr( "pongTree", "Can't load modal form content from '"+resourceURL+resourceSub );
-//		}
-//	);
-//}

@@ -21,7 +21,8 @@
 						"idField":"productId",
 						"labelField":"productName",
 						"update":["out2"],
-						"maxDeepth":"4"
+						"maxDeepth":"4",
+            "pollDataSec": 30
 					},
 		            "decor" : "decor"
 		          },
