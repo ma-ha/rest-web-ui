@@ -753,7 +753,7 @@ function pongTblCrunchActionData ( divId, action, dta ) {
     for ( var i = 0; i < action.update.length; i++ ) {
       log( "PoNG-Table", "action: '"+ action.id + "' updateData: "+action.update[i].resId );
       if ( dta == null )  dta = pongTblGetPostLst2( divId, action.update[i] );
-      udateModuleData( action.update[i].resId+'Content', dta );				
+      udateModuleData( action.update[i].resId+'Content', dta );
     }
   }
   if ( ( action.setData != null ) && ( action.setData.length != null ) ) {
@@ -762,13 +762,16 @@ function pongTblCrunchActionData ( divId, action, dta ) {
       log( "PoNG-Table", "action: '"+ action.id + "' setData "+action.setData[i].resId );
       if ( dta == null )  dta = pongTblGetPostLst2( divId, action.setData[i] );
       if ( action.setData[i].dataDocSubPath != null ) {
-        setModuleData( action.setData[i].resId+'Content', dta, action.setData[i].dataDocSubPath );								
+        setModuleData( action.setData[i].resId+'Content', dta, action.setData[i].dataDocSubPath );
       } else {
-        setModuleData( action.setData[i].resId+'Content', dta, null );									
+        setModuleData( action.setData[i].resId+'Content', dta, null );
       }
-    }			
+    }
   }
-
+  if ( action.execute && action.execute.length > 0) {
+    var btn = document.getElementById( action.execute );
+    btn.click();
+  }
 }
 
 
