@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.17.1
+- [Table](html/modules/pong-table) actions allow "modalQuestion"
+
 ## 2.17.0
 - [Tree](html/modules/pong-tree) supports `pollDataSec` in moduleConfig
 

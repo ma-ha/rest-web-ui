@@ -663,9 +663,24 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
       
       log( "PoNG-Table",  '  action '+action.id);
       contentItems.push( '<button id="'+divId+'Bt'+action.id+'" class="pong-table-action">'+$.i18n(action.actionName)+'</button>' );	
+      if ( action.modalQuestion ) { 
+        contentItems.push( '<div id="'+divId+'ModalDlg'+action.id+'">'+$.i18n( action.modalQuestion )+'</div>' );  
+      }
       contentItems.push( '<script>' );
       contentItems.push( '  $(function() { ' );
-      contentItems.push( '       $( "#'+divId+'Bt'+action.id+'" ).click(' );
+      contentItems.push( '     $( "#'+divId+'Bt'+action.id+'" ).click(' );
+      if ( action.modalQuestion ) { 
+        contentItems.push( '    function(e) { ' ); 
+        contentItems.push( '      $( "#'+divId+'ModalDlg'+action.id+'" ).dialog( "open" );' );
+        contentItems.push( '      return false;' );
+        contentItems.push( '    });' );
+        // contentItems.push( '  $(function() { ' );
+        contentItems.push( '    $( "#'+divId+'ModalDlg'+action.id+'" ).dialog({ ' );
+        contentItems.push( '      autoOpen: false, modal: true,' ); 
+        contentItems.push( '      buttons: {' ); 
+        contentItems.push( '        Cancel: function() { $( this ).dialog( "close" ); },' ); 
+        contentItems.push( '        "'+$.i18n( action.actionName )+'": ' ); 
+      }
       contentItems.push( '          function() {  ' ); 
       if ( action.actionURL ) { // otherwise no AJAX, only interaction
         contentItems.push( '              var actionUrl = "'+action.actionURL+'";' );
@@ -695,6 +710,9 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
         contentItems.push( '                 function( dta ) {  ' );
         contentItems.push( '                    if ( dta != null && ( dta.error != null || dta.error_message != null ) ) {  alert( "ERROR: "+ dta.error +": "+ dta.error_message );}   ' );
         contentItems.push( '                    pongTblCrunchActionData( "'+divId+'", poTbl[ "'+divId+'" ].pongTableDef.actions[ '+x+' ], dta ); ');
+        if ( action.modalQuestion ) { 
+          contentItems.push( '                 $( "#'+divId+'ModalDlg'+action.id+'" ).dialog( "close" );' );
+        }
         contentItems.push( '                    return false;' ); 
         contentItems.push( '                 }  ' );
         contentItems.push( '              ).error( function( jqXHR, textStatus, errorThrown) { alert( textStatus+": "+jqXHR.responseText ); } ); ');
@@ -709,8 +727,15 @@ function pongTableActions( divId, resourceURL, params, tbl ) {
 
       contentItems.push( '              return false;' ); 
       contentItems.push( '          }' );
-      contentItems.push( '       ); ' );
-      contentItems.push( '  }); ' );
+      if ( action.modalQuestion ) { 
+        contentItems.push( '      } ' ); // buttons
+        contentItems.push( '    }) ' ); // dialog
+        // contentItems.push( '  }; ' ); // function click
+      } else {
+        contentItems.push( '     )' );
+      }
+      //contentItems.push( '    ); ' ); // click
+      contentItems.push( '  }); ' ); //function
       contentItems.push( '</script>' );
 
 

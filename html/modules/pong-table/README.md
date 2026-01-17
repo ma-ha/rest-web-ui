@@ -400,6 +400,8 @@ The actions are same like form actions (defined separately), example:
 		}
 	}
 
+You can specify an optional "modalQuestion" for the action.
+
 ## "date" / "datems" Column Type
 
 The "date" type displays a Unix Date (seconds since 1970) or "datems" a Java/JS date (milliseconds since 1970) in a human readable format.
