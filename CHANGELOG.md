@@ -1,5 +1,12 @@
 # Release Notes
 
+## 2.18.0 
+- [Form](html/modules/pong-form) `afterUpdate` can call `setData`
+- [Upload](html/modules/pong-upload) 
+  - implements `setData`
+  - hidden input fields
+  - can call `setData`
+  
 ## 2.17.2
 - [Table](html/modules/pong-table) actions allow "modalQuestion"
 - [Table](html/modules/pong-table) actions allow "execute" (of button clicks)

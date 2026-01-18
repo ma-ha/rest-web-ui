@@ -792,6 +792,12 @@ function pongFormUpdateData( divId, paramsObj ) {
                     udateModuleData( action.update[i].resId+'Content', paramsObj );
                   }
                 }
+                if ( action.setData != null ) {
+                  for ( let setData of action.setData ) {
+                    // alert( "afterUpadte > setData " + setData.resId );
+                    setModuleData( setData.resId+'Content', data );
+                  }
+                }
               }
             }
           }

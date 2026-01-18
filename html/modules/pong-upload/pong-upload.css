@@ -1,8 +1,12 @@
+.UploadForm {
+  margin: 7px;
+}
+
 .uploadFromLabel {
   width: 150px;
   display: block;
 }
 
-.uploadFormIput {
+.uploadFormInput {
   width: 300px;
 }

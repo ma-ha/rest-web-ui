@@ -28,4 +28,7 @@ Example:
      }
   }
 
-The configs for `input`, `accept` and `update` are optional.
+The configs for `input`, `accept`, `update` and `setData` are optional. The values `update` and `setData` are arrays of strings (resource ids).
+
+Inputs can also be `"hidden":true`, to be specified either by `"value"` or by `setData` from e.g. another form.
+

@@ -31,12 +31,18 @@ function pongUploadDivHTML( divId, uploadURL, fparam ) {
   html.push( '<form class="UploadForm">' );
   if ( moduleConfig[ divId ] && moduleConfig[ divId ].input ) {
     for ( var inp of moduleConfig[ divId ].input ) {
-      let val = ( inp.value ? '  value="'+inp.value+'" ' : '' )
-      html.push( '<div id="'+divId+inp.id+'" class="pongFormField">' );
-      html.push( '<label for="'+inp.id+'" class="uploadFromLabel">'+ $.i18n( inp.label )+'</label>' );
-      html.push( '<input id="'+inp.id+'" name="'+inp.name+'" '+val );
-      html.push( '  class="text ui-widget-content ui-corner-all UploadFileInput uploadFormInput" required="required">' );
-      html.push( '</div>' );
+      if ( ! inp.name ) { inp.name = inp.id }
+      let val = ( inp.value ? ' value="'+inp.value+'" ' : '  value="" ' )
+      if ( inp.hidden ) {
+        html.push( '<input id="input'+divId+inp.id+'" name="'+inp.name+'" '+val+' type="hidden">' );
+
+      } else {
+        html.push( '<div id="'+divId+inp.id+'" class="pongFormField">' );
+        html.push( '<label for="'+inp.id+'" class="uploadFromLabel">'+ $.i18n( inp.label )+'</label>' );
+        html.push( '<input id="input'+divId+inp.id+'" name="'+inp.name+'" '+val );
+        html.push( '  class="text ui-widget-content ui-corner-all UploadFileInput uploadFormInput" required="required">' );
+        html.push( '</div>' );
+      }
     }
   }
   let accept = ''
@@ -56,6 +62,16 @@ function pongUploadDivHTML( divId, uploadURL, fparam ) {
   $( '#'+divId ).html( html.join( "\n" ) );
 }
 
+function pongUploadSetData( divId, data, dataDocSubPath ) {
+  console.log( 'pongUploadSetData', divId, data )
+  for ( let field in data ) {
+    if  (typeof field === 'string' || field instanceof String ) {
+      console.log( 'pongUploadSetData','#input'+divId+field, data[ field ] )
+      $( '#input'+divId+field ).val( data[ field ] );
+    }
+  }
+}
+
 function pongUploadFile( divId, url, params ) {
   var toUpload = document.getElementById( divId+'File' ).files[0];
   if ( ! toUpload ) {
@@ -66,11 +82,11 @@ function pongUploadFile( divId, url, params ) {
   let formData = new FormData();
   if ( moduleConfig[ divId ] && moduleConfig[ divId ].input ) {
     for ( var inp of moduleConfig[ divId ].input ) {
-      if ( !  $( '#'+inp.id ).val() ||  $( '#'+inp.id ).val() == '' ) {
+      if ( !  $( '#input'+divId+inp.id ).val() ||  $( '#input'+divId+inp.id ).val() == '' ) {
         alert( $.i18n( 'Please fill out all form fields.' ) );
         return
       }
-      formData.append( inp.id, $( '#'+inp.id ).val() )
+      formData.append( inp.id, $( '#input'+divId+inp.id ).val() )
     }
   }
   var getParams = getUrlGETparams();
@@ -85,12 +101,20 @@ function pongUploadFile( divId, url, params ) {
   fetch( url, {
     method: 'POST',
     body: formData,
-  }).then( response => {
+  }).then( async response => {
 
+    console.log( 'upload response', response )
     if ( moduleConfig[ divId ] && moduleConfig[ divId ].update ) {
       var upd = moduleConfig[ divId ].update;
       for ( var i = 0; i < upd.length; i++ ) {
         udateModuleData( upd[i]+'Content', params );
+      }
+    }
+    if ( moduleConfig[ divId ] && moduleConfig[ divId ].setData ) {
+      const result = await response.json();
+      console.log( 'upload response', result )
+      for ( let resId of  moduleConfig[ divId ].setData ) {
+        setModuleData( resId+'Content', result );
       }
     }
 

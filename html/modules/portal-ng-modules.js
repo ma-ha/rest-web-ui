@@ -323,7 +323,8 @@ moduleMap[ "pong-nav-embed" ] = {
 moduleMap[ "pong-upload" ] = {
   "name": "pong-upload",
   "hooks": [
-    { hook: "loadResourcesHtml", method:"pongUploadDivHTML" }
+    { hook: "loadResourcesHtml", method:"pongUploadDivHTML" },
+    { hook: "setData", method:"pongUploadSetData" }
   ]
 };
 
