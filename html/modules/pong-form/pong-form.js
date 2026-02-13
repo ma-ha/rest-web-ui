@@ -875,7 +875,30 @@ function pongFormUpdateFieldsData( divId, pmd, dta ) {
           } else if ( field.type == "select" ) {
             log( "Pong-Form",  'pongFormUpdateFieldsData select: '+field.id+' '+dta[field.id] );
             if ( dta[field.id] != null ) {
-              $( fieldId ).val( dta[field.id] );              
+              // console.log( JSON.stringify( dta[field.id] ) )
+              // console.log( JSON.stringify( field ) )
+              $( fieldId ).empty();  
+              for ( let option of dta[field.id] ) {
+                // console.log( option )
+                let optValue = '';
+                if ( field.optionsResource?.optionValue ) {
+                  optValue = 'value="'+option[ field.optionsResource.optionValue ]+'"';
+                } else if ( option.value != null  ) {
+                  optValue = 'value="'+option.value+'"';
+                } else {
+                  optValue = 'value="'+option.option+'"';
+                }
+                let optMod = ''
+                if ( option.selected ) { optMod += ' selected'; }
+                if (option.disabled ) { optMod += ' disabled'; }
+                let optStr = option.option;
+                if ( field.optionsResource?.optionField ) {
+                  optStr = option[ field.optionsResource.optionField ]
+                }
+                $( fieldId ).append( '<option '+optValue+optMod+'>'+ $.i18n( optStr )+'</option>' );  
+              }
+
+              // $( fieldId ).val( dta[field.id] );
             }else {
               $( fieldId ).val( -1 );
             }

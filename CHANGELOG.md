@@ -1,4 +1,6 @@
 # Release Notes
+## 2.18.1
+- [Form](html/modules/pong-form) fix update for select
 
 ## 2.18.0 
 - [Form](html/modules/pong-form) `afterUpdate` can call `setData`
