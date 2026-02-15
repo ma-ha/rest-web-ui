@@ -1,4 +1,7 @@
 # Release Notes
+## 2.18.2
+- [Table](html/modules/pong-table) graph with "borderCol" option
+
 ## 2.18.1
 - [Form](html/modules/pong-form) fix update for select
 

@@ -1786,7 +1786,8 @@ function pongTblRenderGraph( divId, ctx, def, dta, canvasId ) {
         var lyy = Math.round( y  + h - ly ); 
         log( "Pong-Table", "Graph y-lbl: "+x+"/"+lyy+" -- "+xx+"/"+lyy);
         ctx.moveTo( x,  lyy );
-        ctx.strokeStyle = "#00A";
+        ctx.strokeStyle = "#BBB";
+        if ( def.borderCol ) { ctx.strokeStyle = def.borderCol; }
         ctx.fillStyle   = "#DDD";
         ctx.lineTo( xx, lyy );
         ctx.stroke();
