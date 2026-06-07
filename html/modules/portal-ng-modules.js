@@ -324,7 +324,8 @@ moduleMap[ "pong-upload" ] = {
   "name": "pong-upload",
   "hooks": [
     { hook: "loadResourcesHtml", method:"pongUploadDivHTML" },
-    { hook: "setData", method:"pongUploadSetData" }
+    { hook: "setData", method:"pongUploadSetData" },
+    { hook: "update", method:"pongUploadUpdate" }
   ]
 };
 

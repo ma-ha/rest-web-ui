@@ -72,6 +72,16 @@ function pongUploadSetData( divId, data, dataDocSubPath ) {
   }
 }
 
+function pongUploadUpdate( divId, data ) {
+  console.log( "pongUploadUpdate",  divId, data );
+  for ( let field in data ) {
+    if  (typeof field === 'string' || field instanceof String ) {
+      console.log( 'pongUploadSetData','#input'+divId+field, data[ field ] )
+      $( '#input'+divId+field ).val( data[ field ] );
+    }
+  }
+}
+
 function pongUploadFile( divId, url, params ) {
   var toUpload = document.getElementById( divId+'File' ).files[0];
   if ( ! toUpload ) {

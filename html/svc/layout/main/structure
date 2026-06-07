@@ -87,7 +87,7 @@
       "linkList": [
       	{ "text":"About", "url": "index.html?layout=about"},
       	{ "text":"GitHub", "url": "https://github.com/ma-ha/rest-web-ui"},
-      	{ "text":"NPM", "url": "https://www.npmjs.com/package/easy-web-app"},
+      	{ "text":"NPM", "url": "https://www.npmjs.com/package/easy-web-app", "target": "_blank" },
       	{ "text":"Wiki", "url": "https://mh-svr.de/mw/index.php/PoNG"}
       ],
       "modules" : [ 

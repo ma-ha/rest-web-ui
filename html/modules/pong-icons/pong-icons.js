@@ -79,6 +79,8 @@ function pongIcons_RenderHTML( divId, resourceURL, paramObj, pmd ) {
         id = pmd.icons[i].id
       } else if ( pmd.icons[i].layout ) {
         id = pmd.icons[i].layout.replace(/\//g, '');
+      } else if ( pmd.icons[i].page ) {
+        id = pmd.icons[i].page.replace(/\//g, '');
       } else { id = i }
       let descr = '';
       if ( pmd.icons[i].descr ) { 

@@ -1,4 +1,8 @@
 # Release Notes
+## 2.18.3
+- [Upload](html/modules/pong-upload) 
+  - implements `update`, but as `setData`
+
 ## 2.18.2
 - [Table](html/modules/pong-table) graph with "borderCol" option
 
