@@ -1,4 +1,8 @@
 # Release Notes
+## 2.18.4
+- [EasyTable](html/modules/pong-upload) 
+  - overflow auto
+  
 ## 2.18.3
 - [Upload](html/modules/pong-upload) 
   - implements `update`, but as `setData`
